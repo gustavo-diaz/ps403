@@ -1,2 +1,1 @@
-# ps210
-POLI SCI 210: Probability and Statistics
+# POLI SCI 403: Probability and Statistics
