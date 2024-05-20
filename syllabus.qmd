@@ -23,23 +23,32 @@ geometry:
 
 # Course Overview
 
+This is the first course in the required two-quarter quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference, with emphasis on core concepts in probability and statistics relevant to applications in quantitative social science. These include variables, distributions, measurement, estimation, and inference.
+
 # Learning Objectives
 
-# Prerequisites and Expectations
+Statistical inference involves using the data we have to learn about something for which we do not have data. The overarching theme of this course is to develop tools and skills to
 
-# Required Resources
+# Prerequisites
 
- <!-- Prereq can also go here -->
- 
+# Requirements
+
 ## Reading
 
 ## Software
 
-# Course Evaluation
+# Evaluation
 
-# Grading
+## Assignments
+
+## Grading
+
+
+\newpage
 
 # Schedule
+
+\newpage
 
 # Academic Integrity
 
