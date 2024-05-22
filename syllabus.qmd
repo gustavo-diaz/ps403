@@ -16,33 +16,79 @@ geometry:
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz  
 **Time and Place:** TBD  
-**Office Hours**: TBD
+**Office Hours:** TBD  
+**GitHub Repository:** TBD
 
 **Teaching Assistant:** TBD
 <!-- More details about TA here -->
 
 # Course Overview
 
-This is the first course in the required two-quarter quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference, with emphasis on core concepts in probability and statistics relevant to applications in quantitative social science. These include variables, distributions, measurement, estimation, and inference.
+This is the first course in the required two-quarter quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference in quantitative social science. Topics include probability theory, statistical inference from random samples, estimation theory, linear regression, maximum likelihood estimation, and nonparametric identification.
+
 
 # Learning Objectives
 
-Statistical inference involves using the data we have to learn about something for which we do not have data. The overarching theme of this course is to develop tools and skills to
+The goal of statistical inference is to use the data we have to learn about something for which we do not have data. That connection requires making assumptions. This course aims at introducing tools and developing skills to do so with as few assumptions as possible.
+
+
+By the end of the course, you will be able to apply statistical methods to conduct your own analyses, explain statistical tools and concepts in your own words, evaluate the credibility of applied and methodological work, and continue learning more advanced methods.
+
 
 # Prerequisites
+
+<!-- Revise depending on what actually happens -->
+There are no formal requirements to take this course other than enrollment in the Political Science PhD program or express approval to enroll.
+
+This course does not assume prior training on statistics or quantitative methods beyond a tenuous grasp of basic concepts in algebra and calculus covered US high schools or math camp. For example, you know that integrals can be used to calculate the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work.
+
+I expect you to participate actively, productively, and respectfully in our meetings. Some of
+the material addresses complicated concepts or uses math extensively. I do not expect you to
+understand every single equation for this course, but I do expect you to read carefully enough that you would understand every equation if you chose to revisit the material after taking this course.
 
 # Requirements
 
 ## Reading
 
-## Software
+The main textbook we will follow is:
+
+Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*](https://doi.org/10.1017/9781316831762). Cambridge University Press
+
+<!-- Make sure to ask the library to stock this book -->
+The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon.
+
+The book tends to err on the side of brevity and mathematical complexity. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. The digital version of the syllabus will have URLs for additional readings in the Schedule section.
+
+The final section of this syllabus includes recommended readings that may be useful to complement current or future learning. 
+
+## Computing
+
+We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on lab assignments and the final research note.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers.
+
+You can install R and RStudio on your personal computer, which is the preferred workflow. You can use [this link](https://sites.northwestern.edu/researchcomputing/resources/r-and-rstudio/) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
+
+<!-- Could we one day have a posit cloud server? -->
+You can also use [Posit Cloud](https://posit.cloud/) to access RStudio from any web browser. A free account should be sufficient for the purposes of this course and has the advantage of letting you access your work across devices.
+
+If you ever need more computing resources than what a free Posit Cloud account allows, you should consider requesting access to the [Quest Analytic Nodes](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/quest-analytics-nodes.html) from Northwestern IT. I do not anticipate this to be relevant for this course, but it may be useful for future reference.
+
 
 # Evaluation
 
-## Assignments
+Your final grade in this course will depend on the following:
 
-## Grading
+- Participation
+- Lab assignments (7 total)
+- Research note
 
+## Participation
+
+## Lab assignments
+
+## Research note
+
+# Grading
+<!-- Contract grading -->
 
 \newpage
 
@@ -55,3 +101,11 @@ Statistical inference involves using the data we have to learn about something f
 # Accessibility
 
 # Generative AI
+
+\newpage
+
+# Recommended readings
+
+## Statistics
+
+## Computing
