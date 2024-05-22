@@ -52,12 +52,17 @@ understand every single equation for this course, but I do expect you to read ca
 
 The main textbook we will follow is:
 
+::: {.callout-note}
+## Textbook
+
 Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*](https://doi.org/10.1017/9781316831762). Cambridge University Press
+:::
+
 
 <!-- Make sure to ask the library to stock this book -->
 The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon.
 
-The book tends to err on the side of brevity and mathematical complexity. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. The digital version of the syllabus will have URLs for additional readings in the Schedule section.
+The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. The digital version of the syllabus will have URLs for additional readings in the Schedule section.
 
 The final section of this syllabus includes recommended readings that may be useful to complement current or future learning. 
 
@@ -70,7 +75,7 @@ You can install R and RStudio on your personal computer, which is the preferred 
 <!-- Could we one day have a posit cloud server? -->
 You can also use [Posit Cloud](https://posit.cloud/) to access RStudio from any web browser. A free account should be sufficient for the purposes of this course and has the advantage of letting you access your work across devices.
 
-If you ever need more computing resources than what a free Posit Cloud account allows, you should consider requesting access to the [Quest Analytic Nodes](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/quest-analytics-nodes.html) from Northwestern IT. I do not anticipate this to be relevant for this course, but it may be useful for future reference.
+If you ever need more computing resources than what a personal computer or a free Posit Cloud account allows, you should consider requesting access to the [Quest Analytic Nodes](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/quest-analytics-nodes.html) from Northwestern IT. I do not anticipate this to be relevant for this course, but it may be useful for future reference.
 
 
 # Evaluation
