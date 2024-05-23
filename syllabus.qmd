@@ -15,7 +15,7 @@ geometry:
 
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz  
-**Time and Place:** TBD  
+**Time and Place:**  Tues/Thurs 11:00am -- 12:20pm, room TBD  
 **Office Hours:** TBD  
 **GitHub Repository:** TBD
 
@@ -83,8 +83,8 @@ If you ever need more computing resources than what a personal computer or a fre
 Your final grade in this course will depend on the following:
 
 - Participation
-- Lab assignments (7 total)
-- Research note
+- Lab assignments (8 total, due Mondays 8 AM?)
+- Research note (due December 11)
 
 ## Participation
 
@@ -98,6 +98,60 @@ Your final grade in this course will depend on the following:
 \newpage
 
 # Schedule
+
+## Week 1 (September 24/26): Preliminaries
+**Reading:**
+
+**Lab 0:**
+
+## Week 2 (October 1/3): Probability theory
+**Reading:**
+
+**Lab 1:**
+
+## Week 3 (October 8/10): Summarizing distributions
+**Reading:**
+
+**Lab 2:**
+
+## Week 4 (October 15/17): Random samples
+**Reading:**
+
+**Lab 3:**
+
+## Week 5 (October 22/24): Regression
+**Reading:**
+
+**Lab 4:**
+
+## Week 6 (October 29/31): Parametric models
+**Reading:**
+
+**Lab 5:**
+
+## Week 7 (November 5/7): Missing data
+**Reading:**
+
+**Lab 6:**
+
+## Week 9 (November 12/14): Causal inference I
+**Reading:**
+
+**Lab 7:**
+
+## Week 10 (November 19/21): Causal inference II
+**Reading:**
+
+**Lab 8:**
+
+## Week 11 (November 26): Flex week/future directions?
+**Reading:**
+
+
+## Week 12 (December 3/5): Research note presentations
+
+
+
 
 \newpage
 
