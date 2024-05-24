@@ -24,7 +24,7 @@ geometry:
 
 # Course Overview
 
-This is the first course in the required two-quarter quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference in quantitative social science. Topics include probability theory, statistical inference from random samples, estimation theory, linear regression, maximum likelihood estimation, and nonparametric identification.
+This is the first course in the required two-quarter quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference from a social science perspective. Topics include probability, inference from random samples, linear regression, maximum likelihood estimation, identification, and causal inference.
 
 
 # Learning Objectives
@@ -38,9 +38,9 @@ By the end of the course, you will be able to apply statistical methods to condu
 # Prerequisites
 
 <!-- Revise depending on what actually happens -->
-There are no formal requirements to take this course other than enrollment in the Political Science PhD program or express approval to enroll.
+There are no formal requirements to take this course other than enrollment in the Political Science PhD program or express approval.
 
-This course does not assume prior training on statistics or quantitative methods beyond a tenuous grasp of basic concepts in algebra and calculus covered US high schools or math camp. For example, you know that integrals can be used to calculate the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work.
+This course does not assume prior training on statistics or quantitative methods beyond a grasp of US high school level algebra and calculus (which is covered in math camp). For example, you know that integrals have something to do with calculating the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work.
 
 I expect you to participate actively, productively, and respectfully in our meetings. Some of
 the material addresses complicated concepts or uses math extensively. I do not expect you to
@@ -53,7 +53,7 @@ understand every single equation for this course, but I do expect you to read ca
 The main textbook we will follow is:
 
 ::: {.callout-note}
-## Textbook
+## **Textbook**
 
 Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*](https://doi.org/10.1017/9781316831762). Cambridge University Press
 :::
@@ -62,9 +62,9 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 <!-- Make sure to ask the library to stock this book -->
 The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon.
 
-The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. The digital version of the syllabus will have URLs for additional readings in the Schedule section.
+The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find have URLs for additional readings in the Schedule section.
 
-The final section of this syllabus includes recommended readings that may be useful to complement current or future learning. 
+The final section of this syllabus includes recommended resources that may be useful to complement current or future learning. 
 
 ## Computing
 
@@ -75,7 +75,7 @@ You can install R and RStudio on your personal computer, which is the preferred 
 <!-- Could we one day have a posit cloud server? -->
 You can also use [Posit Cloud](https://posit.cloud/) to access RStudio from any web browser. A free account should be sufficient for the purposes of this course and has the advantage of letting you access your work across devices.
 
-If you ever need more computing resources than what a personal computer or a free Posit Cloud account allows, you should consider requesting access to the [Quest Analytic Nodes](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/quest-analytics-nodes.html) from Northwestern IT. I do not anticipate this to be relevant for this course, but it may be useful for future reference.
+If you ever need more computing resources than what a personal computer or a free Posit Cloud account allows, you should consider requesting access to the [Quest Analytic Nodes](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/quest-analytics-nodes.html) from Northwestern IT. I do not anticipate this to be relevant for this course, but it may be useful in the future.
 
 
 # Evaluation
@@ -84,16 +84,18 @@ Your final grade in this course will depend on the following:
 
 - Participation
 - Lab assignments (8 total, due Mondays 8 AM?)
-- Research note (due December 11)
+- Replication paper (due date agreed upon during Week 1)
 
 ## Participation
+
+This course does not formally require attendance, but I do expect the usual level of accountability of a small graduate seminar. That means attending class regularly, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify by the end of Week 6 and give you feedback on how to improve.
 
 ## Lab assignments
 
 ## Research note
 
 # Grading
-<!-- Contract grading -->
+<!-- Contract grading. Remember to write about allowing to redo unsatisfactory work -->
 
 \newpage
 
@@ -163,7 +165,7 @@ Your final grade in this course will depend on the following:
 
 \newpage
 
-# Recommended readings
+# Resources
 
 ## Statistics
 
