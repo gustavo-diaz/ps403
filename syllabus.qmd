@@ -60,15 +60,15 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 
 
 <!-- Make sure to ask the library to stock this book -->
-The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon.
+The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon. TBD whether this will be available at the library.
 
-The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find have URLs for additional readings in the Schedule section.
+The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
 
 The final section of this syllabus includes recommended resources that may be useful to complement current or future learning. 
 
 ## Computing
 
-We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on lab assignments and the final research note.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers.
+We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on lab assignments and the final research note.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers. You are welcome to use different software for statistical computing, but I cannot guarantee I will be able to help you troubleshoot problems.
 
 You can install R and RStudio on your personal computer, which is the preferred workflow. You can use [this link](https://sites.northwestern.edu/researchcomputing/resources/r-and-rstudio/) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
 
@@ -83,19 +83,47 @@ If you ever need more computing resources than what a personal computer or a fre
 Your final grade in this course will depend on the following:
 
 - Participation
-- Lab assignments (8 total, due Mondays 8 AM?)
-- Replication paper (due date agreed upon during Week 1)
+- Lab assignments (8 total, due dates TBD)
+- Replication paper (due date TBD)
 
 ## Participation
 
-This course does not formally require attendance, but I do expect the usual level of accountability of a small graduate seminar. That means attending class regularly, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify by the end of Week 6 and give you feedback on how to improve.
+This course does not formally require attendance, but I do expect the usual level of accountability required in a small graduate seminar. That means attending class regularly, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify by the end of Week 6 and give you feedback on how to improve.
 
 ## Lab assignments
 
-## Research note
+We will have weekly assignments aimed at practicing the application of course material with statistical software. These will range from coding exercises to tricky puzzles that you may try to solve. In general, the goal of the lab assignments to show why statistical analyses are (or should not be done) in a certain way.
+
+Our usual workflow will be to start working at the lab assignment during our class and TA section meetings on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
+
+<!-- The goal is to give people enough time to prepare for next week's class  -->
+Labs are due on TBD in the week after they are assigned and they must be submitted in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *satisfactory*, *unsatisfactory*, or *fail* if you did not submitted or barely tried. I will mark late submissions as a fail unless I give you written approval submit later. However, you can resubmit any labs marked unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+
+For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best trying to understand what went wrong and how things should look like if it had worked right.
+
+The implication is that, to assign a satisfactory mark to your lab, I will be mostly looking at evidence that you have learned something useful.
+
+
+## Replication paper
+
+You will submit a short replication paper as your final assignment. The goal of this paper is to apply what you have learned this quarter on a topic of your interest by reproducing the analysis of previously published work, reflecting on the way it was conducted, consider what could be done differently, and possibly improve upon it.
+
+You should think of this as the first step toward writing a publishable article in your field. You can find some guidelines on how to choose a publication to replicate here: https://gking.harvard.edu/papers
+
+You are required to schedule a meeting with me to discuss the topic of your replication paper. The paper does not need to be restricted to the topics covered in our class (the only requirement is some form of statistical analysis), but this means you should be willing to work to learn the new methods on your own. I believe this is a valuable skill to practice early on.
+
+You are allowed to work with a co-author or alone as you see fit. I am also open to discussing a different kind of paper if you have a solid idea of something you would prefer work on rather than a replication.
+
+<!-- As late as possible while giving me enough time to grade -->
+Final papers are due on TBD. Your should submit your paper in PDF format (I will show you how to write a PDF that integrates data analysis and writing in the R workshop). Your paper should follow the format of a research note, around 4,000 words. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix.
+
+We will discuss more details about the final replication paper during Week 1 and throughout the term.
+
+
+
 
 # Grading
-<!-- Contract grading. Remember to write about allowing to redo unsatisfactory work -->
+<!-- Contract grading. Remember to write about allowing to redo unsatisfactory work. Think about requiring one of the 3 grading items as outstanding to get a perfect grade -->
 
 \newpage
 
