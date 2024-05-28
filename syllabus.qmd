@@ -146,40 +146,59 @@ TBD until I learn more about university requirements and department norms.
 ## Week 1 (September 24/26): Preliminaries
 **Reading:**
 
-**Lab 0:**
+- AM Introduction
+- King, Gary. 2006. ["Publication, Publication."](https://doi.org/10.1017/S1049096506060252) *PS: Political Science and Politics* 39 (1): 119-125
+- King, Gary. ["How to Write a Publishable Paper as a Class Project"](https://gking.harvard.edu/papers)
+- Schwartz, Martin A. 2008. ["The importance of stupidity in scientific research."](https://doi.org/10.1242/jcs.033340) *Journal of Cell Science* 121 (11): 1771
+
+**Lab 0:** Project workflow in RStudio
 
 ## Week 2 (October 1/3): Probability theory
 **Reading:**
+
+- AM Chapter 1
 
 **Lab 1:**
 
 ## Week 3 (October 8/10): Summarizing distributions
 **Reading:**
 
+- AM Chapter 2
+
 **Lab 2:**
 
 ## Week 4 (October 15/17): Random samples
 **Reading:**
+
+- AM Chapter 3
 
 **Lab 3:**
 
 ## Week 5 (October 22/24): Regression
 **Reading:**
 
+- AM Chapter 4
+
 **Lab 4:**
 
 ## Week 6 (October 29/31): Parametric models
 **Reading:**
 
+- AM Chapter 5
+
 **Lab 5:**
 
 ## Week 7 (November 5/7): Missing data
-**Reading:**
+**Reading:** 
+
+- AM Chapter 6
 
 **Lab 6:**
 
 ## Week 9 (November 12/14): Causal inference I
 **Reading:**
+
+- AM Chapter 7
 
 **Lab 7:**
 
