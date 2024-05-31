@@ -1,17 +1,19 @@
 ---
-title: "POLI SCI 403: Probability and Statistics"
-subtitle: "Fall 2024"
+title: |
+       | POLI SCI 403
+       | Probability and Statistics
+       | Fall 2024
 format: 
-     pdf:
-       documentclass: article
+  typst:
+    margin:
+      x: 1in
+      y: 1in
 fontsize: 12pt
-urlcolor: blue
-geometry:
-      - left=1in
-      - right=1in
-      - top=1in
-      - bottom=1in
 ---
+
+```{=typst} 
+#show link: set text(blue)
+```
 
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz  
@@ -139,7 +141,7 @@ TBD until I learn more about university requirements and department norms.
 
 
 
-\newpage
+{{< pagebreak >}}
 
 # Schedule
 
@@ -216,7 +218,7 @@ TBD until I learn more about university requirements and department norms.
 
 
 
-\newpage
+{{< pagebreak >}}
 
 # Academic Integrity
 
@@ -224,7 +226,7 @@ TBD until I learn more about university requirements and department norms.
 
 # Generative AI
 
-\newpage
+{{< pagebreak >}}
 
 # Resources
 
