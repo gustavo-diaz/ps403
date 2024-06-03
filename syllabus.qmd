@@ -70,7 +70,7 @@ The final section of this syllabus includes recommended resources that may be us
 
 ## Computing
 
-We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on lab assignments and the final research note.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers. You are welcome to use different software for statistical computing, but I cannot guarantee I will be able to help with troubleshooting.
+We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on assignments and classroom demonstrations.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers. You are welcome to use different software for statistical computing, but I cannot guarantee I will be able to help with troubleshooting.
 
 You can install R and RStudio on your personal computer, which is the preferred workflow. You can use [this link](https://sites.northwestern.edu/researchcomputing/resources/r-and-rstudio/) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
 
@@ -90,7 +90,7 @@ Your final grade in this course will depend on the following:
 
 ## Participation
 
-This course does not formally require attendance, but I do expect the usual level of accountability required in a small graduate seminar. That means attending class regularly, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify by the end of Week 6 and give you feedback on how to improve.
+This course does not formally require attendance, but I do expect the usual level of accountability required in a small graduate seminar. That means attending class regularly, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify you by the end of Week 6 and give you feedback on how to improve.
 
 ## Lab assignments
 
@@ -99,9 +99,9 @@ We will have weekly assignments aimed at practicing the application of course ma
 Usually, we will start working on the lab assignment during our class and TA section meetings on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
 
 <!-- The goal is to give people enough time to prepare for next week's class  -->
-Labs are due on TBD in the week after they are assigned and they must be submitted in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* if you did not submitted or barely tried. I will mark late submissions as a fail unless I give you written approval submit later. However, you can resubmit any labs marked unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+Labs are due on TBD in the week after they are assigned and they must be submitted in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* if you did not submitted or barely tried. I will mark late submissions as a fail unless I give you written approval submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
 
-For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong and how things should look like if they had gone right.
+For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong and explaining how things should look like if they had gone right.
 
 The implication is that, to assign a satisfactory mark to your lab, I will be mostly looking at evidence that you have learned something useful.
 
@@ -117,7 +117,7 @@ You are required to schedule a meeting with me to discuss the topic of your repl
 You are allowed to work with a co-author or alone as you see fit. I am also open to discussing a different kind of paper if you have a solid idea of what you want to do.
 
 <!-- As late as possible while giving me enough time to grade -->
-Final papers are due on TBD. Your should submit your paper in PDF format (I will show you how to write a PDF that integrates data analysis and writing in the R workshop). Your paper should follow the format of a research note, around 4,000 words. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
+Final papers are due on TBD. You should submit your paper in PDF format. Your paper should follow the format of a research note, around 4,000 words and focusing on the main point. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
 
 Like lab assignments, your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline.
 
@@ -126,18 +126,37 @@ We will discuss more details about the final replication paper during Week 1 and
 
 # Grading
 
-TBD until I learn more about university requirements and department norms.
+This course uses a labor-based grading agreement, commonly known as contract grading. In this course, instead of being given a final grade based on how “good” your submitted assignments are, your final grade will be based on the amount of labor you put into the course. Hence why participation and assignments are given categorical instead of numerical marks. The goal is to decouple grades from performance and emphasize learning and effort.
+
+You will get a default grade if you meet the contract. It will go lower if you miss parts of the contract, it will go higher if you meet the baseline plus other criteria.
+
+At Illinois, you needed a B+ to make a graduate course to count as credit for your PhD requirements. I am not sure what the rules at NU are, so the following will change dramatically
 
 <!-- This course uses a labor-based grading agreement, commonly known as contract grading. In this course, instead of being given a final grade based on how “good” your submitted assignments are, your final grade will be based on the amount of labor you put into the course. In practice, this means you will receive full marks (grade translation TBD) for completing the baseline grading contract. -->
 
-<!-- To meet the baseline grading contract, you should: -->
+To meet the baseline grading contract (B+), you should:
 
-<!-- - Complete Lab 0 -->
-<!-- - Be late (by a maximum of 24 hours) on no more than one lab assignment -->
-<!-- - Submit the final paper before the deadline -->
-<!-- - Complete seven lab assignments with a satisfactory or outstanding mark -->
-<!-- - Receive a satisfactory or outstanding mark in the final paper -->
-<!-- - Have a satisfactory participation status by the end of the semester -->
+- Complete Lab 0
+- Be late (by a maximum of 24 hours) on no more than one lab assignment
+- Submit the final paper before the deadline
+- Complete seven lab assignments with a satisfactory or outstanding mark
+- Receive a satisfactory or outstanding mark in the final paper
+- Have a satisfactory participation status by the end of the semester
+
+TBD how missing parts of the grading contract will decrease your letter grade.
+
+
+To get an A-, you should meet the baseline grading contract AND meet one of the following:
+
+- Receive an outstanding mark in at least 3 labs
+- Receive an outstanding mark in the final paper
+
+To get an A, you should complete the baseline contract AND one of the following:
+
+- Complete **both** requirements listed to receive an A-
+- Receive and outstanding mark in every lab
+
+By signing up for this course, you accept the terms of the grading contract. We will discuss potential amendments in Week 1. Amendments to the grading contract beyond this point should be agreed upon unanimously by all participants, including students and the instructional team.
 
 
 
@@ -222,9 +241,27 @@ TBD until I learn more about university requirements and department norms.
 
 # Academic Integrity
 
+Students in this course are required to comply with the policies found in the booklet, "Academic Integrity at Northwestern University: A Basic Guide". All papers submitted for credit in this course must be submitted electronically unless otherwise instructed by the professor. Your written work may be tested for plagiarized content. For details regarding academic integrity at Northwestern or to download the guide, visit: <https://www.northwestern.edu/provost/policies-procedures/academic-integrity/index.html>
+
+The use of generative artificial intelligence in this course is encouraged as long as it is used to amplify humans instead of replacing them. Any form of cheating, including improper use of content generated by artificial intelligence, constitutes a violation of Northwestern’s academic integrity policy.
+
 # Accessibility
 
-# Generative AI
+Northwestern University is committed to providing the most accessible learning environment as possible for students with disabilities. Should you anticipate or experience disability-related barriers in the academic setting, please contact AccessibleNU to move forward with the university’s established accommodation process (e: <accessiblenu@northwestern.edu>; p: 847-467-5530). If you already have established accommodations with AccessibleNU, please let me know as soon as possible, preferably within the first two weeks of the term, so we can work together to implement your disability accommodations. Disability information, including academic accommodations, is confidential under the Family Educational Rights and Privacy Act.
+
+# Religious Observance
+
+Northwestern is committed to fostering an academic community respectful and welcoming of persons from all backgrounds.  To that end, the [policy on academic accommodations](https://www.northwestern.edu/provost/policies-procedures/classwork-curricular-policies/accommodations-for-religious-holidays.html) for religious holidays stipulates that students will not be penalized for class absences to observe religious holidays. If you will observe a religious holiday during a class meeting, scheduled exam, or assignment deadline, please let me know as soon as possible, preferably within the first two week of class. If exams or assignment deadlines on the syllabus fall on religious holidays you observe, please reach out so that we can discuss that coursework.
+
+# Inclusivity
+
+This course strives to be an inclusive learning community, respecting those of differing backgrounds and beliefs. As a community, we aim to be respectful to all students in this class, regardless of race, ethnicity, socio-economic status, religion, gender identity or sexual orientation.
+
+# Course Details Subject to Change
+
+Please note that the specifics of this course syllabus are subject to change in the case of unforeseen circumstances. Instructors will notify students of any changes as soon as possible. Students will be responsible for abiding by the changes.
+
+
 
 {{< pagebreak >}}
 
