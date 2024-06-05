@@ -62,7 +62,7 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 
 
 <!-- Make sure to ask the library to stock this book -->
-The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon. TBD whether this will be available at the library.
+The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon. TBD whether digital copy will be available through library subscription.
 
 The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
 
@@ -185,6 +185,9 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:**
 
 - AM Chapter 2
+- Gelman, Andrew. 2023. ["What is a standard error?"](https://doi.org/10.1016/j.jeconom.2023.105516) *Journal of Econometrics* 237 (1): 105516
+- Wooldridge, Jeffrey M. 2023. ["What is a standard error? (And how should we compute it?)"](https://doi.org/10.1016/j.jeconom.2023.105517) *Journal of Econometrics* 237 (1): 105517
+- Powell, James L. 2023. ["Discussion of 'What is a standard error?'"](https://doi.org/10.1016/j.jeconom.2023.105518) *Journal of Econometrics* 237 (1): 105518
 
 **Lab 2:**
 
@@ -192,6 +195,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:**
 
 - AM Chapter 3
+- Read about 84% confidence intervals?
 
 **Lab 3:**
 
@@ -199,6 +203,8 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:**
 
 - AM Chapter 4
+- Hansen, Bruce E. 2022. ["A Modern Gauss-Markov Theorem."](https://doi.org/10.3982/ECTA19255) *Econometrica* 90 (3): 1283-1294
+- Read about Lin regression? Jake? Wanna set the tone here that regression only makes sense for adjustment of main effect
 
 **Lab 4:**
 
@@ -206,6 +212,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:**
 
 - AM Chapter 5
+- Read more about robust estimation? Regression with binary outcomes? Achen?
 
 **Lab 5:**
 
@@ -213,6 +220,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:** 
 
 - AM Chapter 6
+- Read about MNAR
 
 **Lab 6:**
 
@@ -220,11 +228,16 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:**
 
 - AM Chapter 7
+- Read Holland, Rubin.
 
 **Lab 7:**
 
 ## Week 10 (November 19/21): Causal inference II
 **Reading:**
+
+- Read Keele, Rosenbaum
+- Regression discontinuity + critiques
+- Difference-in-differences + critiques
 
 **Lab 8:**
 
