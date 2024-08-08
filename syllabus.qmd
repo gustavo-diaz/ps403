@@ -66,7 +66,7 @@ The rest of the syllabus refers to this book as AM. You can purchase a physical 
 
 The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
 
-The final section of this syllabus includes recommended resources that may be useful to complement current or future learning. 
+A companion file to this syllabus includes recommended resources that may be useful to complement current or future learning. 
 
 ## Computing
 
@@ -178,6 +178,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Reading:**
 
 - AM Chapter 1
+- Freedman, David A. ad Philip B. Stark. 2003. ["What is the chance of an earthquake?"](https://www.stat.berkeley.edu/~stark/Preprints/611.pdf) *NATO Science Series IV: Earth and Environmental Sciences*. 32: 201-213
 
 **Lab 1:**
 
@@ -242,7 +243,12 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Lab 8:**
 
 ## Week 11 (November 26): Flex week/future directions?
-**Reading:**
+
+We are leaving this week open to discuss topics that may be of interest to the group, I can think of three topics:
+
+- Read about statistical methods for prediction (as opposed to inference)
+- Machine learning for statistical inference
+- Introduction to Computational Social Science (and how it's different from statistics)
 
 
 ## Week 12 (December 3/5): Research note presentations
@@ -274,12 +280,3 @@ This course strives to be an inclusive learning community, respecting those of d
 
 Please note that the specifics of this course syllabus are subject to change in the case of unforeseen circumstances. Instructors will notify students of any changes as soon as possible. Students will be responsible for abiding by the changes.
 
-
-
-{{< pagebreak >}}
-
-# Resources
-
-## Statistics
-
-## Computing
