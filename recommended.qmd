@@ -4,17 +4,15 @@ title: |
        | Probability and Statistics
 date: last-modified
 date-format: long
-format: 
-  typst:
-    margin:
-      x: 1in
-      y: 1in
-fontsize: 12pt
+format: pdf
+fontsize: 10pt
+geometry:
+      - left=.75in
+      - textwidth=4.5in
+      - marginparsep=.25in
+      - marginparwidth=2.25in
 ---
 
-```{=typst} 
-#show link: set text(blue)
-```
 
 # Recommended material
 
@@ -22,25 +20,12 @@ fontsize: 12pt
 
 ### Textbooks
 
-<!-- CONTINUE HERE COME UP WITH A BETTER WAY TO ANNOTATE -->
+- [Accessible undergrad-level introduction]{.aside} Freedman, David, Robert Pisani, and Roger Purves. 2007. [*Statistics.*](https://wwnorton.com/books/Statistics) New York, NY: Norton
 
-- Freedman, David, Robert Pisani, and Roger Purves. 2007. [*Statistics.*](https://wwnorton.com/books/Statistics) New York, NY: Norton
+- [Grad-level textbook blending stats and R]{.aside} Imai, Kosuke and Nora Web-Williams. 2022. [*Quantitative Social Science: An Introduction in tidyverse.*](https://press.princeton.edu/books/hardcover/9780691222271/quantitative-social-science) Princeton University Press
 
-::: {.callout-note}
-A good introduction for those who do not have experience with undergrad-level courses in probability and statistics.
-:::
+- [For complete beginners, light on the math]{.aside} Llaudet, Elena, and Kosue Imai. 2022. [*Data Analysis for Social Science: A Friendly a Practical Introduction.*](https://press.princeton.edu/books/paperback/9780691199436/data-analysis-for-social-science) Princeton University Press
 
-- Imai, Kosuke and Nora Web-Williams. 2022. [*Quantitative Social Science: An Introduction in tidyverse.*](https://press.princeton.edu/books/hardcover/9780691222271/quantitative-social-science) Princeton University Press
-
-::: {.callout-note}
-A common resource in introductory graduate methods courses that seamlessly integrates theory with coding. There are also versions in base R and Stata
-:::
-
-- Llaudet, Elena, and Kosue Imai. 2022. [*Data Analysis for Social Science: A Friendly a Practical Introduction.*](https://press.princeton.edu/books/paperback/9780691199436/data-analysis-for-social-science) Princeton University Press
-
-::: {.callout-note}
-A good introduction to statistics in R for complete beginners
-:::
 
 ### Regression
 
