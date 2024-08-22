@@ -16,22 +16,24 @@ fontsize: 12pt
 ```
 
 <!-- Remember double space for line skip -->
-**Instructor:** Gustavo Diaz  
+**Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
 **Time and Place:**  Tues/Thurs 11:00am -- 12:20pm, room TBD  
 **Office Hours:** TBD  
 **GitHub Repository:** TBD
 
-**Teaching Assistant:** TBD
-<!-- More details about TA here -->
+**Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
+**TA Sections:** Thursdays TBD  
+**Office Hours:** TBD
+
 
 # Course Overview
 
-This is the first course in the required two-quarter quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference from a social science perspective. Topics include probability, inference from random samples, linear regression, maximum likelihood estimation, identification, and causal inference.
+This is the first course in the quantitative methods sequence for graduate students in the Department of Political Science. The course focuses on statistical inference from a social science perspective. Topics include probability, inference from random samples, linear regression, maximum likelihood estimation, identification, and causal inference.
 
 
 # Learning Objectives
 
-The goal of statistical inference is to use the data we have to learn about something for which we do not have data. That connection requires making assumptions. This course aims at introducing tools and developing skills to do so with as few assumptions as possible.
+The goal of statistical inference is to use the data we have to learn about something for which we do not have data. That connection requires making assumptions. This course aims at introducing tools and developing skills to conduct statistical inference with as few assumptions as possible.
 
 
 By the end of the course, you will be able to apply statistical methods to conduct your own analyses, explain statistical tools and concepts in your own words, evaluate the credibility of applied and methodological work, and continue learning more advanced methods.
@@ -62,7 +64,7 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 
 
 <!-- Make sure to ask the library to stock this book -->
-The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it's usually cheaper in storefronts like Amazon. A digital copy is available through the library subscription at no additional cost.
+The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it is usually cheaper at online storefronts like Amazon. A digital copy is available through the library subscription at no additional cost.
 
 The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
 
@@ -72,10 +74,10 @@ A companion file to this syllabus includes recommended resources that may be use
 
 We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on assignments and classroom demonstrations.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers. You are welcome to use different software for statistical computing, but I cannot guarantee I will be able to help with troubleshooting.
 
-You can install R and RStudio on your personal computer, which is the preferred workflow. You can use [this link](https://sites.northwestern.edu/researchcomputing/resources/r-and-rstudio/) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
+You can install R and RStudio on your personal computer, which is the preferred use case. You can use [this link](https://sites.northwestern.edu/researchcomputing/resources/r-and-rstudio/) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
 
 <!-- Could we one day have a posit cloud server? -->
-You can also use [Posit Cloud](https://posit.cloud/) to access RStudio from any web browser. A free account should be sufficient for the purposes of this course and has the advantage of letting you access your work across devices.
+You can also use [Posit Cloud](https://posit.cloud/) to access RStudio from any web browser. A free account should suffice for the purposes of this course and has the advantage of letting you access your work across devices.
 
 If you ever need more computing resources than what a personal computer or a free Posit Cloud account allow, you should consider requesting access to the [Quest Analytic Nodes](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/quest-analytics-nodes.html) from Northwestern IT. I do not anticipate this to be relevant for this course, but it may be useful in the future.
 
@@ -99,7 +101,7 @@ We will have weekly assignments aimed at practicing the application of course ma
 Usually, we will start working on the lab assignment during our class and TA section meetings on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
 
 <!-- The goal is to give people enough time to prepare for next week's class  -->
-Labs are due on TBD in the week after they are assigned and they must be submitted in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+Labs are due on TBD in the week after they are assigned and they must be submitted in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (the last one applies if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
 
 For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong and explaining how things should look like if they had gone right.
 
@@ -121,12 +123,12 @@ Final papers are due on TBD. You should submit your paper in PDF format. Your pa
 
 Like lab assignments, your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline.
 
-We will discuss more details about the final replication paper during Week 1 and throughout the term.
+We will discuss more details about the final paper during Week 1 and throughout the term.
 
 
 # Grading
 
-This course uses a labor-based grading agreement, commonly known as contract grading. In this course, instead of being given a final grade based on how “good” your submitted assignments are, your final grade will be based on the amount of labor you put into the course. Hence why participation and assignments are given categorical instead of numerical marks. The goal is to decouple grades from performance and emphasize learning and effort.
+This course uses a labor-based grading agreement, commonly known as contract grading. In this course, instead of being given a final grade based on how “good” your submitted assignments are, your final grade will be based on the amount of labor you put into the course. The goal is to decouple grades from performance and emphasize learning and effort.
 
 You will get a default grade if you meet the contract. It will go lower if you miss parts of the contract, it will go higher if you meet the baseline plus other criteria.
 
@@ -153,10 +155,10 @@ To get an A, you should complete the baseline contract AND one of the following:
 Your grade will go below a B+ if you miss work. Unless otherwise agreed upon in writing on a case-by-case basis, the following criteria outlines how deviating from the baseline contract will impact your grade (assuming everything else constant):
 
 - Participation marked as unsatisfactory: B
-- 2/8 labs marked as failed: B-
-- 3/8 labs marked as failed: C
-- 4/8 or more labs marked as failed: F
-- Final paper marked as failed: F
+- 2/8 labs marked as unsatisfactory or failed: B-
+- 3/8 labs marked as unsatisfactory or failed: C
+- 4/8 or more labs marked as unsatisfactory or failed: F
+- Final paper marked as unsatisfactory or failed: F
 
 By signing up for this course, you accept the terms of the grading contract. We will discuss potential amendments in Week 1. Amendments to the grading contract beyond this point should be agreed upon unanimously by all participants, including students and the instructional team.
 
@@ -192,63 +194,98 @@ By signing up for this course, you accept the terms of the grading contract. We 
 - Wooldridge, Jeffrey M. 2023. ["What is a standard error? (And how should we compute it?)"](https://doi.org/10.1016/j.jeconom.2023.105517) *Journal of Econometrics* 237 (1): 105517
 - Powell, James L. 2023. ["Discussion of 'What is a standard error?'"](https://doi.org/10.1016/j.jeconom.2023.105518) *Journal of Econometrics* 237 (1): 105518
 
-**Lab 2:** Estimation
+**Lab 2:** Quantities of interest
 
 ## Week 4 (October 15/17): Random samples
 **Reading:**
 
-- AM Chapter 3
-- Goldstein, Harvey and Michael J.R. Healy. 1995. ["The Graphical Presentation of a Collection of Means."](https://doi.org/10.2307/2983411) *Journal of the Royal Statistical Society* 158 (1): 175-177
+<!-- Include jackknife reading in the lab but don't assign it -->
+<!-- https://doi-org.ezproxy.galter.northwestern.edu/10.2307/2334280 -->
 
-**Lab 3:** Quantifying uncertainty
+- AM Chapter 3
+- Mooney, Christopher. 1996. ["Bootstrap Statistical Inference: Examples and Evaluations for Political Science."](https://doi.org/10.2307/2111639) *American Journal of Political Science* 40 (2): 570-602
+- Goldstein, Harvey and Michael J.R. Healy. 1995. ["The Graphical Presentation of a Collection of Means."](https://doi.org/10.2307/2983411) *Journal of the Royal Statistical Society* 158 (1): 175-177
+- Knol, Miriam J., Wiebe R. Pestman, and Diederick E. Grobbee. 2011. ["The (mis)use of overlap of confidence intervals to assess effect modification."](https://doi.org/10.1007/s10654-011-9563-8) *European Journal of Epidemiology* 26: 253-254
+
+
+**Lab 3:** Estimation and uncertainty
 
 ## Week 5 (October 22/24): Regression
 **Reading:**
 
 - AM Chapter 4
+- Berk, Richard. 2010. ["What You Can and Can't Properly do with Regression."](https://doi.org/10.1007/s10940-010-9116-4) *Journal of Quantitative Criminology* 26: 481-487
+- Achen, Christopher H. 2005. ["Let’s Put Garbage-Can Regressions and Garbage-Can Probits Where They Belong."](https://doi.org/10.1080/07388940500339167) *Conflict Management and Peace Science* 22 (4): 327-339
 - Hansen, Bruce E. 2022. ["A Modern Gauss-Markov Theorem."](https://doi.org/10.3982/ECTA19255) *Econometrica* 90 (3): 1283-1294
-- Read about Lin regression? Jake? Wanna set the tone here that regression only makes sense for adjustment of main effect
 
-**Lab 4:** Covariance adjustment?
+
+**Lab 4:** Adjusting for covariates
 
 ## Week 6 (October 29/31): Parametric models
 **Reading:**
 
 - AM Chapter 5
-- Read more about robust estimation? Regression with binary outcomes? Achen?
+- Stigler, Stephen M. 2007. ["The Epic Story of Maximum Likelihood."](http://dx.doi.org/10.1214/07-STS249) *Statistical Science* 22 (4): 598-620
+- James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2021. [*An Introduction to Statistical Learning with Applications in R*](https://www.statlearning.com/). Springer. Chapters 4.1-4.3
+- Achen, Christopher. 2002. ["Toward a New Political Methodology: Microfoundations and ART."](https://doi.org/10.1146/annurev.polisci.5.112801.080943) *Annual Review of Political Science* 5: 423-450
 
-**Lab 5:** Model selection?
+
+**Lab 5:** Maximum likelihood estimation
 
 ## Week 7 (November 5/7): Missing data
 **Reading:** 
 
-- AM Chapter 6
-- Read about MNAR
+<!-- https://www.john-fox.ca/Companion/appendices/Appendix-Multiple-Imputation.pdf -->
 
-**Lab 6:** Partial identification?
+- AM Chapter 6
+- Lall, Ranjit. 2016. ["How Multiple Imputation Makes a Difference."](https://doi.org/10.1093/pan/mpw020) *Political Analysis* 24 (4): 414-433
+- Arel-Bundock, Vincent and Krzysztof J. Pelc. 2018. ["When Can Multiple Imputation Improve Regression Estimates?"](https://doi.org/10.1017/pan.2017.43) *Political Analysis* 26 (2): 240-245
+- Pepinsky, Thomas. 2018. ["A Note on Listwise Deletion versus Multiple Imputation."](https://doi.org/10.1017/pan.2018.18) *Political Analysis* 26 (4): 480-488
+
+<!-- Some more technical reading -->
+<!-- - Rosenbaum, Paul R. 1987. ["Model-Based Direct Adjustment."](https://doi.org/10.2307/2289440) *Journal of the American Statistical Association* 82 (398): 387-394 -->
+<!-- - Kang, Joseph D.Y. and Joseph L. Schafer. 2007. ["Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data."](http://dx.doi.org/10.1214/07-STS227) *Statistical Science* 22 (4): 523-539 -->
+
+**Lab 6:** Dealing with missing data
+<!-- Make them simulate missingness in existing data, and then determine which correction method is more appropriate -->
 
 ## Week 9 (November 12/14): Causal inference I
 **Reading:**
 
 - AM Chapter 7
-- Read Holland, Rubin.
+- Fisher, R.A. 1935. [*The design of experiments*](https://mimno.infosci.cornell.edu/info3350/readings/fisher.pdf). Oliver & Boyd. Chapters 1-2.
+- Splawa-Neyman, Jerzy. 1990. ["On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9."](https://doi.org/10.1214/ss/1177012031) *Statistical Science* 5 (4) 465 - 472
+- Rubin, Donald B. 1990. ["Comment: Neyman (1923) and Causal Inference in Experiments and Observational Studies."](https://doi.org/10.1214/ss/1177012032). *Statistical Science* 5 (4): 472-480
+- Keele, Luke, Corrine McConnaughy, and Ismail White. 2012. ["Strengthening the Experimenter’s Toolbox: Statistical Estimation of Internal Validity."](https://doi.org/10.1111/j.1540-5907.2011.00576.x) *American Journal of Political Science* 56 (2): 484-499
 
-**Lab 7:** 
+**Lab 7:** Randomization inference and hypothesis testing
 
 ## Week 10 (November 19/21): Causal inference II
 **Reading:**
 
-- Read Keele, Rosenbaum
-- Regression discontinuity + critiques
-- Difference-in-differences + critiques
+*Regression Discontinuity*
 
-**Lab 8:**
+- Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2020. [*A Practical Introduction to Regression Discontinuity Designs: Foundations*](https://titiunik.github.io/books/CattaneoIdroboTitiunik2020-CUP-Foundations.pdf). Cambridge University Press. Chapters 1-4
+- Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2024. [*A Practical Introduction to Regression Discontinuity Designs: Extensions*](https://titiunik.github.io/books/CattaneoIdroboTitiunik2024-CUP-Extensions.pdf). Cambridge University Press. Chapter 2
+- Stommes, Drew, P.M. Aronow, and Fredrik Sävje. 2023. ["On the reliability of published findings using the regression discontinuity design in political science."](https://doi.org/10.1177/20531680231166457) *Research and Politics* 
+ 
 
-## Week 11 (November 26): Flex week/future directions?
+*Difference-in-Differences*
 
-We are leaving this week open to discuss topics that may be of interest to the group, I can think of three topics:
+- Cunningham, Scott. 2021. [*Causal Inference: The Mixtape*](https://mixtape.scunning.com/). Yale University Press. Chapter 9
+- Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. ["How Much Should We Trust Differences-In-Differences Estimates?"](https://doi.org/10.1162/003355304772839588) *The Quarterly Journal of Economics* 119 (1): 249-275
+- Roth, Jonathan, Pedro H.C. Sant'Anna, Alyssa Bilinski, and John Poe. 2023. ["What’s trending in difference-in-differences? A synthesis of the recent econometrics literature"](https://doi.org/10.1016/j.jeconom.2023.03.008) *Journal of Econometrics* 235 (2): 2218-2244
 
-- Read about statistical methods for prediction (as opposed to inference)
+
+**Lab 8:** Quasi-experiments
+<!-- Present two datasets, one RDD, one DD. Choose one, provide the most accurate estimation possible. -->
+
+## Week 11 (November 26): Flex week/future directions
+
+We are leaving this week open to discuss topics that may be of interest to the group, I can think of four:
+
+- Bayesian statistics
+- Statistical/machine learning for prediction
 - Machine learning for statistical inference
 - Generative AI/large language models
 
