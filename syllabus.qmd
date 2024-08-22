@@ -282,12 +282,13 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 ## Week 11 (November 26): Flex week/future directions
 
-We are leaving this week open to discuss topics that may be of interest to the group, I can think of four:
+We are leaving this week open to discuss topics that may be of interest to the group, I can think of five options:
 
 - Bayesian statistics
 - Statistical/machine learning for prediction
 - Machine learning for statistical inference
 - Generative AI/large language models
+- Methods work by Northwestern faculty
 
 
 ## Week 12 (December 3/5): Research note presentations
