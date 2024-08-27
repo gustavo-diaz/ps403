@@ -1,6 +1,6 @@
 # POLI SCI 403: Probability and Statistics
-**Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
-**Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
+**Instructor:** Gustavo Diaz  
+**Teaching Assistant:** Artur Baranov
 
 # Course Overview
 
