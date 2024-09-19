@@ -29,6 +29,8 @@ geometry:
 
 ### Regression
 
+- [Step-by-step regression guide]{.aside} Heiss, Andrew. 2024. [*Program Evaluation*](https://evalsp24.classes.andrewheiss.com/example/regression.html)
+
 ### Parametric models
 
 ### Missing data
@@ -41,3 +43,7 @@ geometry:
 
 
 ## Computing
+
+### Textbooks
+
+- [General introduction to R programming]{.aside} Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. [*R for Data Science (2e)*](https://r4ds.hadley.nz)
