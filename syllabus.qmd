@@ -22,7 +22,7 @@ fontsize: 12pt
 **Canvas:** <https://canvas.northwestern.edu/courses/216757>
  
 **Time and Place:**  Tues/Thurs 11:00am -- 12:20pm, Scott Hall 212  
-**Lab Hours:** Fridays 2:00 - 3:20pm, room TBD  
+**Lab Hours:** Fridays 2:00 - 3:20pm, Scott Hall 101 
 **Student Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/f24-meetings)
 
 
@@ -44,7 +44,7 @@ By the end of the course, you will be able to apply statistical methods to condu
 <!-- Revise depending on what actually happens -->
 There are no formal requirements to take this course other than enrollment in the Political Science PhD program or express approval.
 
-This course does not assume prior training on statistics or quantitative methods beyond a grasp of US high school level algebra and calculus (which is covered in math camp). For example, you know that integrals have something to do with calculating the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work (which is also covered in math camp).
+This course does not assume prior training on statistics or quantitative methods beyond a grasp of US high school level algebra and calculus (which is covered in math camp). For example, you know that integrals have something to do with calculating the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work. For example, you are able to determine where a file is located in your laptop.
 
 I expect you to participate actively, productively, and respectfully in our meetings. Some of
 the material addresses complicated concepts or uses math extensively. I do not expect you to
@@ -101,7 +101,7 @@ We will have weekly assignments aimed at practicing the application of course ma
 Usually, we will start working on the lab assignment during our class and TA section meetings on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
 
 <!-- The goal is to give people enough time to prepare for next week's class  -->
-Labs are due on TBD in the week after they are assigned and they must be submitted in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (the last one applies if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+Labs are due on TBD in the week after they are assigned and they must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (the last one applies if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
 
 For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong and explaining how things should look like if they had gone right.
 
@@ -119,7 +119,7 @@ You are required to schedule a meeting with me to discuss the topic of your repl
 You are allowed to work with a co-author or alone as you see fit. I am also open to discussing a different kind of paper if you know what you want to do.
 
 <!-- As late as possible while giving me enough time to grade -->
-Final papers are due on TBD. You should submit your paper in PDF format. Your paper should follow the format of a research note, around 4,000 words and focusing on the main point. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
+Final papers are due on TBD. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 4,000 words and focusing on the main point. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
 
 Like lab assignments, your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline.
 
