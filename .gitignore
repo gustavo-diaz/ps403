@@ -11,3 +11,5 @@
 # RStudio files
 .Rproj.user/
 .DS_Store
+# Omit lab pdfs
+**/labs/*.pdf
