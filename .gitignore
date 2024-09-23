@@ -13,3 +13,4 @@
 .DS_Store
 # Omit lab pdfs
 /labs/*.pdf
+!/labs/lab0.pdf
