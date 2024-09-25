@@ -3,9 +3,8 @@ title: "Lab 0: Getting Started"
 author: 
   - FirstName LastName
   - <YourEmail@u.northwestern.edu>
-date: today
-# date-format: "**[D]ue:** MMMM D, YYYY"
-date-format: "**[D]ue:** [TBD]"
+date: September 30, 2024
+date-format: "**[D]ue:** MMMM D, YYYY"
 format: 
      pdf:
        documentclass: article
