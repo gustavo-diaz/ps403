@@ -22,7 +22,7 @@ fontsize: 12pt
 **Canvas:** <https://canvas.northwestern.edu/courses/216757>
  
 **Time and Place:**  Tues/Thurs 11:00am -- 12:20pm, Scott Hall 212  
-**Lab Hours:** Fridays 2:00 - 3:20pm, Scott Hall 101 
+**Lab Hours:** Fridays 2:00 -- 3:20pm, Scott Hall 101   
 **Student Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/f24-meetings)
 
 
@@ -64,7 +64,7 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 
 
 <!-- Make sure to ask the library to stock this book -->
-The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it is usually cheaper at online storefronts like Amazon. A digital copy is available through the library subscription at no additional cost.
+The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it is usually cheaper on online storefronts like Amazon. A digital copy is available through the library subscription at no additional cost.
 
 The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
 
@@ -87,8 +87,8 @@ If you ever need more computing resources than what a personal computer or a fre
 Your final grade in this course will depend on the following:
 
 - Participation
-- Lab assignments (8 total, due dates TBD)
-- Replication paper (due date TBD)
+- Lab assignments (8 total, due Mondays 9 AM)
+- Replication paper (due December 11 9AM)
 
 ## Participation
 
@@ -98,14 +98,14 @@ This course does not formally require attendance, but I do expect the usual leve
 
 We will have weekly assignments aimed at practicing the application of course material with statistical software. These will range from coding exercises to problems that help illustrate theorems. In general, the goal of the lab assignments is to show why statistical analyses are (or should not be) conducted in a certain way.
 
-Usually, we will start working on the lab assignment during our class and TA section meetings on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
+Usually, we will start working on the lab assignment during our class meeting on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
 
 <!-- The goal is to give people enough time to prepare for next week's class  -->
-Labs are due on TBD in the week after they are assigned and they must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (the last one applies if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+Labs are due on Mondays at 9AM after they are assigned and must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (the last one applies if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
 
 For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong and explaining how things should look like if they had gone right.
 
-The implication is that, to assign a satisfactory or outstanding mark to your lab, I will be mostly looking at evidence that you have learned something useful.
+The implication is that, to assign a satisfactory or outstanding mark to your lab, I will be mostly looking for evidence that you have learned something useful.
 
 
 ## Replication paper
@@ -119,7 +119,7 @@ You are required to schedule a meeting with me to discuss the topic of your repl
 You are allowed to work with a co-author or alone as you see fit. I am also open to discussing a different kind of paper if you know what you want to do.
 
 <!-- As late as possible while giving me enough time to grade -->
-Final papers are due on TBD. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 4,000 words and focusing on the main point. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
+Final papers are due on Wednesday, December 11 at 9AM. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 4,000 words and focusing on the main point. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
 
 Like lab assignments, your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline.
 
@@ -137,12 +137,12 @@ To meet the baseline grading contract (B+), you should:
 - Complete Lab 0
 - Be late (by a maximum of 24 hours) on no more than one lab assignment
 - Submit the final paper before the deadline
-- Complete 7/8 lab assignments with a satisfactory or outstanding mark
+- Complete 7 out of 8 lab assignments with a satisfactory or outstanding mark
 - Receive a satisfactory or outstanding mark in the final paper
 - Have a satisfactory participation status by the end of the semester
 
 
-To get an A-, you should meet the baseline grading contract AND meet one of the following:
+To get an A-, you should meet the baseline grading contract AND meet at least one of the following:
 
 - Receive an outstanding mark in at least 3 labs
 - Receive an outstanding mark in the final paper
@@ -150,7 +150,7 @@ To get an A-, you should meet the baseline grading contract AND meet one of the 
 To get an A, you should complete the baseline contract AND one of the following:
 
 - Complete **both** requirements listed to receive an A-
-- Receive and outstanding mark in every lab
+- Receive and outstanding mark in 7 out of 8 labs
 
 Your grade will go below a B+ if you miss work. Unless otherwise agreed upon in writing on a case-by-case basis, the following criteria outlines how deviating from the baseline contract will impact your grade (assuming everything else constant):
 
