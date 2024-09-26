@@ -1,0 +1,93 @@
+---
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    code-overflow: wrap
+    chalkboard: true
+---
+
+## Definitions
+
+::: incremental
+- $\Omega$ sample space
+- $\omega$ sample points
+- $A \subseteq \Omega$ event space
+:::
+
+## Kolmogorov probability axioms
+
+::: incremental
+- **Non-negativity:** $\forall A \in S, P(A) \geq 0$
+- **Unitarity:** $P(\Omega) = 1$
+- **Countable additivity:** If $A_1, A_2, A_3, \ldots \in S$ are *pairwise disjoint* then $P(A_1 \cup A_2 \cup A_3 \cup \ldots) = \sum_iP(A_i)$
+:::
+
+## Basic properties
+
+::: incremental
+- **Monotonicity:** If $A \subseteq B$, then $P(A) \leq P(B)$
+- **Subtraction rule:** If $A \subseteq B$, then $P(B \backslash A) = P(B) - P(A)$
+- **Empty set:** $P(\emptyset = 0)$
+- **Probability bounds:** $0 \leq P(A) \leq 1$
+- **Complement rule:** $P(A^c) = 1-P(A)$
+:::
+
+## Joint and conditional probabilities
+
+These make a lot more sense in practice:
+
+::: incremental
+- **Joint:** $P(A\cap B)$
+- **Addition:** $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ 
+- **Conditional:** $P(A|B) = \frac{P(A \cup B)}{P(B)}$
+
+:::
+
+## Bayes rule/theorem
+
+$$
+P(A|B) = \frac{P(B|A) P(A)}{P(B)}
+$$
+
+## Bayes rule\theorem
+
+$$
+\underbrace{P(A|B)}_\text{Posterior} = \frac{\color{purple}{P(B|A)} \overbrace{P(A)}^\text{Prior}}{\color{purple}{\underbrace{P(B)}_\text{Support}}}
+$$
+
+## Law of total probability
+
+When is the following true?
+
+. . .
+
+$$
+P(B) = \sum_i P(B \cap A_i)
+$$
+
+## Random variables
+
+::: {.fragment fragment-index=1}
+Discrete
+:::
+
+::: {.fragment fragment-index=3}
+- PMF
+:::
+
+::: {.fragment fragment-index=2}
+Continuous
+:::
+
+::: {.fragment fragment-index=4}    
+- PDF
+:::
+
+::: {.fragment fragment-index=5}
+**Cumulative Distribution Function (CDF)** $F(x) = Pr[X \leq x]$
+:::
+
+::: {.fragment fragment-index=6}
+- Slightly different properties if discrete/continuous RV
+:::
