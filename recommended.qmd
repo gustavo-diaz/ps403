@@ -26,6 +26,7 @@ geometry:
 
 - [For complete beginners, light on the math]{.aside} Llaudet, Elena, and Kosue Imai. 2022. [*Data Analysis for Social Science: A Friendly a Practical Introduction.*](https://press.princeton.edu/books/paperback/9780691199436/data-analysis-for-social-science) Princeton University Press
 
+- [General Textbook for Causal Inference]{.aside} Cunningham, Scott. 2021. [*Causal Inference The Mixtape*](https://mixtape.scunning.com)
 
 ### Regression
 
