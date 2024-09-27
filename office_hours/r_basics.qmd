@@ -1,0 +1,183 @@
+---
+title: "POLI_SCI_403 | Office Hours"
+format: html
+editor: source
+---
+
+Download the script from here:
+
+## Basics of R and RStudio
+
+- R language and RStudio shell
+- What is Markdown and Quatro?
+
+![R software](https://raw.githubusercontent.com/gustavo-diaz/NUmathcamp/main/r/images/r_rstudio_quarto_output.png)
+
+- Structure of the Document and let's not forget to try the Render button!
+- Libraries / packages
+
+```{r}
+#| eval: false
+
+install.packages("tidyverse")
+```
+
+- Inserting a chunk
+
+- Checking the working directory 
+
+```{r}
+getwd()
+```
+
+- Changing the working directory
+
+```{r}
+#| eval: false
+setwd("new_path/to/some_folder")
+```
+
+
+## Introduction to Quantitative Analysis
+
+### Quantitative data in R
+
+A vector is a basic unit that contains some kind of data. They are called variables. For example, age:
+
+```{r}
+age = c(23, 20, 21, 19, 20, 21, 20, 23)
+```
+
+What type of data is age?
+
+```{r}
+class(age)
+```
+
+If we want to convert to a discrete format, we use the `as.integer` function
+
+```{r}
+age = as.integer(age)
+```
+
+```{r}
+class(age)
+```
+
+
+### Basic statistics
+
+We can find out:
+
+- average
+- median
+- minimum value
+- maximum value
+
+```{r}
+mean(age)
+median(age)
+min(age)
+max(age)
+```
+
+Or using one function:
+
+```{r}
+summary(age)
+```
+
+### Qualitative data in R
+
+For example, we have a gender data:
+
+```{r}
+gender = c("m", "m", "f", "f", "m", "f", "m", "f")
+```
+
+Let's check the data type. What's wrong?
+
+```{r}
+class(gender)
+gender = as.factor(gender)
+```
+
+Let's check statistics
+
+```{r}
+summary(gender)
+table(gender)
+```
+
+### Data tables
+
+We rarely deal with only one variable, more often for one person / thing / country ... we have several indicators (not only age, but also, for example, gender). That is, the data can be combined into tables (the vectors that make up them must be of the same length).
+
+They are also called:
+
+- data frame
+- data set
+- Database, etc. and so on.
+
+```{r}
+dataExample = data.frame(age, gender)
+View(dataExample)
+```
+
+Our dataset consists of vectors. We can access any variable (column) using the `$` character
+
+```{r}
+dataExample
+dataExample$age
+class(dataExample$age)
+mean(dataExample$age)
+```
+
+## Visualization basics
+
+Visualization is a way not only to present results, but also to explore the data. Let's load a library that allows you to visualize data and try to build a simple graph. *This is the most interesting, but a bit tricky part*.
+
+```{r}
+library(tidyverse)
+ggplot() +
+  geom_bar(data = dataExample, aes(x=gender))
+```
+
+It turned out not very informative, right? Let's try to use a different graph to see the distribution of age in men and women.
+
+- Boxplot plot feature 
+
+```{r}
+ggplot()+
+  geom_boxplot(data = dataExample, aes(x=gender, y=age))
+```
+## Aggregation basics
+
+Tidyverse is increadibly helpful in this sense. What is `%>%`?
+
+```{r}
+mtcars %>%
+  group_by(cyl) %>%
+  summarize(avg_horsepower = mean(hp))
+```
+
+The way I like to think about it can be described by the following image:
+
+![](https://artur-baranov.github.io/data/groupby_sum_eng.png)
+
+Moreover, we can create a new variable, e.g. "power_to_weight"
+
+```{r}
+mtcars %>%
+  mutate(power_to_weight = hp/wt)
+```
+
+And of course we can summarize it!
+
+```{r}
+mtcars %>%
+  mutate(power_to_weight = hp/wt) %>%
+  group_by(cyl) %>%
+  summarize(avg_power_to_weight = mean(power_to_weight))
+```
+
