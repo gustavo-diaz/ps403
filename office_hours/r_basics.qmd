@@ -4,7 +4,7 @@ format: html
 editor: source
 ---
 
-Download the script from here:
+Download the script from here our GitHub or just use this link: https://vk.cc/cBvclX
 
 ## Basics of R and RStudio
 
