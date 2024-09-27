@@ -34,20 +34,12 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-# This code chunk sets up the global options
-# It won't be visible when you render to PDF
-# By the way, lines beginning with #
-# will not be processed by R
-# Use this to comment your code
-
 # Global options for the rendering behavior of all subsequent code chunks
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE,
                       message = FALSE,
                       tidy = TRUE,
                       tidy.opts=list(width.cutoff=80))
-# echo = TRUE prints the actual code chunk in the PDF
-# We want this for lab assignments
 ```
 
 
