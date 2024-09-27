@@ -29,6 +29,8 @@ header-includes:
     - \usepackage{booktabs}
     - \usepackage{amsmath}
     - \usepackage{url}
+    - \usepackage{fvextra}
+    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +43,9 @@ header-includes:
 # Global options for the rendering behavior of all subsequent code chunks
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE,
-                      message = FALSE)
+                      message = FALSE,
+                      tidy = TRUE,
+                      tidy.opts=list(width.cutoff=80))
 # echo = TRUE prints the actual code chunk in the PDF
 # We want this for lab assignments
 ```
