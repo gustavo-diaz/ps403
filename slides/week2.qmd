@@ -50,7 +50,7 @@ $$
 P(A|B) = \frac{P(B|A) P(A)}{P(B)}
 $$
 
-## Bayes rule\theorem
+## Bayes rule/theorem
 
 $$
 \underbrace{P(A|B)}_\text{Posterior} = \frac{\color{purple}{P(B|A)} \overbrace{P(A)}^\text{Prior}}{\color{purple}{\underbrace{P(B)}_\text{Support}}}
