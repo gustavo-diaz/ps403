@@ -138,7 +138,7 @@ These questions are a remix of the [birthday problem](https://en.wikipedia.org/w
 
 ::: {.callout-tip}
 ## Tips
-1. We need to assume something about the distribution of birthdays. The AM book introduced two useful distributions that correspond to functions in R. Which distribution seems more useful to approach this problem? Why?
+1. We need to assume something about the distribution of birthdays. The AM book introduced three useful distributions that correspond to functions in R. Which distribution seems more useful to approach this problem? Why?
 
 2. Time is a construct, so are weeks and months
 
