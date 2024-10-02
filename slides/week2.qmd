@@ -40,7 +40,7 @@ These make a lot more sense in practice:
 ::: incremental
 - **Joint:** $P(A\cap B)$
 - **Addition:** $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ 
-- **Conditional:** $P(A|B) = \frac{P(A \cup B)}{P(B)}$
+- **Conditional:** $P(A|B) = \frac{P(A \cap B)}{P(B)}$
 
 :::
 
@@ -66,28 +66,20 @@ $$
 P(B) = \sum_i P(B \cap A_i)
 $$
 
-## Random variables $f(x)$
+## Random variables
 
-::: {.fragment fragment-index=1}
-Discrete
+::: incremental
+- $X$ is a random variable. 
+- **A random variable is a function** such that $X:\Omega \rightarrow \mathbb{R}$
+
+- A *mapping* of possible states of the world into a real number
+
+- Neither *random* nor a *variable*
+
+- **Informally:** A *variable* that takes a value determined by a random generative process
+
+- $X$ has either a **PMF** or **PDF** $f(x) = Pr[X=x]$
+
+- Can also be expressed as a **CDF** $F(x) = Pr[X \leq x]$
 :::
 
-::: {.fragment fragment-index=3}
-- PMF
-:::
-
-::: {.fragment fragment-index=2}
-Continuous
-:::
-
-::: {.fragment fragment-index=4}    
-- PDF
-:::
-
-::: {.fragment fragment-index=5}
-**Cumulative Distribution Function (CDF)** $F(x) = Pr[X \leq x]$
-:::
-
-::: {.fragment fragment-index=6}
-- Slightly different properties if discrete/continuous RV
-:::

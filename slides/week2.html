@@ -366,7 +366,7 @@
 <ul>
 <li class="fragment"><strong>Joint:</strong> <span class="math inline">\(P(A\cap B)\)</span></li>
 <li class="fragment"><strong>Addition:</strong> <span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></li>
-<li class="fragment"><strong>Conditional:</strong> <span class="math inline">\(P(A|B) = \frac{P(A \cup B)}{P(B)}\)</span></li>
+<li class="fragment"><strong>Conditional:</strong> <span class="math inline">\(P(A|B) = \frac{P(A \cap B)}{P(B)}\)</span></li>
 </ul>
 </div>
 </section>
@@ -391,30 +391,17 @@ P(B) = \sum_i P(B \cap A_i)
 \]</span></p>
 </div>
 </section>
-<section id="random-variables-fx" class="slide level2">
-<h2>Random variables <span class="math inline">\(f(x)\)</span></h2>
-<div class="fragment" data-fragment-index="1">
-<p>Discrete</p>
-</div>
-<div class="fragment" data-fragment-index="3">
+<section id="random-variables" class="slide level2">
+<h2>Random variables</h2>
+<div>
 <ul>
-<li>PMF</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="2">
-<p>Continuous</p>
-</div>
-<div class="fragment" data-fragment-index="4">
-<ul>
-<li>PDF</li>
-</ul>
-</div>
-<div class="fragment" data-fragment-index="5">
-<p><strong>Cumulative Distribution Function (CDF)</strong> <span class="math inline">\(F(x) = Pr[X \leq x]\)</span></p>
-</div>
-<div class="fragment" data-fragment-index="6">
-<ul>
-<li>Slightly different properties if discrete/continuous RV</li>
+<li class="fragment"><p><span class="math inline">\(X\)</span> is a random variable.</p></li>
+<li class="fragment"><p><strong>A random variable is a function</strong> such that <span class="math inline">\(X:\Omega \rightarrow \mathbb{R}\)</span></p></li>
+<li class="fragment"><p>A <em>mapping</em> of possible states of the world into a real number</p></li>
+<li class="fragment"><p>Neither <em>random</em> nor a <em>variable</em></p></li>
+<li class="fragment"><p><strong>Informally:</strong> A <em>variable</em> that takes a value determined by a random generative process</p></li>
+<li class="fragment"><p><span class="math inline">\(X\)</span> has either a <strong>PMF</strong> or <strong>PDF</strong> <span class="math inline">\(f(x) = Pr[X=x]\)</span></p></li>
+<li class="fragment"><p>Can also be expressed as a <strong>CDF</strong> <span class="math inline">\(F(x) = Pr[X \leq x]\)</span></p></li>
 </ul>
 </div>
 <div class="quarto-auto-generated-content">
