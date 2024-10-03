@@ -50,6 +50,7 @@ To work on the following problems, we will need to install and load the `UsingR`
 ```{r}
 # You would need to install this if you haven't used it before
 library(UsingR)
+library(tidyverse)
 ```
 
 If you are curious where this is coming from, you can read the package documentation [here](https://cran.r-project.org/web/packages/UsingR/UsingR.pdf).
@@ -76,7 +77,7 @@ I believe *"show, don't tell"* is a principle that applies to many, perhaps most
 
 
 
-## Which types of packaging hve an equal distribution of colors?
+## Which types of packaging have an equal distribution of colors?
 
 ## Which packaging has a single color that is more likely than all the others? What color is this?
 
@@ -100,10 +101,43 @@ Calculating the answer is easy, but I also want you to show me that you read and
 
 ## Create a new variable that records each teams' probability of getting the first draft pick
 
+```{r}
+nba = nba.draft %>% 
+  mutate(Prob = Balls/1000)
+
+nba
+```
+
 ## Use the `sample()` function (or an equivalent alternative) to simulate one instance of the draft. Which team got the first round pick in your simulation?
+
+```{r}
+set.seed(20241003)
+
+sample(nba$Team) # What is missing?
+```
+
 
 ## Write a loop that simulates the 2002 NBA draft that stops once Houston is selected. How many rounds did it take?
 
+```{r}
+# THIS IS HARD TO FIGURE OUT BUT EASY TO IMPLEMENT
+# Look up: while loop in R
+
+set.seed(20241003)
+
+# Create a placeholder object for the number of rounds
+
+# remember this sampling is missing an ingredient
+while(sample(nba$Team, size = 1) != "Houston"){
+
+  # Keep adding to the placeholder object to count the number of rounds it takes  
+  
+}
+
+# Print the final number of rounds
+
+
+```
 
 
 # Fun with coins and dice
