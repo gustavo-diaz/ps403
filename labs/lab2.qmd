@@ -1,5 +1,5 @@
 ---
-title: "Lab 2: Quantities of interest"
+title: "Lab 2: Summarizing data"
 author: 
   - FirstName LastName
   - <YourEmail@u.northwestern.edu>
@@ -44,7 +44,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # Setup {.unnumbered}
 
-Before starting, include all the relevant packages in the code chunk below.
+Before starting, include all the relevant packages in this code chunk.
 
 ```{r}
 library(tidyverse)
@@ -52,7 +52,9 @@ library(tidyverse)
 
 # Overview {.unnumbered}
 
-AM chapter 2 introduces many summary features of random variables. We have also discussed how one nice feature of random variables is that we can treat them as a functions. This means the quantities introduced in the chapter also have an analogue that we can compute with actual data. Knowing this will be useful later to visualize the properties of different *estimators*.
+AM Chapter 2 introduces many summary features of random variables. We have also discussed how one nice feature of random variables is that they are technically functions but we can treat them as variables. This means the quantities introduced in the chapter also have an analogue that we can compute with actual data. Knowing this will be useful later to visualize the statistical properties of different *estimators*.^[This language is slowly filtering into our vocabulary, we will formalize it later.]
+
+As an aside, the original name for this lab in the syllabus was "Quantities of interest." In statistics, that name is usually reserved for *inferential targets*, as in the quantities we are interested in but cannot observe, so we use data to approximate them. For example, the population mean is an inferential target, for which we may use the sample mean to learn something about.
 
 # Create data
 
@@ -62,7 +64,7 @@ The following code simulates a data set.
 # Remember to use set.seed() so that results remain the same
 data = data.frame(
   x = rnorm(n = 10000, mean = 5, sd = 2),
-  y = rbinom(10000, size = 1, prob = 0.6)
+  y = rbinom(n = 10000, size = 1, prob = 0.6)
 )
 ```
 
@@ -73,18 +75,30 @@ data = data.frame(
 ## How is `y` generated? What does each argument mean?
 
 
-# Summary quantities of interest
+# Univariate summaries
 
-The code chunks below represent many quantities of interest we can compute. Under each chunk, Explain:
+The code chunks below represent many quantities of interest we can compute. Under each chunk, explain:
 
 - What are we computing?
-- Does this quantity have a name?
+- Does this quantity have a name (e.g. expected value, variance)? 
 - Why is this quantity useful/important?
-- Is there an easier way to calculate this in base R? What about a package? If so, show it
+- Is there a dedicated function to calculate this in base R or the tidyverse? If so, show it
+
+::: {.callout-tip}
+## Hints
+
+1. Some of these may be repeats, but they are calculated in a different way to illustrate some useful statistical property. If applicable, explain what makes an alternative presentation of a quantity interesting, useful, or important
+
+2. The AM textbook only mentions them in a footnote. But some of the quantities below may be [standardized moments](https://en.wikipedia.org/wiki/Standardized_moment)
+:::
+
 
 ##
 
 ```{r, eval = FALSE}
+# The code chunk option eval = FALSE
+# Prints the code in the pdf but
+# does not evaluate it
 sum(data$x)/length(data$x)
 ```
 
@@ -190,9 +204,14 @@ with(data,
      )
 ```
 
+
+# Bivariate summaries
+
+Answer the same questions for the code chunks below.
+
 ##
 
-```{r, eval = FALSE}
+```{r}
 with(data,
      mean((x - mean(x)) * (y - mean(y)))
      )
@@ -209,11 +228,40 @@ with(data,
 
 ##
 
-```{r, eval = FALSE}
-# Correlation
+```{r}
+with(data,
+     (mean(x*y) - mean(x)*mean(y)) /
+       ((sqrt(mean(x^2) - mean(x)^2)) * 
+          sqrt(mean(y^2) - mean(y)^2))
+     )
 ```
 
-# Do again with any data set you like
+
+## Why are all these bivariate summaries so close to zero?
+
+# Apply to real data
+
+Load any data set you like into R. Pick two numerical variables. Briefly explain what the data is about and what the two variables you choose are measuring.
+
+Make a table that shows the following quantities:
+
+- The expected value, variance, and standard deviation of the first variable (feel free to use base R functions for these)
+- The expected value, variance, and standard deviation of the second variable
+- The covariance between variables
+- The correlation between variables
+
+What do we learn about the variables from each quantity? Given your application, does any quantity seem more informative than the others?
+
+You will get closer to an "outstanding" mark if you:
+
+- Clean the data before making the table (e.g. filtering, renaming variables)
+- Present a quantities at a meaningful level of precision (rounding if necessary)
+- Customize the table so that it is easy to read
+- Make the table look pretty in the pdf by using a table-drawing package like [`tinytable`](https://vincentarelbundock.github.io/tinytable/)
+
+## Work on your answer below
+
+
 
 
 
