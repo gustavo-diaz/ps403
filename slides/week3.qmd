@@ -1,0 +1,148 @@
+---
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    code-overflow: wrap
+    chalkboard: true
+---
+
+## Expected value
+
+$$
+E[X] = \sum_x x f(x)
+$$
+
+&nbsp;
+
+
+$$
+E[X] = \int_{-\infty}^{+\infty} xf(x)dx
+$$
+
+## Linearity of expectations
+
+::: aside
+This is a very important property!
+:::
+
+Let $X$ and $Y$ be random variables, then $\forall a, b, c \in \mathbb{R}$
+
+. . .
+
+$$
+E[aX + bY + c] = a E[X] + bE[Y] + c
+$$
+
+## Variance and standard deviation
+
+::: incremental
+- **Variance:** $V[X] = E[(X - E[X])^2]$
+
+- **Alternative:** $V[X] = E[X^2] - E[X]^2$
+
+- **Standard deviation:** $\sigma[X] = \sqrt{V[X]}$
+:::
+
+## Why do we like the standard deviation?
+
+. . .
+
+
+$$
+V[aX] = a^2 V[X]
+$$
+
+. . .
+
+$$
+\sigma[aX] = |a| \sigma[X]
+$$
+
+## Measuring fit
+
+::: aside
+Eventually, $c$ will become something more meaningful
+:::
+
+$$
+MSE = E[(X-c)^2]
+$$
+
+. . .
+
+
+- $E[X]$ minimizes MSE (p. 58, cf. Theorems 2.1.23 and 2.1.24)
+
+. . .
+
+$$
+E[(X-c)^2] = V[X] + (E[X]-c)^2
+$$
+
+## Summarizing joint distributions
+
+. . .
+
+**Covariance**
+
+$$
+\text{Cov}[X,Y] = E[(X-E[X])(Y-E[Y])]
+$$
+
+. . .
+
+**Correlation:**
+
+
+$$
+\rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
+$$
+
+. . .
+
+**Variance rule:** $V[X+Y] = V[X] + \color{purple}{2\text{Cov}[X,Y]} + V[Y]$
+
+## Independence
+
+. . .
+
+What does it mean for $X$ and $Y$ to be **independent**?
+
+. . .
+
+> *Knowing the outcome of one random variable provides no information about the probability of any outcome for the other.*
+
+
+## Consequences of independence
+
+::: incremental
+- $E[XY] = E[X] E[Y]$
+- $\text{Cov} [X,Y] = 0$
+- $V[X+Y] =V[X] + V[Y]$
+:::
+
+. . .
+
+- $\rho [X,Y] = 0$ $\not \Rightarrow$ independence
+
+## Best (linear) predictor
+
+. . .
+
+CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
+
+. . .
+
+If we restrict ourselves to a linear functional form $Y = a + bX$, then the following minimize MSE of $Y$ given $X$:
+
+. . .
+
+- $g(X) = \alpha + \beta X$ where
+- $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
+- $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
+
+
+::: aside
+For now, just remember this will become very important
+:::
