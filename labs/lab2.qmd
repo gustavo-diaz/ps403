@@ -261,6 +261,14 @@ You will get closer to an "outstanding" mark if you:
 
 ## Work on your answer below
 
+This is a sketch, using the simulated data from the beginning, of how I would start working on this.
+
+```{r}
+data %>% 
+  summarize(ev_x = mean(x),
+            ev_y = mean(y))
+```
+
 
 
 
