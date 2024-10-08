@@ -72,7 +72,7 @@ $$
 . . .
 
 
-- $E[X]$ minimizes MSE (p. 58, cf. Theorems 2.1.23 and 2.1.24)
+- $E[X]$ minimizes MSE (cf. Theorems 2.1.23 and 2.1.24)
 
 . . .
 
@@ -124,7 +124,52 @@ What does it mean for $X$ and $Y$ to be **independent**?
 
 . . .
 
-- $\rho [X,Y] = 0$ $\not \Rightarrow$ independence
+$\rho [X,Y] = 0$ $\not \Rightarrow$ independence
+
+## Rank correlation
+
+. . .
+
+$\rho$ is **Pearson's** correlation
+
+$$
+\rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
+$$
+
+. . .
+
+**Spearman's**
+
+$$
+r_s = \rho[R[X], R[Y]] = \frac{\text{Cov}[R[X],R[Y]}{\sigma[R[X]] \sigma[R[Y]]}
+$$
+
+## Rank correlation
+
+**Kendall's**
+
+. . .
+
+$$
+\tau = \frac{(\text{# concordant pairs}) - (\text{# discordant pairs})} {(\text{# total pairs})}
+$$
+
+. . .
+
+- **concordant:** $x_i > x_j$ *and* $y_i > y_j$ **OR** $x_i < x_j$ *and* $y_i < y_j$
+
+- **discordant** otherwise
+
+## Correlation in R
+
+```{r, eval = FALSE, echo = TRUE}
+cor(x, y, method = "pearson") # default
+
+cor(x, y, method = "spearman")
+
+cor(x, y, method = "kendall")
+```
+
 
 ## Best (linear) predictor
 
