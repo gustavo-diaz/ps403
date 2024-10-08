@@ -3,7 +3,6 @@ format:
   revealjs:
     slide-number: false
     progress: false
-    code-overflow: wrap
     chalkboard: true
 ---
 
@@ -80,30 +79,47 @@ knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE,
                       message = FALSE,
                       tidy = TRUE,
-                      tidy.opts=list(width.cutoff=80))
+                      tidy.opts=list(width.cutoff=50))
 ```
+
+::: {.panel-tabset}
+## Code
 
 ```{r, eval = FALSE}
-remotes::install_github("kjhealy/gssr")
-
+library(tidyverse)
+# remotes::install_github("kjhealy/gssr")
 library(gssr)
 
 gss22 = gss_get_yr(2022)
 
-# Question 202a. Tell me if you agree or disagree with this statement: Most men are better suited emotionally for politics than are most women.
-# Find a more granular question!
-x = gss22$fepol
-
-table(x)
+# Question 202a. 
+# Tell me if you agree or disagree with this statement: 
+# Most men are better suited emotionally for politics than are most women.
+gss22 %>% 
+  select(fepol) %>% 
+  mutate(fepol_agree = ifelse(fepol == 1, 1, 0)) %>% 
+  drop_na()
 ```
+
+## Data
 
 ```{r, echo = FALSE, cache = TRUE}
+library(tidyverse)
+# remotes::install_github("kjhealy/gssr")
 library(gssr)
+
 gss22 = gss_get_yr(2022)
-x = gss22$fepol
-table(x)
+
+# Question 202a. 
+# Tell me if you agree or disagree with this statement: 
+# Most men are better suited emotionally for politics than are most women.
+gss22 %>% 
+  select(fepol) %>% 
+  mutate(fepol_agree = ifelse(fepol == 1, 1, 0)) %>% 
+  drop_na()
 ```
 
+:::
 
 
 
