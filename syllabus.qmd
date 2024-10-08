@@ -249,7 +249,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Lab 6:** Dealing with missing data
 <!-- Make them simulate missingness in existing data, and then determine which correction method is more appropriate -->
 
-## Week 9 (November 12/14): Causal inference I
+## Week 8 (November 12/14): Causal inference I
 **Reading:**
 
 - AM Chapter 7
@@ -260,7 +260,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 **Lab 7:** Randomization inference and hypothesis testing
 
-## Week 10 (November 19/21): Causal inference II
+## Week 9 (November 19/21): Causal inference II
 **Reading:**
 
 *Regression Discontinuity*
@@ -280,7 +280,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Lab 8:** Quasi-experiments
 <!-- Present two datasets, one RDD, one DD. Choose one, provide the most accurate estimation possible. -->
 
-## Week 11 (November 26): Flex week/future directions
+## Week 10 (November 26): Flex week/future directions
 
 We are leaving this week open to discuss topics that may be of interest to the group, I can think of five options:
 
@@ -291,7 +291,7 @@ We are leaving this week open to discuss topics that may be of interest to the g
 - Methods work by Northwestern faculty
 
 
-## Week 12 (December 3/5): Research note presentations
+## Week 11 (December 3/5): Research note presentations
 
 
 
