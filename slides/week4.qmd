@@ -7,187 +7,107 @@ format:
     chalkboard: true
 ---
 
-## Expected value
+## Talking points
 
-$$
-E[X] = \sum_x x f(x)
-$$
+- Why random sampling?
 
-&nbsp;
+- Estimation vs. inference
 
+- Plug-in principle
 
-$$
-E[X] = \int_{-\infty}^{+\infty} xf(x)dx
-$$
+- Estimation theory vs. *Asymptotic* estimation theory
 
-## Linearity of expectations
+- Confidence intervals vs. hypotheses testing
 
-::: aside
-This is a very important property!
-:::
-
-Let $X$ and $Y$ be random variables, then $\forall a, b, c \in \mathbb{R}$
-
-. . .
-
-$$
-E[aX + bY + c] = a E[X] + bE[Y] + c
-$$
-
-## Variance and standard deviation
+## Ingredients for statistical inference
 
 ::: incremental
-- **Variance:** $V[X] = E[(X - E[X])^2]$
+1. Estimand $\theta$
 
-- **Alternative:** $V[X] = E[X^2] - E[X]^2$
-
-- **Standard deviation:** $\sigma[X] = \sqrt{V[X]}$
+2. Estimator $\widehat \theta$
 :::
 
-## Why do we like the standard deviation?
+## Ingredients for statistical inference
+
+1. Estimand $\mu$
+
+2. Estimator $\widehat \mu$
+
+## Ingredients for statistical inference
+
+1. Estimand $\mu$
+
+2. Estimator $\widehat \mu$
+
+3. Data $X$
+
+## Ingredients for statistical inference
+
+1. Estimand $\mu$
+
+2. Estimator $\widehat \mu$
+
+3. Data $X$
+
+4. Estimate $\overline X$
+
+## Ingredients for statistical inference
+
+1. Estimand $\mu$
+
+2. Estimator $\widehat \mu$
+
+3. Data $X$
+
+4. Estimate $\overline X$
+
+5. Measure of uncertainty (confidence intervals, hypothesis testing)
+
 
 . . .
 
+::: {style="text-align: center"}
 
-$$
-V[aX] = a^2 V[X]
-$$
+$X \rightarrow \overline{X} \rightarrow \hat{\mu} \xrightarrow{\text{hopefully!}} \mu$
 
-. . .
-
-$$
-\sigma[aX] = |a| \sigma[X]
-$$
-
-## Measuring fit
-
-::: aside
-Eventually, $c$ will become something more meaningful
 :::
 
-$$
-MSE = E[(X-c)^2]
-$$
+## Data
 
-. . .
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = TRUE,
+                      tidy.opts=list(width.cutoff=80))
+```
 
+```{r, eval = FALSE}
+remotes::install_github("kjhealy/gssr")
 
-- $E[X]$ minimizes MSE (cf. Theorems 2.1.23 and 2.1.24)
+library(gssr)
 
-. . .
+gss22 = gss_get_yr(2022)
 
-$$
-E[(X-c)^2] = V[X] + (E[X]-c)^2
-$$
+# Question 202a. Tell me if you agree or disagree with this statement: Most men are better suited emotionally for politics than are most women.
+# Find a more granular question!
+x = gss22$fepol
 
-## Summarizing joint distributions
+table(x)
+```
 
-. . .
-
-**Covariance**
-
-$$
-\text{Cov}[X,Y] = E[(X-E[X])(Y-E[Y])]
-$$
-
-. . .
-
-**Correlation:**
-
-
-$$
-\rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
-$$
-
-. . .
-
-**Variance rule:** $V[X+Y] = V[X] + \color{purple}{2\text{Cov}[X,Y]} + V[Y]$
-
-## Independence
-
-. . .
-
-What does it mean for $X$ and $Y$ to be **independent**?
-
-. . .
-
-> *Knowing the outcome of one random variable provides no information about the probability of any outcome for the other.*
-
-
-## Consequences of independence
-
-::: incremental
-- $E[XY] = E[X] E[Y]$
-- $\text{Cov} [X,Y] = 0$
-- $V[X+Y] =V[X] + V[Y]$
-:::
-
-. . .
-
-$\rho [X,Y] = 0$ $\not \Rightarrow$ independence
-
-## Rank correlation
-
-. . .
-
-$\rho$ is **Pearson's** correlation
-
-$$
-\rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
-$$
-
-. . .
-
-**Spearman's**
-
-$$
-r_s = \rho[R[X], R[Y]] = \frac{\text{Cov}[R[X],R[Y]}{\sigma[R[X]] \sigma[R[Y]]}
-$$
-
-## Rank correlation
-
-**Kendall's**
-
-. . .
-
-$$
-\tau = \frac{(\text{# concordant pairs}) - (\text{# discordant pairs})} {(\text{# total pairs})}
-$$
-
-. . .
-
-- **concordant:** $x_i > x_j$ *and* $y_i > y_j$ **OR** $x_i < x_j$ *and* $y_i < y_j$
-
-- **discordant** otherwise
-
-## Correlation in R
-
-```{r, eval = FALSE, echo = TRUE}
-cor(x, y, method = "pearson") # default
-
-cor(x, y, method = "spearman")
-
-cor(x, y, method = "kendall")
+```{r, echo = FALSE, cache = TRUE}
+library(gssr)
+gss22 = gss_get_yr(2022)
+x = gss22$fepol
+table(x)
 ```
 
 
-## Best (linear) predictor
-
-. . .
-
-CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
-
-. . .
-
-If we restrict ourselves to a linear functional form $Y = a + bX$, then the following minimize MSE of $Y$ given $X$:
-
-. . .
-
-- $g(X) = \alpha + \beta X$ where
-- $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
-- $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
 
 
-::: aside
-For now, just remember this will become very important
-:::
+
+
+
+
