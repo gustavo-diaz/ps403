@@ -1,0 +1,141 @@
+---
+title: "Lab 3: Estimation and uncertainty"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: October 21, 2024
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+    - \usepackage{float}
+    - \floatplacement{figure}{t}
+    - \floatplacement{table}{t}
+    - \usepackage{flafter}
+    - \usepackage[T1]{fontenc}
+    - \usepackage[utf8]{inputenc}
+    - \usepackage{ragged2e}
+    - \usepackage{booktabs}
+    - \usepackage{amsmath}
+    - \usepackage{url}
+    - \usepackage{fvextra}
+    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+```{r setup, include=FALSE}
+# Code chunk options
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = FALSE,
+                      tidy.opts=list(width.cutoff=80))
+
+# Packages
+library(tidyverse)
+
+
+# Global options
+theme_set(theme_bw(base_size = 20)) # ggplot background and size
+```
+
+
+# Data
+
+For this lab, we will work with data from the General Social Survey (GSS). The R package [`gssr`](https://kjhealy.github.io/gssr/index.html) helps us load the data easily. However, this package is too big to host in CRAN (the official R repository), so we need to install the package from GitHub.^[There is a companion package that lists all the variables included: <https://kjhealy.github.io/gssrdoc/>. You can technically install this too, but I recommend you just browse the website.]
+
+```{r}
+## You may need to run the first two commented lines the first time
+
+# install.packages("remotes")
+
+# remotes::install_github("kjhealy/gssr")
+library(gssr)
+```
+
+The package has data for the 1972-2022 period. We will focus on the most recent survey. And among these variables, we will primarily focus on whether the respondent recalls having voted in the 2020 election (`vote20`). We will also keep the respondent's `sex` variable on deck, as it will be useful later.
+
+```{r, results="hide"}
+gss22 = gss_get_yr(2022)
+
+gss = gss22 %>% 
+  select(vote20, sex) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0),
+         sex_cat =  ifelse(sex == 2, "Woman", "Man") ) %>% 
+  drop_na()
+
+gss # This will print in RStudio but not on the PDF
+```
+
+Notice that we are dropping missing observations. For now, we will pretend this is not a big deal. On Week 7, we will discuss when and how missing data is a problem, and what to do about it.
+
+You can learn more about the GSS [here](https://gss.norc.org/content/dam/gss/get-documentation/pdf/codebook/GSS%202022%20Codebook.pdf). The section on sampling design starting on p. 36 may be helpful to answer the following question.
+
+## Based on how the GSS survey data is collected. Do you think it makes sense for us to invoke the i.i.d. assumption? Explain.
+
+# Confidence intervals
+
+Let us (at least) pretend that the GSS was collected in such a way that makes observations (respondents) *approximately independent* and *approximately identically distributed*. This makes the i.i.d. assumption plausible.
+
+That means we can believe the data we observe is a fair representation of how the data was collected, so that if we were to redo the survey again, our observations would look more or less similar. 
+
+In turn, this implies that, even if we cannot observe it directly, we can convince ourselves that the sample mean is an *unbiased estimator* of the population mean, which is our *estimand*. 
+
+To say that an estimator is unbiased suggests that, over many realizations of the survey, the sample mean will average to the unobserved population mean (which should also be the expected value of whatever collection of random variables that yields our data).
+
+Therefore, any one realization on the survey need not produce a sample mean *estimate* that is close to the *estimand*. In fact, we have no way to tell. There would be no point to conduct statistical inference if we already knew the answer.
+
+We need to convey this uncertainty somehow. We may consider the sample standard deviation as our go-to measure of spread.
+
+```{r}
+gss %>% 
+  summarize(estimate = mean(vote),
+            std.dev = sd(vote))
+```
+
+This is a good start, R uses the corrected formula for the sample variance in the `sd()` function, so we have an unbiased estimator for our measure of dispersion.
+
+We can use this to compute our confidence interval.
+
+```{r}
+gss %>% 
+  summarize(estimate = mean(vote),
+            std.dev = sd(vote),
+            conf.low = estimate - 1.96 * std.dev,
+            conf.high = estimate + 1.96 * std.dev)
+```
+
+## What is wrong with this confidence interval? 
+
+## Perhaps the standard deviation is not the right measure of uncertainty. Which quantity seems more appropriate? Why?
+
+::: {.callout-tip}
+Consider the discussion on AM Chapter 3 and the readings from the *Journal of Econometrics* in Week 3.
+:::
+
+After sorting out our confusion, we can proceed to calculate a confidence interval around our mean. 
+
+## Calculate and interpret a 95% confidence interval for the sample mean of `vote`
+
+::: {.callout-tip}
+The functions `t.test()` in base R or `t_test()` in tidyverse may help you corroborate your answers. Check their documentation.
+:::
+
+## What is a confidence interval? Where does the 95% come from? What about the 1.96?
+
+
+# Bootstrap
+
+# Jackknife
+
+# Overlapping intervals
