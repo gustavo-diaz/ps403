@@ -1,5 +1,5 @@
 ---
-title: "Lab 2: Summarizing data"
+title: "Lab 2: Summarizing distributions"
 author: 
   - FirstName LastName
   - <YourEmail@u.northwestern.edu>
@@ -52,7 +52,7 @@ library(tidyverse)
 
 # Overview {.unnumbered}
 
-AM Chapter 2 introduces many summary features of random variables. We have also discussed how one nice feature of random variables is that they are technically functions but we can treat them as variables. This means the quantities introduced in the chapter also have an analogue that we can compute with actual data. Knowing this will be useful later to visualize the statistical properties of different *estimators*.^[This language is slowly filtering into our vocabulary, we will formalize it later.]
+AM Chapter 2 introduces many summary features of random variables. We have also discussed how one nice feature of random variables is that they are technically functions but we can treat them as variables.^[This is called the *plug-in principle*, more on this next week.] This means the quantities introduced in the chapter also have an analogue that we can compute with actual data. Knowing this will be useful later to visualize the statistical properties of different *estimators*.^[This language is slowly filtering into our vocabulary, we will formalize it next week.]
 
 As an aside, the original name for this lab in the syllabus was "Quantities of interest." In statistics, that name is usually reserved for *inferential targets*, as in the quantities we are interested in but cannot observe, so we use data to approximate them. For example, the population mean is an inferential target, for which we may use the sample mean to learn something about.
 
