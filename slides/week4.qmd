@@ -4,19 +4,8 @@ format:
     slide-number: false
     progress: false
     chalkboard: true
+    code-overflow: wrap
 ---
-
-## Talking points
-
-- Why random sampling?
-
-- Estimation vs. inference
-
-- Plug-in principle
-
-- Estimation theory vs. *Asymptotic* estimation theory
-
-- Confidence intervals vs. hypotheses testing
 
 ## Ingredients for statistical inference
 
@@ -60,14 +49,31 @@ format:
 
 4. Estimate $\overline X$
 
-5. Measure of uncertainty (confidence intervals, hypothesis testing)
+5. Quantify uncertainty
+
+## Ingredients for statistical inference
+
+1. Estimand $\mu$
+
+2. Estimator $\widehat \mu$
+
+3. Data $X$
+
+4. Estimate $\overline X$
+
+5. Quantify uncertainty
+
+    - Confidence intervals (lab)
+    - Hypothesis testing (week 8)
+
+
 
 
 . . .
 
 ::: {style="text-align: center"}
 
-$X \rightarrow \overline{X} \rightarrow \hat{\mu} \xrightarrow{\text{hopefully!}} \mu$
+$X \rightarrow \overline{X} \rightarrow \widehat{\mu} \xrightarrow{\text{hopefully!}} \mu$
 
 :::
 
@@ -78,8 +84,9 @@ $X \rightarrow \overline{X} \rightarrow \hat{\mu} \xrightarrow{\text{hopefully!}
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE,
                       message = FALSE,
-                      tidy = TRUE,
-                      tidy.opts=list(width.cutoff=50))
+                      fig.pos = "center")
+
+
 ```
 
 ::: {.panel-tabset}
@@ -92,25 +99,268 @@ library(gssr)
 
 gss22 = gss_get_yr(2022)
 
-# Question
-# Do you remember for sure whether or not you voted in that election?
-gss22 = gss22 %>% 
+# Question: 
+# Do you remember for sure whether or not you voted in the last election?
+gss = gss22 %>% 
   select(vote20) %>% 
   mutate(vote = ifelse(vote20 == 1, 1, 0)) %>% 
   drop_na()
 ```
 
+
 ## Data
 
 ```{r, echo = FALSE}
-gss22
+gss
+```
+
+:::
+
+# Why random sampling?
+
+## Independent, identically distributed
+
+A collection of **random variables** is i.i.d. if they are:
+
+. . .
+
+1. Mutually independent
+
+2. Identically distributed
+
+## Which of the following implies i.i.d?
+
+**Option 1**
+
+```{r, eval = FALSE}
+x = sample(gss$vote, size = 10, replace = FALSE)
+```
+
+. . .
+
+**Option 2**
+
+```{r, eval = FALSE}
+x = sample(gss$vote, size = 10, replace = TRUE)
+```
+
+. . .
+
+
+**Option 3**
+
+```{r, eval = FALSE}
+x0 = sample(gss$vote, size = 1)
+x1 = sample(gss$vote, size = 1)
+x2 = sample(gss$vote, size = 1)
+x3 = sample(gss$vote, size = 1)
+x4 = sample(gss$vote, size = 1)
+x5 = sample(gss$vote, size = 1)
+x6 = sample(gss$vote, size = 1)
+x7 = sample(gss$vote, size = 1)
+x8 = sample(gss$vote, size = 1)
+x9 = sample(gss$vote, size = 1)
+```
+
+## Pretend our data is the population
+
+**Population mean**
+
+```{r}
+mean(gss$vote)
+```
+
+. . .
+
+**Sample mean**
+
+```{r}
+set.seed(20241009)
+x = sample(gss$vote, size = 10, replace = FALSE)
+mean(x)
+```
+
+. . .
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Bias**
+
+```{r}
+mean(x) - mean(gss$vote)
+```
+
+:::
+
+::: {.column width="50%"}
+**MSE**
+
+```{r}
+mean((x - mean(gss$vote))^2)
+```
+
+:::
+
+::::
+
+## Finite-sample properties
+
+::: {.panel-tabset}
+## Code
+
+```{r}
+sample_mean = function(n){
+  mean(sample(gss$vote, size = n), replace = FALSE)
+}
+
+set.seed(20241009)
+means = replicate(10, sample_mean(100))
+```
+
+## Output
+
+```{r}
+means
+```
+
+## Figure
+
+```{r, include = FALSE}
+# ggplot global options
+library(tidyverse)
+theme_set(theme_gray(base_size = 20))
+ggdodge = position_dodge(width = 0.5)
+```
+
+```{r}
+ggplot(mapping = aes(x = means)) +
+  geom_density() +
+  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
+  xlim(0,1)
 ```
 
 :::
 
 
+## Increase the number of replicates
+
+::: {.panel-tabset}
+## 10 replications
+
+```{r, echo = FALSE}
+ggplot(mapping = aes(x = means)) +
+  geom_density() +
+  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
+    xlim(0,1)
+```
+
+
+## 100 replications
+
+```{r, echo = FALSE}
+means100 = replicate(100, sample_mean(100))
+
+ggplot(mapping = aes(x = means100)) +
+  geom_density() +
+  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
+    xlim(0,1) +
+  labs(x = "means")
+```
+
+## 1000 replications
+
+```{r, echo = FALSE}
+means1000 = replicate(1000, sample_mean(100))
+
+ggplot(mapping = aes(x = means1000)) +
+  geom_density() +
+  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
+    xlim(0,1) +
+  labs(x = "means")
+```
+
+:::
+
+
+## Variance
+
+Why is there a difference?
+
+. . .
+
+```{r}
+set.seed(20241009)
+gss %>%
+  # replace = FALSE by default
+  sample_n(size = 400) %>% 
+  summarize(var1 = var(vote),
+            var2 = mean(mean(vote^2) - mean(vote)^2),
+            var3 = mean(mean(vote^2) - mean(vote)^2) * (400/(400-1))
+            )
+  
+```
+
+
+## Asymptotic properties
+
+::: {.panel-tabset}
+## Function
+
+```{r}
+draw_sample = function(data, n) {
+  df = data %>% 
+    sample_n(size = n) %>% 
+    summarize(
+      estimate = mean(vote),
+      std.error = sd(vote),
+      rmse = sqrt(mean((vote - mean(gss$vote))^2))
+    )
+  
+  return(df)
+}
+
+# Example
+draw_sample(gss, 100)
+```
+## Scale up
+
+```{r}
+n = seq(10, 1000, by = 10)
+
+set.seed(20241009)
+reps = n %>% 
+  map(~draw_sample(gss, n = .)) %>% 
+  bind_rows %>% 
+  mutate(n = n)
+
+head(reps)
+```
+
+## Plot
+
+```{r, echo = FALSE}
+reps_df = reps %>% 
+  pivot_longer(!n,
+               names_to = "statistic",
+               values_to = "value")
+
+ggplot(reps_df) +
+  aes(x = n, y = value) +
+  geom_line() +
+  facet_wrap(~statistic, scales = "free_y")
+```
 
 
 
+:::
 
+## Properties of estimators
 
+::: incremental
+- **Unbiasedness:** $E[\widehat \theta] = \theta$
+
+- **Efficiency:**  $\widehat \theta_A$ is more efficient that $\widehat \theta_ B$ if it has lower MSE
+
+- **Consistency:** $\widehat \theta \overset{p}{\to} \theta$
+:::
