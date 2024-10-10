@@ -43,7 +43,8 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # Packages
 library(tidyverse)
-
+library(mosaic) # one line bootstrap
+library(infer) # tidyverse-friendly t-test
 
 # Global options
 theme_set(theme_bw(base_size = 20)) # ggplot background and size
@@ -52,7 +53,7 @@ theme_set(theme_bw(base_size = 20)) # ggplot background and size
 
 # Data
 
-For this lab, we will work with data from the General Social Survey (GSS). The R package [`gssr`](https://kjhealy.github.io/gssr/index.html) helps us load the data easily. However, this package is too big to host in CRAN (the official R repository), so we need to install the package from GitHub.^[There is a companion package that lists all the variables included: <https://kjhealy.github.io/gssrdoc/>. You can technically install this too, but I recommend you just browse the website.]
+For this lab, we will work with data from the General Social Survey (GSS). The R package [`gssr`](https://kjhealy.github.io/gssr/index.html) helps us load the data. However, this package is too big to host in CRAN (the official R repository), so we need to install the package from GitHub.^[There is a companion package that lists all the variables included: <https://kjhealy.github.io/gssrdoc/>. You can technically install this too, but I recommend you just browse the website.]
 
 ```{r}
 ## You may need to run the first two commented lines the first time
@@ -81,11 +82,11 @@ Notice that we are dropping missing observations. For now, we will pretend this 
 
 You can learn more about the GSS [here](https://gss.norc.org/content/dam/gss/get-documentation/pdf/codebook/GSS%202022%20Codebook.pdf). The section on sampling design starting on p. 36 may be helpful to answer the following question.
 
-## Based on how the GSS survey data is collected. Do you think it makes sense for us to invoke the i.i.d. assumption? Explain.
+## Based on how the GSS survey data is collected. Do you think it makes sense for us to invoke the i.i.d. assumption? Explain
 
 # Confidence intervals
 
-Let us (at least) pretend that the GSS was collected in such a way that makes observations (respondents) *approximately independent* and *approximately identically distributed*. This makes the i.i.d. assumption plausible.
+Let us (at least) pretend that the GSS was collected in such a way that makes observations (respondents' answers) *approximately independent* and *approximately identically distributed*. This makes the i.i.d. assumption plausible.
 
 That means we can believe the data we observe is a fair representation of how the data was collected, so that if we were to redo the survey again, our observations would look more or less similar. 
 
@@ -93,7 +94,7 @@ In turn, this implies that, even if we cannot observe it directly, we can convin
 
 To say that an estimator is unbiased suggests that, over many realizations of the survey, the sample mean will average to the unobserved population mean (which should also be the expected value of whatever collection of random variables that yields our data).
 
-Therefore, any one realization on the survey need not produce a sample mean *estimate* that is close to the *estimand*. In fact, we have no way to tell. There would be no point to conduct statistical inference if we already knew the answer.
+Therefore, any one realization on the survey need not produce a sample mean *estimate* that is close to the *estimand*. In fact, we have no way to tell. There would be no point in conducting statistical inference if we already knew the answer.
 
 We need to convey this uncertainty somehow. We may consider the sample standard deviation as our go-to measure of spread.
 
@@ -125,17 +126,223 @@ Consider the discussion on AM Chapter 3 and the readings from the *Journal of Ec
 
 After sorting out our confusion, we can proceed to calculate a confidence interval around our mean. 
 
-## Calculate and interpret a 95% confidence interval for the sample mean of `vote`
+## Calculate and interpret the 95% confidence interval for the mean of `vote`
 
 ::: {.callout-tip}
-The functions `t.test()` in base R or `t_test()` in tidyverse may help you corroborate your answers. Check their documentation.
+The functions `t.test()` in base R or `t_test()` in the `infer` tidyverse package may help you corroborate your answers. Check their documentation.
 :::
 
 ## What is a confidence interval? Where does the 95% come from? What about the 1.96?
 
 
-# Bootstrap
+# The bootstrap
 
-# Jackknife
+In the previous section, we calculated *Normal approximation-based confidence intervals*. They rely on the assumption that the standardized sample mean converges in probability to a standard normal distribution.
+
+An alternative approach would be to take advantage of the idea that we can use the *empirical* CDF to approximate the CDF of the random variable that underlies our data. Again, we can't really observe this, but this principle lets us assume that the sample we observe is enough approximate the sampling distribution of the estimator.
+
+The bootstrap proceeds as follows:
+
+1. Take a sample with replacement of size $n$ from the original sample, where $n$ is the sample size
+2. Calculate the would-be estimate on the bootstrap sample (in our case the mean)
+3. Repeat this process many times, so that we collect many observations of the estimate
+
+The following code reproduces a bootstrap for the sample mean. First, we create a function to sample with replacement and then compute the sample mean.
+
+```{r}
+boot_gss = function(){
+  gss %>% 
+  sample_n(size = nrow(gss), replace = TRUE) %>% 
+  summarize(sample_mean = mean(vote))
+}
+
+
+# Example
+boot_gss()
+```
+
+Then we repeat many times. In tidyverse, we can do:
+
+```{r}
+tidy_boot = 1:1000 %>% 
+  map(~boot_gss()) %>% 
+  bind_rows()
+
+tidy_boot %>% 
+  summarize(
+    estimate = mean(sample_mean),
+    std.error = sd(sample_mean)
+  )
+```
+
+I also like the functionality of the `mosaic` package to compute one line bootstraps.
+
+```{r}
+nsamps = 1000
+
+mosaic_boot = do(nsamps) * mean(~ vote, data = resample(gss))
+
+head(mosaic_boot)
+
+mosaic_boot %>% 
+  summarize(
+    estimate = mean(mean),
+    std.error = sd(mean)
+  )
+```
+
+Either way, you can corroborate that the resulting standard deviation is close enough to the normal approximation-based confidence intervals you computed in the previous section.
+
+To compute confidence intervals from a bootstrap resample, we can use the *standard deviation* approach or the *percentile* method. It should not matter whether we use `tidy_boot` or `mosaic_boot`.
+
+```{r}
+# First, extract the original sample mean
+xbar = mean(gss$vote)
+
+boot_ci = mosaic_boot %>% 
+  summarize(
+    sd.conf.low = xbar - 1.96*sd(mean),
+    sd.conf.high = xbar + 1.96*sd(mean),
+    pc.conf.low = quantile(mean, .025),
+    pc.conf.high = quantile(mean, .975)
+  ) %>% 
+  mutate(estimate = xbar) %>% # include original estimate
+  relocate(estimate) # put it first
+
+boot_ci
+```
+
+## How are the two methods to compute confidence intervals from a bootsrap resampling distribution different? Does it make a difference? Does any of the two methods seem more appropriate?
+
+::: {.callout-tip}
+The paper by Mooney assigned for this week discusses the two approaches.
+:::
+
+
+# The jackknife
+
+Yet another technique to approximate the resampling distribution of an estimator is the **jackknife**. You can learn more about this resampling method [here](https://doi.org/10.2307/2334280), [here](https://statisticelle.com/resampling-the-jackknife-and-pseudo-observations/) and [here](https://www.math.wustl.edu/~sawyer/handouts/Jackknife.pdf).
+
+The simplest version of this technique is the *leave-one-out jackknife*. As the name suggests, it proceeds as follows:
+
+1. Estimate the quantity of interest (estimand) using the original sample of size $n$
+
+2. Construct a total of $n$ jackknife samples of size $(n-1)$, removing a single different observation each time
+
+3. Estimate the quantity of interest within each resulting sample, which yields $n$ *jackknife replicates*
+
+4. Compute confidence intervals either with the *standard deviation* approach or the *percentile* method
+
+## Compute jackknife confidence intervals for the mean of `vote`
+
+To get you started, this is one way to remove one specific observation from a vector and then calculate the mean.
+
+```{r, eval = FALSE}
+# Removes the first row
+gss %>% slice(-1) %>% summarize(estimate = mean)
+```
+::: {.callout-tip}
+## Hint
+
+The `bootstrap` package has a [`jackknife()` function](https://www.rdocumentation.org/packages/bootstrap/versions/2019.6/topics/jackknife). I want you to write your own code instead of using the dedicated function, but you can use it to confirm your answer.
+
+:::
+
+## Which resampling method seems generally more appropriate? Does your answer change depending on what we can assume about the data generation process? Explain
 
 # Overlapping intervals
+
+In statistical inference, we often want to go beyond computing just a single mean and its confidence interval. We may also want to compare the means between two groups and use confidence intervals to determine if the two means are different.
+
+For example, we can calculate means and confidence intervals by respondents' sex.
+
+```{r}
+comparison = gss %>% 
+  group_by(sex_cat) %>% 
+  summarize(
+    estimate = mean(vote),
+    conf.low = t.test(vote)$conf.int[1],
+    conf.high = t.test(vote)$conf.int[2]
+  )
+
+comparison
+```
+
+And then we can visualize with ggplot:^[This type of figure is very common when presenting quantitative findings.]
+
+```{r}
+ggplot(comparison) +
+  aes(x = sex_cat, y = estimate) +
+  geom_point(size = 2) +
+  geom_linerange(aes(x = sex_cat,
+                     ymin = conf.low,
+                     ymax = conf.high)) +
+  ylim(0.7, 0.8) +
+  labs(y = "Estimate",
+       x = "Respondent's sex")
+```
+
+You can see that women recall having voted at slightly higher rates than men. However, the confidence intervals overlap, so we are able to determine whether the population means as estimands are actually different.
+
+The readings by Goldstein et al and Knol et al assigned for this week criticize this practice. They argue that, to visually compare two means, you should instead compute 84% confidence intervals instead, which translates to about $\pm$ 1.39 standard deviations from the mean in a standard normal distribution.
+
+## Why should we avoid using 95% confidence intervals when comparing two means? Why 84% and not another quantity?
+
+::: {.callout-tip}
+Here, I am looking for an answer using your own words. You will get closer to an outstanding mark if you bake the concepts of *coverage*, *type I error*, and *type II error*.
+:::
+
+## Demonstrate this using your favorite resampling method
+
+There are many ways to accomplish this. Here's how I would start.
+
+First, we need to determine a "correct" standard. Luckily, we can just circumvent the whole problem by just computing confidence intervals around the difference in means.
+
+The `t_test()` function in the `infer` package (loaded at the beginning of the file) makes this straightforward. I will begin by creating a function that calculates the difference in means in a bootstrap resample, then replicate many times.
+
+```{r}
+boot_diff = function(){
+  gss %>% 
+    sample_n(size = nrow(gss), replace = TRUE) %>% 
+    t_test(vote ~ sex_cat, x = .) %>% 
+    .$estimate # isolate the diff in means
+}
+
+# Example
+boot_diff()
+```
+
+Notice that, by default, the tidyverse orders categorical variables alphabetically:
+
+```{r}
+table(gss$sex_cat)
+```
+
+So the number computed by `boot_diff()` is the difference between in average vote recall rates among men vs. women. Since vote recall rates are slightly higher among women in our observed data, this number should be negative the majority of time.
+
+We can confirm this by calculating the proportion of negative estimates, on top of our usual quantities.
+
+```{r}
+differences = do(1000) * boot_diff()
+  
+differences %>% 
+  summarize(
+    estimate = mean(boot_diff),
+    stdev = sd(boot_diff),
+    conf.low = estimate - 1.96 * stdev,
+    conf.high = estimate + 1.96 * stdev,
+    prop.neg = mean(boot_diff < 0))
+```
+
+So we need to devise a resampling simulation that compares 95% and 84% confidence intervals between groups and then determine how often each alternative would lead us to infer that women have higher vote recall rates than men.
+
+::: {.callout-tip}
+## Hint
+
+We are not necessarily interested in reconstructing the resampling distribution of the mean for each group, but rather the resampling distribution of the upper bound of the confidence interval of each group, and the lower bound of the confidence interval for the other group. It may help to compute the resampling distribution of both upper and lower bounds for both groups, and then figure out what the right comparison is.
+
+Also, note that in this particular example the difference in vote recall rates among men and women may be so tiny that it may not make a difference at all which confidence level we use. Still, it may help to think about how things should look like if it *did* make a difference.
+:::
+
+
+
