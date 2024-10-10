@@ -255,7 +255,7 @@ What do we learn about the variables from each quantity? Given your application,
 You will get closer to an "outstanding" mark if you:
 
 - Clean the data before making the table (e.g. filtering, renaming variables)
-- Present a quantities at a meaningful level of precision (rounding if necessary)
+- Present quantities at a meaningful level of precision (rounding if necessary)
 - Customize the table so that it is easy to read
 - Make the table look pretty in the pdf by using a table-drawing package like [`tinytable`](https://vincentarelbundock.github.io/tinytable/)
 
