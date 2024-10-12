@@ -48,6 +48,7 @@ Before starting, include all the relevant packages in this code chunk.
 
 ```{r}
 library(tidyverse)
+library(tinytable)
 ```
 
 # Overview {.unnumbered}
@@ -269,7 +270,8 @@ This is a sketch, using the simulated data from the beginning, of how I would st
 ```{r}
 data %>% 
   summarize(ev_x = mean(x),
-            ev_y = mean(y))
+            ev_y = mean(y)) %>% 
+  tt(digits = 2)
 ```
 
 
