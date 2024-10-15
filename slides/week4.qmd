@@ -306,6 +306,7 @@ draw_sample = function(data, n) {
 # Example
 draw_sample(gss, 100)
 ```
+
 ## Scale up
 
 ```{r}
@@ -366,21 +367,37 @@ gss %>%
 - **Consistency:** $\widehat \theta \overset{p}{\to} \theta$
 :::
 
-## Next week: Regression {.smaller} (AM Chapter 4)
+## Next week: Regression (AM Chapter 4) {.smaller}
 
 Important:
 
 - Estimation (Connection to BLP)
 - Inference (3 types of standard errors)
+- Application (Clean water and infant mortality)
 
-Less important (just get the concept):
+Less important (POLI_SCI 405):
 
 - Polynomials
 - Interactions
 - Overfitting
-- Average partial derivatives (aka marginal effects)
+- Average partial derivatives vs. partial derivative at the average (aka marginal effects)
 
 Ignore:
 
 - Sieve estimation
 - Penalized regression
+
+## Next week: Other readings {.smaller}
+
+**Berk (2010)**
+
+- TBD
+
+**Achen (2005)**
+
+- TBD
+
+**Hansen (2022)** (very dense!)
+
+- What does it mean for OLS to be BLUE vs. BUE?
+- Why does it matter?
