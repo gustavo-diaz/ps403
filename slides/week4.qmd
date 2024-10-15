@@ -285,25 +285,6 @@ ggplot(mapping = aes(x = means1000)) +
 :::
 
 
-## Variance
-
-Why is there a difference?
-
-. . .
-
-```{r}
-set.seed(20241009)
-gss %>%
-  # replace = FALSE by default
-  sample_n(size = 400) %>% 
-  summarize(var1 = var(vote),
-            var2 = mean(mean(vote^2) - mean(vote)^2),
-            var3 = mean(mean(vote^2) - mean(vote)^2) * (400/(400-1))
-            )
-  
-```
-
-
 ## Asymptotic properties
 
 ::: {.panel-tabset}
@@ -357,6 +338,24 @@ ggplot(reps_df) +
 
 :::
 
+## Variance
+
+Why is there a difference?
+
+. . .
+
+```{r}
+set.seed(20241009)
+gss %>%
+  # replace = FALSE by default
+  sample_n(size = 400) %>% 
+  summarize(var1 = var(vote),
+            var2 = mean(mean(vote^2) - mean(vote)^2),
+            var3 = mean(mean(vote^2) - mean(vote)^2) * (400/(400-1))
+            )
+  
+```
+
 ## Properties of estimators
 
 ::: incremental
@@ -366,3 +365,22 @@ ggplot(reps_df) +
 
 - **Consistency:** $\widehat \theta \overset{p}{\to} \theta$
 :::
+
+## Next week: Regression {.smaller} (AM Chapter 4)
+
+Important:
+
+- Estimation (Connection to BLP)
+- Inference (3 types of standard errors)
+
+Less important (just get the concept):
+
+- Polynomials
+- Interactions
+- Overfitting
+- Average partial derivatives (aka marginal effects)
+
+Ignore:
+
+- Sieve estimation
+- Penalized regression
