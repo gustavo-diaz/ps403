@@ -77,6 +77,20 @@ $X \rightarrow \overline{X} \rightarrow \widehat{\mu} \xrightarrow{\text{hopeful
 
 :::
 
+
+
+# Why random sampling?
+
+## Independent, identically distributed
+
+A collection of **random variables** is i.i.d. if they are:
+
+. . .
+
+1. Mutually independent
+
+2. Identically distributed
+
 ## Data
 
 ```{r setup, include=FALSE}
@@ -115,18 +129,6 @@ gss
 ```
 
 :::
-
-# Why random sampling?
-
-## Independent, identically distributed
-
-A collection of **random variables** is i.i.d. if they are:
-
-. . .
-
-1. Mutually independent
-
-2. Identically distributed
 
 ## Which of the following implies i.i.d?
 
@@ -233,7 +235,7 @@ theme_set(theme_gray(base_size = 20))
 ggdodge = position_dodge(width = 0.5)
 ```
 
-```{r}
+```{r, out.width="70%"}
 ggplot(mapping = aes(x = means)) +
   geom_density() +
   geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
