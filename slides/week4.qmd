@@ -391,13 +391,15 @@ Ignore:
 
 **Berk (2010)**
 
-- TBD
+- Regression level I, II, III
 
 **Achen (2005)**
 
-- TBD
+- Why are "garbage-can" regressions a problem?
+- Total vs direct effects
+- Linearity vs. monotonicity
 
-**Hansen (2022)** (very dense!)
+**Hansen (2022)** (skip proofs)
 
-- What does it mean for OLS to be BLUE vs. BUE?
-- Why does it matter?
+- What does it mean for OLS to be BUE instead of BLUE? Why does it matter?
+- History of OLS
