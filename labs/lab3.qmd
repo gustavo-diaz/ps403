@@ -337,7 +337,7 @@ Also, note that in this particular example the difference in vote recall rates a
 :::
 
 ::: {.callout-warning}
-You are very likely to run into a dead end here, because the *actual* answer requires translating between confidence intervals and hypothesis testing, so you may only get halfway there with what we know so far.
+You are very likely to run into a dead end here, because the actual answer requires translating between confidence intervals and hypothesis testing, so you may only get halfway there with what we know so far.
 :::
 
 
