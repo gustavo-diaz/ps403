@@ -1,0 +1,241 @@
+---
+title: "Lab 4: Controlling for covariates"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: October 28, 2024
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+---
+
+```{r setup, include=FALSE}
+# Code chunk options
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = FALSE,
+                      tidy.opts=list(width.cutoff=80))
+
+# Packages
+library(tidyverse)
+library(broom) # tidyverse-friendly regression
+library(rsample) # tidyverse-friendly bootstrap
+library(estimatr) # easy robust standard errors
+library(marginaleffects) # Visualize regression output
+library(ggdist) # Shortcut for ribbon plots
+library(distributional) # Shortcut for plotting regression CIs
+library(modelsummary) # make pdf regression tables
+
+```
+
+
+# Data
+
+For this lab, we will follow the application on Section 4.4 in the AM textbook.
+
+They use the [Quality of Governance data](https://www.gu.se/en/quality-government/qog-data/data-downloads/standard-dataset) to examine the relationship between access to clean water and infant morality.
+
+For the lab, we will use the most recent version of the Cross-Section data. Which we load in the code chunk below.
+
+```{r, results = "hide"}
+url = 'https://www.qogdata.pol.gu.se/data/qog_std_cs_jan24.csv'
+
+qog = read.csv(url)
+
+# examine but don't print in pdf
+qog
+```
+
+This is the January 2024 version of the indicators, the AM book uses an older version, so our results will differ.
+
+This data set has 194 observations (countries) and 1652 variables. This is too many variables to carry along, so we will create focus on only three.
+
+These are:
+
+- `wdi_mortinf`: Infant mortality rate (number of infants dying before reaching one year of age per 1,000 births in a given year)
+- `who_dwtot`: % of the population with access to clean drinking water
+- `wdi_acel`: % of the population with access to electricity
+
+Infant mortality is our outcome variable. Access to clean water and electricity are our explanatory variables. I prefer these names over the traditional "dependent" and "independent" variable names because I find the similarity confusing.
+
+The code chunk below creates a smaller version of the data that includes our outcome and explanatory variables only. We also given them more informative names.
+
+```{r}
+qog_am = qog %>% 
+  select(mortinf = wdi_mortinf,
+         water = who_dwtot,
+         elec = wdi_acel) %>% 
+  drop_na()
+
+# examine
+head(qog_am)
+```
+
+Notice that we are also dropping missing data, primary on the `water` variable, so we are left with only 123 countries in the end.
+
+Visualizing the data before estimating a model is generally a good idea. The code below plots the values of access to clean water in the horizontal axis against infant mortality in the vertical axis. Notice how I force a line skip in the label of the horizontal axis with the `\n` expression.
+
+```{r}
+ggplot(qog_am) +
+  aes(x = water, y = mortinf) +
+  geom_point() +
+  labs(
+    x = "% Access to Clean Water",
+    y = "Infant Mortality\n(per 1,000 births)"
+  )
+```
+
+## How does this plot compare to Figure 4.4.1 (p. 171) in the AM textbook
+
+## What do we need to assume to conduct statistical inference with this data? Is that assumption credible?
+
+# Regression with one explanatory variable
+
+We are mainly interested in the relationship between access to clean water and infant mortality. The AM book is wary about referring to this as the "effect" of access to clean water and infant mortality since it implies causation, and we are yet to talk about that. I am okay with using "effect" informally since "slope" or "derivative" are not super fun words.
+
+We can estimate OLS regression with the `lm()` function in base R.
+
+```{r}
+fit0 = lm(mortinf ~ water, data = qog_am)
+```
+
+The traditional way to print regression output in R is with the `summary` function.
+
+```{r, results = "hide"}
+# Look at it but don't print in pdf
+summary(fit0)
+```
+
+But this is hard to read and has information that we will not cover in this course. We will prefer the tidy output from the `broom` package.
+
+
+```{r}
+tidy(fit0)
+```
+
+You may consider that a linear specification does not fit the data well. We can introduce a quadratic fit.
+
+```{r}
+fit1 = lm(mortinf ~ water + I(water^2), data = qog_am)
+
+tidy(fit1)
+```
+
+We can also visualize our results in ggplot. The [`marginaleffects`](https://marginaleffects.com) package provides a wrapper function that lets you plot regression objects directly.
+
+```{r}
+plot_predictions(fit0,
+                 condition = "water",
+                 points = 0.5) +
+    labs(
+      title = "Linear fit",
+      x = "% Access to Clean Water",
+      y = "Infant Mortality\n(per 1,000 births)"
+  )
+```
+
+```{r}
+plot_predictions(fit1,
+                 condition = "water",
+                 points = 0.5) +
+    labs(
+      title = "Quadratic fit",
+      x = "% Access to Clean Water",
+      y = "Infant Mortality\n(per 1,000 births)"
+  )
+```
+
+Plotting the same lines side by side is a little bit more involved, but not impossible. The key is to extract the data from our plots.
+
+```{r, results = "hide"}
+# draw = FALSE returns a data frame instead of a ggplot object
+p0 = plot_predictions(fit0,
+                 condition = "water",
+                 draw = FALSE)
+
+p1 = plot_predictions(fit1,
+                 condition = "water",
+                 draw = FALSE)
+
+# Inspect but do not print
+p0
+p1
+
+# Paste together and add a variable to label them
+pred_df = bind_rows(
+  p0 %>% mutate(fit = "Linear"),
+  p1 %>% mutate(fit = "Quadratic")
+)
+
+
+```
+
+Then we can make feed these directly into `ggplot`. This time we will add a "rug" to indicate where the raw data is without crowding the visual space. We are also using the shortcuts from the `ggdist` and `distributional` packages to plot lines and confidence intervals.
+
+```{r}
+ggplot(qog_am) +
+  aes(x = water, y = mortinf) +
+  geom_rug() +
+  # This part needs ggdist and distributional
+  stat_lineribbon(
+    data = pred_df,
+    aes(x = water,
+        ydist = dist_normal(mu = estimate,
+                            sigma = std.error),
+        fill = fit),
+    alpha = 0.3
+  ) +
+  labs(
+    x = "% Access to Clean Water",
+    y = "Infant Mortality\n(per 1,000 births)"
+  )
+```
+
+
+## Interpret the output of `tidy(fit0)`, with special attention to the `estimate` and `std.error` of each `term`. How does this compare to Table 4.4.5 in the AM book?
+
+## Looking at the figures, which specification do you think fits the data better? Which one uses a more `efficient` estimator?
+
+::: {.callout-tip}
+## Hints
+
+1. Recall the definition of efficiency from AM chapters 3 and 5.
+
+2. The `deviance()` function will return the residual sum of squares from an `lm` object
+
+:::
+
+## Compare `fit0` and `fit1`. What happens to the `estimate` and `std.error` of `water` as we move from a linear to a quadratic specification? What statistical property or phenomena is this illustrating?
+
+
+::: {.callout-tip}
+## Hint
+
+You gain something but lose something else. You could call it a *tradeoff*.
+
+:::
+
+
+
+
+
+# Regression with multiple covariates
+
+# Standard errors
+
+# Regression tables
+
+

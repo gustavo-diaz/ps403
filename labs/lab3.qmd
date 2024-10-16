@@ -19,18 +19,6 @@ geometry:
 header-includes:
     - \usepackage{setspace}
     - \doublespacing
-    - \usepackage{float}
-    - \floatplacement{figure}{t}
-    - \floatplacement{table}{t}
-    - \usepackage{flafter}
-    - \usepackage[T1]{fontenc}
-    - \usepackage[utf8]{inputenc}
-    - \usepackage{ragged2e}
-    - \usepackage{booktabs}
-    - \usepackage{amsmath}
-    - \usepackage{url}
-    - \usepackage{fvextra}
-    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 ---
 
 ```{r setup, include=FALSE}
@@ -45,9 +33,6 @@ knitr::opts_chunk$set(echo = TRUE,
 library(tidyverse)
 library(mosaic) # one line bootstrap
 library(infer) # tidyverse-friendly t-test
-
-# Global options
-theme_set(theme_bw(base_size = 20)) # ggplot background and size
 ```
 
 
@@ -235,12 +220,15 @@ The simplest version of this technique is the *leave-one-out jackknife*. As the 
 
 ## Compute jackknife confidence intervals for the mean of `vote`
 
-To get you started, this is one way to remove one specific observation from a vector and then calculate the mean.
+To get you started, this is one way to remove one specific observation from a vector and then calculate the mean. 
 
 ```{r, eval = FALSE}
 # Removes the first row
 gss %>% slice(-1) %>% summarize(estimate = mean)
 ```
+
+Then, you can probably write a function with observation $i$ as its only parameter that grabs the data, removes the $i^{th}$ observation, then computes the mean. Then you `map` that function from 1 to the total number of observations in tidyverse, and then get a jackknife resampling distribution of means, from which you can compute the standard deviation and confidence intervals. The code that creates `tidy_boot` may be a useful reference.
+
 ::: {.callout-tip}
 ## Hint
 
@@ -249,6 +237,10 @@ The `bootstrap` package has a [`jackknife()` function](https://www.rdocumentatio
 :::
 
 ## Which resampling method seems generally more appropriate? Does your answer change depending on what we can assume about the data generation process? Explain
+
+::: {.callout-tip}
+This is not the only way to answer this, but think about the relative appropriateness of bootstrap vs. jackknife when we cannot credibly claim we have a random sample. For example, what if we had countries as the unit of analysis?
+:::
 
 # Overlapping intervals
 
@@ -289,7 +281,7 @@ The readings by Goldstein et al and Knol et al assigned for this week criticize 
 ## Why should we avoid using 95% confidence intervals when comparing two means? Why 84% and not another quantity?
 
 ::: {.callout-tip}
-Here, I am looking for an answer using your own words. You will get closer to an outstanding mark if you bake the concepts of *coverage*, *type I error*, and *type II error*.
+Here, I am looking for an answer using your own words. You will get closer to an outstanding mark if you incorporate the concepts of *coverage*, *type I error*, and *type II error*.
 :::
 
 ## Demonstrate this using your favorite resampling method
@@ -342,6 +334,10 @@ So we need to devise a resampling simulation that compares 95% and 84% confidenc
 We are not necessarily interested in reconstructing the resampling distribution of the mean for each group, but rather the resampling distribution of the upper bound of the confidence interval of each group, and the lower bound of the confidence interval for the other group. It may help to compute the resampling distribution of both upper and lower bounds for both groups, and then figure out what the right comparison is.
 
 Also, note that in this particular example the difference in vote recall rates among men and women may be so tiny that it may not make a difference at all which confidence level we use. Still, it may help to think about how things should look like if it *did* make a difference.
+:::
+
+::: {.callout-warning}
+You are very likely to run into a dead end here, because the *actual* answer requires translating between confidence intervals and hypothesis testing, so you may only get halfway there with what we know so far.
 :::
 
 
