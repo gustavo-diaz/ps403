@@ -1,0 +1,156 @@
+---
+title: "Projects and Tables"
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    chalkboard: true
+    code-overflow: wrap
+    
+---
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.pos = "center")
+```
+
+## Presenting Data using R
+
+```{r}
+#| include: false
+library(tidyverse)
+```
+
+Let's, say, work with our favorite `mtcars` data. 
+
+<br>
+
+What do you think of this presentation?
+
+```{r}
+head(mtcars)
+```
+
+## Improving the presentation
+
+`KableExtra` can help you with this. Let's try it out.
+
+```{r}
+library(kableExtra)
+
+mtcars_kable = mtcars %>%
+  head(n = 3) %>%
+  kbl()
+
+mtcars_kable
+```
+
+## Custumizing the output
+
+::: {.panel-tabset}
+## Paper
+
+```{r}
+mtcars_kable %>%
+  kable_paper()
+```
+
+
+## Classic
+
+```{r}
+mtcars_kable %>%
+  kable_classic()
+```
+
+## Minimal
+
+```{r}
+mtcars_kable %>%
+  kable_minimal()
+```
+
+## Material
+
+```{r}
+mtcars_kable %>%
+  kable_material()
+```
+
+:::
+
+
+## Presenting data we want
+
+Let's say, we want to present average and median of `mpg` variable.
+
+```{r}
+descriptive_statistics = mtcars %>%
+  summarize(mpg_average = mean(mpg),
+            mpg_median = median(mpg))
+```
+
+<br>
+
+```{r}
+descriptive_statistics
+```
+
+## Making the data accessible
+
+::: {.panel-tabset}
+## Wide format
+
+```{r}
+descriptive_statistics %>%
+  rename(`Average Miles Per Gallon` = mpg_average,
+         `Median Miles Per Gallon` = mpg_median) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+
+## Long format
+
+```{r}
+descriptive_statistics %>%
+  pivot_longer(cols = c(mpg_average, mpg_median), 
+               names_to = "Statistic",
+               values_to = "Value") %>%
+  mutate(Statistic = case_when(Statistic == "mpg_average" ~ "Average Miles Per Gallon",
+                               Statistic == "mpg_median" ~ "Median Miles Per Gallon")) %>%
+  kbl() %>%
+  kable_styling()
+```
+
+:::
+
+
+## Projects in R and paths
+
+Absolute paths
+
+```{r, eval=FALSE}
+"G:/PS403 Stats and Probability/Labs/Lab0/data/data.csv"
+```
+
+<br>
+
+Relative paths (with working directory set)
+
+```{r, eval=FALSE}
+"data/data.csv"
+```
+
+## Projects
+
+Projects set your working directory to specific folder on your laptop
+
+[How to find a directory on MacOS](https://support.apple.com/guide/mac-help/get-file-folder-and-disk-information-on-mac-mchlp1774)
+
+<br>
+
+Let's practice with happiness report 2024!
