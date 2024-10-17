@@ -48,7 +48,7 @@ For this lab, we will follow the application on Section 4.4 in the AM textbook.
 
 They use the [Quality of Governance data](https://www.gu.se/en/quality-government/qog-data/data-downloads/standard-dataset) to examine the relationship between access to clean water and infant morality.
 
-For the lab, we will use the most recent version of the Cross-Section data. Which we load in the code chunk below.
+For the lab, we will use the most recent version of the Cross-Section data, which we load in the code chunk below.
 
 ```{r, results = "hide"}
 url = 'https://www.qogdata.pol.gu.se/data/qog_std_cs_jan24.csv'
@@ -61,7 +61,7 @@ qog
 
 This is the January 2024 version of the indicators, the AM book uses an older version, so our results will differ.
 
-This data set has 194 observations (countries) and 1652 variables. This is too many variables to carry along, so we will create focus on only three.
+This data set has 194 observations (countries) and 1652 variables. This is too many variables to carry along, so we will focus on only three.
 
 These are:
 
@@ -228,11 +228,19 @@ You gain something but lose something else. You could call it a *tradeoff*.
 
 :::
 
-
-
-
-
 # Regression with multiple covariates
+
+One of the features of regression is that incorporate more than one explanatory variable. Normally, we do this to characterize the relationship between explanatory and outcome variable *conditional* on other variables. 
+
+[CONTINUE HERE EXPLAIN THIS BETTER]
+
+We tend to refer to these third variables as **control** variables or just **covariates**. The term "covariate" explains a lot about what we do when we *control* or *adjust* for them. We believe that they *co-vary* with the outcome in ways that are (theoretically) unrelated to the explanatory variable, but that they still (mathematically) confound the effect of our explanatory variable.
+
+## Why can't we just interpret each coefficient as the "effect" of each variable? (Think of total vs. direct effect)
+
+## Something about APD vs. PDA
+
+## Write more models in table 4.4.5?
 
 # Standard errors
 
