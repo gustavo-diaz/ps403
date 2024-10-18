@@ -230,20 +230,233 @@ You gain something but lose something else. You could call it a *tradeoff*.
 
 # Regression with multiple covariates
 
-One of the features of regression is that incorporate more than one explanatory variable. Normally, we do this to characterize the relationship between explanatory and outcome variable *conditional* on other variables. 
+Why does access to clean water matter for infant mortality? Let's pretend that our preferred explanation is that having clean drinking water helps babies avoid disease.
 
-[CONTINUE HERE EXPLAIN THIS BETTER]
+Someone else could argue clean water is just measuring a state's ability to promote basic infrastructure in general. There is nothing in particular about clean drinking water that keeping babies healthier, it is just a proxy for state capacity.
 
-We tend to refer to these third variables as **control** variables or just **covariates**. The term "covariate" explains a lot about what we do when we *control* or *adjust* for them. We believe that they *co-vary* with the outcome in ways that are (theoretically) unrelated to the explanatory variable, but that they still (mathematically) confound the effect of our explanatory variable.
+If the state capacity critique is true, then perhaps including a variable that is better proxy of state capacity in our regression model may change the observed coefficient for our `water` variable. Let's pretend that access to electricity `elec` is such a variable (there could be a better candidate, but I am trying to off what AM Chapter 4 does).
 
-## Why can't we just interpret each coefficient as the "effect" of each variable? (Think of total vs. direct effect)
+More formally, if `mortinf` is our outcome variable, and `water` is our explanatory variable. Then we would say that `elec` is a *control variable* or a *covariate*. I have a slight preference for the term "covariate" because it reminds you that the reason you include it in a regression model is because you expect it to *co-vary* with the outcome variable, the explanatory variable, or both.^[You could have more than one explanatory variables, but that does not automatically imply you should include both in a regression model.]
 
-## Something about APD vs. PDA
 
-## Write more models in table 4.4.5?
+::: {.callout-note}
+You will discuss this in more detail in POLI_SCI 405 or a similar course on linear models. But the importance of distinguishing between **explanatory** variables and **covariates** is that, from a substantive perspective, statistical inference in multiple regression only makes sense when we want to use covariates to **adjust** the coefficient of an explanatory variable. This usually requires (at least) a proto-causal story.
+:::
+
+Digression aside, we can include `elec` as a control variable in our regression model. To start, let's assume that a linear specification for `water` is the most appropriate, feel free to change this in the code chunk below.
+
+```{r}
+fit2 = lm(mortinf ~ water + elec, data = qog_am)
+```
+
+A more eclectic scholar may come up with a more conciliatory argument: The "effect" of `water` as a disease-preventing factor depends on other state-capacity factors captured by `elec`. After all, if you have access to clean drinking water *and* electricity, that means that you can cook nicer, keep food and antibiotics in the fridge, and perhaps other more substantial factors beyond the instructors' expertise.
+
+If this was true, we would say that `elec` *moderates* the effect of `water`, which we can model by introducing an interaction term in the regression.
+
+```{r}
+fit3 = lm(mortinf ~ water * elec, data = qog_am)
+```
+
+If you inspect the output of `fit3`, you would notice it is the same as:
+
+```{r}
+fit3b = lm(mortinf ~ water + elec + water:elec,
+           data = qog_am)
+```
+
+That is because in R formulae, the operator `a*b` tells R to look for all the possible combinations of `a` and `b`, which includes each of them by themselves. In contrast, the `a:b` operator will instruct R to only look at the literal multiplication of the two variables in the mathematical sense. For reasons that will hopefully become relevant in a future course, you usually want to include the constitutive terms of an interaction in any kind of regression estimation, so the default behavior of the `a*b` operator is desirable.
+
+The use of interaction terms also makes the distinction between **average marginal effects (AME)** and **marginal effects at the mean (MEM)**. Or, as the AM book calls them, **average partial derivative** and **partial derivative at the average**, respectively. You could also say something like "average individual slope" and "slope at the average." The important part is that you remember those are different things. You can read a more detailed guide on this [here](https://www.andrewheiss.com/blog/2022/05/20/marginalia/).
+
+The **AME** is the average of the effect/slope/partial derivative evaluated at the values of each observation in the data. 
+
+The `slopes` function in the `marginaleffects` package helps us visualize these. Since regression is just an equation with many variables, we can take the partial derivative with respect to a variable of interest and then evaluate it at every point in our data.
+
+```{r, results = "hide"}
+# Evaluate but do not print in the pdf
+fit3 %>% 
+  slopes(variables = "water") %>% 
+  as.data.frame()
+```
+
+Since our specification for `fit3` assumes an interaction between `water` and `elec`, that also means the individual slopes of `water` depend on the values of `elec`. Note that shaded area is a fluctuating confidence interval, since different values of `water` and `elec` vary in frequency.
+
+```{r}
+# This is also from marginaleffects
+plot_slopes(fit3,
+            variables = "water",
+            condition = "elec",
+            rug = TRUE)
+```
+
+
+So every observation has its own slope, which may or may not vary. The **AME** is just the average of these slopes. 
+
+```{r}
+fit3 %>% 
+  slopes(variables = "water") %>% 
+  as.data.frame() %>% 
+  summarize(AME = mean(estimate))
+```
+
+Which you can corroborate with yet another function in `marginaleffects`.
+
+```{r}
+avg_slopes(fit3) 
+```
+
+In turn, the **MEM** is the effect/slope/partial derivative of a variable of interest when all variables (including the explanatory variable of interest) are held at their mean/average value. You can think of it as the expected change in slope in that particular variable as you move away from the average observation (which need not be a real observation).
+
+```{r}
+avg_slopes(fit3, newdata = "mean")
+```
+
+## Show and interpret the results of `fit2`, with special attention to the `estimate` and the `std.error` of `water`. What does this mean for our "clean water matters" story?
+
+::: {.callout-tip}
+## Hint
+
+You can do this by showing the numbers on a tidy output, or with a figure. Choose the one that makes the most sense to you.
+:::
+
+## Why can't we just interpret each coefficient in `fit2` as the "effect" of each variable? 
+
+::: {.callout-tip}
+## Hint
+
+Think about the distinction of total vs. direct effect and the idea of "holding constant" in some of the assigned readings for this week.
+
+:::
+
+## Show and interpret the results of `fit3`, with special attention to the `estimate` and the `std.error` of `water` and `water:elec`. What does this mean for the "effect of water depends on electricity" story?
+
+## Calculate the AME and MEM of `water` for `fit0`, `fit1`, `fit2`, and `fit3`. When is it different? Why? Showing figures may help.
+
+::: {.callout-tip}
+## Tip
+
+If you find they are never different, then when do you think they should be different? This is another one of those things that doesn't matter very often. But, when it matters, it matters **a lot**.
+
+:::
 
 # Standard errors
 
+AM Chapter 4 discusses three types of standard errors for regression. In a different order from what is introduced in the book, these are.
+
+1. Classical standard errors
+2. Robust standard errors
+3. Bootstrap standard errors
+
+There used to be a time when computing these was a pain in the keister, but not anymore. Just to help you make sense of the underlying difference, this is how you would compute classical standard errors with matrix algebra for `fit2`.
+
+```{r}
+## Inspect every step if you are curious
+# outcome
+y = qog_am$mortinf
+
+# right hand side vars with a leading column of 1s
+X = model.matrix(~ water + elec, data = qog_am)
+
+# beta coefficients
+b = solve(t(X) %*% X) %*% t(X) %*% y
+
+# residuals
+ehat = y - (X %*% b)
+
+# estimate variance
+sigma2 = sum(ehat^2) / (nrow(qog_am) - length(b))
+
+# variance-covariance matrix
+vcovb = sigma2 * solve(t(X) %*% X)
+
+# standard errors
+seb = sqrt(diag(vcovb))
+
+seb
+```
+
+Which is just what the base R `lm()` function calculates.
+
+```{r}
+tidy(fit2)$std.error
+```
+
+Meanwhile, Huber-White "sandwich" robust standard errors look like this.
+
+```{r}
+# We are recycling some of the elements in the previous chunk
+bread = solve(t(X) %*% X)
+
+# The part in the middle is an nxn matrix with
+# residuals in the diagonal and
+# zeroes in the off diagonal
+meat = t(X) %*% diag(c(ehat))^2 %*% X
+
+# Sandwich vcov matrix
+sandwich = bread %*% meat %*% bread
+
+# Robust SEs
+sqrt(diag(sandwich))
+```
+
+We will corroborate this soon.
+
+Luckily, we do not have to bother with any of this. The `lm_robust()` function in the `estimatr` package lets you implement many kinds of standard errors. You can read more about the different kinds [here](https://declaredesign.org/r/estimatr/articles/mathematical-notes.html).
+
+This is how you implement classical standard errors, which is **not** the default in this package.
+
+```{r}
+fit2_classic = lm_robust(
+  mortinf ~ water + elec,
+  data = qog_am,
+  se_type = "classical"
+)
+
+tidy(fit2_classic)
+```
+
+This is how you implement sandwich standard errors, which matches our matrix algebra above. Which is also not the default. The default in the package is `HC2`, but the default in Stata is `HC1`. What a life!
+
+```{r}
+fit2_robust = lm_robust(
+  mortinf ~ water + elec,
+  data = qog_am,
+  se_type = "HC0"
+)
+
+tidy(fit2_robust)
+```
+
+You can also use `rsample` package to implement bootstrap standard errors. Which has the advantage of preserving the `lm_robust()` output format.
+
+```{r}
+# Remember the seed!
+fit2_boot = bootstraps(data = qog_am, times = 1000)$splits %>% 
+  map(~lm(mortinf ~ water + elec, data = analysis(.))) %>% 
+  map(tidy) %>% 
+  bind_rows(.id = "bootstrap_replicate") %>% 
+  group_by(term) %>% 
+  summarize(std.error = sd(estimate))
+
+fit2_boot
+```
+
+## Explain what every step in `fit2_boot` is doing
+
+## Which kind of standard error estimation procedure is more appropriate in theory? Explain
+
+## Does it make a difference in practice? Explain
+
 # Regression tables
 
+If you look at regression tables in published articles, they usually have a particular format. We can reproduce this with the [`modelsummary`](https://modelsummary.com) package.
+
+```{r}
+# make a list of models
+models = list(fit0, fit1, fit2, fit3)
+
+modelsummary(models)
+```
+
+## Look at the [documentation](https://modelsummary.com/vignettes/modelsummary.html) for the `modelsummary` function. Customize the `models` table to make it as informative as possible. Explain what you changed and why you changed it
 
