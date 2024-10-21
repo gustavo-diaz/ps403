@@ -84,9 +84,9 @@ qog_am = qog %>%
 head(qog_am)
 ```
 
-Notice that we are also dropping missing data, primary on the `water` variable, so we are left with only 123 countries in the end.
+Notice that we are also dropping missing data, primarily on the `water` variable, so we are left with only 123 countries in the end.
 
-Visualizing the data before estimating a model is generally a good idea. The code below plots the values of access to clean water in the horizontal axis against infant mortality in the vertical axis. Notice how I force a line skip in the label of the horizontal axis with the `\n` expression.
+Visualizing the data before estimating a model is generally a good idea. The code below plots the values of access to clean water in the horizontal axis against infant mortality in the vertical axis. Notice how I force a line skip in the label of the vertical axis with the `\n` expression.
 
 ```{r}
 ggplot(qog_am) +
@@ -104,7 +104,7 @@ ggplot(qog_am) +
 
 # Regression with one explanatory variable
 
-We are mainly interested in the relationship between access to clean water and infant mortality. The AM book is wary about referring to this as the "effect" of access to clean water and infant mortality since it implies causation, and we are yet to talk about that. I am okay with using "effect" informally since "slope" or "derivative" are not super fun words.
+We are mainly interested in the relationship between access to clean water and infant mortality. The AM book is wary about referring to this as the "effect" of access to clean water on infant mortality since it implies causation, and we are yet to talk about that. I am okay with using "effect" informally since "slope" or "derivative" are not super fun words.
 
 We can estimate OLS regression with the `lm()` function in base R.
 

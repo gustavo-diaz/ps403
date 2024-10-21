@@ -1,0 +1,78 @@
+---
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    chalkboard: true
+    code-overflow: wrap
+---
+
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.pos = "center")
+
+
+```
+
+## Back to BLP
+
+
+
+## ANES 2016 data
+
+::: aside
+**Codebook:**  <https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf>
+:::
+
+```{r}
+library(tidyverse)
+
+# remotes::install_github("jamesmartherus/anesr")
+library(anesr)
+
+
+data(timeseries_2016)
+```
+
+## Variables
+
+::: {.panel-tabset}
+## Code
+
+```{r}
+nes16 = timeseries_2016 %>% 
+  select(
+    V162034a, # For whom did R vote for President [POST]
+    V161087, # Feeling thermometer for TRUMP [PRE]
+    V162079, # Feeling thermometer for TRUMP [POST]
+    V162255, # Is Barack Obama Muslim (yes/no) [POST]
+    V162255x, # Barack Obama is/isn't Muslim (1-10) [POST]
+    V161267, # Respondent Age [PRE]
+    V162230x, # Better if man works and woman takes care of home
+    V161342, # Self-identified gender [PRE]
+    V161270, # Highest level of Education (Years) [PRE]
+    V161158x # Party ID [PRE]
+  )
+```
+
+## Data
+
+```{r, echo = FALSE}
+nes16
+```
+
+:::
+
+## Recode
+
+## Code
+
+```{r}
+# CONTINUE HERE LOOK AT JAKE'S RECODE TO MAKE EVERYTHING BINARY
+
+```
+
