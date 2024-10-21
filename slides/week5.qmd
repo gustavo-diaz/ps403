@@ -20,6 +20,69 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ## Back to BLP
 
+. . .
+
+CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
+
+. . .
+
+If we restrict ourselves to a linear functional form $Y = a + bX$, then the following minimize MSE of $Y$ given $X$:
+
+. . .
+
+- $g(X) = \alpha + \beta X$ where
+- $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
+- $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
+
+## Plug-in principle
+
+. . .
+
+**Estimand**
+
+$\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X] \qquad \beta = \frac{\text{Cov}[X,Y]}{V[X]}$
+
+&nbsp;
+
+. . .
+
+**Estimator**
+
+$\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2} \overline{X} \qquad \widehat{\beta} = \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2}$
+
+. . .
+
+Regression *consistently* estimates the minimum MSE *linear* approximation of the BLP.
+
+::: aside
+$\widehat{\alpha}$: intercept; $\widehat{\beta}$: slope
+:::
+
+## Ordinary Least Squares (OLS)
+
+. . .
+
+Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
+
+. . .
+
+Such that
+
+$$
+\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i
+$$
+
+. . .
+
+Where
+
+$$
+e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
+$$
+
+::: aside
+OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+:::
 
 
 ## ANES 2016 data
@@ -30,6 +93,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```{r}
 library(tidyverse)
+library(scales) # rescaling from 0 to 1
 
 # remotes::install_github("jamesmartherus/anesr")
 library(anesr)
@@ -46,15 +110,13 @@ data(timeseries_2016)
 ```{r}
 nes16 = timeseries_2016 %>% 
   select(
-    V162034a, # For whom did R vote for President [POST]
-    V161087, # Feeling thermometer for TRUMP [PRE]
     V162079, # Feeling thermometer for TRUMP [POST]
-    V162255, # Is Barack Obama Muslim (yes/no) [POST]
-    V162255x, # Barack Obama is/isn't Muslim (1-10) [POST]
-    V161267, # Respondent Age [PRE]
+    V161087, # Feeling thermometer for TRUMP [PRE]
     V162230x, # Better if man works and woman takes care of home
-    V161342, # Self-identified gender [PRE]
+    V162255, # Is Barack Obama Muslim (yes/no) [POST]
+    V161267, # Respondent Age [PRE]
     V161270, # Highest level of Education (Years) [PRE]
+    V161342, # Self-identified gender [PRE]
     V161158x # Party ID [PRE]
   )
 ```
@@ -69,10 +131,29 @@ nes16
 
 ## Recode
 
+::: {.panel-tabset}
 ## Code
 
 ```{r}
-# CONTINUE HERE LOOK AT JAKE'S RECODE TO MAKE EVERYTHING BINARY
+nes16 %>% 
+  mutate(
+    ft_trump_post = ifelse(V162079 < 0 | V162079 == 998, NA, V162079),
+    ft_trump_pre = ifelse(V161087 < 0 | V161087 == 998, NA, V161087),
+    women_at_home = ifelse(V162230x < 0, NA, V162230x),
+    women_at_home = 1 - rescale(women_at_home),
+    obamamuslim = ifelse(V162255 == 1, 1, 0),
+    age = ifelse(V161267 < 0, NA, V161267),
+    age50plus = as.numeric(age >= 50),
+    educyrs = ifelse(V161270 < 0 | V161270 %in% c(90, 95),
+                     NA, V161270 - 5),
+    # man
+    # PID
+  )
+
+
+
+nes16$V161342
 
 ```
 
+:::

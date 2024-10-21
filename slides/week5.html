@@ -394,7 +394,59 @@
 
 <section id="back-to-blp" class="slide level2">
 <h2>Back to BLP</h2>
+<div class="fragment">
+<p>CEF <span class="math inline">\(E[Y|X]\)</span> minimizes MSE of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span></p>
+</div>
+<div class="fragment">
+<p>If we restrict ourselves to a linear functional form <span class="math inline">\(Y = a + bX\)</span>, then the following minimize MSE of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>:</p>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(g(X) = \alpha + \beta X\)</span> where</li>
+<li><span class="math inline">\(\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]\)</span></li>
+<li><span class="math inline">\(\beta = \frac{\text{Cov}[X,Y]}{V[X]}\)</span></li>
+</ul>
+</div>
 </section>
+<section id="plug-in-principle" class="slide level2">
+<h2>Plug-in principle</h2>
+<div class="fragment">
+<p><strong>Estimand</strong></p>
+<p><span class="math inline">\(\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X] \qquad \beta = \frac{\text{Cov}[X,Y]}{V[X]}\)</span></p>
+<p>&nbsp;</p>
+</div>
+<div class="fragment">
+<p><strong>Estimator</strong></p>
+<p><span class="math inline">\(\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2} \overline{X} \qquad \widehat{\beta} = \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2}\)</span></p>
+</div>
+<div class="fragment">
+<p>Regression <em>consistently</em> estimates the minimum MSE <em>linear</em> approximation of the BLP.</p>
+
+</div>
+<aside><div>
+<p><span class="math inline">\(\widehat{\alpha}\)</span>: intercept; <span class="math inline">\(\widehat{\beta}\)</span>: slope</p>
+</div></aside></section>
+<section id="ordinary-least-squares-ols" class="slide level2">
+<h2>Ordinary Least Squares (OLS)</h2>
+<div class="fragment">
+<p>Function <span class="math inline">\(\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}\)</span></p>
+</div>
+<div class="fragment">
+<p>Such that</p>
+<p><span class="math display">\[
+\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Where</p>
+<p><span class="math display">\[
+e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
+\]</span></p>
+
+</div>
+<aside><div>
+<p>OLS “finds” the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals – SSR)</p>
+</div></aside></section>
 <section id="anes-2016-data" class="slide level2">
 <h2>ANES 2016 data</h2>
 
@@ -413,7 +465,7 @@
 <section id="variables" class="slide level2">
 <h2>Variables</h2>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Select</a></li><li><a href="#tabset-1-2">Data</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Code</a></li><li><a href="#tabset-1-2">Data</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
@@ -454,6 +506,15 @@
 </div>
 </div>
 </div>
+</div>
+</section>
+<section id="recode" class="slide level2">
+<h2>Recode</h2>
+</section>
+<section id="code-1" class="slide level2">
+<h2>Code</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># CONTINUE HERE LOOK AT JAKE'S RECODE TO MAKE EVERYTHING BINARY</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
