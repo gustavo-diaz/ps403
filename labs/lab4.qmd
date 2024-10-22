@@ -1,5 +1,5 @@
 ---
-title: "Lab 4: Controlling for covariates"
+title: "Lab 4: Adjusting for covariates"
 author: 
   - FirstName LastName
   - <YourEmail@u.northwestern.edu>
@@ -61,11 +61,11 @@ qog
 
 This is the January 2024 version of the indicators, the AM book uses an older version, so our results will differ.
 
-This data set has 194 observations (countries) and 1652 variables. This is too many variables to carry along, so we will focus on only three.
+This data set has 194 observations (countries) and 1652 variables. This is too many variables to carry along, so we will focus on three only.
 
 These are:
 
-- `wdi_mortinf`: Infant mortality rate (number of infants dying before reaching one year of age per 1,000 births in a given year)
+- `wdi_mortinf`: Infant mortality rate (number of infants dying before reaching one year of age per 1,000 births)
 - `who_dwtot`: % of the population with access to clean drinking water
 - `wdi_acel`: % of the population with access to electricity
 
@@ -134,9 +134,11 @@ fit1 = lm(mortinf ~ water + I(water^2), data = qog_am)
 tidy(fit1)
 ```
 
-We can also visualize our results in ggplot. The [`marginaleffects`](https://marginaleffects.com) package provides a wrapper function that lets you plot regression objects directly.
+We can also visualize our results in `ggplot()`. The [`marginaleffects`](https://marginaleffects.com) package provides a wrapper function that lets you plot regression objects directly.
 
 ```{r}
+# The "points" argument sets the transparency of data points
+# Defaults to points = 0, which shows no points
 plot_predictions(fit0,
                  condition = "water",
                  points = 0.5) +
@@ -183,7 +185,7 @@ pred_df = bind_rows(
 
 ```
 
-Then we can make feed these directly into `ggplot`. This time we will add a "rug" to indicate where the raw data is without crowding the visual space. We are also using the shortcuts from the `ggdist` and `distributional` packages to plot lines and confidence intervals.
+Then we can feed these directly into `ggplot()`. This time we will add a "rug" to indicate where the raw data is without crowding the visual space. We are also using the shortcuts from the `ggdist` and `distributional` packages to plot lines and confidence intervals.
 
 ```{r}
 ggplot(qog_am) +
@@ -232,24 +234,24 @@ You gain something but lose something else. You could call it a *tradeoff*.
 
 Why does access to clean water matter for infant mortality? Let's pretend that our preferred explanation is that having clean drinking water helps babies avoid disease.
 
-Someone else could argue clean water is just measuring a state's ability to promote basic infrastructure in general. There is nothing in particular about clean drinking water that keeping babies healthier, it is just a proxy for state capacity.
+Someone else could argue clean water is just measuring a state's ability to promote basic infrastructure in general. There is nothing in particular about clean drinking water keeping babies healthier other than it being a proxy for state capacity.
 
-If the state capacity critique is true, then perhaps including a variable that is better proxy of state capacity in our regression model may change the observed coefficient for our `water` variable. Let's pretend that access to electricity `elec` is such a variable (there could be a better candidate, but I am trying to off what AM Chapter 4 does).
+If the state capacity critique is true, then perhaps including a variable that is a more proximate of state capacity in our regression model may change the observed coefficient for the `water` variable. Let's pretend that access to electricity `elec` is such a variable (there could be a better candidate, but I am trying to go off what AM Chapter 4 does).
 
-More formally, if `mortinf` is our outcome variable, and `water` is our explanatory variable. Then we would say that `elec` is a *control variable* or a *covariate*. I have a slight preference for the term "covariate" because it reminds you that the reason you include it in a regression model is because you expect it to *co-vary* with the outcome variable, the explanatory variable, or both.^[You could have more than one explanatory variables, but that does not automatically imply you should include both in a regression model.]
+More formally, if `mortinf` is our outcome variable, and `water` is our explanatory variable. Then we would say that `elec` is a *control variable* or a *covariate*. I have a slight preference for the term "covariate" because it reminds you that the reason you include it in a regression model is because you expect it to *co-vary* with the outcome variable, the explanatory variable, or both.^[You could have more than one explanatory variable, but that does not automatically imply you should include both in a regression model.]
 
 
 ::: {.callout-note}
 You will discuss this in more detail in POLI_SCI 405 or a similar course on linear models. But the importance of distinguishing between **explanatory** variables and **covariates** is that, from a substantive perspective, statistical inference in multiple regression only makes sense when we want to use covariates to **adjust** the coefficient of an explanatory variable. This usually requires (at least) a proto-causal story.
 :::
 
-Digression aside, we can include `elec` as a control variable in our regression model. To start, let's assume that a linear specification for `water` is the most appropriate, feel free to change this in the code chunk below.
+Digression aside, we can include `elec` as a control variable in our regression model. To start, let's assume that a linear specification for `water` is the most appropriate.
 
 ```{r}
 fit2 = lm(mortinf ~ water + elec, data = qog_am)
 ```
 
-A more eclectic scholar may come up with a more conciliatory argument: The "effect" of `water` as a disease-preventing factor depends on other state-capacity factors captured by `elec`. After all, if you have access to clean drinking water *and* electricity, that means that you can cook nicer, keep food and antibiotics in the fridge, and perhaps other more substantial factors beyond the instructors' expertise.
+A more eclectic scholar may propose conciliatory argument: The "effect" of `water` as a disease-preventing factor depends on other state-capacity factors captured by `elec`. After all, if you have access to clean drinking water *and* electricity, that means that you can cook nicer meals, keep food and antibiotics in the fridge, and perhaps other more substantial factors that escape the expertise of an instructor of a probability and statistics course.
 
 If this was true, we would say that `elec` *moderates* the effect of `water`, which we can model by introducing an interaction term in the regression.
 
@@ -264,13 +266,13 @@ fit3b = lm(mortinf ~ water + elec + water:elec,
            data = qog_am)
 ```
 
-That is because in R formulae, the operator `a*b` tells R to look for all the possible combinations of `a` and `b`, which includes each of them by themselves. In contrast, the `a:b` operator will instruct R to only look at the literal multiplication of the two variables in the mathematical sense. For reasons that will hopefully become relevant in a future course, you usually want to include the constitutive terms of an interaction in any kind of regression estimation, so the default behavior of the `a*b` operator is desirable.
+That is because in R ~~formulas~~ ~~formulae~~ formulæ, the operator `a*b` tells R to look for all the possible combinations of `a` and `b`, which includes each by themselves. In contrast, the `a:b` operator will instruct R to only look at the literal multiplication of the two variables in the mathematical sense. For reasons that will hopefully become relevant in a future course, you usually want to include the constitutive terms of an interaction when you estimate any kind of regression-like model, so the default behavior of the `a*b` operator is desirable.
 
-The use of interaction terms also makes the distinction between **average marginal effects (AME)** and **marginal effects at the mean (MEM)**. Or, as the AM book calls them, **average partial derivative** and **partial derivative at the average**, respectively. You could also say something like "average individual slope" and "slope at the average." The important part is that you remember those are different things. You can read a more detailed guide on this [here](https://www.andrewheiss.com/blog/2022/05/20/marginalia/).
+The use of interaction terms also makes relevant the distinction between **average marginal effects (AME)** and **marginal effects at the mean (MEM)**. Or, as the AM book calls them, **average partial derivative** and **partial derivative at the average**, respectively. You could also say something like "average individual slope" and "slope at the average." The important part is that you remember those are different things. You can read a more detailed guide on the topic [here](https://www.andrewheiss.com/blog/2022/05/20/marginalia/).
 
-The **AME** is the average of the effect/slope/partial derivative evaluated at the values of each observation in the data. 
+The **average marginal effect (AME)** is the average of the effect/slope/partial derivative evaluated at the values of each observation in the data. 
 
-The `slopes` function in the `marginaleffects` package helps us visualize these. Since regression is just an equation with many variables, we can take the partial derivative with respect to a variable of interest and then evaluate it at every point in our data.
+The `slopes` function in the `marginaleffects` package helps us visualize this. Since regression is just an equation with many variables, we can take the partial derivative with respect to a variable of interest and then evaluate it at every point in our data.
 
 ```{r, results = "hide"}
 # Evaluate but do not print in the pdf
@@ -279,7 +281,7 @@ fit3 %>%
   as.data.frame()
 ```
 
-Since our specification for `fit3` assumes an interaction between `water` and `elec`, that also means the individual slopes of `water` depend on the values of `elec`. Note that shaded area is a fluctuating confidence interval, since different values of `water` and `elec` vary in frequency.
+Since our specification for `fit3` assumes an interaction between `water` and `elec`, that also means the individual slopes of `water` depend on the values of `elec`. We can visualize that in the figure below. The shaded area is a fluctuating confidence interval. Since different values of `water` and `elec` vary in frequency, we convey or confidence in those predicted slopes accordingly.
 
 ```{r}
 # This is also from marginaleffects
@@ -305,11 +307,13 @@ Which you can corroborate with yet another function in `marginaleffects`.
 avg_slopes(fit3) 
 ```
 
-In turn, the **MEM** is the effect/slope/partial derivative of a variable of interest when all variables (including the explanatory variable of interest) are held at their mean/average value. You can think of it as the expected change in slope in that particular variable as you move away from the average observation (which need not be a real observation).
+In turn, the **marginal effect at the mean (MEM)** is the effect/slope/partial derivative of a variable of interest when all variables (including the explanatory variable of interest) are held at their mean/average value. You can think of it as an approximation of the expected change in slope in that particular variable as you move away from a hypothetical observation that has average values in all variables (which is not the same as the average observation).
 
 ```{r}
 avg_slopes(fit3, newdata = "mean")
 ```
+
+In this case, AME and MEM are the same. However, this is a case of "it doesn't really matter until it matters." Generally speaking, the AME is a more intuitive quantity, albeit more cumbersome to compute.
 
 ## Show and interpret the results of `fit2`, with special attention to the `estimate` and the `std.error` of `water`. What does this mean for our "clean water matters" story?
 
@@ -387,9 +391,9 @@ Meanwhile, Huber-White "sandwich" robust standard errors look like this.
 # We are recycling some of the elements in the previous chunk
 bread = solve(t(X) %*% X)
 
-# The part in the middle is an nxn matrix with
-# residuals in the diagonal and
-# zeroes in the off diagonal
+# The "diag" part in the middle is an nxn matrix
+# with residuals in the diagonal
+# and zeroes in the off-diagonal
 meat = t(X) %*% diag(c(ehat))^2 %*% X
 
 # Sandwich vcov matrix
@@ -415,7 +419,7 @@ fit2_classic = lm_robust(
 tidy(fit2_classic)
 ```
 
-This is how you implement sandwich standard errors, which matches our matrix algebra above. Which is also not the default. The default in the package is `HC2`, but the default in Stata is `HC1`. What a life!
+This is how you implement "sandwich" robust standard errors (aka `HCO`), which matches our matrix algebra above. These are not the default either. The default in the package are `HC2` standard errors, but the default in Stata are `HC1`. What a life!
 
 ```{r}
 fit2_robust = lm_robust(
@@ -427,7 +431,7 @@ fit2_robust = lm_robust(
 tidy(fit2_robust)
 ```
 
-You can also use `rsample` package to implement bootstrap standard errors. Which has the advantage of preserving the `lm_robust()` output format.
+You can also use `rsample` package to implement bootstrap standard errors. Which has the advantage of preserving the tidy output format.
 
 ```{r}
 # Remember the seed!
@@ -449,7 +453,7 @@ fit2_boot
 
 # Regression tables
 
-If you look at regression tables in published articles, they usually have a particular format. We can reproduce this with the [`modelsummary`](https://modelsummary.com) package.
+If you look at regression tables in published articles, they usually have a particular format. We can reproduce this style with the [`modelsummary`](https://modelsummary.com) package.
 
 ```{r}
 # make a list of models
@@ -458,5 +462,5 @@ models = list(fit0, fit1, fit2, fit3)
 modelsummary(models)
 ```
 
-## Look at the [documentation](https://modelsummary.com/vignettes/modelsummary.html) for the `modelsummary` function. Customize the `models` table to make it as informative as possible. Explain what you changed and why you changed it
+## Look at the [documentation](https://modelsummary.com/vignettes/modelsummary.html) for the `modelsummary` function. Customize the `models` table to make it as informative as possible. Explain what you changed and why you changed it. Reprinting the table may help the reader notice your changes
 
