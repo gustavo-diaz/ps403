@@ -52,7 +52,7 @@ $\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overli
 
 . . .
 
-Regression *consistently* estimates the minimum MSE *linear* approximation of the BLP.
+Regression *consistently* estimates the minimum MSE *linear* approximation of the BLP
 
 ::: aside
 $\widehat{\alpha}$: intercept; $\widehat{\beta}$: slope
@@ -69,7 +69,7 @@ Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat 
 Such that
 
 $$
-\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i
+\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
 $$
 
 . . .
@@ -87,13 +87,12 @@ OLS "finds" the vector of coefficients that minimizes the MSE of squared residua
 
 ## ANES 2016 data
 
-::: aside
-**Codebook:**  <https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf>
-:::
+
 
 ```{r}
 library(tidyverse)
-library(scales) # rescaling from 0 to 1
+library(tinytable)
+library(broom) # tidy regression output
 
 # remotes::install_github("jamesmartherus/anesr")
 library(anesr)
@@ -104,6 +103,10 @@ data(timeseries_2016)
 
 ## Variables
 
+::: aside
+**Codebook:**  <https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf>
+:::
+
 ::: {.panel-tabset}
 ## Code
 
@@ -111,12 +114,10 @@ data(timeseries_2016)
 nes16 = timeseries_2016 %>% 
   select(
     V162079, # Feeling thermometer for TRUMP [POST]
-    V161087, # Feeling thermometer for TRUMP [PRE]
     V162230x, # Better if man works and woman takes care of home
     V162255, # Is Barack Obama Muslim (yes/no) [POST]
     V161267, # Respondent Age [PRE]
     V161270, # Highest level of Education (Years) [PRE]
-    V161342, # Self-identified gender [PRE]
     V161158x # Party ID [PRE]
   )
 ```
@@ -132,28 +133,279 @@ nes16
 ## Recode
 
 ::: {.panel-tabset}
-## Code
+## Mutate
 
 ```{r}
-nes16 %>% 
+nes16 = nes16 %>% 
   mutate(
     ft_trump_post = ifelse(V162079 < 0 | V162079 == 998, NA, V162079),
-    ft_trump_pre = ifelse(V161087 < 0 | V161087 == 998, NA, V161087),
-    women_at_home = ifelse(V162230x < 0, NA, V162230x),
-    women_at_home = 1 - rescale(women_at_home),
+    women_at_home = case_when(V162230x < 0 ~ NA,
+                              V162230x <= 3 ~ 1,
+                              V162230x <= 7 ~ 0),
     obamamuslim = ifelse(V162255 == 1, 1, 0),
     age = ifelse(V161267 < 0, NA, V161267),
-    age50plus = as.numeric(age >= 50),
-    educyrs = ifelse(V161270 < 0 | V161270 %in% c(90, 95),
-                     NA, V161270 - 5),
-    # man
-    # PID
+    age0 = age - 18,
+    educ_hs = case_when(V161270 < 0 ~ NA,
+                        V161270 >= 90 ~ NA,
+                        V161270 >= 9 ~ 1,
+                        V161270 <= 8 ~ 0),
+    republican = case_when(V161158x < 0 ~ NA,
+                           V161158x <= 4 ~ 0,
+                           V161158x <= 7 ~ 1)
   )
+```
 
+## Select
 
+```{r}
+nes = nes16 %>% 
+  select(ft_trump_post,
+         women_at_home, obamamuslim,
+         age, age0,
+         educ_hs, republican)
+```
 
-nes16$V161342
+## Data
 
+```{r, echo = FALSE}
+nes
 ```
 
 :::
+
+## Regression as conditional means
+
+. . .
+
+```{r}
+lm_race = lm(ft_trump_post ~ obamamuslim, data = nes)
+
+coef(lm_race)
+```
+
+. . .
+
+Compare with
+
+```{r}
+nes %>% 
+  select(ft_trump_post, obamamuslim) %>% 
+  drop_na() %>% 
+  group_by(obamamuslim) %>% 
+  summarize(estimate = mean(ft_trump_post))
+```
+
+. . .
+
+```{r}
+sum(coef(lm_race))
+```
+
+## Maybe just an education thing
+
+. . .
+
+```{r}
+coef(lm(obamamuslim ~ educ_hs, data = nes))
+```
+
+. . .
+
+```{r}
+coef(lm(ft_trump_post ~ educ_hs, data = nes))
+```
+
+. . .
+
+```{r}
+with(nes, cor(educ_hs, obamamuslim, use = "pairwise.complete.obs"))
+```
+
+. . .
+
+```{r, echo = FALSE}
+correlation = tribble(
+  ~`Absolute magnitude`, ~Effect,
+  .1, "Small",
+  .3, "Moderate",
+  .5, "Large"
+)
+
+correlation %>% 
+  tt()
+
+```
+
+
+## Or maybe an age thing
+
+
+. . .
+
+```{r}
+coef(lm(obamamuslim ~ age, data = nes))
+```
+
+. . .
+
+```{r}
+summary(nes$age)
+```
+
+. . .
+
+```{r}
+summary(nes$age0)
+```
+
+
+. . .
+
+```{r}
+coef(lm(obamamuslim ~ age0, data = nes))
+```
+
+## Or maybe an age thing
+
+```{r}
+coef(lm(ft_trump_post ~ age0, data = nes))
+```
+
+. . .
+
+```{r}
+with(nes, cor(age, obamamuslim, use = "pairwise.complete.obs"))
+```
+
+
+## Or partisan motivated reasoning
+
+. . .
+
+```{r}
+coef(lm(obamamuslim ~ republican, data = nes))
+```
+
+. . .
+
+```{r}
+coef(lm(ft_trump_post ~ republican, data = nes))
+```
+
+. . .
+
+```{r}
+with(nes, cor(republican, obamamuslim, use = "pairwise.complete.obs"))
+```
+
+## Adjusting for covariates
+
+. . .
+
+```{r}
+coef(lm(ft_trump_post ~ obamamuslim, data = nes))
+```
+
+. . .
+
+```{r}
+coef(lm(ft_trump_post ~ obamamuslim + educ_hs, data = nes))
+```
+
+. . .
+
+```{r}
+coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0, data = nes))
+```
+
+. . .
+
+```{r}
+coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0 + republican,
+        data = nes))
+```
+
+## Interactions {.smaller}
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+**Code**
+
+:::
+
+::: {.column width="50%"}
+**Math**
+:::
+
+::::
+
+. . .
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+coef(lm(ft_trump_post ~ women_at_home,
+        data = nes))
+```
+
+:::
+
+::: {.column width="50%"}
+$y = \beta_0 + \beta_1 \mathtt{\text{women_at_home}} + \varepsilon$
+:::
+
+::::
+
+. . .
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+coef(lm(ft_trump_post ~ obamamuslim +
+          women_at_home,
+        data = nes))
+```
+
+:::
+
+::: {.column width="50%"}
+$y = \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \varepsilon$
+:::
+
+::::
+
+. . .
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+coef(lm(ft_trump_post ~ obamamuslim *
+          women_at_home,
+        data = nes)) %>% 
+  tidy() # easier to read in slides
+```
+
+:::
+
+::: {.column width="50%"}
+$$
+\begin{align*}
+y = & \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \\
+& \beta_3 \mathtt{obamamuslim} \times  \mathtt{\text{women_at_home}} + \varepsilon
+\end{align*}
+$$
+:::
+
+::::
+
+<!-- ## Next week: Parametric models (AM Chapter 5) -->
+
+<!-- TBD -->
