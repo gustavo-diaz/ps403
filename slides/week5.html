@@ -467,6 +467,10 @@ e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
 <aside><div>
 <p>OLS “finds” the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals – SSR)</p>
 </div></aside></section>
+<section id="visualizing-ols" class="slide level2">
+<h2>Visualizing OLS</h2>
+
+<img data-src="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif" class="r-stretch"></section>
 <section id="anes-2016-data" class="slide level2">
 <h2>ANES 2016 data</h2>
 <div class="cell">
@@ -656,12 +660,12 @@ e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
 <!-- preamble start -->
 
     <script>
-      function styleCell_d6y1ji1kzip1o37lq7e6(i, j, css_id) {
-        var table = document.getElementById("tinytable_d6y1ji1kzip1o37lq7e6");
+      function styleCell_9y3zf3qa295ab6w234lh(i, j, css_id) {
+        var table = document.getElementById("tinytable_9y3zf3qa295ab6w234lh");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_d6y1ji1kzip1o37lq7e6');
+        var table = document.getElementById('tinytable_9y3zf3qa295ab6w234lh');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -669,8 +673,8 @@ e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_d6y1ji1kzip1o37lq7e6(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_d6y1ji1kzip1o37lq7e6");
+      function spanCell_9y3zf3qa295ab6w234lh(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_9y3zf3qa295ab6w234lh");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -696,15 +700,15 @@ e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_d6y1ji1kzip1o37lq7e6(0, 0, 'tinytable_css_idkur0odxikwt7so7nxrr2') })
-window.addEventListener('load', function () { styleCell_d6y1ji1kzip1o37lq7e6(0, 1, 'tinytable_css_idkur0odxikwt7so7nxrr2') })
+window.addEventListener('load', function () { styleCell_9y3zf3qa295ab6w234lh(0, 0, 'tinytable_css_idbgmf4cauk01y5ycwxes3') })
+window.addEventListener('load', function () { styleCell_9y3zf3qa295ab6w234lh(0, 1, 'tinytable_css_idbgmf4cauk01y5ycwxes3') })
     </script>
 
     <style>
-    .table td.tinytable_css_idkur0odxikwt7so7nxrr2, .table th.tinytable_css_idkur0odxikwt7so7nxrr2 {  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idbgmf4cauk01y5ycwxes3, .table th.tinytable_css_idbgmf4cauk01y5ycwxes3 {  border-bottom: solid 0.1em #d3d8dc; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_d6y1ji1kzip1o37lq7e6" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_9y3zf3qa295ab6w234lh" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>

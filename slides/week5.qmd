@@ -108,6 +108,11 @@ $$
 OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
 :::
 
+## Visualizing OLS
+
+![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+
+
 
 ## ANES 2016 data
 
