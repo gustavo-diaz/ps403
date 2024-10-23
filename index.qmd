@@ -1,0 +1,23 @@
+---
+title: "POLI_SCI 403 Slides"
+author: "Gustavo Diaz"
+format: html
+---
+
+## Slides list
+
+[Week 2: Probability Theory](slides/week2.html)
+
+[Week 3: Summarizing Random Variables](slides/week3.html)
+
+[Week 4: Random Samples](slides/week4.html)
+
+[Week 5: Regression](slides/week5.html)
+
+Week 6: Parametric Models
+
+Week 7: Missing Data
+
+Week 8: Causal Inference I
+
+Week 9: Causal Inference II
