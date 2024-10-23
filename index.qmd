@@ -1,10 +1,11 @@
 ---
-title: "POLI_SCI 403 Slides"
+title: "POLI_SCI 403: Probability and Statistics"
 author: "Gustavo Diaz"
+date: last-modified
 format: html
 ---
 
-## Slides list
+## Slides
 
 [Week 2: Probability Theory](slides/week2.html)
 
