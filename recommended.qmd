@@ -26,13 +26,23 @@ geometry:
 
 - [For complete beginners, light on the math]{.aside} Llaudet, Elena, and Kosue Imai. 2022. [*Data Analysis for Social Science: A Friendly a Practical Introduction.*](https://press.princeton.edu/books/paperback/9780691199436/data-analysis-for-social-science) Princeton University Press
 
+- [Focus on building intuition with no math]{.aside} Kaplan, Daniel, and Randall Pruim. 2023. [*Statistical Modeling: A Fresh Approach*](https://statistical-modeling.netlify.app) (electronic edition)
+
 - [General Textbook for Causal Inference]{.aside} Cunningham, Scott. 2021. [*Causal Inference The Mixtape*](https://mixtape.scunning.com)
 
 ### Regression
 
+- [Reference textbook for all sorts of regression models]{.aside} Fox, John. 2016. *Applied Regression Analysis and Generalized Linear Models* (Third Edition). Sage
+
 - [Step-by-step regression guide]{.aside} Heiss, Andrew. 2024. [*Program Evaluation*](https://evalsp24.classes.andrewheiss.com/example/regression.html)
 
+### Video lectures
+
+- [Focus on understanding statistical theory concepts]{.aside} King, Gary. [Quantitative Social Science Methods I](https://youtube.com/playlist?list=PL0n492lUg2sgSevEQ3bLilGbFph4l92gH&si=dOClSNcqFPjfv0Xf)
+
 ### Parametric models
+
+- [Comprehensive coverage of parametric models]{.aside} Fox, John. 2016. *Applied Regression Analysis and Generalized Linear Models* (Third Edition). Sage
 
 ### Missing data
 
