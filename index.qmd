@@ -15,7 +15,7 @@ format: html
 
 [Week 5: Regression](slides/week5.html)
 
-Week 6: Parametric Models
+[Week 6: Parametric Models](slides/week6.html)
 
 Week 7: Missing Data
 

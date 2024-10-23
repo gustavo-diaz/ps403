@@ -435,6 +435,17 @@ $$
 
 ::::
 
-<!-- ## Next week: Parametric models (AM Chapter 5) -->
+## Next week: Parametric models (AM Chapter 5) {.smaller}
 
-<!-- TBD -->
+**Important**
+
+- How are parametric models different from agnostic statistics?
+- Classical linear model vs. regression chapter
+- Logit model (not probit)
+- Main idea behind Maximum Likelihood Estimator
+- A Note on Models as Approximations
+
+**Ignore**
+
+- Mixture Models
+- Penalized Maximum Likelihood Regression

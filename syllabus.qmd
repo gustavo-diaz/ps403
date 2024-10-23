@@ -272,7 +272,7 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 *Difference-in-Differences*
 
-- Cunningham, Scott. 2021. [*Causal Inference: The Mixtape*](https://mixtape.scunning.com/). Yale University Press. Chapter 9
+- Hungtinton-Klein, Nick. 2022. [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net). Chapman & Hall. Chapter 18
 - Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. ["How Much Should We Trust Differences-In-Differences Estimates?"](https://doi.org/10.1162/003355304772839588) *The Quarterly Journal of Economics* 119 (1): 249-275
 - Roth, Jonathan, Pedro H.C. Sant'Anna, Alyssa Bilinski, and John Poe. 2023. ["What’s trending in difference-in-differences? A synthesis of the recent econometrics literature"](https://doi.org/10.1016/j.jeconom.2023.03.008) *Journal of Econometrics* 235 (2): 2218-2244
 
