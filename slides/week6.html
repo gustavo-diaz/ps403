@@ -768,7 +768,7 @@ default    0    1
 <span id="cb16-18"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
 <span id="cb16-19"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Default) <span class="sc">+</span></span>
 <span id="cb16-20"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> balance, <span class="at">y =</span> default01) <span class="sc">+</span></span>
-<span id="cb16-21"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb16-21"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">height =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <span id="cb16-22"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
 <span id="cb16-23"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> pred_df,</span>
 <span id="cb16-24"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> balance, </span>
@@ -776,7 +776,7 @@ default    0    1
 <span id="cb16-26"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> Estimator),</span>
 <span id="cb16-27"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb16-28"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb16-29"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Income"</span>,</span>
+<span id="cb16-29"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Balance"</span>,</span>
 <span id="cb16-30"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Pr(Default)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
