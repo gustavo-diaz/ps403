@@ -216,7 +216,7 @@ ggplot(qog_am) +
 
 1. Recall the definition of efficiency from AM chapters 3 and 5.
 
-2. The `deviance()` function will return the residual sum of squares from an `lm` object
+2. The `deviance()` function will return the sum of squared residuals from an `lm` object
 
 :::
 
@@ -251,7 +251,7 @@ Digression aside, we can include `elec` as a control variable in our regression 
 fit2 = lm(mortinf ~ water + elec, data = qog_am)
 ```
 
-A more eclectic scholar may propose conciliatory argument: The "effect" of `water` as a disease-preventing factor depends on other state-capacity factors captured by `elec`. After all, if you have access to clean drinking water *and* electricity, that means that you can cook nicer meals, keep food and antibiotics in the fridge, and perhaps other more substantial factors that escape the expertise of an instructor of a probability and statistics course.
+A more eclectic scholar may propose conciliatory argument: The "effect" of `water` as a disease-preventing factor depends on other state-capacity factors captured by `elec`. After all, if you have access to clean drinking water *and* electricity, you can cook nicer meals, keep food and antibiotics in the fridge, and perhaps other more substantial factors that escape the expertise of an instructor of a probability and statistics course.
 
 If this was true, we would say that `elec` *moderates* the effect of `water`, which we can model by introducing an interaction term in the regression.
 
@@ -320,7 +320,7 @@ In this case, AME and MEM are the same. However, this is a case of "it doesn't r
 ::: {.callout-tip}
 ## Hint
 
-You can do this by showing the numbers on a tidy output, or with a figure. Choose the one that makes the most sense to you.
+You can do this by showing the numbers in tidy output, or with a figure. Choose the one that makes the most sense to you.
 :::
 
 ## Why can't we just interpret each coefficient in `fit2` as the "effect" of each variable? 
