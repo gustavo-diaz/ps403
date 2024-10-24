@@ -449,3 +449,18 @@ $$
 
 - Mixture Models
 - Penalized Maximum Likelihood Regression
+
+## Next week: Other readings
+
+**Stigler (2007)**
+
+- Story of maximum likelihood (just for reference)
+
+**James et al (2021)**
+
+- A more intuitive explanation of logistic regression and maximum likelihood
+
+**Achen (2002)**
+
+- Why A Rule of Three (ART)?
+- *Less important:* Logit, scobit, power logit, microfoundations

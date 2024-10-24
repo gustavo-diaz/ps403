@@ -172,14 +172,9 @@ $$
 
 ## Logistic regression
 
-::: aside
-Called logit model in the AM textbook
-:::
 
 <!-- My old cheatsheet -->
 <!-- https://drive.google.com/drive/folders/1y0SwNYAjG5_uDGj7MaaJJoS3TpZ_5HuL -->
-
-. . .
 
 For the logit model, the link is the *logistic function*
 
@@ -187,15 +182,23 @@ $$
 p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
 $$
 
-## Logistic function
+. . .
 
-[PICTURE HERE]
+
+```{r, echo = FALSE, out.width="75%", fig.align='center'}
+library(tidyverse)
+
+theme_set(theme_gray(base_size = 25))
+
+ggplot(data = data.frame(x = c(-3,3))) +
+  aes(x) +
+  stat_function(fun = function(x) exp(x)/(1+exp(x)), n = 100, linewidth = 2) +
+  ylim(0,1) +
+  labs(y = "p(X)")
+  
+```
 
 ## Logistic regression
-
-::: aside
-Called logit model in the AM textbook
-:::
 
 
 For the logit model, the link is the *logistic function*
@@ -214,9 +217,6 @@ $$
 
 ## Logistic regression
 
-::: aside
-Called logit model in the AM textbook
-:::
 
 Taking the natural logarithm gives the *log odds*
 
