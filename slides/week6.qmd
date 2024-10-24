@@ -5,6 +5,7 @@ format:
     progress: false
     chalkboard: true
     code-overflow: wrap
+    code-line-numbers: false
 ---
 
 
@@ -43,7 +44,11 @@ We assume there exists a function $g$ with parameters $\theta$
 
 . . .
 
-If you know $\theta$, then you can *fully characterize* the PMF/PDF of $Y$ given $X$ ($f_{Y|X}(y|x)$)
+If you know $\theta$, then you can *fully characterize* the PMF/PDF of $Y$ given $X$
+
+. . .
+
+Then we can say $\theta$ is a *sufficient statistic*
 
 ## Toy example: Biased coin flip
 
@@ -185,7 +190,7 @@ $$
 . . .
 
 
-```{r, echo = FALSE, out.width="75%", fig.align='center'}
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
 library(tidyverse)
 
 theme_set(theme_gray(base_size = 25))
@@ -232,7 +237,199 @@ $$
 
 ## Maximum likelihood estimation (MLE)
 
+::: aside
+[Dr. King explains it better](https://youtu.be/P79af1fkUsk?si=9eIT50q7KK0uh2nx&t=1313)
+:::
+
 <!-- Show intuition with math, then example from ISLR -->
+::: incremental
+- Knowing $\theta$ is enough to characterize conditional PMF of $Y$ given $X$
+- But we do not know $\theta$! We only know the data we observe
+- We can try many different values for $\theta$ and see what sticks
+- **Trick:** Find $\theta$ that *would have maximized the probability of obtaining the data we observe*
+- **Restated:** Find *parameters* that would have made outcomes *as likely as possible*
+:::
+
+## Example: Which line makes observed data more likely?
+
+![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+
+## More formally
+
+. . .
+
+Likelihood function $\mathcal{L}(t|Y, \boldsymbol{X})$
+
+. . .
+
+Maximum likelihood estimator
+
+$$
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}\mathcal{L}(t|Y, \boldsymbol{X}) = \underset{t\in\Theta}{\text{argmax}} \prod_{i=1}^n\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+$$
+
+. . .
+
+Products are hard, maximize *log-likelihood* instead
+
+$$
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}[\text{log}\mathcal{L}(t|Y, \boldsymbol{X})] = \underset{t\in\Theta}{\text{argmax}} \sum_{i=1}^n\text{log}\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+$$
+
+## With data
+
+```{r}
+library(ISLR)
+
+head(Default)
+```
+
+. . .
+
+```{r}
+Default$default01 = ifelse(Default$default == "Yes", 1, 0)
+
+with(Default, table(default, default01))
+```
+
+## Estimation
+
+. . .
+
+Linear probability model
+
+```{r}
+ols = lm(default01 ~ student + balance + income, data = Default)
+
+coef(ols) # very small numbers
+```
+
+
+## Estimation
+
+Linear probability model
+
+```{r}
+ols = lm(default01 ~ student + balance + income, data = Default)
+
+coef(ols) %>% round(5) # easier to read
+```
+
+. . .
+
+Logit model
+
+```{r}
+logit = glm(default01 ~ student + balance + income, 
+            data = Default, family = binomial)
+
+coef(logit) %>% round(5)
+```
+
+. . .
+
+Logit coefficients are expressed in *log-odds*
+
+## Convert to probabilities
+
+```{r}
+get_logit_prob = function(fit){
+  coefs = coef(fit) # extract coefficients from logit fit
+  odds = exp(coefs) # transform log-odds to odds
+  prob = odds / (1 + odds) # convert odds to probabilities
+  prob = round(prob, 5) # round for easy interpretation
+  return(prob)
+}
+```
+
+. . .
+
+```{r}
+get_logit_prob(logit)
+```
+
+. . .
+
+```{r}
+coef(ols) %>% round(5)
+```
+
+## Why so different?
+
+::: {.panel-tabset}
+## Plot
+
+```{r, echo = FALSE}
+library(marginaleffects)
+
+# Extract predictions
+p_ols = plot_predictions(ols,
+                 condition = "balance",
+                 draw = FALSE)
+
+p_log = plot_predictions(logit,
+                         condition = "balance",
+                         draw = FALSE)
+
+# Combine and label
+pred_df = bind_rows(
+  p_ols %>% mutate(Estimator = "OLS"),
+  p_log %>% mutate(Estimator = "Logit")
+)
+
+# Visualize
+ggplot(Default) +
+  aes(x = balance, y = default01) +
+  geom_rug() +
+  geom_line(
+    data = pred_df,
+    aes(x = balance, 
+        y = estimate,
+        color = Estimator),
+    linewidth = 2) +
+  scale_color_viridis_d(begin = 0, end = 0.8) +
+  labs(x = "Income",
+       y = "Pr(Default)")
+```
+
+
+## Code
+
+```{r, eval = FALSE}
+library(marginaleffects)
+
+# Extract predictions
+p_ols = plot_predictions(ols,
+                 condition = "balance",
+                 draw = FALSE)
+
+p_log = plot_predictions(logit,
+                         condition = "balance",
+                         draw = FALSE)
+
+# Combine and label
+pred_df = bind_rows(
+  p_ols %>% mutate(Estimator = "OLS"),
+  p_log %>% mutate(Estimator = "Logit")
+)
+
+# Visualize
+ggplot(Default) +
+  aes(x = balance, y = default01) +
+  geom_rug() +
+  geom_line(
+    data = pred_df,
+    aes(x = balance, 
+        y = estimate,
+        color = Estimator),
+    linewidth = 2) +
+  scale_color_viridis_d(begin = 0, end = 0.8) +
+  labs(x = "Income",
+       y = "Pr(Default)")
+```
+
+
+:::
 
 
 

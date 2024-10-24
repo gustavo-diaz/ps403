@@ -28,6 +28,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="week6_files/libs/revealjs/dist/theme/quarto.css">
   <link href="week6_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -351,7 +416,10 @@
 <p>We assume there exists a function <span class="math inline">\(g\)</span> with parameters <span class="math inline">\(\theta\)</span></p>
 </div>
 <div class="fragment">
-<p>If you know <span class="math inline">\(\theta\)</span>, then you can <em>fully characterize</em> the PMF/PDF of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span> (<span class="math inline">\(f_{Y|X}(y|x)\)</span>)</p>
+<p>If you know <span class="math inline">\(\theta\)</span>, then you can <em>fully characterize</em> the PMF/PDF of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span></p>
+</div>
+<div class="fragment">
+<p>Then we can say <span class="math inline">\(\theta\)</span> is a <em>sufficient statistic</em></p>
 </div>
 </section>
 <section id="toy-example-biased-coin-flip" class="slide level2">
@@ -486,7 +554,7 @@ p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="week6_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center" style="width:75.0%" data-fig-pos="center"></p>
+<p><img data-src="week6_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center" data-fig-pos="center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -522,7 +590,198 @@ log \left (\frac{p(X)}{1-p(X)} \right) = X\beta
 </section>
 <section id="maximum-likelihood-estimation-mle" class="slide level2">
 <h2>Maximum likelihood estimation (MLE)</h2>
+
 <!-- Show intuition with math, then example from ISLR -->
+<div>
+<ul>
+<li class="fragment">Knowing <span class="math inline">\(\theta\)</span> is enough to characterize conditional PMF of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span></li>
+<li class="fragment">But we do not know <span class="math inline">\(\theta\)</span>! We only know the data we observe</li>
+<li class="fragment">We can try many different values for <span class="math inline">\(\theta\)</span> and see what sticks</li>
+<li class="fragment"><strong>Trick:</strong> Find <span class="math inline">\(\theta\)</span> that <em>would have maximized the probability of obtaining the data we observe</em></li>
+<li class="fragment"><strong>Restated:</strong> Find <em>parameters</em> that would have made outcomes <em>as likely as possible</em></li>
+</ul>
+</div>
+<aside><div>
+<p><a href="https://youtu.be/P79af1fkUsk?si=9eIT50q7KK0uh2nx&amp;t=1313">Dr.&nbsp;King explains it better</a></p>
+</div></aside></section>
+<section id="example-which-line-makes-observed-data-more-likely" class="slide level2">
+<h2>Example: Which line makes observed data more likely?</h2>
+
+<img data-src="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif" class="r-stretch"></section>
+<section id="more-formally" class="slide level2">
+<h2>More formally</h2>
+<div class="fragment">
+<p>Likelihood function <span class="math inline">\(\mathcal{L}(t|Y, \boldsymbol{X})\)</span></p>
+</div>
+<div class="fragment">
+<p>Maximum likelihood estimator</p>
+<p><span class="math display">\[
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}\mathcal{L}(t|Y, \boldsymbol{X}) = \underset{t\in\Theta}{\text{argmax}} \prod_{i=1}^n\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Products are hard, maximize <em>log-likelihood</em> instead</p>
+<p><span class="math display">\[
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}[\text{log}\mathcal{L}(t|Y, \boldsymbol{X})] = \underset{t\in\Theta}{\text{argmax}} \sum_{i=1}^n\text{log}\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+\]</span></p>
+</div>
+</section>
+<section id="with-data" class="slide level2">
+<h2>With data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ISLR)</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Default)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  default student   balance    income
+1      No      No  729.5265 44361.625
+2      No     Yes  817.1804 12106.135
+3      No      No 1073.5492 31767.139
+4      No      No  529.2506 35704.494
+5      No      No  785.6559 38463.496
+6      No     Yes  919.5885  7491.559</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a>Default<span class="sc">$</span>default01 <span class="ot">=</span> <span class="fu">ifelse</span>(Default<span class="sc">$</span>default <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(Default, <span class="fu">table</span>(default, default01))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       default01
+default    0    1
+    No  9667    0
+    Yes    0  333</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="estimation" class="slide level2">
+<h2>Estimation</h2>
+<div class="fragment">
+<p>Linear probability model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">=</span> <span class="fu">lm</span>(default01 <span class="sc">~</span> student <span class="sc">+</span> balance <span class="sc">+</span> income, <span class="at">data =</span> Default)</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ols) <span class="co"># very small numbers</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  (Intercept)    studentYes       balance        income 
+-8.117949e-02 -1.033010e-02  1.326897e-04  1.991528e-07 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="estimation-1" class="slide level2">
+<h2>Estimation</h2>
+<p>Linear probability model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>ols <span class="ot">=</span> <span class="fu">lm</span>(default01 <span class="sc">~</span> student <span class="sc">+</span> balance <span class="sc">+</span> income, <span class="at">data =</span> Default)</span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ols) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">5</span>) <span class="co"># easier to read</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  studentYes     balance      income 
+   -0.08118    -0.01033     0.00013     0.00000 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Logit model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="" aria-hidden="true" tabindex="-1"></a>logit <span class="ot">=</span> <span class="fu">glm</span>(default01 <span class="sc">~</span> student <span class="sc">+</span> balance <span class="sc">+</span> income, </span>
+<span id="cb9-2"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> Default, <span class="at">family =</span> binomial)</span>
+<span id="cb9-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(logit) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  studentYes     balance      income 
+  -10.86905    -0.64678     0.00574     0.00000 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Logit coefficients are expressed in <em>log-odds</em></p>
+</div>
+</section>
+<section id="convert-to-probabilities" class="slide level2">
+<h2>Convert to probabilities</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="" aria-hidden="true" tabindex="-1"></a>get_logit_prob <span class="ot">=</span> <span class="cf">function</span>(fit){</span>
+<span id="cb11-2"><a href="" aria-hidden="true" tabindex="-1"></a>  coefs <span class="ot">=</span> <span class="fu">coef</span>(fit) <span class="co"># extract coefficients from logit fit</span></span>
+<span id="cb11-3"><a href="" aria-hidden="true" tabindex="-1"></a>  odds <span class="ot">=</span> <span class="fu">exp</span>(coefs) <span class="co"># transform log-odds to odds</span></span>
+<span id="cb11-4"><a href="" aria-hidden="true" tabindex="-1"></a>  prob <span class="ot">=</span> odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> odds) <span class="co"># convert odds to probabilities</span></span>
+<span id="cb11-5"><a href="" aria-hidden="true" tabindex="-1"></a>  prob <span class="ot">=</span> <span class="fu">round</span>(prob, <span class="dv">5</span>) <span class="co"># round for easy interpretation</span></span>
+<span id="cb11-6"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(prob)</span>
+<span id="cb11-7"><a href="" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">get_logit_prob</span>(logit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  studentYes     balance      income 
+    0.00002     0.34372     0.50143     0.50000 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(ols) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)  studentYes     balance      income 
+   -0.08118    -0.01033     0.00013     0.00000 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="why-so-different" class="slide level2">
+<h2>Why so different?</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Plot</a></li><li><a href="#tabset-1-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="week6_files/figure-revealjs/unnamed-chunk-10-1.png" data-fig-pos="center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span>
+<span id="cb16-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract predictions</span></span>
+<span id="cb16-4"><a href="" aria-hidden="true" tabindex="-1"></a>p_ols <span class="ot">=</span> <span class="fu">plot_predictions</span>(ols,</span>
+<span id="cb16-5"><a href="" aria-hidden="true" tabindex="-1"></a>                 <span class="at">condition =</span> <span class="st">"balance"</span>,</span>
+<span id="cb16-6"><a href="" aria-hidden="true" tabindex="-1"></a>                 <span class="at">draw =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-7"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="" aria-hidden="true" tabindex="-1"></a>p_log <span class="ot">=</span> <span class="fu">plot_predictions</span>(logit,</span>
+<span id="cb16-9"><a href="" aria-hidden="true" tabindex="-1"></a>                         <span class="at">condition =</span> <span class="st">"balance"</span>,</span>
+<span id="cb16-10"><a href="" aria-hidden="true" tabindex="-1"></a>                         <span class="at">draw =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-11"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine and label</span></span>
+<span id="cb16-13"><a href="" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">=</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb16-14"><a href="" aria-hidden="true" tabindex="-1"></a>  p_ols <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Estimator =</span> <span class="st">"OLS"</span>),</span>
+<span id="cb16-15"><a href="" aria-hidden="true" tabindex="-1"></a>  p_log <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Estimator =</span> <span class="st">"Logit"</span>)</span>
+<span id="cb16-16"><a href="" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-17"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize</span></span>
+<span id="cb16-19"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Default) <span class="sc">+</span></span>
+<span id="cb16-20"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> balance, <span class="at">y =</span> default01) <span class="sc">+</span></span>
+<span id="cb16-21"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>() <span class="sc">+</span></span>
+<span id="cb16-22"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb16-23"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> pred_df,</span>
+<span id="cb16-24"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> balance, </span>
+<span id="cb16-25"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> estimate,</span>
+<span id="cb16-26"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> Estimator),</span>
+<span id="cb16-27"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-28"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb16-29"><a href="" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Income"</span>,</span>
+<span id="cb16-30"><a href="" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Pr(Default)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
