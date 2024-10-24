@@ -442,7 +442,7 @@ $$
 - How are parametric models different from agnostic statistics?
 - Classical linear model vs. regression chapter
 - Logit model (not probit)
-- Main idea behind Maximum Likelihood Estimator
+- Main idea behind Maximum Likelihood Estimation
 - A Note on Models as Approximations
 
 **Ignore**
