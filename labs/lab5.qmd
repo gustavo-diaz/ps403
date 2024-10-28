@@ -34,6 +34,7 @@ library(tidyverse)
 library(marginaleffects) # Visualize regression output
 library(modelsummary) # make pdf regression tables
 library(car) # Includes data
+library(mvtnorm) ##  a package for the multivariate normal distribution
 
 ```
 
@@ -60,24 +61,32 @@ Each variable measures the following
 - `population`:
 - `region`:
 
+We will recode our outcome variable as a binary indicator for whether people indicate they will vote "Yes" (in favor of keeping military rule).
+
+```{r}
+chile = Chile %>% drop_na
+
+chile$yes = ifelse(chile$vote == "Y", 1, 0)
+
+# check
+with(chile, table(vote, yes))
+```
 
 
 # Maximum likelihood estimation
 
 <!-- MLE by hand, then gaussian -->
+<!-- https://github.com/gustavo-diaz/531-explorations/blob/spring2021/exploration8MLE2.Rmd --> -->
 
-<!-- https://www.ime.unicamp.br/~cnaber/optim_1.pdf -->
 
 ```{r}
-ols.lfg = function(theta, y, X){
-  n = nrow(X)
-  k = ncol(X)
-  beta = theta[1:k]
-  sigma2 = theta[k+1]
-  e = y - X
-  logl = asdf #???
-  
-  return(-logl)
+ols_ll = function(theta, y, X){
+  betas = theta [1:ncol(X)]
+  sigma2 = theta[ncol(X) + 1]
+  mu = X %*% betas
+  n = length(y)
+  sigma_mat = sigma2 * diag(n)
+  ll = - dmvnorm(t(y), mu, sigma_mat, log = TRUE)
 }
 ```
 
