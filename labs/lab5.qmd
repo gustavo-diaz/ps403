@@ -33,15 +33,62 @@ knitr::opts_chunk$set(echo = TRUE,
 library(tidyverse)
 library(marginaleffects) # Visualize regression output
 library(modelsummary) # make pdf regression tables
+library(car) # Includes data
 
 ```
 
 
 # Data
 
-# Classical linear model
+The `Chile` data frame contains observations from a national survey conducted in April and May of 1988 by FLACSO/Chile. 
+
+[Explain more based on the Fox book]
+
+```{r, eval = FALSE}
+# Explore but do not print in pdf
+Chile
+```
+
+Each variable measures the following
+
+- `vote`: Outcome
+- `statusquo`: Main explanatory variable
+- `income`:
+- `education`:
+- `age`:
+- `sex`: 
+- `population`:
+- `region`:
+
+
+
+# Maximum likelihood estimation
 
 <!-- MLE by hand, then gaussian -->
+
+<!-- https://www.ime.unicamp.br/~cnaber/optim_1.pdf -->
+
+```{r}
+ols.lfg = function(theta, y, X){
+  n = nrow(X)
+  k = ncol(X)
+  beta = theta[1:k]
+  sigma2 = theta[k+1]
+  e = y - X
+  logl = asdf #???
+  
+  return(-logl)
+}
+```
+
+
+# Classical linear model
+
+Consider the following model:
+
+[MODEL]
+
+Assuming this model is true, we can estimate the parameters $\theta$.
 
 # Logistic regression
 
