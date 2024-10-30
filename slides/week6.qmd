@@ -431,5 +431,22 @@ ggplot(Default) +
 
 :::
 
+## Next week: Missing data (Chapter 6) {.smaller}
 
+**New topic:** Identification
 
+**Important concepts:**
+
+- Point-identification
+- Stable Outcomes Model
+- Missing completely at random (MCAR) vs. missing at random (MAR)
+- Propensity scores
+- Double Robustness Theorem
+
+**Important methods:**
+
+- Bounds
+- Imputing missing data (regression, hot deck, MLE)
+- Inverse probability weighting
+
+**Other readings:** Why do people disagree on missing data being a problem?

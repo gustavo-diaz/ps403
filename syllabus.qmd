@@ -280,6 +280,8 @@ By signing up for this course, you accept the terms of the grading contract. We 
 **Lab 8:** Quasi-experiments
 <!-- Present two datasets, one RDD, one DD. Choose one, provide the most accurate estimation possible. -->
 
+**Due:** Final paper title, abstract, and introduction (November 25)
+
 ## Week 10 (November 26): Review
 
 We reflect on what we have learned this quarter and what is to come.
@@ -287,8 +289,7 @@ We reflect on what we have learned this quarter and what is to come.
 
 ## Week 11 (December 3/5): Research note roundtable
 
-Submit your title, abstract, and introduction by November 25.
-
+We discuss final paper ideas after circulating titles, abstracts, and introductions.
 
 
 
