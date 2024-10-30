@@ -438,7 +438,7 @@ ggplot(Default) +
 **Important concepts:**
 
 - Point-identification
-- Stable Outcomes Model
+- Stable Outcomes Framework
 - Missing completely at random (MCAR) vs. missing at random (MAR)
 - Propensity scores
 - Double Robustness Theorem
