@@ -52,7 +52,7 @@ Chile
 
 You can learn more about how each variable is coded by passing `?Chile` or `help(Chile)` to the console.
 
-Our outcome variable is `vote`, which we will recode as a binary outcome called `yes`, which will take a value of 1 is the person indicated they will vote in favor of the dictatorship in the plebiscite, and 0 otherwise.
+Our outcome variable is `vote`, which we will recode as a binary outcome called `yes`, which will take a value of 1 if the person indicated they will vote in favor of the dictatorship in the plebiscite, and 0 otherwise.
 
 ```{r}
 chile = Chile %>% drop_na
@@ -69,7 +69,7 @@ Our main explanatory variable will be `statusquo`, which is an aggregate index o
 summary(chile$statusquo)
 ```
 
-## Explain what each variable in the original `Chile` data frame is measuring
+## Explain what the other variables in the original `Chile` data frame are measuring
 
 # Classical linear model
 
@@ -79,9 +79,9 @@ $$
 \text{yes} = \beta_0 + \beta_1 \mathtt{statusquo} + \varepsilon
 $$
 
-This a classical linear model, so knowing $\beta_0$, $beta_1$, and the variance of $\varepsilon \sim N(0, \sigma^2)$ is enough to characterize the relationship between vote intention and support for the statusquo.
+This a parametric linear model, so knowing $\beta_0$, $\beta_1$, and the variance of $\varepsilon \sim N(0, \sigma^2)$ is enough to characterize the relationship between vote intention and support for the statusquo.
 
-We know that a model like this could be estimated by ordinary least squares (OLS). But we can also estimate this via maximum likelihood estimation (MLE). This is because, from the parametric models perspective, finding parameters that maximize the log likelihood is very similar to finding the parameters that minimize the sum of squared residuals. In other words, OLS regression is a special case of maximum likelihood estimation.
+We know that a model like this could be estimated by ordinary least squares (OLS). But we can also estimate it via maximum likelihood estimation (MLE). This is because, from the parametric models perspective, finding parameters that maximize the log likelihood is very similar to finding the parameters that minimize the sum of squared residuals. In other words, OLS regression is a special case of maximum likelihood estimation.
 
 For your reference, the code below is how you would program MLE by hand for this problem.
 
@@ -139,6 +139,10 @@ mle$par
 Of course, there is a pre-packaged routine to estimate simple MLE problems in R. We use the `glm` function.
 
 ```{r}
+# family = gaussian is the default for glm
+# It implies assuming a multivariate normal
+# distribution
+# "gaussian" is a special kind of normal curve
 linear_mle = glm(yes ~ statusquo, 
               data = chile, 
               family = gaussian)
@@ -161,7 +165,7 @@ logLik(linear_ols)
 
 ## Explain every step in the `ols_ll` function
 
-## Explain every step in the `optim` function used to create the `mle` object
+## Explain every argument in the `optim` function used to create the `mle` object
 
 ## Are the coefficients in `mle` the same as those in `linear_mle` and `linear_ols`? Regardless of your answer, why do you think doing MLE by hand may yield different results?
 
@@ -177,18 +181,20 @@ $$
 
 Where $p(X) = Pr(Y = 1 | \mathtt{statusquo)}$. 
 
-We can estimate this model via ML as well by changing the `family` argument to `binomial`, which by default using the logistic function as the link.
+We can estimate this model via ML as well by changing the `family` argument to `binomial`, which by default uses the logistic function as the link.
 
 ```{r}
 logit0 = glm(yes ~ statusquo, 
               data = chile, 
-              family = binomial) # logit link by default
+              family = binomial) # logit link
 
 coef(logit0)
 ```
 
 
-You may notice we get very different numbers than with the classical linear model. This is because logistic regression coefficients are expressed in log odds-ratios, a byproduct of streamlining the estimation procedure.
+You may notice we get very different numbers than with the classical linear model. This is because logistic regression coefficients are expressed in log odds ratios (log odds for short), a byproduct of streamlining the estimation procedure.
+
+Visualizing this in a `marginaleffects` plot can help us interpret these coefficient.
 
 ```{r}
 plot_predictions(model = logit0,
@@ -200,16 +206,29 @@ plot_predictions(model = logit0,
                                    ")"))))
 ```
 
-So we can interpret our result as the "effect" of one unit increase in `statusquo` the log odds ratio of `yes`.
+Because the relationship between `statusquo` and the log odds is linear, we can interpret our result as the "effect" of one unit increase in `statusquo` the log odds of `yes`.
 
-Since this is a weird quantity, we can reverse engineer the quantity to express it in terms of probability.
+Since this is a weird quantity, we can reverse engineer the quantity to express it in terms of probability. The function below grabs a model object and converts the coefficients' unit from log odds to probabilities.
 
 ```{r}
-# HERE CONVERT TO PROBS
+get_logit_prob = function(fit){
+  coefs = coef(fit) # extract coefficients from logit fit
+  odds = exp(coefs) # transform log-odds to odds
+  prob = odds / (1 + odds) # convert odds to probabilities
+  prob = round(prob, 5) # round for easy interpretation
+  return(prob)
+}
 ```
 
+We can apply this to our `logit0` model.
 
-<!-- Log odds linear but probs not linear -->
+```{r}
+get_logit_prob(logit0)
+```
+
+However, the problem is that our link function uses an s-shaped [sigmoid function](https://en.wikipedia.org/wiki/Sigmoid_function) to bound probabilities in the $[0,1]$ range.
+
+Again, this is easier to visualize with a figure.
 
 ```{r}
 # "response" is the default type for logit models
@@ -219,6 +238,95 @@ plot_predictions(model = logit0,
   labs(y = expression(p(X)))
 ```
 
+Because the relationship between `statusquo` and the predicted probabilities is not in a linear scale, converting the coefficients to probabilities does not give you much information. The slope (or derivative) of the curve depends on the values of `statusquo`, so the only thing you can conclude by looking at the coefficients of a logistic regression model is whether the curve is generally increasing or decreasing, and you can already convey that information using log odds as the scale.^[Converting log odds coefficients into probabilities may still be helpful when you have binary or categorical predictors, since they convey all the information about the predictors at their relevant values.]
 
+## Using one or more figures, compare the results of `linear_mle` and `logit_0`. Which model seems to be a better fit for the data? Which is more plausible to assume as the true model from a parametric perspective?
+
+:::{.callout-tip}
+The slides for this week have an example of how to plot two models together using `marginaleffects`. You could also visualize one model at a time with the `plot_predictions` function in the same package.
+:::
+
+## Look at the log likelihood for each model. Does it change your answer to the previous question? Explain
+
+## Propose an alternative model specification for `logit_0` that includes at least one additional control variable. Estimate this model with logistic regression. Show the coefficients and make a figure to compare the results with `linear_mle` and `logit_0`. How does the model you propose change our interpretation of the relationship between `statusquo` and voting `yes`?
+
+::: {.callout-tip}
+## Tips
+
+1. You can also use the code in the slides for this week to plot the three models together with `marginaleffects` functions. You need to adapt it to visualize the results of three models now.
+
+2. You could include as many new variables as you want to, but remember Achen's ART mantra.
+:::
 
 # Inference
+
+A nice feature of parametric models is that, if we assume the model is true, we can also safely assume that the asymptotic properties required to justify the use of classical normal-approximation standard errors are also true. 
+
+Similar to how `lm` works, `glm` produces classical standard errors by default.
+
+```{r}
+tidy(logit0)
+```
+
+However, unlike `lm` in base R or `lm_robust` in the `estimatr` package, we do not get confidence intervals unless we ask for them.
+
+```{r}
+confint(logit0)
+```
+
+
+From a nonparametric approach, classical normal-approximation standard errors required somewhat heroic assumptions. However, from the parametric point of view, you need a *very* strong reason to use anything other than classical standard errors. 
+
+AM Chapter 5 gives us one general reason. In some applications, MLE may serve as a decent approximation even if the underlying model is wrong. In some cases, it may be better to use a well known model and "tweak" its standard errors instead of rewriting a whole new model.
+
+Still, nothing stops you from calculating robust standard errors in a logit model. There is no one-line routine like in `lm_robust`, but you can use the [`sandwich`](https://sandwich.r-forge.r-project.org/index.html) package to compute robust standard errors in any kind of `glm` model object.
+
+```{r}
+# Get variance-covariance matrix
+logit_vcov = vcovHC(logit0, type = "HC0")
+
+# the square root of the diagonal give our
+# standard errors
+logit_se = sqrt(diag(logit_vcov))
+
+logit_se
+```
+
+Which you can compare with:
+
+```{r}
+tidy(logit0) %>% .$std.error
+```
+
+Ultimately, this is a matter of open debate. From a *pure* parametric models perspective, nothing about logistic regression requires us to assume anything about how errors are distributed (see [here](https://davegiles.blogspot.com/2013/05/robust-standard-errors-for-nonlinear.html) and [here](https://statmodeling.stat.columbia.edu/2017/12/27/id-say-robust-standard-errors-like-holy-roman-empire-except-think-theyre-error/) for poignant arguments). [King and Roberts (2015)](https://doi.org/10.1093/pan/mpu015) even argue that the divergence of classical and robust standard errors is a symptom of using the wrong model. [Aronow (2016)](https://doi.org/10.48550/arXiv.1609.01774) retorts by suggesting that using robust standard errors helps us recast parametric models as semiparametric, which in turn requires us to assume fewer things about the data generation process, and fewer assumptions implies more credibility (in the agnostic statistics sense).
+
+## What do you think? Do you see yourself using robust standard errors in logistic regression or another kind of parametric model? How would you justify your choice during a job talk?
+
+## What about bootstrapped standard errors? Do they make sense for parametric models conceptually? 
+
+## Compute bootstrap standard errors for `logit_0`. How do they compare to classical and robust standard errors?
+
+::: {.callout-tip}
+## Hint
+
+This code worked well for OLS regression last week, it may also work fine for logit.
+
+```{r, eval = FALSE}
+library(rsample)
+
+# Remember the seed!
+fit2_boot = bootstraps(data = qog_am, times = 1000)$splits %>% 
+  map(~lm(mortinf ~ water + elec, data = analysis(.))) %>% 
+  map(tidy) %>% 
+  bind_rows(.id = "bootstrap_replicate") %>% 
+  group_by(term) %>% 
+  summarize(std.error = sd(estimate))
+```
+
+:::
+
+## Calculate confidence intervals for the estimate of `statusquo` in `logit_0` using classical, robust, and bootstrap standard errors. Does our choice or standard error affect the inferences that we are able to draw about the relationship between voting `yes` and `statusquo`? Why do you think that is the case?
+
+
+
+
