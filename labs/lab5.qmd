@@ -169,8 +169,6 @@ logLik(linear_ols)
 
 ## Are the coefficients in `mle` the same as those in `linear_mle` and `linear_ols`? Regardless of your answer, why do you think doing MLE by hand may yield different results?
 
-## Why do you think `mle` takes much longer to give a result than `linear_mle` or `linear_ols`?
-
 # Logistic regression
 
 Since our outcome `yes` is binary, you may want to consider an estimation procedure that explicitly models probabilities. 
