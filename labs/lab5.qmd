@@ -43,7 +43,7 @@ library(sandwich) # robust standard errors
 
 # Data
 
-The `Chile` data frame contains observations from a national survey conducted in April and May of 1988 by FLACSO/Chile. This survey happened six months before a plebiscite that would decide the faith of the country's dictatorship at the time. A *yes* vote would have led to eight more years of military rule, a *no* vote would set in motion a democratization process (which is what eventually happened).
+The `Chile` data frame contains observations from a national survey conducted in April and May of 1988 by FLACSO/Chile. This survey happened six months before a plebiscite that would decide the faith of the country's dictatorship at the time. A *yes* vote would have led to eight more years of military rule, a *no* vote would set in motion a democratization process (which is what happened eventually).
 
 ```{r, eval = FALSE}
 # Explore but do not print in pdf
@@ -52,7 +52,7 @@ Chile
 
 You can learn more about how each variable is coded by passing `?Chile` or `help(Chile)` to the console.
 
-Our outcome variable is `vote`, which we will recode as a binary outcome called `yes`, which will take a value of 1 if the person indicated they will vote in favor of the dictatorship in the plebiscite, and 0 otherwise.
+Our outcome variable is `vote`, which we will recode as a binary outcome called `yes`, taking a value of 1 if the person indicated they will vote in favor of the dictatorship in the plebiscite, and 0 otherwise.
 
 ```{r}
 chile = Chile %>% drop_na
@@ -76,10 +76,10 @@ summary(chile$statusquo)
 Consider the following model:
 
 $$
-\text{yes} = \beta_0 + \beta_1 \mathtt{statusquo} + \varepsilon
+\mathtt{yes} = \beta_0 + \beta_1 \mathtt{statusquo} + \varepsilon
 $$
 
-This a parametric linear model, so knowing $\beta_0$, $\beta_1$, and the variance of $\varepsilon \sim N(0, \sigma^2)$ is enough to characterize the relationship between vote intention and support for the statusquo.
+This a parametric linear model, so knowing $\beta_0$, $\beta_1$, and the variance of $\varepsilon \sim N(0, \sigma^2)$ is enough to characterize the relationship between vote intention and support for the status quo.
 
 We know that a model like this could be estimated by ordinary least squares (OLS). But we can also estimate it via maximum likelihood estimation (MLE). This is because, from the parametric models perspective, finding parameters that maximize the log likelihood is very similar to finding the parameters that minimize the sum of squared residuals. In other words, OLS regression is a special case of maximum likelihood estimation.
 
@@ -169,6 +169,8 @@ logLik(linear_ols)
 
 ## Are the coefficients in `mle` the same as those in `linear_mle` and `linear_ols`? Regardless of your answer, why do you think doing MLE by hand may yield different results?
 
+## Why do you think `mle` takes much longer to give a result than `linear_mle` or `linear_ols`?
+
 # Logistic regression
 
 Since our outcome `yes` is binary, you may want to consider an estimation procedure that explicitly models probabilities. 
@@ -179,7 +181,7 @@ $$
 p(X) = \beta_0 + \beta_1\mathtt{statusquo}
 $$
 
-Where $p(X) = Pr(Y = 1 | \mathtt{statusquo)}$. 
+Where $p(X) = Pr(\mathtt{yes} = 1 | \mathtt{statusquo)}$. 
 
 We can estimate this model via ML as well by changing the `family` argument to `binomial`, which by default uses the logistic function as the link.
 
@@ -194,12 +196,14 @@ coef(logit0)
 
 You may notice we get very different numbers than with the classical linear model. This is because logistic regression coefficients are expressed in log odds ratios (log odds for short), a byproduct of streamlining the estimation procedure.
 
-Visualizing this in a `marginaleffects` plot can help us interpret these coefficient.
+Visualizing this in a `marginaleffects` plot can help us interpret these estimates.
 
 ```{r}
 plot_predictions(model = logit0,
                  condition = "statusquo",
+                 # Plot link function on Y axis
                  type = "link") +
+  # the expression function is just to write math in the labels
   labs(y = expression(paste(log, 
                             bgroup("(", frac(p(X),
                                              1-p(X)),
@@ -208,7 +212,7 @@ plot_predictions(model = logit0,
 
 Because the relationship between `statusquo` and the log odds is linear, we can interpret our result as the "effect" of one unit increase in `statusquo` the log odds of `yes`.
 
-Since this is a weird quantity, we can reverse engineer the quantity to express it in terms of probability. The function below grabs a model object and converts the coefficients' unit from log odds to probabilities.
+Since log odds is a weird unit, we can reverse engineer the numbers to express then in terms of probability. The function below grabs a model object and converts the coefficients' unit from log odds to probabilities.
 
 ```{r}
 get_logit_prob = function(fit){
@@ -275,9 +279,9 @@ confint(logit0)
 ```
 
 
-From a nonparametric approach, classical normal-approximation standard errors required somewhat heroic assumptions. However, from the parametric point of view, you need a *very* strong reason to use anything other than classical standard errors. 
+From a nonparametric approach, classical normal-approximation standard errors required somewhat heroic assumptions. However, from the parametric point of view, you need a *very* strong reason to use anything other than classical standard errors.
 
-AM Chapter 5 gives us one general reason. In some applications, MLE may serve as a decent approximation even if the underlying model is wrong. In some cases, it may be better to use a well known model and "tweak" its standard errors instead of rewriting a whole new model.
+AM Chapter 5 gives us one general reason. In some applications, MLE may serve as a decent approximation even if the underlying model is wrong. In some cases, it may be better to use a well known model and "tweak" its standard errors instead of rewriting a whole new model. This would be an example of a semiparametric model. We are keeping the parametric portion that estimates betas in the original model but then we add a nonparametric layer to calculate standard errors, meaning we do not assume anything in particular about their distribution.
 
 Still, nothing stops you from calculating robust standard errors in a logit model. There is no one-line routine like in `lm_robust`, but you can use the [`sandwich`](https://sandwich.r-forge.r-project.org/index.html) package to compute robust standard errors in any kind of `glm` model object.
 
