@@ -237,6 +237,8 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 <!-- https://www.john-fox.ca/Companion/appendices/Appendix-Multiple-Imputation.pdf -->
 
+<!-- https://doi.org/10.1214/18-STS647 -->
+
 - AM Chapter 6
 - Lall, Ranjit. 2016. ["How Multiple Imputation Makes a Difference."](https://doi.org/10.1093/pan/mpw020) *Political Analysis* 24 (4): 414-433
 - Arel-Bundock, Vincent and Krzysztof J. Pelc. 2018. ["When Can Multiple Imputation Improve Regression Estimates?"](https://doi.org/10.1017/pan.2017.43) *Political Analysis* 26 (2): 240-245
