@@ -17,7 +17,7 @@ format: html
 
 [Week 6: Parametric Models](slides/week6.html)
 
-Week 7: Missing Data
+[Week 7: Missing Data](slides/week7.html)
 
 Week 8: Causal Inference I
 
