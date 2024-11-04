@@ -23,6 +23,8 @@ library(tinytable)
 options(tinytable_html_mathjax = TRUE)
 ```
 
+
+
 ## Identification
 
 ::: incremental
@@ -32,9 +34,11 @@ options(tinytable_html_mathjax = TRUE)
 
 - **Validity:** An estimator is *valid* if we believe that it measures what it claims to measure
 
-- A *statistical functional* is **point-identified** if it has only one value that is compatible with the CDF of the unobservable random vector of interest (given assumptions)
-
 :::
+
+## Point-identification
+
+> We say that a statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional that is logically compatible with the CDF of the unobservable vector given the assumptions.
 
 ## Missing data problem
 
@@ -377,4 +381,302 @@ tt(tab6) %>%
 ```
 
 Imagine we observe covariates $X_{1i}$ and $X_{2i}$
+
+## Options
+
+1. Regression estimation
+
+2. Hot deck imputation
+
+3. Inverse-probability weighting (IPW)
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tt(tab6) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+
+. . .
+
+Estimate $\widehat Y_i^* = \widehat \beta_0 + \widehat \beta_1 X_{1i} + \widehat \beta_2 X_{2i}$ with observed data
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tt(tab6) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Use coefficients to impute missing values
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tab7 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
+  1, 1, 1, 0, 3, "1",
+  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
+  3, 1, 1, 0, 9, "1",
+  4, 0, 1, 0, 5, "0",
+  5, 1, 1, 1, 4, "1",
+  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
+)
+
+tt(tab7) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 6),
+           color = "purple") 
+```
+
+. . .
+
+Which yields the same $\widehat E[Y_i]$ as
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tab8 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
+  1, 1, 1, 0, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 3$",
+  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
+  3, 1, 1, 0, 9, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 9$",
+  4, 0, 1, 0, 5, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 5$",
+  5, 1, 1, 1, 4, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 4$",
+  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
+)
+
+tt(tab8) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") %>% 
+  style_tt(i = 1:6,
+           j = 6,
+           color = "purple")
+```
+
+. . .
+
+What if we could condition on a *function* of covariates instead?
+
+## Propensity score
+
+. . .
+
+**Response propensity function**
+
+$$
+p_R(\mathbf{x}) = Pr[R_i = 1 | \mathbf{X}_i = x]
+$$
+
+::: incremental
+- $p_R(\mathbf{X}_i)$ is the **propensity score** of unit $i$
+
+- Conditional probability of response given the covariates
+
+- Useful since you cannot *nonparametrically* condition on many covariates
+
+- Can estimate consistently via ML (usually logit)
+
+- Still suffers from *omitted variable bias*
+:::
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
+  1, 2, 1, 0, 3,
+  2, -99, 0, 0, 7,
+  3, 3, 1, 0, 9,
+  4, 10, 1, 0, 5,
+  5, 12, 1, 1, 4,
+  6, -99, 0, 1, 3
+) 
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple")
+  
+```
+
+. . .
+
+Add propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$p_R(\\mathbf{X}_i)$` = c(0.33, 0.14, 0.73, 0.35, 0.78, 0.70)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple")
+```
+
+Add propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$Y_i$` = c(
+  "2",
+  "$\\widehat E[Y_i|p_R(X_i) = 0.14]$",
+  "3",
+  "10",
+  "12",
+  "$\\widehat E[Y_i|p_R(X_i) = 0.70]$"
+)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+**Not a good idea.** Discards a lot of information!
+
+## Inverse probability weighting (IPW)
+
+::: incremental
+- The problem is not missing data
+
+- But an unrepresentative sample
+
+- If MAR holds, we can use propensity score to *weight* observations
+
+- **Inverse probability weight** $\frac{1}{p_R(\mathbf{X}_i)}$
+
+:::
+
+## IPW estimator
+
+
+**Horvitz-Thompson estimator**
+
+$$
+\widehat E_{IPW}[Y_i] = \frac{1}{n} \sum_{i=1}^n \frac{Y_i^* R_i}{\widehat p_R(\mathbf{X}_i)}
+$$
+
+::: incremental
+
+- Low propensity scores are *underrepresented* $\rightarrow$ Assign greater weight
+
+- High-propensity scores $\rightarrow$ lower weight
+
+:::
+
+::: aside
+In practice, Hájek's stabilized IPW estimator is used more often because it avoids disproportional weights (cf. Definition 6.2.8 in AM Chapter 6)
+:::
+
+## Recap
+
+. . .
+
+**Options under MAR**
+
+1. Regression estimation
+
+2. Hot deck imputation
+
+3. Inverse-probability weighting (IPW)
+
+## Recap
+
+**Options under MAR**
+
+1. Regression estimation
+
+2. ~~Hot deck imputation~~
+
+3. Inverse-probability weighting (IPW)
+
+## Recap
+
+**Options under MAR**
+
+1. Regression estimation
+
+2. ~~Hot deck imputation~~
+
+3. Inverse-probability weighting (IPW)
+
+4. **Doubly robust estimation**
+
+## Doubly robust estimation
+
+::: incremental
+- Regression specification may be incorrect
+
+- Propensity score specification may be incorrect
+
+- Combining the two in a model that yield consistent estimates when *either* is correct
+:::
+
+. . .
+
+$$
+\begin{align}
+& \widehat E_{DR}[Y_i] = \\
+&\frac{1}{n} \sum_{i=1}^n \widehat E[Y_i^*|R_i = 1, \mathbf{X}_i] + \frac{1}{n} \sum_{i=1}^n \frac{R_i(Y_i^* - \widehat E[Y_i^* | R = 1, \mathbf{X}_i])}{\widehat{p}_R(\mathbf{X}_i)}
+\end{align}
+$$
+
+## Doubly robust estimation
+
+- Regression specification may be incorrect
+
+- Propensity score specification may be incorrect
+
+- Combining the two in a model that yield consistent estimates when *either* is correct
+
+
+$$
+\widehat E_{DR}[Y_i] = \text{Regression estimator} + \text{IPW correction}
+$$
 
