@@ -28,11 +28,13 @@ options(tinytable_html_mathjax = TRUE)
 ## Identification
 
 ::: incremental
-- A model is **identifiable** if it is *theoretically* possible to learn its true values
+- A "model" is **identifiable** if it is *theoretically* possible to learn its true values
 
 - **Example:** If we can credibly approximate $E(X)$ with the sample mean, then we can say $E(X)$ is *identified*
 
 - **Validity:** An estimator is *valid* if we believe that it measures what it claims to measure
+
+- Validity implies *low bias* and *consistency*
 
 :::
 
@@ -213,7 +215,7 @@ tt(tab2) %>%
 
 
 ::: incremental
-- **Baseline:** Missing not at at random (MNAR/NMAR)
+- **Baseline:** Missing not at random (MNAR/NMAR)
 
 - **MCAR:** Missing completely at random
 
@@ -479,11 +481,11 @@ $$
 
 - Conditional probability of response given the covariates
 
-- Useful since you cannot *nonparametrically* condition on many covariates
+- Useful since you cannot condition on many covariates  *nonparametrically* 
 
-- Can estimate consistently via ML (usually logit)
+- Can estimate *consistently* via ML (usually logit)
 
-- Still suffers from *omitted variable bias*
+- Still need to assume *specification* is correct
 :::
 
 ## Hot deck imputation
@@ -655,7 +657,7 @@ In practice, Hájek's stabilized IPW estimator is used more often because it avo
 
 - Propensity score specification may be incorrect
 
-- Combining the two in a model that yield consistent estimates when *either* is correct
+- Combining the two in a model that yields consistent estimates when *either* is correct
 :::
 
 . . .
