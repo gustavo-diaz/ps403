@@ -69,7 +69,7 @@ dpp = dpp %>% drop_na
 dpp
 ```
 
-We will then reproduce their main finding, which is the effect of being an incumbent on a candidate's vote share. The model includes a bunch of covariates (the `type_*` variables are indicators for different kinds of candidate occupations). We are also including fixed effects for electoral districts and clustering our standard errors by electoral district as well.^[You will learn what fixed effects and clustered standard errors are in POLI_SCI 405.]
+We will then reproduce their main finding, which is the effect of being an incumbent on a candidate's vote share. The model includes a bunch of covariates (the `type_*` variables are indicators for different kinds of candidate occupations). We are also including fixed effects and clustered standard errors by electoral district.^[You will learn what fixed effects and clustered standard errors are in POLI_SCI 405.]
 
 To avoid repeated copy-pasting, we will save our regression specification as a formula object.
 
@@ -353,7 +353,7 @@ results %>%
 
 # Multiple imputation
 
-The previous example considered missing data in the outcome only. We will encounter data with missing values across multiple covariates often. How to deal with missing data in this context?
+The previous example considered missing data in the outcome only. We will encounter data with missing values across many variables often. How to deal with missing data in this context?
 
 To illustrate the problem, consider the `UN98` data set contained in the `car` package, which contains social indicators on 207 nations distributed by the United Nations circa 1998. You can learn more by checking the documentation with `?UN98`.
 
@@ -368,7 +368,7 @@ UN98 %>%
 ```
 
 
-<!-- Listwise deletion -->
+<!-- Listwise deletion --> 
 
 We are interested in the conditional expectation of `infantMortality` by `GDPperCapita`, controlling for `educationFemale` and `region`. The following estimation performs listwise deletion by default, which in the multiple imputation world is also known as *complete cases* analysis.
 
@@ -393,7 +393,7 @@ More to the point, our baseline models discards a lot of data.
 glance(lm_complete)$nobs
 ```
 
-We are only using 76 of out of 207 observations, so we can certainly do better. The challenge is that we have missing data all over the place, even in variables that we are not using for estimation. Therefore, we cannot rely on regression imputation or IPW since those models will also suffer from missing data.
+We are using 76 of out of 207 observations, so we can certainly do better. The challenge is that we have missing data all over the place, even in variables that we are not using for estimation. Therefore, we cannot rely on regression imputation or IPW since those models will also suffer from missing data issues.
 
 <!-- mice -->
 The solution is to address the missing data problem as part of the data *pre-processing* step. We have two popular options to do so in the social sciences, both assuming MAR across variables. The first is called [Multivariate Imputation by Chained Equations (MICE)](https://amices.org/mice/). As the name suggests, this approach iteratively fills in missing data for every variable through a bunch of back and forth predictive models. See [here](https://stefvanbuuren.name/publications/2011%20MICE%20-%20JSS.pdf) for technical details and [here](https://www.john-fox.ca/Companion/appendices/Appendix-Multiple-Imputation.pdf) for an extended tutorial.
@@ -440,10 +440,10 @@ Amelia II has a similar implementation as MICE. We use the `amelia` function in 
 
 ```{r, results = "hide", message = FALSE, warning = FALSE}
 # Set the seed!
-amelia_imp = amelia(UN98, idvars = c("region")) # also gives 5 options
+amelia_imp = amelia(UN98, idvars = "region") # also gives 5 options
 ```
 
-Notice the warning about Amelia choosing to ignore observations that are completely missing, which is different from MICE. After choosing one of the five candidates, we can estimate.
+Notice the warning about Amelia choosing to ignore observations that are completely missing, which is different from MICE (I believe this is a design choice, not a limitation). After choosing one of the five candidates, we can estimate.
 
 ```{r}
 # Select one candidate data
@@ -463,7 +463,7 @@ df_amelia
 ```
 
 
-We can check the effective sample under Amelia imputation. We use `r glance(lm_amelia)$nobs` out of 207 observations.
+We can check the effective sample under Amelia imputation. We use `r glance(lm_amelia)$nobs` out of 207 observations. This number will vary because of the bootstrap step, so remember to set the seed in the code chunk that creates `amelia_imp`.
 
 ```{r}
 glance(lm_amelia)$nobs
