@@ -682,3 +682,33 @@ $$
 \widehat E_{DR}[Y_i] = \text{Regression estimator} + \text{IPW correction}
 $$
 
+## Next week: Causal inference (Chapter 7) {.smaller}
+
+**Parallels**
+
+- Stable outcomes framework $\rightarrow$ Potential outcomes framework
+- Average treatment effect bounds
+- MCAR $\rightarrow$ random assignment
+- MAR $\rightarrow$ strong ignorability
+- Regression, propensity score, matching, IPW, doubly robust estimation
+
+**Less important**
+
+- Post-treatment variables (but be wary!)
+- Generalizing beyond binary treatments.
+- Placebo testing
+
+## Next week: Other readings {.smaller}
+
+**Keele, McConnaughy, and White (2012)**
+
+- Hypothesis testing
+- Classical inference vs. randomization inference
+- Sharp null hypothesis
+- Inverting the sharp null to form confidence intervals
+
+**Fisher, Neyman, Rubin**
+
+- Early ideas on designing experiments
+- Importance of *physical* randomization
+
