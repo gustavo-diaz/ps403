@@ -675,7 +675,7 @@ $$
 
 - Propensity score specification may be incorrect
 
-- Combining the two in a model that yield consistent estimates when *either* is correct
+- Combining the two in a model that yields consistent estimates when *either* is correct
 
 
 $$
