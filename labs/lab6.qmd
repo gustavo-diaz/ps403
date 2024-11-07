@@ -343,7 +343,7 @@ results %>%
 ```
 
 
-## Conceptually, what do MCAR and MAR mean? How are they different? When is one more appropriate than the other?
+## Conceptually, what do MCAR and MAR mean? How are they different? When is one assumption more appropriate than the other?
 
 ## Interpret the results of each procedure. How well do they approximate the original results? Are they worth the additional assumptions?
 
