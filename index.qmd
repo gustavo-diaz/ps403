@@ -19,6 +19,6 @@ format: html
 
 [Week 7: Missing Data](slides/week7.html)
 
-Week 8: Causal Inference I
+[Week 8: Causal Inference I](slides/week8.html)
 
 Week 9: Causal Inference II
