@@ -1,0 +1,58 @@
+---
+title: "Lab 7: Hypothesis testing"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: November 18, 2024
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+---
+
+```{r setup, include=FALSE}
+# Code chunk options
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = FALSE,
+                      tidy.opts=list(width.cutoff=80))
+
+# Packages
+library(tidyverse)
+library(infer) # Tidy-friendly hypothesis testing
+library(estimatr) # Design-based estimators
+library(ri2) # Randomization inference
+library(broom) # Tidy lm output
+library(tinytable) # Print pdf tables
+```
+
+# Experiments and randomization inference
+
+This week, we learned random assignment allows us to point-identify the *average treatment effect* (ATE). Random assignment is analogous to assuming MCAR in the context of missing data. However, where MCAR is a heroic assumption, random assignment is something a researcher can have direct control over.
+
+This is the reason why experiments are popular in academia, public policy, and industry.^[Experiments are also called randomized controlled trials (RCTs) in the policy world, and A/B tests in industry.] The most prominent feature of experimentation is the random assignment of units to conditions.
+
+Implicit to random assignment is a notion of **direct control**. There is nothing about the observed distribution of conditions that guarantees random assignment was conducted. We would normally expect treatment and control units to look similar across observed covariates as a result of random assignment, but that is a symptom, not a cause, of randomization. This means the only way to guarantee random assignment holds is the fact that we conducted the experiment ourselves or we have sufficient knowledge to confirm that a third party did so.
+
+An important feature of random assignment is that it facilitates statistical inference using only the knowledge of how conditions were assigned to units. This is what Fisher meant by randomization being the reasoned basis for inference in the readings assigned for this week. This particular mode of inference is called **design-based causal inference** because the credibility of our conclusions follows from what we know (or assume) about research design.^[Design-based causal inference is usually presented in opposition to model-based causal inference, which draws inferential leverage from what we are willing to assume about parametric models.]
+
+
+
+# Confidence intervals as inverted hypothesis tests
+
+# Causal inference in observational studies
+
+An observational study is a study in which the researcher collects or observes data from the world, but does not intervene in it as we would do in an experiment. This usually means than random assignment is not guaranteed, so the only assumption available to conduct valid causal inference is **strong ignorability.**
+
