@@ -878,7 +878,7 @@ Estimation strategies (more in the lab):
 
 - Regression discontinuity
 
-- Difference in differences
+- Difference-in-differences
 
 **Focus:** How do they satisfy ignorability?
 
