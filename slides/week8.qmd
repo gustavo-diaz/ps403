@@ -871,3 +871,21 @@ Estimation strategies (more in the lab):
 - IPW estimation
 - Doubly robust estimation
 :::
+
+## Next week: Causal Inference II
+
+**General topic:** Satisfying ignorability by design.
+
+- Regression discontinuity
+
+- Difference in differences
+
+**Focus:** How do they satisfy ignorability?
+
+**Just for reference:** Methodological critiques
+
+&nbsp;
+
+:::{.r-stack}
+CHECK UPDATED SYLLABUS ON GITHUB!
+:::
