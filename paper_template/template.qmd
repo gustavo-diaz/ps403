@@ -1,0 +1,195 @@
+---
+title: "Final Paper Template"
+author:
+    - 'Gustavo Diaz^[Assistant Professor of Instruction. Northwestern University. Email: <gustavo.diaz@northwestern.edu>]'
+    - "Second Author^[Postdoctoral Fellow,  Fake University, Email : <second.author@fake.edu>]"
+date: today
+date-format: long
+abstract: \singlespacing This is a template to write an academic paper in Quarto. In this space, you normally write the abstract, which is a summary of the paper in no more than 120-200 words.
+thanks: 'Here you usually recognize the people who have given feedback to the paper. For some reason, research assistants are recognized in a separate sentence.'
+format: 
+     pdf:
+       documentclass: article 
+fontsize: 12pt
+number-sections: true # automatic section numbering
+urlcolor: blue # highlight links
+bibliography: references.bib # needs to be in the same folder
+geometry: # margins
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    # Line spacing
+    - \usepackage{setspace}
+    - \doublespacing
+    # Figures and tables always on top of page
+    - \usepackage{float}
+    - \floatplacement{figure}{t}
+    - \floatplacement{table}{t}
+    # Tables and figures appear after they are mentioned
+    - \usepackage{flafter}
+    # Figure stays within their section
+    - \usepackage[section]{placeins}
+---
+
+```{r setup, include=FALSE}
+# Here you customize global options for how
+# code will translate into the PDF
+# It won't show in the document
+library(knitr)
+opts_chunk$set(echo = FALSE, 
+               message = FALSE, 
+               warning = FALSE, 
+               results = "asis", 
+               out.width = "100%")
+
+# Load additional R packages here
+library(tidyverse) # Data manipulation
+library(tinytable) # tables
+library(palmerpenguins) # Practice data, you can safely delete this for your actual paper
+```
+
+
+\newpage
+
+# Introduction
+
+<!-- This line is a comment, it will not render in the PDF. You introduce by placing your cursor in a text line and then input  ctrl + shift + C in Windows and cmd + shift + C in Mac.-->
+
+Papers usually start with an introduction. See [this link](https://anthlittle.github.io/files/little_intros.pdf) for some tips on how to write introductions.^[You can also try the full URL: <https://anthlittle.github.io/files/little_intros.pdf>. Oh, this is how you make footnotes.]
+
+For our course, the introduction should be roughly composed of:
+
+- One paragraph situating the big picture
+- One paragraph introducing the article/study to be replicated
+- One paragraph explaining what you do in terms of replication and why
+- One paragraph summarizing the results
+
+You will use citations throughout your paper. Citations by default are in Chicago style. For example, you can see @Wickham2016a to learn more about working with R and RStudio. See [here](https://quarto.org/docs/authoring/citations.html) for more information on how to use other citation styles.
+
+# Background, Data, and Research Design
+
+In this section you explain in a bit more detail what the original piece did, with special attention to how the data was collected and analyzed. Remember to not only convey *what* they did, but also *why*.
+
+You should wrap up this section by indicating which part of the original analysis you will be replicating, and then explain how you improve upon (or think it should be improved upon later).
+
+# Replication
+
+This section should reproduce, to the best of your ability, the findings of the relevant parts of the original study. If there are any discrepancies, you should try to reason why these exist and how consequential they are.
+
+You will want to include figures and tables in this section or other parts of the paper, here are a few pointers on how to incorporate them.
+
+## Figures from R
+
+@fig-penguins shows how to plot a figure from R code. See @Wickham2016 for more on how to make pretty plots.^[Notice how we use cross-reference to automate figure labels and citations.]
+
+```{r}
+#| label: fig-penguins
+#| fig-cap: "An example of how to make figures using `ggplot2`"
+
+ggplot(penguins) +
+  aes(x = flipper_length_mm,
+      y = body_mass_g) +
+  geom_point(aes(color = species, 
+                 shape = species),
+             size = 3,
+             alpha = 0.8) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(title = "Penguin size, Palmer Station LTER",
+       subtitle = "Flipper length and body mass for Adelie, Chinstrap and Gentoo Penguins",
+       x = "Flipper length (mm)",
+       y = "Body mass (g)",
+       color = "Penguin species",
+       shape = "Penguin species") +
+  theme(legend.position = c(0.2, 0.7),
+        plot.title.position = "plot",
+        plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.caption.position = "plot")
+```
+
+
+
+## Figures from external sources
+
+Sometimes you may want to include a figure that was not made in R. Alternatively, when your data analysis becomes too cumbersome, you may want to save your figures in a separate file, and then import them. @fig-import shows an example using a URL (you can replace this with a relative or absolute path in your computer). In practice, you would use the path of file in your working directory.
+
+::: {#fig-import}
+![](https://raw.githubusercontent.com/nrennie/nrennie.rbind.io/main/content/blog/2024-01-31-making-pdf-with-quarto-typst-latex/featured.png){fig-align="center" width=50%}
+
+An example of how to plot an external figure
+:::
+
+
+## Pipe tables
+
+You can make tables "by hand" using pipe tables. Like @tbl-pipe shows.
+
+| Default | Left | Right | Center |
+|---------|:-----|------:|:------:|
+| 12      | 12   |    12 |   12   |
+| 123     | 123  |   123 |  123   |
+| 1       | 1    |     1 |   1    |
+
+: Demonstration of pipe table syntax {#tbl-pipe}
+
+You can even use a [Tables Generator](https://www.tablesgenerator.com/markdown_tables) to make them interactively and then copy and paste in your .qmd file.
+
+## Tables from R
+
+Of course, you can also make tables in R and then print them in a nice format. I like to use the [`tinytable`](https://vincentarelbundock.github.io/tinytable/) for simple tables.^[You should also consider [`modelsummary`](https://modelsummary.com) for regression-like result tables.]
+
+For example, @tbl-r is made "by hand" with R code. Of course, you can also plot tidy data objects, like @tbl-tidy shows.
+
+```{r}
+#| label: tbl-r
+#| tbl-cap: "An example of a table made with `tinytable`"
+
+
+r_table = tribble(
+  ~Default, ~Left, ~Right, ~Center,
+  12, 12, 12, 12,
+  123, 123, 123, 123,
+  1, 1, 1, 1
+)
+
+r_table %>% tt()
+```
+
+
+```{r}
+#| label: tbl-tidy
+#| tbl-cap: "An example of a table made from tidy data with `tinytable`"
+
+# table1 is a sample table from the tidyr package
+table1 %>% tt()
+```
+
+# Extension/Discussion
+
+In this section you will do at least one of two things:
+
+1. Show additional analyses that correct or improve upon the original article. If you are making a methodological point, think about how it changes our understanding of the social or political phenomenon under study.
+
+2. Discuss what should be done in future work to improve our understanding of the phenomenon under study. If you are not doing any additional analyses, your discussion should be both detailed in terms of what to do and realistic in terms of what could be done. Take this as an opportunity to think about how your next paper should look like.
+
+
+# Conclusion
+
+Conclude with roughly one paragraph summarizing what you did and the main takeaway of your paper, and then another paragraph explaining the significance for the field or future studies.
+
+# Supplementary Material
+
+Include a link to a public GitHub repository with all the materials required to reproduce the analyses. You may also include a separate appendix file with additional analyses that are less central to your paper, but you still want to reference in the main text.
+
+Include a statement like the one below to point out readers to your replication materials.
+
+The data, code, and any additional materials required to replicate all analyses in this article are available at <https://github.com/gustavo-diaz/ps403>.
+
+# References {.unnumbered}
+
+<!-- References go in the end by default, you can specify their placement with the following divider. -->
+
+::: {#refs}
+:::
+
