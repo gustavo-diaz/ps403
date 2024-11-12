@@ -60,7 +60,9 @@ geometry:
 
 ### Textbooks
 
-- [General introduction to R programming]{.aside} Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. [*R for Data Science (2e)*](https://r4ds.hadley.nz)
+- [Introduction to Tidyverse]{.aside} Mock, Thomas. 2019. [*A Gentle Introduction to Tidy Statistics in R*](https://posit.co/resources/videos/a-gentle-introduction-to-tidy-statistics-in-r/)
+
+- [Statistical Models with Tidyverse]{.aside} Carrie Wright, Shannon E. Ellis, Stephanie C. Hicks and Roger D. Peng. 2021. [*Tidyverse Skills for Data Science*](https://jhudatascience.org/tidyversecourse/)
 
 ### Tutorials
 
