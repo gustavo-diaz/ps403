@@ -56,10 +56,13 @@ To illustrate this point, we will use a smaller version of the data from [Gerber
 ```{r, results = "hide"}
 # Not available on CRAN, install from GitHub
 # remotes::install_github("kosukeimai/qss-package")
-library(qss)
+# library(qss)
 
 # Attach on environment
-data(social)
+# data(social)
+
+# Alternative option if install_github doesn't work
+load("http://gustavodiaz.org/ps403/data/social.RData")
 
 # Explore but do not print in PDF
 social
