@@ -62,7 +62,7 @@ To illustrate this point, we will use a smaller version of the data from [Gerber
 # data(social)
 
 # Alternative option if install_github doesn't work
-load("http://gustavodiaz.org/ps403/data/social.RData")
+load(url("http://gustavodiaz.org/ps403/data/social.RData"))
 
 # Explore but do not print in PDF
 social
