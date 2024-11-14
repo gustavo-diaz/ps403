@@ -21,22 +21,63 @@ library(tinytable)
 library(kableExtra) # too lazy to change
 library(DeclareDesign) # Re-randomize
 library(infer)
+# devtools::install_github("kbodwin/flair")
+library(flair) # color code
 
 # tinytable options
 # options(tinytable_html_mathjax = TRUE)
 ```
 
 
-## Return to strong ignorability
+## Strategy 2: Ignorability
+
+. . .
+
+What if we cannot assume random assignment?
+
+## Strategy 2: Ignorability
 
 We can still conduct valid causal inference if we believe treatment assignment is **strongly ignorable** (conditional on covariates)
 
+. . .
+
 Requirements:
 
+::: incremental
 - *Conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
 - *Positivity*: There exists $\epsilon > 0$ such that $$\epsilon < Pr[D_i = 1 | \mathbf{X}_i] < 1 - \epsilon$$
+:::
+
+::: aside
+*Weak ignorability* only requires $Y_i(d) \perp \!\!\! \perp D_i | \mathbf{X}_i \forall d \in \{0, 1\}$, which in most cases makes no difference
+:::
+
+## Strategy 2: Ignorability
+
+If strong ignorability holds:
+
+::: incremental
+- ATE $E[\tau_i]$  is **point-identified**
+- Conditional ATE (CATE) $E[\tau_i | \mathbf{X}_i]$ is **point-identified**
+:::
 
 . . .
+
+Estimation strategies:
+
+::: incremental
+- Conditioning on covariates (regression)
+- Propensity score matching
+- IPW estimation
+- Doubly robust estimation
+:::
+
+## Strategy 2: Ignorability
+
+If strong ignorability holds:
+
+- ATE $E[\tau_i]$  is **point-identified**
+- Conditional ATE (CATE) $E[\tau_i | \mathbf{X}_i]$ is **point-identified**
 
 ::: {.r-stack}
 What if we could guarantee strong ignorability *by design*?
@@ -281,3 +322,155 @@ $K(\cdot)$ assigns weights to units based on distance to cutoff (triangular perf
 
 ## DID ingredients
 
+::: incremental
+
+- Time periods: $t = \{1,2\}$ (Before/after treatment)
+
+- Treatment: $D_i = \{0,1\}$
+
+- Potential outcomes: $Y_{i,t}(0) = Y_{i,t}(0, 0)$ and $Y_{i,t}(1) = Y_{i,t}(0, 1)$
+
+:::
+
+. . .
+
+**Switching equation**
+
+$$
+Y_{i,t} = D_i Y_{i,t}(1) + (1-D_i) Y_{i,t}(0)
+$$
+
+
+::: aside
+Same as canonical potential outcomes framework but now with time periods
+:::
+
+## Causal estimand
+
+. . .
+
+**Average treated effect on the treated (ATT) in $t=2$**
+
+$$
+\tau_2 = E[Y_{i,2}(1) - Y_{i,2}(0) | D_i = 1]
+$$
+
+::: incremental
+- Cannot observe directly
+
+- Cannot avoid selection bias
+
+- But before/after setup allows for valid estimation
+:::
+
+## Causal estimand
+
+![](fig/dd.png)
+
+## DID estimation
+
+![](fig/dd.png)
+
+
+$$
+\widehat{ATT} =  [\text{Mean}(B) - \text{Mean}(A)] - [\text{Mean}(D) - \text{Mean}(C)]
+$$
+
+
+
+## DID estimation
+
+
+
+![](fig/dd.png)
+
+$$
+\widehat{ATT} =  \underbrace{[\text{Mean}(B) - \text{Mean}(A)]}_\text{Difference} - \underbrace{[\text{Mean}(D) - \text{Mean}(C)]}_\text{Difference}
+$$
+
+## DID estimation
+
+![](fig/dd.png)
+
+$$
+\widehat{ATT} =  \underbrace{\underbrace{[\text{Mean}(B) - \text{Mean}(A)]}_\text{Difference} - \underbrace{[\text{Mean}(D) - \text{Mean}(C)]}_\text{Difference}}_\text{Difference-in-differences}
+$$
+
+## Rewrite as a regression estimator
+
+. . .
+
+**Two time periods**
+
+
+$$
+\begin{align}
+Y = & \beta_0 + \beta_1 \text{Treated} + \beta_2 \text{Post-treatment} + \\
+& \color{purple}{\beta_3 \text{Treated} \times \text{Post-treatment}} + \varepsilon
+\end{align}
+$$
+
+. . .
+
+
+```{r, echo=TRUE, eval=FALSE}
+lm(Y ~ Treated * Post-treatment, data = dat) # both are the same
+
+lm(Y ~ Treated + Post-treatment + treated:post-treatment, data= dat)
+```
+
+
+## Rewrite as a regression estimator
+
+**Multiple time periods**
+
+. . .
+
+$$
+Y = \alpha_i + \alpha_t + \color{purple}{\beta_1 \text{Treated}} + \varepsilon
+$$
+
+. . .
+
+Know as the two-way fixed-effects estimator (TWFE)
+
+. . .
+
+```{r, echo = TRUE, eval = FALSE}
+lm_robust(
+  Y ~ Treated,
+  fixed_effects = ~Unit + Time,
+  clusters = Unit,
+  se_type = "stata", # faster computing
+  data = dat
+)
+```
+
+## Assumption: Parallel trends
+
+![](fig/dd_trend_1.png)
+
+## What if we break parallel trends?
+
+![](fig/dd_trend_2.png)
+
+## What if we break parallel trends?
+
+![](fig/dd_trend_3.png)
+
+## Challenge: Staggered adoption
+
+
+![](fig/dd_timing.png)
+
+::: aside
+See [Roth et al 2023](https://doi.org/10.1016/j.jeconom.2023.03.008) and [`did`](https://bcallaway11.github.io/did/) package for details
+:::
+
+::: {style="text-align: center"}
+## Thank you! {.center background-color="#D2D755"}
+
+&nbsp;
+
+![](fig/panda_dance.gif){fig-align="center" width="10%" height="10%"} 
+:::
