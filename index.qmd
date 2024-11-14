@@ -21,4 +21,4 @@ format: html
 
 [Week 8: Causal Inference I](slides/week8.html)
 
-Week 9: Causal Inference II
+[Week 9: Causal Inference II](slides/week9.html)
