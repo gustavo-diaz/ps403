@@ -43,13 +43,13 @@ library(tinytable) # Print pdf tables
 
 # Experiments and randomization inference
 
-This week, we learned random assignment allows us to point-identify the *average treatment effect* (ATE). Random assignment is analogous to assuming MCAR in the context of missing data. However, where MCAR is a heroic assumption, random assignment is something a researcher can have direct control over.
+This week, we learned that random assignment allows us to point-identify the *average treatment effect* (ATE). Random assignment is analogous to assuming MCAR in the context of missing data. However, where MCAR is a heroic assumption, random assignment is something a researcher can have direct control over.
 
-This is the reason why experiments are popular in academia, public policy, and industry.^[Experiments are also called randomized controlled trials (RCTs) in the policy world, and A/B tests in industry.] The most prominent feature of experimentation is the random assignment of units to conditions.
+This is the reason why experiments are popular in academia, public policy, and industry.^[Experiments are also called randomized controlled trials (RCTs) in the policy world, and A/B tests in industry.] The most prominent feature of experimentation is the random assignment of units to conditions. There are many forms of random assignment that we will not get to cover this term.
 
 Implicit to random assignment is a notion of **direct control**. There is nothing about the observed distribution of conditions that guarantees random assignment was conducted. We would normally expect treatment and control units to look similar across observed covariates as a result of random assignment, but that is a symptom, not a cause, of randomization. This means the only way to guarantee random assignment holds is the fact that we conducted the experiment ourselves or we have sufficient knowledge to confirm that a third party did so.
 
-An important feature of random assignment is that it facilitates statistical inference using only the knowledge of how conditions were assigned to units. This is what Fisher meant by randomization being the reasoned basis for inference in the readings assigned for this week. This particular mode of inference is called **design-based causal inference** because the credibility of our conclusions follows from what we know (or assume) about research design.^[Design-based causal inference is usually presented in opposition to model-based causal inference, which draws inferential leverage from what we are willing to assume about parametric models.]
+An important feature of random assignment is that it facilitates statistical inference using only the knowledge of how conditions were assigned to units. This is what Fisher meant by randomization being the reasoned basis for inference in the readings assigned for this week. This particular mode of inference is called **design-based causal inference** because the credibility of our conclusions follows from what we know (or assume) about the research design.^[Design-based causal inference is usually presented in opposition to model-based causal inference, which draws inferential leverage from what we are willing to assume about parametric models.]
 
 To illustrate this point, we will use a smaller version of the data from [Gerber, Green, and Larimer (2008)](https://doi.org/10.1017/S000305540808009X). The version of the data that we will use is contained in the `social` data frame of the `qss` package (which is only available on GitHub).
 
@@ -146,11 +146,13 @@ Luckily, we do not need to write such long code to conduct randomization inferen
 
 ```{r, eval = FALSE}
 # Set seed and change eval = FALSE to cache =  TRUE
+# Declare random assignment
 gotv_assignment = declare_ra(
   N = nrow(gotv), # total units
   m = sum(gotv$treatment == 1) # total treated units
 )
 
+# Then conduct randomization inference
 # I think this only works if treatment is a binary indicator
 gotv_ri = conduct_ri(
   primary2006 ~ treatment,
@@ -161,7 +163,7 @@ gotv_ri = conduct_ri(
 
 ```
 
-Finally, we can also conduct randomization inference, and permutation testing in general, with the `mosaic` package. Notice the use of the `shuffle()` function.
+Finally, we can also implement randomization inference, and permutation testing in general, with the `mosaic` package. Notice the use of the `shuffle()` function.
 
 ```{r, eval = FALSE}
 # Set seed and change eval = FALSE to cache = TRUE
@@ -199,7 +201,7 @@ ate_lm2 = lm_robust(primary2006 ~ messages,
 tidy(ate_lm2)
 ```
 
-What if you wanted to compare between groups, instead of each group by the baseline? You can adapt your `lm_robust` code to conduct *linear hypotheses* using `lh_robust`.
+What if you wanted to compare treatment between groups, instead of each group against the control baseline? You can adapt your `lm_robust` code to conduct *linear hypotheses* using `lh_robust`. This is equivalent to subsetting the data and then comparing the mean of each group with `diference_in_means`.
 
 ```{r}
 ate_lh = lh_robust(primary2006 ~ messages,
@@ -213,18 +215,18 @@ ate_lh$lh %>% tidy()
 
 
 
-## Explain how every variable (other than `messages`) in `social` is measured.
+## Explain how every variable (other than `messages`) in the `social` data frame is measured.
 
-## Customize the `conditions` table above to make it more informative.
+## Customize the `conditions` table above to make it more informative (and show it around here).
 
-## Interpret the result of `ate` in terms of the estimate, confidence intervals, and p-value (print a nice table if you can)
+## Interpret the result of `ate` in terms of the estimate, confidence intervals, and p-value (show a nice table if you can)
 
 ## How and why is the result using `t.test` different from using `difference_in_means`? Which one is more appropriate?
 
 
 ## Does randomization inference change our conclusions about `ate`? Why? Under what circumstances would you give the opposite answer?
 
-## Compare all possible pairwise combinations of treatment groups using `lh_robust`. Is there a particular message that is more effective than others?
+## Compare all possible pairwise combinations of treatment groups using `lh_robust` (or any other equivalent approach). Is there a particular GOTV message that is more effective than others?
 
 ::: {.callout-tip}
 ## Hint
