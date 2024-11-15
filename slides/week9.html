@@ -435,16 +435,9 @@
 </div>
 </div>
 </section>
-<section id="strategy-2-ignorability-3" class="slide level2">
-<h2>Strategy 2: Ignorability</h2>
-<p>If strong ignorability holds:</p>
-<ul>
-<li>ATE <span class="math inline">\(E[\tau_i]\)</span> is <strong>point-identified</strong></li>
-<li>Conditional ATE (CATE) <span class="math inline">\(E[\tau_i | \mathbf{X}_i]\)</span> is <strong>point-identified</strong></li>
-</ul>
-<div class="r-stack">
+<section id="strategy-3" class="slide level2 center">
+<h2>Strategy 3</h2>
 <p>What if we could guarantee strong ignorability <em>by design</em>?</p>
-</div>
 </section>
 <section id="quasi-experiments" class="slide level2">
 <h2>Quasi-experiments</h2>
@@ -586,11 +579,8 @@ Y_i(1) &amp; \text{if } X_i \geq c
 <li><p>Still, we can approximate</p></li>
 </ul>
 <p><span class="math display">\[
-\begin{align}
-&amp;\tau_{SRD} = \\
-&amp; \lim_{x \downarrow c} E[Y_i | X_i = x] -
+\lim_{x \downarrow c} E[Y_i | X_i = x] -
 \lim_{x \uparrow c} E[Y_i | X_i x]
-\end{align}
 \]</span></p>
 </div></div>
 </section>
@@ -761,23 +751,14 @@ Y = \alpha_i + \alpha_t + \color{purple}{\beta_1 \text{Treated}} + \varepsilon
 <h2>Challenge: Staggered adoption</h2>
 <p><img data-src="fig/dd_timing.png"></p>
 
-<aside><div>
-<p>See <a href="https://doi.org/10.1016/j.jeconom.2023.03.008">Roth et al 2023</a> and <a href="https://bcallaway11.github.io/did/"><code>did</code></a> package for details</p>
-</div></aside></section>
-<section id="thank-you" class="slide level2 center" style="text-align: center" data-background-color="#D2D755">
-<h2>Thank you!</h2>
-<p>&nbsp;</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="fig/panda_dance.gif" class="quarto-figure quarto-figure-center" style="width:10.0%;height:10.0%"></p>
-</figure>
-</div>
-</section>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>
 </div>
+<aside><div>
+<p>See <a href="https://doi.org/10.1016/j.jeconom.2023.03.008">Roth et al 2023</a> and <a href="https://bcallaway11.github.io/did/"><code>did</code></a> package for details</p>
+</div></aside></section>
     </div>
   </div>
 
