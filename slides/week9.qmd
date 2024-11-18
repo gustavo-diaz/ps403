@@ -21,8 +21,6 @@ library(tinytable)
 library(kableExtra) # too lazy to change
 library(DeclareDesign) # Re-randomize
 library(infer)
-# devtools::install_github("kbodwin/flair")
-library(flair) # color code
 
 # tinytable options
 # options(tinytable_html_mathjax = TRUE)
@@ -72,16 +70,10 @@ Estimation strategies:
 - Doubly robust estimation
 :::
 
-## Strategy 2: Ignorability
+## Strategy 3 {.center}
 
-If strong ignorability holds:
 
-- ATE $E[\tau_i]$  is **point-identified**
-- Conditional ATE (CATE) $E[\tau_i | \mathbf{X}_i]$ is **point-identified**
-
-::: {.r-stack}
 What if we could guarantee strong ignorability *by design*?
-:::
 
 ## Quasi-experiments
 
@@ -265,11 +257,8 @@ Called *sharp* because treatment assignment is *deterministic* on the cutoff
 - Still, we can approximate
 
 $$
-\begin{align}
-&\tau_{SRD} = \\
-& \lim_{x \downarrow c} E[Y_i | X_i = x] -
+\lim_{x \downarrow c} E[Y_i | X_i = x] -
 \lim_{x \uparrow c} E[Y_i | X_i x]
-\end{align}
 $$
 :::
 
@@ -414,7 +403,8 @@ $$
 
 
 ```{r, echo=TRUE, eval=FALSE}
-lm(Y ~ Treated * Post-treatment, data = dat) # both are the same
+# Both are the same
+lm(Y ~ Treated * Post-treatment, data = dat)
 
 lm(Y ~ Treated + Post-treatment + Treated:Post-treatment, data= dat)
 ```
@@ -467,10 +457,3 @@ lm_robust(
 See [Roth et al 2023](https://doi.org/10.1016/j.jeconom.2023.03.008) and [`did`](https://bcallaway11.github.io/did/) package for details
 :::
 
-::: {style="text-align: center"}
-## Thank you! {.center background-color="#D2D755"}
-
-&nbsp;
-
-![](fig/panda_dance.gif){fig-align="center" width="10%" height="10%"} 
-:::

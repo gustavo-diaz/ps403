@@ -1,0 +1,236 @@
+---
+title: "Lab 8: Quasi-Experiments"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: November 25, 2024
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+---
+
+```{r setup, include=FALSE}
+# Code chunk options
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = FALSE,
+                      tidy.opts=list(width.cutoff=80))
+
+# Packages
+library(tidyverse)
+library(haven) # read .dta files
+library(estimatr) # Design-based estimators
+library(broom) # Tidy lm output
+library(tinytable) # Print pdf tables
+library(modelsummary) # Regression tables
+```
+
+# Regression discontinuity
+
+To illustrate the application of RD designs in R, we will use the data referenced in [Cattaneo et al (2020)](https://titiunik.github.io/books/CattaneoIdroboTitiunik2020-CUP-Foundations.pdf).
+
+```{r, results = "hide"}
+url = "http://gustavodiaz.org/ps403/data/CIT_2020_CUP_polecon.dta"
+
+tr = read_dta(url)
+
+# Inspect but do not print
+tr
+```
+
+This data originally comes from [Meyersson's (2014)]() study on the effect of electing Islamic parties on Women's education in Turkey/Türkiye. The unit of analysis is the municipality. The important variables are:
+
+- `Y`: Percentage of young women who had completed high school by 2000 (Outcome)
+- `X`: Islamic parties' margin of victory in the 1994 mayoral election (Score)
+- `T`: Whether a mayor from an Islamic party was elected in the 1994 election (treatment)
+
+We have an outcome, a score, and an implicit cutoff indicated by our treatment and the centering of the score at 0.
+
+As a baseline, consider a parametric estimation of the effect of electing a mayor from an Islamic party on women's educational attainment.
+
+```{r}
+baseline = lm(Y ~ T + X, data = tr)
+
+tidy(baseline)
+```
+
+We can justify our `baseline` model with the strong ignorability assumption. We know that treatment assignment (electing a mayor from an Islamic party) depends exclusively the score (vote margin for Islamic parties). Therefore, controlling just for this confounder is enough to satisfy the conditional independence requirement.
+
+The problem with the parametric approach is that it is not necessary justified under the continuity-based approach to regression discontinuity. To illustrate this, let's visualize the regression discontinuity.
+
+```{r}
+ggplot(tr) +
+  aes(x = X, y = Y) +
+  geom_point() +
+  geom_vline(xintercept = 0, 
+             color = "purple") +
+  geom_smooth(
+    aes(x = X, y = Y, color = as.factor(T)),
+    method = "lm", se = FALSE
+  )
+```
+
+Hold on, the data is too crowded for us to see what's going on. Let's use the functionality in the `rdrobust` package to show the data in bins.
+
+```{r}
+library(rdrobust)
+
+# This is a ggplot object that can be further customized
+rdplot(y = tr$Y,x = tr$X, p = 1)
+```
+
+We can now see a small negative jump around the cutoff. However, notice how there are no observations *exactly* at the cutoff.
+
+```{r}
+# Total obs with score exactly at zero
+sum(tr$X == 0)
+```
+
+In other words, our parametric model is extrapolating to a specific point at which there is no data. Under the continuity approach, we can instead *approximate* the effect at the cutoff nonparametrically without making extrapolations. Or, rather, we are being explicit about this being an extrapolation problem, so we are using methods that are better suited for that task.
+
+This is also implemented in the `rdrobust` package. Recall from our discussion that we need to make three important choices.
+
+1. Polynomial $p$
+2. Kernel function $K(\cdot)$
+3. Bandwidth $h$
+
+Most of these choices are automated in the `rdrobust` function. 
+
+```{r}
+rd = rdrobust(
+  y = tr$Y,
+  x = tr$X)
+
+# Sadly, no tidy output supported
+# But see here for how to mimic it
+# if you want to compare in modelsummary
+# https://stackoverflow.com/questions/71361739/regression-output-tables-from-the-rdrobust-package-in-r
+summary(rd)
+```
+
+
+## Explain how an RDD satisfies the conditional ignorability assumption.
+
+## Compare the results of `baseline` and `rd`. Do they change our interpretation of the effect of electing mayors from Islamic parties on young women's educational attainment? What explains the difference?
+
+## What happens to the `rdrobust` results when you try a different polynomial? Show at least one alternative result.
+
+## What happens to the `rdrobust` results when you try a different bandwidth? Show at least one alternative result.
+
+## Based on your exploration of alternative parameters for `rdrobust`, are you satisfied with the automated procedure? Explain.
+
+# Difference-in-differences
+
+To illustrate how to implement a DID design in R, we will use data from the `causaldata` package, which includes the example data sets used in the [Hungtinton-Klein (2022)](https://theeffectbook.net) textbook.
+
+```{r}
+library(causaldata)
+```
+
+
+We will focus on the data from the [Kessler and Roth (2014)](https://www.nber.org/papers/w20378) study on the effect of changing organ donation forms from an opt-in frame to an active choice frame. See [section 18.1.3](https://theeffectbook.net/ch-DifferenceinDifference.html#how-did-does) of The Effect textbook for details.
+
+```{r, results = "hide"}
+od = causaldata::organ_donations
+
+# Inspect but do not print
+od
+
+# How many states and quarters?
+od %>% group_by(State) %>% tally
+```
+
+In July 2011, California switched from opt-in to active choice. We can treat this state as our treatment group and compare it to the other states that had opt-in throughout the period under study.
+
+We can use this information to code the treatment group and post-treatment indicators:
+
+```{r}
+od = od %>%
+  mutate(Treatment = State == 'California',
+         Post = Quarter %in% c('Q32011','Q42011','Q12012'),
+         # Alternative version for TWFE
+         Treated = State == 'California' & 
+            Quarter %in% c('Q32011','Q42011','Q12012')
+         )
+```
+
+We can get a general sense of the general design by just looking at the means before-after across groups.
+
+```{r, message = FALSE, warning = FALSE}
+od %>% 
+  group_by(Post, Treatment) %>% 
+  summarize(avg_donors = mean(Rate))
+```
+
+Perhaps more informative, we can look at the averages before and after over time:
+
+```{r, message = FALSE, warning = FALSE}
+over_time = od %>% 
+  group_by(Quarter, Treatment) %>% 
+  summarize(avg_donors = mean(Rate))
+
+ggplot(over_time) +
+  aes(x = Quarter, y = avg_donors, 
+      group = Treatment, color = Treatment) +
+  geom_line() + geom_point() +
+  geom_vline(xintercept = "Q32011")
+```
+
+Figures by themselves do not convey a lot. Perhaps estimation and inference can help clarify if there is an effect.
+
+First, we assume this is simply a before/after comparison.
+
+```{r}
+two_periods = lm(
+  Rate ~ Treatment * Post,
+  data = od
+)
+
+tidy(two_periods)
+```
+
+But wait, perhaps we need to account for the fact that we observe the same states over time by clustering the standard errors. Otherwise, we cannot assume observations are i.i.d.
+
+```{r}
+two_periods_cluster = lm_robust(
+  Rate ~ Treatment * Post,
+  clusters = State,
+  data = od
+)
+
+tidy(two_periods_cluster)
+```
+
+Finally, we can admit multiple time periods with the two-way fixed effects estimator.
+
+```{r}
+twfe = lm_robust(
+  Rate ~ Treated,
+  fixed_effects = ~ State + Quarter,
+  clusters = State,
+  data = od
+)
+
+tidy(twfe)
+```
+
+## Does the parallel trends assumption hold here? How do you sustain this claim?
+
+## Is the parallel trends assumption a replacement for strong ignorability? Or do we need to assume both? Explain.
+
+## Interpret the results of `two_periods`, `two_periods_cluster`, and `twfe`. Does it matter which one we use to estimate the effect of moving from opt-in to active choice in organ donation? (Making a nice table with `modelsummary` may help).
+
+## In substantive terms, how do we interpret this effect? Would you say the effect size is considerable?
