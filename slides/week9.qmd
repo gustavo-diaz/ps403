@@ -416,7 +416,7 @@ $$
 ```{r, echo=TRUE, eval=FALSE}
 lm(Y ~ Treated * Post-treatment, data = dat) # both are the same
 
-lm(Y ~ Treated + Post-treatment + treated:post-treatment, data= dat)
+lm(Y ~ Treated + Post-treatment + Treated:Post-treatment, data= dat)
 ```
 
 
