@@ -485,7 +485,7 @@ Y_i(1) &amp; \text{if } X_i \geq c
 </div>
 
 <aside><div>
-<p>Called <em>sharp</em> because treatment assignment is <em>deterministic</em> on the cutoff</p>
+<p>Called <em>sharp</em> because treatment assignment is <em>deterministic</em> at the cutoff</p>
 </div></aside></section>
 <section id="interpretation-two-approaches" class="slide level2">
 <h2>Interpretation: Two approaches</h2>
@@ -706,9 +706,10 @@ Y = &amp; \beta_0 + \beta_1 \text{Treated} + \beta_2 \text{Post-treatment} + \\
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> Treated <span class="sc">*</span> Post<span class="sc">-</span>treatment, <span class="at">data =</span> dat) <span class="co"># both are the same</span></span>
-<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> Treated <span class="sc">+</span> Post<span class="sc">-</span>treatment <span class="sc">+</span> Treated<span class="sc">:</span>Post<span class="sc">-</span>treatment, <span class="at">data=</span> dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># Both are the same</span></span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> Treated <span class="sc">*</span> Post<span class="sc">-</span>treatment, <span class="at">data =</span> dat)</span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Y <span class="sc">~</span> Treated <span class="sc">+</span> Post<span class="sc">-</span>treatment <span class="sc">+</span> Treated<span class="sc">:</span>Post<span class="sc">-</span>treatment, <span class="at">data=</span> dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -721,7 +722,7 @@ Y = \alpha_i + \alpha_t + \color{purple}{\beta_1 \text{Treated}} + \varepsilon
 \]</span></p>
 </div>
 <div class="fragment">
-<p>Know as the two-way fixed-effects estimator (TWFE)</p>
+<p>Known as the two-way fixed-effects estimator (TWFE)</p>
 </div>
 <div class="fragment">
 <div class="cell">

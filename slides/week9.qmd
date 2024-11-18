@@ -119,7 +119,7 @@ $$
 ![](fig/rd_assign.png){fig-align="center" width=59%}
 
 ::: aside
-Called *sharp* because treatment assignment is *deterministic* on the cutoff
+Called *sharp* because treatment assignment is *deterministic* at the cutoff
 :::
 
 ## Interpretation: Two approaches
@@ -422,7 +422,7 @@ $$
 
 . . .
 
-Know as the two-way fixed-effects estimator (TWFE)
+Known as the two-way fixed-effects estimator (TWFE)
 
 . . .
 
