@@ -51,10 +51,10 @@ tr = read_dta(url)
 tr
 ```
 
-This data originally comes from [Meyersson's (2014)]() study on the effect of electing Islamic parties on Women's education in Turkey/Türkiye. The unit of analysis is the municipality. The important variables are:
+This data originally comes from [Meyersson's (2014)](https://doi.org/10.3982/ECTA9878) study on the effect of electing Islamic parties on Women's education in Turkey/Türkiye. The unit of analysis is the municipality. The important variables are:
 
-- `Y`: Percentage of young women who had completed high school by 2000 (Outcome)
-- `X`: Islamic parties' margin of victory in the 1994 mayoral election (Score)
+- `Y`: Percentage of young women who had completed high school by 2000 (outcome)
+- `X`: Islamic parties' margin of victory in the 1994 mayoral election (score)
 - `T`: Whether a mayor from an Islamic party was elected in the 1994 election (treatment)
 
 We have an outcome, a score, and an implicit cutoff indicated by our treatment and the centering of the score at 0.
@@ -167,7 +167,7 @@ od = od %>%
          )
 ```
 
-We can get a general sense of the general design by just looking at the means before-after across groups.
+We can get a general sense of the design by just looking at the means before-after across groups.
 
 ```{r, message = FALSE, warning = FALSE}
 od %>% 
@@ -189,7 +189,7 @@ ggplot(over_time) +
   geom_vline(xintercept = "Q32011")
 ```
 
-Figures by themselves do not convey a lot. Perhaps estimation and inference can help clarify if there is an effect.
+Figures alone do not convey much. Perhaps estimation and inference can help clarify whether there is an effect of changing the frame.
 
 First, we assume this is simply a before/after comparison.
 
