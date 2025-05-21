@@ -2,7 +2,7 @@
 title: |
        | POLI SCI 403
        | Probability and Statistics
-       | Fall 2024
+       | Fall 2025
 format: 
   typst:
     margin:
@@ -17,13 +17,16 @@ fontsize: 12pt
 
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
-**Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)   
+**Teaching Assistant:** TBD  
+<!-- Artur Baranov (<artur.baranov@u.northwestern.edu>) -->
 **GitHub Repository:** <https://github.com/gustavo-diaz/ps403>  
-**Canvas:** <https://canvas.northwestern.edu/courses/216757>
+**Canvas:** TBD
+
+<!-- <https://canvas.northwestern.edu/courses/216757> -->
  
-**Time and Place:**  Tues/Thurs 11:00am -- 12:20pm, Scott Hall 212  
-**Lab Hours:** Fridays 2:00 -- 3:20pm, Scott Hall 101   
-**Student Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/f24-meetings)
+**Time and Place:**  Thursdays 09:30am -- 12:20pm, Room TBD   
+**Lab Hours:** TBD  
+**Student Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/meetings)
 
 
 # Course Overview
@@ -64,11 +67,11 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 
 
 <!-- Make sure to ask the library to stock this book -->
-The rest of the syllabus refers to this book as AM. You can purchase a physical or digital copy directly from the publisher, although it is usually cheaper on online storefronts like Amazon. A digital copy is available through the library subscription at no additional cost.
+The rest of the syllabus refers to this book as AM. A digital copy is available through the library subscription at no additional cost. You can purchase a physical copy directly from the publisher, although it is usually cheaper on online storefronts like Amazon. I advise purchasing a physical copy only if you see yourself referencing the book frequently after taking this course.
 
 The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
 
-A companion file to this syllabus includes recommended resources that may be useful to complement current or future learning. 
+<!-- Consider adding recommended textbooks that are not required but helpful. Maybe restrict existing file only to course material alternatives -->
 
 ## Computing
 
@@ -101,11 +104,11 @@ We will have weekly assignments aimed at practicing the application of course ma
 Usually, we will start working on the lab assignment during our class meeting on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
 
 <!-- The goal is to give people enough time to prepare for next week's class  -->
-Labs are due on Mondays at 9AM after they are assigned and must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail* (the last one applies if you did not submit or barely tried). I will mark late submissions as a fail unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+Labs are due on Mondays at 9AM after they are assigned and must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *satisfactory*, *unsatisfactory*, or *failed* (the last one applies if you did not submit or barely tried). I will mark late submissions as a failed unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
 
-For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong and explaining how things should look like if they had gone right.
+For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong or explaining how things should look like if they had gone right.
 
-The implication is that, to assign a satisfactory or outstanding mark to your lab, I will be mostly looking for evidence that you have learned something useful.
+The implication is that, to assign a satisfactory mark to your lab, I will be mostly looking for evidence that you have learned something useful.
 
 
 ## Replication paper
@@ -116,12 +119,12 @@ You should think of this as the first step toward writing a publishable article 
 
 You are required to schedule a meeting with me to discuss the topic of your replication paper. The paper does not need to be restricted to the methods covered in our class (the only requirement is some form of statistical analysis), but this means you should be willing to work to learn the new methods on your own. I believe this is a valuable skill to practice early on.
 
-You are allowed to work with a co-author or alone as you see fit. I am also open to discussing a different kind of paper if you know what you want to do.
+You are allowed to work with co-authors or alone as you see fit. I am also open to discussing a different kind of paper if you know what you want to do.
 
 <!-- As late as possible while giving me enough time to grade -->
-Final papers are due on Wednesday, December 11 at 9AM. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 4,000 words and focusing on the main point. You are also required to submit an appendix in PDF format including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
+Final papers are due on Wednesday, December 11 at 9AM. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 3,000 words and focusing on the main point. You are also required to submit a link to a GitHub repository including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise.
 
-Like lab assignments, your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *fail*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline.
+Your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *failed*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline. I encourage submitting an incomplete paper for a temporary grade over submitting nothing for an incomplete.
 
 We will discuss more details about the final paper during Week 1 and throughout the term.
 
@@ -137,28 +140,26 @@ To meet the baseline grading contract (B+), you should:
 - Complete Lab 0
 - Be late (by a maximum of 24 hours) on no more than one lab assignment
 - Submit the final paper before the deadline
-- Complete 7 out of 8 lab assignments with a satisfactory or outstanding mark
+- Complete 6 out of 8 lab assignments with a satisfactory mark
 - Receive a satisfactory or outstanding mark in the final paper
 - Have a satisfactory participation status by the end of the semester
 
 
 To get an A-, you should meet the baseline grading contract AND meet at least one of the following:
 
-- Receive an outstanding mark in at least 3 labs
+- Receive a satisfactory mark in 8 out of 8 lab assignments
 - Receive an outstanding mark in the final paper
 
-To get an A, you should complete the baseline contract AND one of the following:
-
-- Complete **both** requirements listed to receive an A-
-- Receive and outstanding mark in 7 out of 8 labs
+To get an A, you should complete the baseline contract AND both requirements listed to get an A-.
 
 Your grade will go below a B+ if you miss work. Unless otherwise agreed upon in writing on a case-by-case basis, the following criteria outlines how deviating from the baseline contract will impact your grade (assuming everything else constant):
 
 - Participation marked as unsatisfactory: B
-- 2/8 labs marked as unsatisfactory or failed: B-
-- 3/8 labs marked as unsatisfactory or failed: C
-- 4/8 or more labs marked as unsatisfactory or failed: F
+- 3/8 labs marked as unsatisfactory or failed: B-
+- 4/8 labs marked as unsatisfactory or failed: C
 - Final paper marked as unsatisfactory or failed: F
+
+If many of the criteria for missed work apply, you will get the lowest grade applicable.
 
 By signing up for this course, you accept the terms of the grading contract. We will discuss potential amendments in Week 1. Amendments to the grading contract beyond this point should be agreed upon unanimously by all participants, including students and the instructional team.
 
@@ -168,17 +169,16 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 # Schedule
 
-## Week 1 (September 24/26): Preliminaries
+## Week 1: Preliminaries
 **Reading:**
 
 - AM Introduction
 - King, Gary. 2006. ["Publication, Publication."](https://doi.org/10.1017/S1049096506060252) *PS: Political Science and Politics* 39 (1): 119-125
 - King, Gary. ["How to Write a Publishable Paper as a Class Project"](https://gking.harvard.edu/papers)
-- Schwartz, Martin A. 2008. ["The importance of stupidity in scientific research."](https://doi.org/10.1242/jcs.033340) *Journal of Cell Science* 121 (11): 1771
 
 **Lab 0:** Project-oriented workflow in RStudio
 
-## Week 2 (October 1/3): Probability theory
+## Week 2: Probability theory
 **Reading:**
 
 - AM Chapter 1
@@ -186,17 +186,25 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 **Lab 1:** Calculating and estimating probabilities in R
 
-## Week 3 (October 8/10): Summarizing distributions
+## Week 3: Random Variables
 **Reading:**
 
 - AM Chapter 2
-- Gelman, Andrew. 2023. ["What is a standard error?"](https://doi.org/10.1016/j.jeconom.2023.105516) *Journal of Econometrics* 237 (1): 105516
-- Wooldridge, Jeffrey M. 2023. ["What is a standard error? (And how should we compute it?)"](https://doi.org/10.1016/j.jeconom.2023.105517) *Journal of Econometrics* 237 (1): 105517
-- Powell, James L. 2023. ["Discussion of 'What is a standard error?'"](https://doi.org/10.1016/j.jeconom.2023.105518) *Journal of Econometrics* 237 (1): 105518
+
 
 **Lab 2:** Quantities of interest
 
-## Week 4 (October 15/17): Random samples
+## Week 4: Estimation
+**Reading:**
+
+
+- AM Chapter 3
+
+
+
+**Lab 3:** Estimation
+
+## Week 5: Uncertainty
 **Reading:**
 
 <!-- Include jackknife reading in the lab but don't assign it -->
@@ -204,35 +212,36 @@ By signing up for this course, you accept the terms of the grading contract. We 
 
 - AM Chapter 3
 - Mooney, Christopher. 1996. ["Bootstrap Statistical Inference: Examples and Evaluations for Political Science."](https://doi.org/10.2307/2111639) *American Journal of Political Science* 40 (2): 570-602
-- Goldstein, Harvey and Michael J.R. Healy. 1995. ["The Graphical Presentation of a Collection of Means."](https://doi.org/10.2307/2983411) *Journal of the Royal Statistical Society* 158 (1): 175-177
-- Knol, Miriam J., Wiebe R. Pestman, and Diederick E. Grobbee. 2011. ["The (mis)use of overlap of confidence intervals to assess effect modification."](https://doi.org/10.1007/s10654-011-9563-8) *European Journal of Epidemiology* 26: 253-254
+<!-- - Goldstein, Harvey and Michael J.R. Healy. 1995. ["The Graphical Presentation of a Collection of Means."](https://doi.org/10.2307/2983411) *Journal of the Royal Statistical Society* 158 (1): 175-177 -->
+<!-- - Knol, Miriam J., Wiebe R. Pestman, and Diederick E. Grobbee. 2011. ["The (mis)use of overlap of confidence intervals to assess effect modification."](https://doi.org/10.1007/s10654-011-9563-8) *European Journal of Epidemiology* 26: 253-254 -->
+- Gelman, Andrew. 2023. ["What is a standard error?"](https://doi.org/10.1016/j.jeconom.2023.105516) *Journal of Econometrics* 237 (1): 105516
+- Wooldridge, Jeffrey M. 2023. ["What is a standard error? (And how should we compute it?)"](https://doi.org/10.1016/j.jeconom.2023.105517) *Journal of Econometrics* 237 (1): 105517 (Section 1 only)
+- Powell, James L. 2023. ["Discussion of 'What is a standard error?'"](https://doi.org/10.1016/j.jeconom.2023.105518) *Journal of Econometrics* 237 (1): 105518
 
+**Lab 4:** Quantifying uncertainty
 
-**Lab 3:** Estimation and uncertainty
-
-## Week 5 (October 22/24): Regression
+## Week 6: Regression
 **Reading:**
 
 - AM Chapter 4
 - Berk, Richard. 2010. ["What You Can and Can't Properly do with Regression."](https://doi.org/10.1007/s10940-010-9116-4) *Journal of Quantitative Criminology* 26: 481-487
-- Achen, Christopher H. 2005. ["Let’s Put Garbage-Can Regressions and Garbage-Can Probits Where They Belong."](https://doi.org/10.1080/07388940500339167) *Conflict Management and Peace Science* 22 (4): 327-339
-- Hansen, Bruce E. 2022. ["A Modern Gauss-Markov Theorem."](https://doi.org/10.3982/ECTA19255) *Econometrica* 90 (3): 1283-1294
+<!-- - Achen, Christopher H. 2005. ["Let’s Put Garbage-Can Regressions and Garbage-Can Probits Where They Belong."](https://doi.org/10.1080/07388940500339167) *Conflict Management and Peace Science* 22 (4): 327-339 -->
+<!-- - Hansen, Bruce E. 2022. ["A Modern Gauss-Markov Theorem."](https://doi.org/10.3982/ECTA19255) *Econometrica* 90 (3): 1283-1294 -->
 
+**Lab 5:** Adjusting for covariates
 
-**Lab 4:** Adjusting for covariates
-
-## Week 6 (October 29/31): Parametric models
+## Week 7: Parametric models
 **Reading:**
 
 - AM Chapter 5
-- Stigler, Stephen M. 2007. ["The Epic Story of Maximum Likelihood."](http://dx.doi.org/10.1214/07-STS249) *Statistical Science* 22 (4): 598-620
+<!-- - Stigler, Stephen M. 2007. ["The Epic Story of Maximum Likelihood."](http://dx.doi.org/10.1214/07-STS249) *Statistical Science* 22 (4): 598-620 -->
 - James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2021. [*An Introduction to Statistical Learning with Applications in R*](https://www.statlearning.com/). Springer. Chapters 4.1-4.3
 - Achen, Christopher. 2002. ["Toward a New Political Methodology: Microfoundations and ART."](https://doi.org/10.1146/annurev.polisci.5.112801.080943) *Annual Review of Political Science* 5: 423-450
 
 
-**Lab 5:** Maximum likelihood estimation
+**Lab 6:** Maximum likelihood estimation
 
-## Week 7 (November 5/7): Missing data
+## Week 8: Missing data
 **Reading:** 
 
 <!-- https://www.john-fox.ca/Companion/appendices/Appendix-Multiple-Imputation.pdf -->
@@ -248,52 +257,23 @@ By signing up for this course, you accept the terms of the grading contract. We 
 <!-- - Rosenbaum, Paul R. 1987. ["Model-Based Direct Adjustment."](https://doi.org/10.2307/2289440) *Journal of the American Statistical Association* 82 (398): 387-394 -->
 <!-- - Kang, Joseph D.Y. and Joseph L. Schafer. 2007. ["Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data."](http://dx.doi.org/10.1214/07-STS227) *Statistical Science* 22 (4): 523-539 -->
 
-**Lab 6:** Dealing with missing data
+**Lab 7:** Dealing with missing data
 <!-- Make them simulate missingness in existing data, and then determine which correction method is more appropriate -->
 
-## Week 8 (November 12/14): Causal inference I
+## Week 9: Causal inference
 **Reading:**
 
 - AM Chapter 7
-- Fisher, R.A. 1935. [*The design of experiments*](https://mimno.infosci.cornell.edu/info3350/readings/fisher.pdf). Oliver & Boyd. Chapters 1-2.
-- Splawa-Neyman, Jerzy. 1990. ["On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9."](https://doi.org/10.1214/ss/1177012031) *Statistical Science* 5 (4) 465 - 472
-- Rubin, Donald B. 1990. ["Comment: Neyman (1923) and Causal Inference in Experiments and Observational Studies."](https://doi.org/10.1214/ss/1177012032). *Statistical Science* 5 (4): 472-480
+<!-- - Fisher, R.A. 1935. [*The design of experiments*](https://mimno.infosci.cornell.edu/info3350/readings/fisher.pdf). Oliver & Boyd. Chapters 1-2. -->
+<!-- - Splawa-Neyman, Jerzy. 1990. ["On the Application of Probability Theory to Agricultural Experiments. Essay on Principles. Section 9."](https://doi.org/10.1214/ss/1177012031) *Statistical Science* 5 (4) 465 - 472 -->
+<!-- - Rubin, Donald B. 1990. ["Comment: Neyman (1923) and Causal Inference in Experiments and Observational Studies."](https://doi.org/10.1214/ss/1177012032). *Statistical Science* 5 (4): 472-480 -->
 - Keele, Luke, Corrine McConnaughy, and Ismail White. 2012. ["Strengthening the Experimenter’s Toolbox: Statistical Estimation of Internal Validity."](https://doi.org/10.1111/j.1540-5907.2011.00576.x) *American Journal of Political Science* 56 (2): 484-499
 
-**Lab 7:** Randomization inference and hypothesis testing
+**Lab 8:** Randomization inference and hypothesis testing
 
-## Week 9 (November 19/21): Causal inference II
-**Reading:**
+## Week 10: THANKSGIVING BREAK, NO CLASS
 
-*Regression Discontinuity*
-
-- Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2020. [*A Practical Introduction to Regression Discontinuity Designs: Foundations*](https://titiunik.github.io/books/CattaneoIdroboTitiunik2020-CUP-Foundations.pdf). Cambridge University Press. Chapters 1-4
-- Cattaneo, Matias D., Nicolás Idrobo, and Rocío Titiunik. 2024. [*A Practical Introduction to Regression Discontinuity Designs: Extensions*](https://titiunik.github.io/books/CattaneoIdroboTitiunik2024-CUP-Extensions.pdf). Cambridge University Press. Chapter 2
-- Stommes, Drew, P.M. Aronow, and Fredrik Sävje. 2023. ["On the reliability of published findings using the regression discontinuity design in political science."](https://doi.org/10.1177/20531680231166457) *Research and Politics* 
- 
-
-*Difference-in-Differences*
-
-- Hungtinton-Klein, Nick. 2022. [*The Effect: An Introduction to Research Design and Causality*](https://theeffectbook.net). Chapman & Hall. Chapter 18
-- Bertrand, Marianne, Esther Duflo, and Sendhil Mullainathan. 2004. ["How Much Should We Trust Differences-In-Differences Estimates?"](https://doi.org/10.1162/003355304772839588) *The Quarterly Journal of Economics* 119 (1): 249-275
-- Roth, Jonathan, Pedro H.C. Sant'Anna, Alyssa Bilinski, and John Poe. 2023. ["What’s trending in difference-in-differences? A synthesis of the recent econometrics literature"](https://doi.org/10.1016/j.jeconom.2023.03.008) *Journal of Econometrics* 235 (2): 2218-2244
-
-
-**Lab 8:** Quasi-experiments
-<!-- Present two datasets, one RDD, one DD. Choose one, provide the most accurate estimation possible. -->
-
-**Due:** Final paper title, abstract, and introduction (November 25)
-
-## Week 10 (November 26): Review
-
-We reflect on what we have learned this quarter and what is to come.
-
-
-## Week 11 (December 3/5): Research note roundtable
-
-We discuss final paper ideas after circulating titles, abstracts, and introductions.
-
-
+## Week 11: Review or make-up class if required
 
 {{< pagebreak >}}
 
