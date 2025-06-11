@@ -14,3 +14,4 @@
 # Omit lab pdfs
 /labs/*.pdf
 !/labs/lab0.pdf
+ps403.Rproj
