@@ -90,7 +90,7 @@ If you ever need more computing resources than what a personal computer or a fre
 Your final grade in this course will depend on the following:
 
 - Participation
-- Lab assignments (8 total, due Mondays 11:59 PM)
+- Lab assignments (9 total, due Mondays 11:59 PM)
 - Replication paper (due December 10 9AM)
 
 ## Participation
@@ -126,9 +126,9 @@ You are required to schedule a meeting with me to discuss the topic of your repl
 <!-- As late as possible while giving me enough time to grade -->
 Final papers are due on Wednesday, December 10 at 9AM. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 3,000 words and focusing on the main point. You are also required to submit a link to a GitHub repository (or equivalent) including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise. You can read more about research notes in political science [here](https://resulumit.com/blog/polisci-research-notes/).
 
-Your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *failed*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline. I encourage submitting an incomplete paper for a temporary grade over submitting nothing for an incomplete.
+Your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *failed*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline. I encourage submitting an incomplete paper for a temporary grade over asking for an incomplete course grade.
 
-We will discuss more details about the final paper during Week 1 and throughout the term.
+We will discuss more details about the final paper during Week 6 and throughout the term.
 
 
 # Grading
@@ -142,14 +142,14 @@ To meet the baseline grading contract (B+), you should:
 - Complete Lab 0
 - Be late (by a maximum of 24 hours) on no more than one lab assignment
 - Submit the final paper before the deadline
-- Complete 6 out of 8 lab assignments with a satisfactory mark
+- Complete 7 out of 9 lab assignments with a satisfactory mark
 - Receive a satisfactory or outstanding mark in the final paper
 - Have a satisfactory participation status by the end of the semester
 
 
 To get an A-, you should meet the baseline grading contract AND meet at least one of the following:
 
-- Receive a satisfactory mark in 8 out of 8 lab assignments
+- Receive a satisfactory mark in 9 out of 9 lab assignments
 - Receive an outstanding mark in the final paper
 
 To get an A, you should complete the baseline contract AND both requirements listed to get an A-.
@@ -157,13 +157,14 @@ To get an A, you should complete the baseline contract AND both requirements lis
 Your grade will go below a B+ if you miss work. Unless otherwise agreed upon in writing on a case-by-case basis, the following criteria outlines how deviating from the baseline contract will impact your grade (assuming everything else constant):
 
 - Participation marked as unsatisfactory: B
-- 3/8 labs marked as unsatisfactory or failed: B-
-- 4/8 labs marked as unsatisfactory or failed: C
+- 3 labs marked as unsatisfactory or failed: B-
+- 4 labs marked as unsatisfactory or failed: C
+- 5 or more labs marked as unsatisfactory or failed: F
 - Final paper marked as failed: F
 
 If many of the criteria for missed work apply, you will get the lowest grade applicable.
 
-By signing up for this course, you accept the terms of the grading contract. We will discuss potential amendments in Week 1. Amendments to the grading contract beyond this point should be agreed upon unanimously by all participants, including students and the instructional team.
+By signing up for this course, you accept the terms of the grading contract. We will discuss potential amendments in Week 1. Amendments to the grading contract beyond this point should be agreed upon unanimously by students and the instructional team.
 
 # Northwestern University Syllabus Standards
 
@@ -183,8 +184,6 @@ Copilot is the [University’s supported artificial intelligence service](https:
 **Reading:**
 
 - AM Introduction
-- King, Gary. 2006. ["Publication, Publication."](https://doi.org/10.1017/S1049096506060252) *PS: Political Science and Politics* 39 (1): 119-125
-- King, Gary. ["How to Write a Publishable Paper as a Class Project"](https://gking.harvard.edu/papers)
 
 **Lab 0:** Project-oriented workflow in RStudio
 
@@ -199,11 +198,8 @@ Copilot is the [University’s supported artificial intelligence service](https:
 
 **Lab 1:** Calculating and estimating probabilities in R
 
-## Week 3 (October 2): NO CLASS INSTRUCTOR CONFLICT
+## Week 3 (October 2): Random variables
 
-<!-- May schedule special TA section -->
-
-## Week 4 (October 9): Random Variables
 **Reading:**
 
 - AM Chapter 2
@@ -211,15 +207,19 @@ Copilot is the [University’s supported artificial intelligence service](https:
 
 **Lab 2:** Quantities of interest
 
-## Week 5 (October 16): Estimation
+## Week 4 (October 9): Estimation
+
 **Reading:**
 
 
 - AM Chapter 3.1-3.3
+- Ben Lambert. [A full course in econometrics](https://youtube.com/playlist?list=PLwJRxp3blEvZyQBTTOMFRP_TDaSdly3gU&si=CJ_6IwaCzmHXXedP). Videos 6-11 
 
 **Lab 3:** Estimation
 
-## Week 6 (October 23): Uncertainty
+
+## Week 5 (October 16): Uncertainty
+
 **Reading:**
 
 <!-- Include jackknife reading in the lab but don't assign it -->
@@ -235,6 +235,18 @@ Copilot is the [University’s supported artificial intelligence service](https:
 
 **Lab 4:** Quantifying uncertainty
 
+## Week 6 (October 23): Final project discussion
+**Reading:**
+
+- King, Gary. 2006. ["Publication, Publication."](https://doi.org/10.1017/S1049096506060252) *PS: Political Science and Politics* 39 (1): 119-125
+- King, Gary. ["How to Write a Publishable Paper as a Class Project"](https://gking.harvard.edu/papers)
+- Little, Andrew. 2016. ["Three Templates for Introductions to Political Science Articles"](https://anthlittle.github.io/files/little_intros.pdf)
+- Tai, Yuehong Cassandra, Yue Hu, and Frederick Solt. 2024. ["Democracy, Public Support, and Measurement Uncertainty."](https://doi.org/10.1017/S0003055422000429) *American Political Science Review* 118 (1): 512-518
+
+
+**Lab 5:** Final project proposal
+
+
 ## Week 7 (October 30): Regression
 **Reading:**
 
@@ -243,7 +255,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 <!-- - Achen, Christopher H. 2005. ["Let’s Put Garbage-Can Regressions and Garbage-Can Probits Where They Belong."](https://doi.org/10.1080/07388940500339167) *Conflict Management and Peace Science* 22 (4): 327-339 -->
 <!-- - Hansen, Bruce E. 2022. ["A Modern Gauss-Markov Theorem."](https://doi.org/10.3982/ECTA19255) *Econometrica* 90 (3): 1283-1294 -->
 
-**Lab 5:** Adjusting for covariates
+**Lab 6:** Adjusting for covariates
 
 ## Week 8 (November 6): Parametric models
 **Reading:**
@@ -254,7 +266,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 - Achen, Christopher. 2002. ["Toward a New Political Methodology: Microfoundations and ART."](https://doi.org/10.1146/annurev.polisci.5.112801.080943) *Annual Review of Political Science* 5: 423-450
 
 
-**Lab 6:** Maximum likelihood estimation
+**Lab 7:** Maximum likelihood estimation
 
 ## Week 9 (November 13): Missing data
 **Reading:** 
@@ -272,7 +284,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 <!-- - Rosenbaum, Paul R. 1987. ["Model-Based Direct Adjustment."](https://doi.org/10.2307/2289440) *Journal of the American Statistical Association* 82 (398): 387-394 -->
 <!-- - Kang, Joseph D.Y. and Joseph L. Schafer. 2007. ["Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data."](http://dx.doi.org/10.1214/07-STS227) *Statistical Science* 22 (4): 523-539 -->
 
-**Lab 7:** Dealing with missing data
+**Lab 8:** Dealing with missing data
 <!-- Make them simulate missingness in existing data, and then determine which correction method is more appropriate -->
 
 ## Week 10 (November 20): Causal inference
@@ -284,7 +296,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 <!-- - Rubin, Donald B. 1990. ["Comment: Neyman (1923) and Causal Inference in Experiments and Observational Studies."](https://doi.org/10.1214/ss/1177012032). *Statistical Science* 5 (4): 472-480 -->
 - Keele, Luke, Corrine McConnaughy, and Ismail White. 2012. ["Strengthening the Experimenter’s Toolbox: Statistical Estimation of Internal Validity."](https://doi.org/10.1111/j.1540-5907.2011.00576.x) *American Journal of Political Science* 56 (2): 484-499
 
-**Lab 8:** Randomization inference and hypothesis testing
+**Lab 9:** Randomization inference and hypothesis testing
 
 ## Week 11 (November 27): NO CLASS THANKSGIVING BREAK
 
