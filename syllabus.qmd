@@ -17,16 +17,20 @@ fontsize: 12pt
 
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
-**Teaching Assistant:** TBD  
-<!-- Artur Baranov (<artur.baranov@u.northwestern.edu>) -->
+**Office Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/meetings)
+
+**Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
+**Office Hours:** TBD
+
+**Lecture Meeting:**  Thursdays 09:30am -- 12:20pm, Room TBD   
+**Lab Hours:** TBD  
 **GitHub Repository:** <https://github.com/gustavo-diaz/ps403>  
 **Canvas:** TBD
 
 <!-- <https://canvas.northwestern.edu/courses/216757> -->
  
-**Time and Place:**  Thursdays 09:30am -- 12:20pm, Room TBD   
-**Lab Hours:** TBD  
-**Student Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/meetings)
+
+
 
 
 # Course Overview
