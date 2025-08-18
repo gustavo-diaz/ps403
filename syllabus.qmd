@@ -17,17 +17,18 @@ fontsize: 12pt
 
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
-**Office Hours:** [Schedule an appointment](https://calendly.com/gustavo-diaz-nu/meetings)
+**Office Hours:** Thursdays 2:00 -- 4:00pm or [by appointment](https://calendly.com/gustavo-diaz-nu/meetings)     
+**Office:** Scott Hall 103
 
 **Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
-**Office Hours:** TBD
+**Office Hours:** TBD  
+**Office:** TBD
 
-**Lecture Meeting:**  Thursdays 09:30am -- 12:20pm, Room TBD   
-**Lab Hours:** TBD  
-**GitHub Repository:** <https://github.com/gustavo-diaz/ps403>  
-**Canvas:** TBD
+**Lecture:**  Thursdays 9:30am -- 12:20pm, Scott Hall 212  
+**Lab:** Fridays  11:00 -- 11:50am, Scott Hall 212  
+**GitHub Repository:** [github.com/gustavo-diaz/ps403](https://github.com/gustavo-diaz/ps403)  
+**Canvas:** [canvas.northwestern.edu/courses/235851](https://canvas.northwestern.edu/courses/235851)
 
-<!-- <https://canvas.northwestern.edu/courses/216757> -->
  
 
 
