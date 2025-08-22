@@ -17,7 +17,7 @@ fontsize: 12pt
 
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
-**Office Hours:** Thursdays 2:00 -- 4:00pm or [by appointment](https://calendly.com/gustavo-diaz-nu/meetings)     
+**Office Hours:** By appointment ([cal.com/gustavodiaz/](https://cal.com/gustavodiaz/))  
 **Office:** Scott Hall 103
 
 **Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
