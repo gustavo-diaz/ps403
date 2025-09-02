@@ -94,15 +94,17 @@ First in the PhD methods sequence:
 ::: {.callout-tip}
 ## Gustavo Diaz
 Assistant Professor of Instruction in Political Science  
-<gustavo.diaz@northwestern.edu>  
-[gustavodiaz.org](https://gustavodiaz.org)
+**Email:** <gustavo.diaz@northwestern.edu>  
+**Website:** [gustavodiaz.org](https://gustavodiaz.org)  
+**Office:** Scott Hall 103 
 :::
 
 ::: {.callout-tip}
 ## Artur Baranov
 PhD Student in Political Science  
-<artur.baranov@u.northwestern.edu>  
-[artur-baranov.github.io](https://artur-baranov.github.io)
+**Email:** <artur.baranov@u.northwestern.edu>  
+**Website:** [artur-baranov.github.io](https://artur-baranov.github.io)  
+**Office:** TBD
 :::
 
 ## You (again)

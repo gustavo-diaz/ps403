@@ -21,7 +21,7 @@ fontsize: 12pt
 **Office:** Scott Hall 103
 
 **Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
-**Office Hours:** TBD  
+**Office Hours:** Fridays 9:30 -- 11:00am  
 **Office:** TBD
 
 **Lecture:**  Thursdays 9:30am -- 12:20pm, Scott Hall 212  
