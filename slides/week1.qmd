@@ -1,0 +1,216 @@
+---
+title: | 
+       | Probability
+       | and Statistics
+subtitle: "POLI_SCI 403"
+author: "Fall 2025"
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    code-overflow: wrap
+---
+
+## Plan for today
+
+- Course topic
+
+- Who are we and why are we here?
+
+- Course overview
+
+## About this course
+
+First in the PhD methods sequence:
+
+::: incremental
+- **POLI_SCI 403:** (Introduction to) Probability and Statistics
+- **POLS_SCI 405:** Linear Models (Seawright)
+
+- **POLI_SCI 406:** Quantitative Causal Inference (Seawright)
+:::
+
+## Methods electives this year
+
+. . .
+
+**Fall**
+
+- Experiments (McGrath)
+- Small-N (Mahoney)
+
+. . .
+
+**Winter:** Machine Learning (Diaz)
+
+. . .
+
+**Spring:** Replication (Coppock)
+
+. . .
+
+**Year-long:** Statistical Computing Workshop (Diaz) 
+
+## This course
+
+**Statistical inference:** Using data we have to understand something for which we do not have data
+
+. . .
+
+**Sample questions**
+
+::: incremental
+- What is the proportion of people who support criminalizing abortion?
+- What is the relationship between economic development and democracy?
+- Do voter ID laws affect turnout?
+:::
+
+## This course
+
+**Statistical inference:** Using data we have to understand something for which we do not have data
+
+. . .
+
+**Topics:** Probability, estimation, inference, linear regression, maximum likelihood, causal inference
+
+. . .
+
+**Theme:** Make minimal assumptions
+
+## Important links
+
+**Syllabus and slides:** [gustavodiaz.org/ps403](https://gustavodiaz.org/ps403/)
+
+**Assignments:** [github.com/gustavo-diaz/ps403](https://github.com/gustavo-diaz/ps403)
+
+**Submit work:** [canvas.northwestern.edu/courses/235851](https://canvas.northwestern.edu/courses/235851)
+
+**Meetings:** [cal.com/gustavodiaz](https://cal.com/gustavodiaz/)
+
+# Who are we and why are we here?
+
+## Instructional team
+
+::: {.callout-tip}
+## Gustavo Diaz
+Assistant Professor of Instruction in Political Science  
+<gustavo.diaz@northwestern.edu>  
+[gustavodiaz.org](https://gustavodiaz.org)
+:::
+
+::: {.callout-tip}
+## Artur Baranov
+PhD Student in Political Science  
+<artur.baranov@u.northwestern.edu>  
+[artur-baranov.github.io](https://artur-baranov.github.io)
+:::
+
+## You (again)
+
+- Name
+- Pronouns
+- Discipline + intended subfield/research area
+- Favorite food/artist/book/place
+
+
+# Course overview
+
+## Textbook
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](fig/textbook.jpg){width=70%}
+:::
+
+::: {.column width="50%"}
+DO NOT BUY
+
+DIGITAL COPY AVAILABLE THROUGH LIBRARY SUBSRIPTION
+
+[doi.org/10.1017/9781316831762](https://doi.org/10.1017/9781316831762)
+
+OR
+
+[NU Library URL](https://search.library.northwestern.edu/permalink/01NWU_INST/h04e76/alma9982466902102441)
+
+Additional readings linked in syllabus
+
+:::
+::::
+
+## Computing
+
+- R + RStudio for lab assignments and in-class demos
+
+- Local installation strongly recommended
+
+- Consider [posit.cloud](https://posit.cloud) as backup
+
+- Other software allowed, no support guaranteed
+
+## Assigments
+
+1. Participation
+
+2. Lab assignments (9 total, due Mondays 11:59 PM)
+
+3. Replication paper (due December 10 9AM)
+
+
+
+## Contract grading
+
+1. Participation (satisfactory/unsatisfactory)
+
+2. Labs (satisfactory/unsatisfactory/fail)
+
+3. Paper (outstanding/satisfactory/unsatisfactory/fail)
+
+. . .
+
+**Canvas rubric**
+
+0: Unsatisfactory  
+1: Satisfactory  
+2: Outstanding  
+NA: Fail
+
+## Baseline contract (B+)
+
+- [Complete Lab 0]{style="color: gray;"}
+- [Be late on no more than one lab assignment]{style="color: gray;"}
+- [Submit final paper before deadline]{style="color: gray;"}
+- Complete 7 out of 9 labs
+- Complete final paper
+- Satisfactory participation mark
+
+## Improving your grade
+
+**A-**
+
+- Complete all labs
+ 
+ OR
+ 
+- Outstanding final paper 
+
+## Improving your grade
+
+**A**
+
+- Complete all labs
+ 
+ AND
+ 
+- Outstanding final paper
+
+## Weekly workload
+
+- ~3 hour lecture
+- ~1 hour TA section
+- One book chapter
+- 1-2 articles/videos
+- One lab assignment
+
+# Questions?
