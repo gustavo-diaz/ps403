@@ -19,6 +19,8 @@ format:
 
 - Course overview
 
+- Lab 0
+
 ## About this course
 
 First in the PhD methods sequence:
@@ -104,7 +106,11 @@ Assistant Professor of Instruction in Political Science
 PhD Student in Political Science  
 **Email:** <artur.baranov@u.northwestern.edu>  
 **Website:** [artur-baranov.github.io](https://artur-baranov.github.io)  
-**Office:** TBD
+**Office:** Scott Hall 110
+:::
+
+::: aside
+See syllabus for office hours
 :::
 
 ## You (again)
@@ -216,3 +222,8 @@ NA: Fail
 - One lab assignment
 
 # Questions?
+
+# Lab 0
+
+[github.com/gustavo-diaz/ps403/blob/main/labs/lab0.qmd](https://github.com/gustavo-diaz/ps403/blob/main/labs/lab0.qmd)
+
