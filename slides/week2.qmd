@@ -1,4 +1,6 @@
 ---
+title: "Probability Theory"
+subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
     slide-number: false
@@ -7,12 +9,295 @@ format:
     chalkboard: true
 ---
 
-## Definitions
+## Agenda
+
+1. Why do we need probability?
+
+2. Probability theory $\Rightarrow$ random variables
+
+4. Peek at Lab 1
+
+## Why is probability theory important?
+
+. . .
+
+You are not allowed to conduct statistical inference unless you are willing to entertain **uncertainty in data generation processes**
+
+. . .
+
+Probability is the language of uncertainty (random events)
+
+. . .
+
+But nothing is *actually* random
+
+. . .
+
+Probability theory is a **mathematical construct**
+
+## Why is probability theory important?
+
+
+You are not allowed to conduct statistical inference unless you are willing to entertain **uncertainty in data generation processes**
+
+
+Probability is the language of uncertainty (random events)
+
+
+But nothing is *actually* random
+
+Probability theory is a **mathematical construct** (that supports other, more important, equally shaky mathematical constructs)
+
+## Probability is a modeling assumption
+
+![](fig/spiegelhalter.png){fig-align="center"}
+
+
+## Probability is a modeling assumption
+
+> And yet, any numerical probability... is not an objective property of the world, but a construction based on personal or collective judgements and (often doubtful) assumptions. Furthermore, in most circumstances, it is not even estimating some underlying ‘true’ quantity. Probability, indeed, can only rarely be said to ‘exist’ at all.
+
+## Probability is a modeling assumption
+
+"...it handles both **chance** and **ignorance**."
+
+. . .
+
+"...any practical use of probability involves **subjective judgements**."
+
+. . .
+
+Events are *uncertain* only because we *cannot measure with arbitrary precision*
+
+## Examples
+
+. . .
+
+What is the probability of landing heads when flipping an **unbiased** coin?
+
+. . .
+
+What is the probability of rolling {{< fa dice-one >}} or {{< fa dice-six >}} with a **fair** dice?
+
+. . .
+
+What about a **biased** coin? An **unfair** dice?
+
+. . .
+
+Why do we need such language?
+
+&nbsp;
+
+. . .
+
+We are making the problem **tractable** so that the answer can be something other than "I don't know"
+
+
+## A more involved example<br>(Stark and Freedman)
+
+*What is the chance that an earthquake of magnitude 6.7 or greater will occur before the year 2023*
+
+&nbsp;
+
+. . .
+
+How do we make *this* tractable?
+
+## Approaches to probability
 
 ::: incremental
-- $\Omega$ sample space
-- $\omega$ sample points
-- $A \subseteq \Omega$ event space
+- **Symmetry:** If outcomes are judged equally likely, then each must have equal probability 
+
+- **Frequentist:** Relative frequency with which the event occurs *in repeated trials under the same conditions*
+
+- **Bayesian:** Probability as degree of belief (0: impossible; 1: sure to happen)
+:::
+
+## Approaches to probability
+
+
+- **Symmetry:** If outcomes are judged equally likely, then each must have equal probability 
+
+- **Frequentist:** Relative frequency with which the event occurs *in repeated trials under the same conditions*
+
+- **Bayesian:** Probability as degree of belief (0: impossible; 1: sure to happen)
+
+
+::: aside
+**Laplace's principle of insufficient reason:** If there is no reason to believe that outcomes are not equally likely, take them to be equally likely
+:::
+
+## Approaches to probability
+
+- ~~**Symmetry:** If outcomes are judged equally likely, then each must have equal probability~~ 
+
+- **Frequentist:** Relative frequency with which the event occurs *in repeated trials under the same conditions*
+
+- **Bayesian:** Probability as degree of belief (0: impossible; 1: sure to happen)
+
+::: aside
+Symmetry will be useful when we move to statistical inference proper. Doesn't make sense for earthquakes
+:::
+
+## Approaches to probability
+
+
+- ~~**Symmetry:** If outcomes are judged equally likely, then each must have equal probability~~ 
+
+- ~~**Frequentist:** Relative frequency with which the event occurs *in repeated trials under the same conditions*~~
+
+- **Bayesian:** Probability as degree of belief (0: impossible; 1: sure to happen)
+
+::: aside
+Frequentist statistics will be the default approach in the methods sequence, but it's hard to imagine repeating 2000-2030
+:::
+
+## Approaches to probability
+
+
+- ~~**Symmetry:** If outcomes are judged equally likely, then each must have equal probability~~ 
+
+- ~~**Frequentist:** Relative frequency with which the event occurs *in repeated trials under the same conditions*~~
+
+- ~~**Bayesian:** Probability as degree of belief (0: impossible; 1: sure to happen)~~
+
+. . .
+
+**Bottomline:** Probability does not always make sense
+
+::: aside
+We won't talk much about Bayesian statistics, but Bayes theorem is very important. Still, for this problem, the Bayesian approach changes the question toward expert opinions
+:::
+
+## But it does sometimes
+
+. . .
+
+**Symmetry** makes sense when thinking about *quasi-experiments*
+
+. . .
+
+**Frequentism** makes sense for weather forecasts and is the basis for random sampling and assignment
+
+. . .
+
+**Bayes** makes a lot of sense for latent variables (e.g. ideal point estimation $\rightarrow$ item-response theory)
+
+## What's the point?
+
+. . .
+
+Everything that follows from today is **fake**
+
+. . .
+
+Or, rather, it is held together by a series of *heroic, implausible assumptions*
+
+. . .
+
+And I find that both **beautiful** *AND* **stupid**
+
+. . .
+
+But, more importantly, I want you to remember that we use statistical models not because they are true, but because they are **useful**
+
+. . .
+
+So the question about the *appropriate method* will always be *subjective*
+
+
+# Probability Theory
+
+## Setup
+
+. . .
+
+1. $\Omega$: sample space
+
+. . .
+
+$$
+\Omega = \{1, 2, 3, 4,   5, 6\}
+$$
+
+. . .
+
+$$
+\Omega = {H,T}
+$$
+
+::: aside
+**Sample space:** Set of all *possible* outcomes of a *random generative process*
+:::
+
+## Setup
+
+1. $\Omega$: sample space
+
+$$
+\Omega = \{1, 2, 3, 4,   5, 6\}
+$$
+
+
+$$
+\Omega = {H,T}
+$$
+
+$\omega \in \Omega$ sampling points
+
+::: aside
+**Sampling points** are individual outcomes in the sampling space 
+:::
+
+## Setup
+
+1. $\Omega$: sample space
+
+2. $S \subseteq \Omega$: event space
+
+. . .
+
+$$
+A = \omega \in \Omega \colon \omega \text{ is even} = \{2,4,6\}
+$$
+
+::: aside
+**Event spaces** or just **events** are subsets of the sample space
+:::
+
+## Setup
+
+1. $\Omega$: sample space
+
+2. $S \subseteq \Omega$: event space
+
+$S$ is an event space if
+
+::: incremental
+- Non-empty: $S \neq \emptyset$
+- Closed under complements: if $A \in S$, then $A^c \in S$
+- Closed under unions: <br> if $A_1, A_2, A_3 \ldots \in S$, then $A_1 \cup A_2 \cup A_3 \ldots \in S$
+:::
+
+::: aside
+This definition ensures events will have well-defined probabilities
+:::
+
+## Setup
+
+1. $\Omega$: sample space
+
+2. $S \subseteq \Omega$: event space
+
+3.  $P:S \rightarrow \mathbb{R}$: probability measure
+
+. . .
+
+These are the basic components required to describe a random generative process
+
+::: aside
+**Probability measure:** A function that assigns a probability to every event in the event space
 :::
 
 ## Kolmogorov probability axioms
@@ -22,6 +307,12 @@ format:
 - **Unitarity:** $P(\Omega) = 1$
 - **Countable additivity:** If $A_1, A_2, A_3, \ldots \in S$ are *pairwise disjoint* then $P(A_1 \cup A_2 \cup A_3 \cup \ldots) = \sum_iP(A_i)$
 :::
+
+
+::: aside
+We are ruling out *nonsensical* probabilities
+:::
+
 
 ## Basic properties
 
@@ -33,30 +324,27 @@ format:
 - **Complement rule:** $P(A^c) = 1-P(A)$
 :::
 
-## Joint and conditional probabilities
+::: aside
+Monotonicity, bounds, and complement are very important!
+:::
 
-These make a lot more sense in practice:
+## Joint and conditional probabilities
 
 ::: incremental
 - **Joint:** $P(A\cap B)$
 - **Addition:** $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ 
 - **Conditional:** $P(A|B) = \frac{P(A \cap B)}{P(B)}$
-
 :::
 
-## Bayes rule/theorem
+::: aside
+These make more sense in practice, we cover them in the lab
+:::
 
-$$
-P(A|B) = \frac{P(B|A) P(A)}{P(B)}
-$$
 
-## Bayes rule/theorem
-
-$$
-\underbrace{P(A|B)}_\text{Posterior} = \frac{\color{purple}{P(B|A)} \overbrace{P(A)}^\text{Prior}}{\color{purple}{\underbrace{P(B)}_\text{Support}}}
-$$
 
 ## Law of total probability
+
+[CONTINUE HERE NEED TO EXPLAIN PARTITIONS]
 
 When is the following true?
 
@@ -82,4 +370,6 @@ $$
 
 - Can also be expressed as a **CDF** $F(x) = Pr[X \leq x]$
 :::
+
+[HERE EXPLAIN MORE CAREFULLY]
 
