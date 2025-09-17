@@ -11,6 +11,16 @@ format:
 
 ## Agenda
 
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.pos = "center")
+
+
+```
+
 1. Why do we need probability?
 
 2. Probability theory $\Rightarrow$ random variables
@@ -81,7 +91,7 @@ What is the probability of rolling {{< fa dice-one >}} or {{< fa dice-six >}} wi
 
 . . .
 
-What about a **biased** coin? An **unfair** dice?
+What about a **biased** coin? An **unfair** die?
 
 . . .
 
@@ -341,18 +351,41 @@ These make more sense in practice, we cover them in the lab
 :::
 
 
+## Independence
 
-## Law of total probability
+. . .
 
-[CONTINUE HERE NEED TO EXPLAIN PARTITIONS]
-
-When is the following true?
+Events $A$ and $B$ are independent iff
 
 . . .
 
 $$
-P(B) = \sum_i P(B \cap A_i)
+P(A \cap B) = P(A) P(B)
 $$
+
+. . .
+
+Applying the definition of conditional probabilities (or multiplicative law)
+
+$A$ and $B$ are independent iff
+
+$$
+P(A|B) = P(A) 
+$$
+
+::: aside
+Independence is a core concept in statistics. These are two ways to think about it
+:::
+
+## Moving on
+
+. . .
+
+We now have a language to talk about **random generative processes**
+
+. . .
+
+The next step is to *describe* or *characterize* these processes
 
 ## Random variables
 
@@ -366,10 +399,230 @@ $$
 
 - **Informally:** A *variable* that takes a value determined by a random generative process
 
-- $X$ has either a **PMF** or **PDF** $f(x) = Pr[X=x]$
-
-- Can also be expressed as a **CDF** $F(x) = Pr[X \leq x]$
+- Except that it *never* takes an *actual* value
 :::
 
-[HERE EXPLAIN MORE CAREFULLY]
+::: aside
+This is weird by construction. We use random variables as a placeholder to think about the properties of random generative processes without actually looking at them. Things will make more sense over the next two weeks.
+:::
+
+## Random variables are functions
+
+But we can also apply functions to them (e.g. $g(X) = X^2$)
+
+. . .
+
+A (well-behaved) function of a random variable is *also* a random variable
+
+. . .
+
+We can also **operate** on them (e.g. $E[X]$ or $Pr[X = 1]$)
+
+. . .
+
+Because we can "do" things to them, we can also *describe* them
+
+## Types of random variables
+
+1. Discrete
+
+2. Continuous
+
+## Discrete random variables
+
+. . .
+
+$X$ is discrete if its range $X(\Omega)$ is a countable set
+
+. . .
+
+We can fully characterize the distribution of $X$ with a **Probability Mass Function** (PMF)
+
+$$
+f(x) = Pr[X = x]
+$$
+
+. . .
+
+This is useful because we can talk about more general cases
+
+::: aside
+I am skipping the condition $\forall x \in\mathbb{R}$ throughout
+:::
+
+## Example: Biased coin flip
+
+$$
+f(x) =\begin{cases}
+1-p & \colon & x = 0 \\
+p & : & x = 1 \\
+0 & : & \text{otherwise}
+\end{cases}
+$$
+
+. . .
+
+Where $p$ is the expected proportion of tails
+
+. . .
+
+This is a **Bernoulli** distribution
+
+. . .
+
+Which is a special case of a **binomial** distribution
+
+## Cumulative distribution function (CDF)
+
+. . .
+
+$$
+F(x) = Pr[X \leq x]
+$$
+
+. . .
+
+Returns the probability of $X$ being greater or equal than $x$
+
+. . .
+
+This is a more general (and more informative) way to describe a random variable
+
+## Example: Die roll CDF
+
+![](fig/die_cdf.png){fig-align="center"}
+
+## Continuous random variables
+
+. . .
+
+Informally, a random variable is continuous if its range can be measured to an arbitrary degree of precision (even if it's not)
+
+. . .
+
+Because working with continuous functions is messier, the definition is recursive
+
+## Continuous random variable
+
+$X$ is a continuous random variable if there exists a non-negative function $f: \mathbb{R} \to \mathbb{R}$ such that the CDF of X is
+
+. . .
+
+$$
+F(x) = Pr[X \leq x] = \int_{-\infty}^x f(u)du
+$$
+
+. . .
+
+Meaning the only way we can tell if a random variable is continuous is because its CDF is also continuous
+
+## Continuous random variable
+
+This turns out to be convenient, because the **Probability Density Function** of a continuous random variable is a *derivative*
+
+. . .
+
+$$
+f(x) = \frac{dF(u)}{du} \bigg\rvert_{u=x}
+$$
+
+. . .
+
+So the **PDF** gives the slope or rate of change at $x$
+
+. . . 
+
+$\neq$ the **PMF** of a discrete RV giving the probability exactly at $x$
+
+## Continuous random variable
+
+This turns out to be convenient, because the **Probability Density Function** of a continuous random variable is a *derivative*
+
+
+$$
+f(x) = \frac{dF(u)}{du} \bigg\rvert_{u=x}
+$$
+
+
+So the **PDF** gives the slope or rate of change at $x$
+
+
+$\neq$ the **PMF** of a discrete RV giving the probability exactly at $x$
+
+::: aside
+
+**Remember:** A continuous random variable needs a P**D**F because continuous distributions *do not have mass* at discrete points
+
+:::
+
+## Example: Uniform distribution
+
+::: {layout-ncol=2}
+
+![Uniform PDF](fig/uniform_pdf.png)
+
+![Uniform CDF](fig/uniform_cdf.png)
+
+:::
+
+
+## Standard normal distribution
+
+::: {layout-ncol=2}
+
+![Standard Normal PDF](fig/normal_pdf.png)
+
+![Standard Normal CDF](fig/normal_cdf.png)
+
+:::
+
+
+## Wrapping up
+
+Random variables as useful placeholders to think about properties of data without looking at data
+
+. . .
+
+Everything applies to bivariate, multivariate distributions, the math is just messier
+
+. . .
+
+**Next week:** Summarizing random variables to identify ideal quantities that we will try to approximate with data
+
+## Aside: distributions in R
+
+. . .
+
+`d` is for *density* (PMF/PDF)
+
+```{r}
+dbinom(x = 1, size = 1, prob = 0.3)
+```
+
+. . .
+
+`p` is for *probability distribution function* (CDF)
+
+```{r}
+pbinom(q = 0.2, size = 1, prob = 0.3)
+```
+
+
+. . .
+
+`q` is for *quantile* (inverse CDF)
+
+```{r}
+qbinom(p = 1, size = 1, prob = 0.3)
+```
+
+. . .
+
+`r` is for *random number generation*
+
+```{r}
+set.seed(123)
+rbinom(n = 10, size = 1, prob = 0.3)
+```
+
 

@@ -6,10 +6,10 @@
 <script src="week2_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week2_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week2_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week2_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="week2_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="week2_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="week2_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>Probability Theory</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -29,6 +29,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="week2_files/libs/revealjs/dist/theme/quarto-ee9ab3830bbe7759b42dda8416faf5cd.css">
   <link href="week2_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -196,7 +262,7 @@
 <p>What is the probability of rolling <i class="fa-solid fa-dice-one" aria-label="dice-one"></i> or <i class="fa-solid fa-dice-six" aria-label="dice-six"></i> with a <strong>fair</strong> dice?</p>
 </div>
 <div class="fragment">
-<p>What about a <strong>biased</strong> coin? An <strong>unfair</strong> dice?</p>
+<p>What about a <strong>biased</strong> coin? An <strong>unfair</strong> die?</p>
 </div>
 <div class="fragment">
 <p>Why do we need such language?</p>
@@ -421,25 +487,34 @@ A = \omega \in \Omega \colon \omega \text{ is even} = \{2,4,6\}
 <aside><div>
 <p>These make more sense in practice, we cover them in the lab</p>
 </div></aside></section>
-<section id="bayes-ruletheorem" class="slide level2">
-<h2>Bayes rule/theorem</h2>
-<p><span class="math display">\[
-P(A|B) = \frac{P(B|A) P(A)}{P(B)}
-\]</span></p>
-</section>
-<section id="bayes-ruletheorem-1" class="slide level2">
-<h2>Bayes rule/theorem</h2>
-<p><span class="math display">\[
-\underbrace{P(A|B)}_\text{Posterior} = \frac{\color{purple}{P(B|A)} \overbrace{P(A)}^\text{Prior}}{\color{purple}{\underbrace{P(B)}_\text{Support}}}
-\]</span></p>
-</section>
-<section id="law-of-total-probability" class="slide level2">
-<h2>Law of total probability</h2>
-<p>When is the following true?</p>
+<section id="independence" class="slide level2">
+<h2>Independence</h2>
+<div class="fragment">
+<p>Events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent iff</p>
+</div>
 <div class="fragment">
 <p><span class="math display">\[
-P(B) = \sum_i P(B \cap A_i)
+P(A \cap B) = P(A) P(B)
 \]</span></p>
+</div>
+<div class="fragment">
+<p>Applying the definition of conditional probabilities (or multiplicative law)</p>
+<p><span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are independent iff</p>
+<p><span class="math display">\[
+P(A|B) = P(A)
+\]</span></p>
+
+</div>
+<aside><div>
+<p>Independence is a core concept in statistics. These are two ways to think about it</p>
+</div></aside></section>
+<section id="moving-on" class="slide level2">
+<h2>Moving on</h2>
+<div class="fragment">
+<p>We now have a language to talk about <strong>random generative processes</strong></p>
+</div>
+<div class="fragment">
+<p>The next step is to <em>describe</em> or <em>characterize</em> these processes</p>
 </div>
 </section>
 <section id="random-variables" class="slide level2">
@@ -450,10 +525,231 @@ P(B) = \sum_i P(B \cap A_i)
 <li class="fragment"><p>A <em>mapping</em> of possible states of the world into a real number</p></li>
 <li class="fragment"><p>Neither <em>random</em> nor a <em>variable</em></p></li>
 <li class="fragment"><p><strong>Informally:</strong> A <em>variable</em> that takes a value determined by a random generative process</p></li>
-<li class="fragment"><p><span class="math inline">\(X\)</span> has either a <strong>PMF</strong> or <strong>PDF</strong> <span class="math inline">\(f(x) = Pr[X=x]\)</span></p></li>
-<li class="fragment"><p>Can also be expressed as a <strong>CDF</strong> <span class="math inline">\(F(x) = Pr[X \leq x]\)</span></p></li>
+<li class="fragment"><p>Except that it <em>never</em> takes an <em>actual</em> value</p></li>
 </ul>
 
+<aside><div>
+<p>This is weird by construction. We use random variables as a placeholder to think about the properties of random generative processes without actually looking at them. Things will make more sense over the next two weeks.</p>
+</div></aside></section>
+<section id="random-variables-are-functions" class="slide level2">
+<h2>Random variables are functions</h2>
+<p>But we can also apply functions to them (e.g.&nbsp;<span class="math inline">\(g(X) = X^2\)</span>)</p>
+<div class="fragment">
+<p>A (well-behaved) function of a random variable is <em>also</em> a random variable</p>
+</div>
+<div class="fragment">
+<p>We can also <strong>operate</strong> on them (e.g.&nbsp;<span class="math inline">\(E[X]\)</span> or <span class="math inline">\(Pr[X = 1]\)</span>)</p>
+</div>
+<div class="fragment">
+<p>Because we can “do” things to them, we can also <em>describe</em> them</p>
+</div>
+</section>
+<section id="types-of-random-variables" class="slide level2">
+<h2>Types of random variables</h2>
+<ol type="1">
+<li><p>Discrete</p></li>
+<li><p>Continuous</p></li>
+</ol>
+</section>
+<section id="discrete-random-variables" class="slide level2">
+<h2>Discrete random variables</h2>
+<div class="fragment">
+<p><span class="math inline">\(X\)</span> is discrete if its range <span class="math inline">\(X(\Omega)\)</span> is a countable set</p>
+</div>
+<div class="fragment">
+<p>We can fully characterize the distribution of <span class="math inline">\(X\)</span> with a <strong>Probability Mass Function</strong> (PMF)</p>
+<p><span class="math display">\[
+f(x) = Pr[X = x]
+\]</span></p>
+</div>
+<div class="fragment">
+<p>This is useful because we can talk about more general cases</p>
+
+</div>
+<aside><div>
+<p>I am skipping the condition <span class="math inline">\(\forall x \in\mathbb{R}\)</span> throughout</p>
+</div></aside></section>
+<section id="example-biased-coin-flip" class="slide level2">
+<h2>Example: Biased coin flip</h2>
+<p><span class="math display">\[
+f(x) =\begin{cases}
+1-p &amp; \colon &amp; x = 0 \\
+p &amp; : &amp; x = 1 \\
+0 &amp; : &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<div class="fragment">
+<p>Where <span class="math inline">\(p\)</span> is the expected proportion of tails</p>
+</div>
+<div class="fragment">
+<p>This is a <strong>Bernoulli</strong> distribution</p>
+</div>
+<div class="fragment">
+<p>Which is a special case of a <strong>binomial</strong> distribution</p>
+</div>
+</section>
+<section id="cumulative-distribution-function-cdf" class="slide level2">
+<h2>Cumulative distribution function (CDF)</h2>
+<div class="fragment">
+<p><span class="math display">\[
+F(x) = Pr[X \leq x]
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Returns the probability of <span class="math inline">\(X\)</span> being greater or equal than <span class="math inline">\(x\)</span></p>
+</div>
+<div class="fragment">
+<p>This is a more general (and more informative) way to describe a random variable</p>
+</div>
+</section>
+<section id="example-die-roll-cdf" class="slide level2">
+<h2>Example: Die roll CDF</h2>
+
+<img data-src="fig/die_cdf.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="continuous-random-variables" class="slide level2">
+<h2>Continuous random variables</h2>
+<div class="fragment">
+<p>Informally, a random variable is continuous if its range can be measured to an arbitrary degree of precision (even if it’s not)</p>
+</div>
+<div class="fragment">
+<p>Because working with continuous functions is messier, the definition is recursive</p>
+</div>
+</section>
+<section id="continuous-random-variable" class="slide level2">
+<h2>Continuous random variable</h2>
+<p><span class="math inline">\(X\)</span> is a continuous random variable if there exists a non-negative function <span class="math inline">\(f: \mathbb{R} \to \mathbb{R}\)</span> such that the CDF of X is</p>
+<div class="fragment">
+<p><span class="math display">\[
+F(x) = Pr[X \leq x] = \int_{-\infty}^x f(u)du
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Meaning the only way we can tell if a random variable is continuous is because its CDF is also continuous</p>
+</div>
+</section>
+<section id="continuous-random-variable-1" class="slide level2">
+<h2>Continuous random variable</h2>
+<p>This turns out to be convenient, because the <strong>Probability Density Function</strong> of a continuous random variable is a <em>derivative</em></p>
+<div class="fragment">
+<p><span class="math display">\[
+f(x) = \frac{dF(u)}{du} \bigg\rvert_{u=x}
+\]</span></p>
+</div>
+<div class="fragment">
+<p>So the <strong>PDF</strong> gives the slope or rate of change at <span class="math inline">\(x\)</span></p>
+</div>
+<div class="fragment">
+<p><span class="math inline">\(\neq\)</span> the <strong>PMF</strong> of a discrete RV giving the probability exactly at <span class="math inline">\(x\)</span></p>
+</div>
+</section>
+<section id="continuous-random-variable-2" class="slide level2">
+<h2>Continuous random variable</h2>
+<p>This turns out to be convenient, because the <strong>Probability Density Function</strong> of a continuous random variable is a <em>derivative</em></p>
+<p><span class="math display">\[
+f(x) = \frac{dF(u)}{du} \bigg\rvert_{u=x}
+\]</span></p>
+<p>So the <strong>PDF</strong> gives the slope or rate of change at <span class="math inline">\(x\)</span></p>
+<p><span class="math inline">\(\neq\)</span> the <strong>PMF</strong> of a discrete RV giving the probability exactly at <span class="math inline">\(x\)</span></p>
+
+<aside><div>
+<p><strong>Remember:</strong> A continuous random variable needs a P<strong>D</strong>F because continuous distributions <em>do not have mass</em> at discrete points</p>
+</div></aside></section>
+<section id="example-uniform-distribution" class="slide level2">
+<h2>Example: Uniform distribution</h2>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/uniform_pdf.png"></p>
+<figcaption>Uniform PDF</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/uniform_cdf.png"></p>
+<figcaption>Uniform CDF</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="standard-normal-distribution" class="slide level2">
+<h2>Standard normal distribution</h2>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/normal_pdf.png"></p>
+<figcaption>Standard Normal PDF</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/normal_cdf.png"></p>
+<figcaption>Standard Normal CDF</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="wrapping-up" class="slide level2">
+<h2>Wrapping up</h2>
+<p>Random variables as useful placeholders to think about properties of data without looking at data</p>
+<div class="fragment">
+<p>Everything applies to bivariate, multivariate distributions, the math is just messier</p>
+</div>
+<div class="fragment">
+<p><strong>Next week:</strong> Summarizing random variables to identify ideal quantities that we will try to approximate with data</p>
+</div>
+</section>
+<section id="aside-distributions-in-r" class="slide level2">
+<h2>Aside: distributions in R</h2>
+<div class="fragment">
+<p><code>d</code> is for <em>density</em> (PMF/PDF)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">dbinom</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><code>p</code> is for <em>probability distribution function</em> (CDF)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">pbinom</span>(<span class="at">q =</span> <span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><code>q</code> is for <em>quantile</em> (inverse CDF)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">qbinom</span>(<span class="at">p =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><code>r</code> is for <em>random number generation</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-2"><a href=""></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0 1 0 1 1 0 0 1 0 0</code></pre>
+</div>
+</div>
+
+</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
@@ -672,6 +968,44 @@ P(B) = \sum_i P(B \cap A_i)
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")

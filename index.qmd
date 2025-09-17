@@ -17,7 +17,7 @@ Click [here](/syllabus.pdf) for the most recent version.
 
 [Week 1: Preliminaries](slides/week1.html)
 
-<!-- [Week 2: Probability Theory](slides/week2.html) -->
+[Week 2: Probability Theory](slides/week2.html)
 
 <!-- [Week 3: Summarizing Random Variables](slides/week3.html) -->
 
