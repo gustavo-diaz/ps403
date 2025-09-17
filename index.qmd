@@ -9,6 +9,10 @@ format: html
 
 Click [here](/syllabus.pdf) for the most recent version.
 
+## GitHub repository
+
+<https://github.com/gustavo-diaz/ps403>
+
 ## Slides
 
 [Week 1: Preliminaries](slides/week1.html)
