@@ -106,7 +106,7 @@ We are making the problem **tractable** so that the answer can be something othe
 
 ## A more involved example<br>(Stark and Freedman)
 
-*What is the chance that an earthquake of magnitude 6.7 or greater will occur before the year 2023*
+*What is the chance that an earthquake of magnitude 6.7 or greater will occur before the year 2023?*
 
 &nbsp;
 
@@ -234,7 +234,7 @@ $$
 . . .
 
 $$
-\Omega = {H,T}
+\Omega = \{H,T\}
 $$
 
 ::: aside
@@ -251,7 +251,7 @@ $$
 
 
 $$
-\Omega = {H,T}
+\Omega = \{H,T\}
 $$
 
 $\omega \in \Omega$ sampling points
