@@ -6,10 +6,10 @@
 <script src="week2_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week2_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week2_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week2_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="week2_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="week2_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="week2_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+  <meta name="generator" content="quarto-1.7.33">
 
   <title>Probability Theory</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -586,8 +586,11 @@ p &amp; : &amp; x = 1 \\
 </div>
 <div class="fragment">
 <p>Which is a special case of a <strong>binomial</strong> distribution</p>
+
 </div>
-</section>
+<aside><div>
+<p>PMFs are usually expressed as <em>cases</em> because probabilities are mapped to each discrete value.</p>
+</div></aside></section>
 <section id="cumulative-distribution-function-cdf" class="slide level2">
 <h2>Cumulative distribution function (CDF)</h2>
 <div class="fragment">
@@ -609,7 +612,7 @@ F(x) = Pr[X \leq x]
 <section id="continuous-random-variables" class="slide level2">
 <h2>Continuous random variables</h2>
 <div class="fragment">
-<p>Informally, a random variable is continuous if its range can be measured to an arbitrary degree of precision (even if it’s not)</p>
+<p>Informally, a random variable is continuous if its range <strong>can</strong> be measured to an arbitrary degree of precision</p>
 </div>
 <div class="fragment">
 <p>Because working with continuous functions is messier, the definition is recursive</p>
@@ -617,7 +620,7 @@ F(x) = Pr[X \leq x]
 </section>
 <section id="continuous-random-variable" class="slide level2">
 <h2>Continuous random variable</h2>
-<p><span class="math inline">\(X\)</span> is a continuous random variable if there exists a non-negative function <span class="math inline">\(f: \mathbb{R} \to \mathbb{R}\)</span> such that the CDF of X is</p>
+<p><span class="math inline">\(X\)</span> is a continuous random variable if there exists a non-negative function <span class="math inline">\(f: \mathbb{R} \to \mathbb{R}\)</span> such that the CDF of X is an integral</p>
 <div class="fragment">
 <p><span class="math display">\[
 F(x) = Pr[X \leq x] = \int_{-\infty}^x f(u)du

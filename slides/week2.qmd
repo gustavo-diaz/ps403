@@ -472,6 +472,10 @@ This is a **Bernoulli** distribution
 
 Which is a special case of a **binomial** distribution
 
+::: aside
+PMFs are usually expressed as *cases* because probabilities are mapped to each discrete value.
+:::
+
 ## Cumulative distribution function (CDF)
 
 . . .
@@ -496,7 +500,7 @@ This is a more general (and more informative) way to describe a random variable
 
 . . .
 
-Informally, a random variable is continuous if its range can be measured to an arbitrary degree of precision (even if it's not)
+Informally, a random variable is continuous if its range **can** be measured to an arbitrary degree of precision
 
 . . .
 
@@ -504,7 +508,7 @@ Because working with continuous functions is messier, the definition is recursiv
 
 ## Continuous random variable
 
-$X$ is a continuous random variable if there exists a non-negative function $f: \mathbb{R} \to \mathbb{R}$ such that the CDF of X is
+$X$ is a continuous random variable if there exists a non-negative function $f: \mathbb{R} \to \mathbb{R}$ such that the CDF of X is an integral
 
 . . .
 
