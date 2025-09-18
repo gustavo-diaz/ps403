@@ -1,0 +1,175 @@
+---
+title: "Lab 1: Probabilities in R"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: September 29, 2025
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+    - \usepackage{float}
+    - \floatplacement{figure}{t}
+    - \floatplacement{table}{t}
+    - \usepackage{flafter}
+    - \usepackage[T1]{fontenc}
+    - \usepackage[utf8]{inputenc}
+    - \usepackage{ragged2e}
+    - \usepackage{booktabs}
+    - \usepackage{amsmath}
+    - \usepackage{url}
+---
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = TRUE,
+                      tidy.opts=list(width.cutoff=80))
+```
+
+
+# M&Ms
+
+To work on the following problems, we will need to install and load the `UsingR` package.
+
+```{r}
+# You would need to install this if you haven't used it before
+library(UsingR)
+library(tidyverse)
+```
+
+If you are curious where this is coming from, you can read the package documentation [here](https://cran.r-project.org/web/packages/UsingR/UsingR.pdf).
+
+The `mandms` data contains the targeted color distribution in a bag of M&Ms as percentages for various types of packages.
+
+```{r}
+mandms
+```
+
+
+Answer the following questions. 
+
+::: {.callout-tip}
+## Show, don't tell
+As a general rule for lab assignments, I would like you to write as if you were teaching to someone who has had zero exposure to R and RStudio, meaning that you should use words to explain what is going on. 
+
+This will help form the good habit of writing code that is easy to follow and interpret years from now. Don't just tell me what the answer is, show me how you got there.
+
+I believe *"show, don't tell"* is a principle that applies to many, perhaps most, aspects of grad school and academia in general.
+:::
+
+## Which packaging is missing one of the six colors?
+
+
+
+## Which types of packaging have an equal distribution of colors?
+
+## Which packaging has a single color that is more likely than all the others? What color is this?
+
+# NBA draft
+
+The National Basketball Association lottery to award the first pick in the draft is held by putting $1,000$ balls into a hopper and selecting one. The teams with the worst records the previous year have a greater proportion of the balls.
+
+The `nba.draft` data set contains the ball allocation for the year 2002. 
+
+```{r}
+nba.draft
+```
+
+## Which team(s) had the best chances at getting the first draft pick?
+
+## That year, the first draft pick went to the Houston Rockets, who selected [Yao Ming](https://en.wikipedia.org/wiki/Yao_Ming). What was the probability of this event happening in 2002? What assumptions inform the computation of this probability?
+
+::: {.callout-tip}
+Calculating the answer is easy, but I also want you to show me that you read and understood the material.
+:::
+
+::: {.callout-note}
+## Hint
+
+By assumptions, I mean which approach to probability appears to be more productive.
+
+:::
+
+## Create a new variable that records each teams' probability of getting the first draft pick
+
+
+
+## Use the `sample()` function (or an equivalent alternative) to simulate one instance of the draft. Which team got the first round pick in your simulation?
+
+
+
+## Write a loop that simulates the 2002 NBA draft that stops once Houston is selected. How many rounds did it take?
+
+::: {.callout-note}
+## Hint
+
+This is hard to do with a `for` loop. Perhaps another kind of loop may make things easier?
+:::
+
+
+
+# Fun with coins and dice
+
+An experimenter flips a fair coin. If the coin comes up heads, the experimenter rolls a fair four-sided die. If the coin comes up tails, the experimenter rolls a fair six-sided die.
+
+::: {.callout-tip}
+This follows from **Example 1.1.11** in the AM book (p. 11).
+
+You can answer the questions below in one of two ways:
+
+- **Analytically:** Apply the rules of probability to compute the answer. Make sure to indicate which rules you are using at every step. Use R objects to designate important quantities like $P(A)$ or $P(B)$
+
+- **Computationally:** Write a function that simulates the experiment, repeat it a large number of times, then use logical operators in R to calculate the answers
+:::
+
+## What is the probability of observing heads and 3?
+
+## What is the probability of observing tails and 3?
+
+## What is the probability of observing heads, given that 3 was observed?
+
+## What is the probability of observing tails, given that 3 was observed?
+
+## What is the probability of observing 3 in this experiment?
+
+
+# Happy birthday!
+
+These questions are a remix of the [birthday problem](https://en.wikipedia.org/wiki/Birthday_problem).
+
+## What is the probability that you share the same birthday with someone in this class?
+
+::: {.callout-note}
+## Hints
+1. We need to assume something about the distribution of birthdays. The AM book introduced three useful distributions that correspond to functions in R. Which distribution seems more useful to approach this problem? Why?
+
+2. Time is a construct, so are months
+
+3. Ignore leap years
+:::
+
+## What is the probability that any two people in this class share a birthday?
+
+::: {.callout-tip}
+This one can also be solved analytically or computationally.
+:::
+
+## Make a figure that shows the probability of two students in the same class having the same birthday as a function of the number of students enrolled. At what point does this probability become greater or equal than 0.5?
+
+::: {.callout-tip}
+You may have an easier time doing this if you answered the previous question analytically.
+:::
