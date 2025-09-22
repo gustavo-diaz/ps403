@@ -1,4 +1,6 @@
 ---
+title: "Summarizing Distributions"
+subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
     slide-number: false
@@ -7,7 +9,39 @@ format:
     chalkboard: true
 ---
 
+## Agenda
+
+- Revisit random variables
+- Summarizing random variables
+- Lab
+
+## Last week
+
+In your own words, what is a random variable?
+
+. . .
+
+- *Discrete* random variables have a **PMF**
+
+. . .
+
+- *Continuous* random variables have a **PDF**
+
+. . .
+
+In either case, they are just functions:
+
+$$
+f(x) = Pr[X = x]
+$$
+
+. . .
+
+They important part is that we can **operate** on them, meaning we can *theorize about producing single number summaries* that describe them
+
 ## Expected value
+
+Discrete:
 
 $$
 E[X] = \sum_x x f(x)
@@ -15,10 +49,34 @@ $$
 
 &nbsp;
 
+Continuous:
 
 $$
 E[X] = \int_{-\infty}^{+\infty} xf(x)dx
 $$
+
+
+## Expected value
+
+Discrete:
+
+$$
+E[X] = \sum_x x f(x)
+$$
+
+&nbsp;
+
+Continuous:
+
+$$
+E[X] = \int_{-\infty}^{+\infty} xf(x)dx
+$$
+
+::: aside
+These are just weighted averages of each value and its corresponding probability
+:::
+
+
 
 ## Linearity of expectations
 
