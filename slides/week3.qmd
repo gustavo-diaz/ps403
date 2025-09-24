@@ -215,7 +215,7 @@ is the $j$th **central moment**
 
 . . .
 
-They are "central" because they convey spread *centered in the expected value*
+Because they convey spread *centered in the expected value*
 
 ::: aside
 The existence of arbitrary moments is important because there is an estimation technique called the [method of moments](https://online.stat.psu.edu/stat415/lesson/1/1.4) that we do not cover in the sequence.
@@ -223,32 +223,100 @@ The existence of arbitrary moments is important because there is an estimation t
 
 ## Central moments
 
-[The first central moment is zero by definition, but the second central moment is variance]
+The *first* central moment is
 
-## Variance and standard deviation
+$$E[X-E[X]]$$
 
-::: incremental
-- **Variance:** $V[X] = E[(X - E[X])^2]$
+## Central moments
 
-- **Alternative:** $V[X] = E[X^2] - E[X]^2$
+The *first* central moment is 
 
-- **Standard deviation:** $\sigma[X] = \sqrt{V[X]}$
+$$E[X-E[X]] \\ = E[X] - E[X]$$
+
+## Central moments
+
+The *first* central moment is 
+
+$$E[X-E[X]] \\ = E[X] - E[X] \\ = 0$$
+
+. . .
+
+Whis is not very useful
+
+## Central moments
+
+The *second* central moment is
+
+$$
+E[(X - E[X])^2]
+$$
+
+## Central moments
+
+The *second* central moment is
+
+$$
+E[(X - E[X])^2]
+$$
+
+Which is called **variance**
+
+. . . 
+
+
+
+Rearrange to something more applicable:
+
+$$
+V[X] = E[X^2] - E[X]^2
+$$
+
+::: aside
+**Variance** is the *squared* deviation from the expected value
 :::
 
-## Why do we like the standard deviation?
+## Central moments
+
+The *second* central moment is
+
+$$
+V[X] = E[(X - E[X])^2]
+$$
+
+
+Which is called **variance**
+
+Rearrange to something more applicable:
+
+$$
+V[X] = E[X^2] - E[X]^2
+$$
+
+::: aside
+The proof here is brief and interesting because it involves treating $E[X]$ as a constant (cf. Theorem 2.1.13 p. 52)
+:::
+
+## Why do we stop at the second central moment?
 
 . . .
 
-
-$$
-V[aX] = a^2 V[X]
-$$
+Other central moments are conceptually distinct but not as important for social science applications (more in the lab)
 
 . . .
 
-$$
-\sigma[aX] = |a| \sigma[X]
-$$
+Variance is expressed in squared terms, but if you take the square root you get a measure in units of $X$
+
+. . .
+
+$$\sigma[X] = \sqrt{V[X]}$$
+
+. . .
+
+Which is called the **standard deviation**
+
+## Joint distributions
+
+[Continue here covariance, correlation, variances are not linear operators]
 
 ## Measuring fit
 

@@ -6,8 +6,8 @@
 <script src="week3_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week3_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week3_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>Summarizing Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -382,12 +382,82 @@ E[aX + bY + c] = a E[X] + bE[Y] + c
 <p>is the <span class="math inline">\(j\)</span>th <strong>central moment</strong></p>
 </div>
 <div class="fragment">
-<p>They are “central” because they convey spread <em>centered in the expected value</em></p>
+<p>Because they convey spread <em>centered in the expected value</em></p>
 
 </div>
 <aside><div>
 <p>The existence of arbitrary moments is important because there is an estimation technique called the <a href="https://online.stat.psu.edu/stat415/lesson/1/1.4">method of moments</a> that we do not cover in the sequence.</p>
 </div></aside></section>
+<section id="central-moments" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>first</em> central moment is</p>
+<p><span class="math display">\[E[X-E[X]]\]</span></p>
+</section>
+<section id="central-moments-1" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>first</em> central moment is</p>
+<p><span class="math display">\[E[X-E[X]] \\ = E[X] - E[X]\]</span></p>
+</section>
+<section id="central-moments-2" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>first</em> central moment is</p>
+<p><span class="math display">\[E[X-E[X]] \\ = E[X] - E[X] \\ = 0\]</span></p>
+<div class="fragment">
+<p>Whis is not very useful</p>
+</div>
+</section>
+<section id="central-moments-3" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>second</em> central moment is</p>
+<p><span class="math display">\[
+E[(X - E[X])^2]
+\]</span></p>
+</section>
+<section id="central-moments-4" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>second</em> central moment is</p>
+<p><span class="math display">\[
+E[(X - E[X])^2]
+\]</span></p>
+<p>Which is called <strong>variance</strong></p>
+<div class="fragment">
+<p>Rearrange to something more applicable:</p>
+<p><span class="math display">\[
+V[X] = E[X^2] - E[X]^2
+\]</span></p>
+
+</div>
+<aside><div>
+<p><strong>Variance</strong> is the <em>squared</em> deviation from the expected value</p>
+</div></aside></section>
+<section id="central-moments-5" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>second</em> central moment is</p>
+<p><span class="math display">\[
+V[X] = E[(X - E[X])^2]
+\]</span></p>
+<p>Which is called <strong>variance</strong></p>
+<p>Rearrange to something more applicable:</p>
+<p><span class="math display">\[
+V[X] = E[X^2] - E[X]^2
+\]</span></p>
+
+<aside><div>
+<p>The proof here is brief and interesting because it involves treating <span class="math inline">\(E[X]\)</span> as a constant (cf.&nbsp;Theorem 2.1.13 p.&nbsp;52)</p>
+</div></aside></section>
+<section id="properties-of-the-variance" class="slide level2">
+<h2>Properties of the variance</h2>
+<ul>
+<li class="fragment"><span class="math inline">\(V[X+c] = V[X]\)</span></li>
+<li class="fragment"><span class="math inline">\(V[aX] = a^2 V[X]\)</span></li>
+</ul>
+<div class="fragment">
+<p><strong>Important:</strong> Variance is <strong>NOT</strong> a linear operator</p>
+</div>
+<div class="fragment">
+<p>Down the line, this will mean that <em>point</em> estimation is much harder than <em>variance</em> estimation</p>
+</div>
+</section>
 <section id="variance-and-standard-deviation" class="slide level2">
 <h2>Variance and standard deviation</h2>
 <ul>
