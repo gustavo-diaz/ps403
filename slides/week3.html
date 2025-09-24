@@ -6,8 +6,8 @@
 <script src="week3_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week3_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week3_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="week3_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
   <title>Summarizing Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -239,10 +239,12 @@ f(x) = Pr[X = x]
 E[X] = \sum_x x f(x)
 \]</span></p>
 <p>&nbsp;</p>
+<div class="fragment">
 <p>Continuous:</p>
 <p><span class="math display">\[
 E[X] = \int_{-\infty}^{+\infty} xf(x)dx
 \]</span></p>
+</div>
 </section>
 <section id="expected-value-1" class="slide level2">
 <h2>Expected value</h2>
@@ -259,17 +261,132 @@ E[X] = \int_{-\infty}^{+\infty} xf(x)dx
 <aside><div>
 <p>These are just weighted averages of each value and its corresponding probability</p>
 </div></aside></section>
+<section id="why-do-we-like-the-expected-value" class="slide level2">
+<h2>Why do we like the expected value?</h2>
+<div class="fragment">
+<p>Averages (and average-like things) have nice <strong>properties</strong> that facilitate statistical inference</p>
+</div>
+<div class="fragment">
+<p>Meaning they <em>usually</em> produce single number summaries that are <em>reliable</em> or <em>useful</em></p>
+</div>
+<div class="fragment">
+<p><strong>Next week:</strong> Statistical properties</p>
+<p><strong>This week:</strong> Mathematical properties</p>
+</div>
+</section>
+<section id="rules-of-expectations" class="slide level2">
+<h2>Rules of expectations</h2>
+<ol type="1">
+<li>If <span class="math inline">\(a\)</span> is a constant, then <span class="math inline">\(E[a] = a\)</span></li>
+</ol>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Extension: <span class="math inline">\(E[aX] = a E[X]\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li><span class="math inline">\(E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<blockquote>
+<p><em>Expectations of summations are summations of expectations</em> (ESSE)</p>
+</blockquote>
+</div>
+</section>
+<section id="rules-of-expectations-1" class="slide level2">
+<h2>Rules of expectations</h2>
+<ol type="1">
+<li><p>If <span class="math inline">\(a\)</span> is a constant, then <span class="math inline">\(E[a] = a\)</span></p></li>
+<li><p>Extension: <span class="math inline">\(E[aX] = a E[X]\)</span></p></li>
+<li><p>ESSE: <span class="math inline">\(E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]\)</span></p></li>
+</ol>
+<div class="fragment">
+<ol start="4" type="1">
+<li><span class="math inline">\(E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<blockquote>
+<p><em>Expectations of <strong>weighted</strong> summations are summations of <strong>weighted</strong> expectations</em> (EWSSWE)</p>
+</blockquote>
+</div>
+</section>
+<section id="rules-of-expectations-2" class="slide level2">
+<h2>Rules of expectations</h2>
+<ol type="1">
+<li><p>If <span class="math inline">\(a\)</span> is a constant, then <span class="math inline">\(E[a] = a\)</span></p></li>
+<li><p>Extension: <span class="math inline">\(E[aX] = a E[X]\)</span></p></li>
+<li><p>ESSE: <span class="math inline">\(E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]\)</span></p></li>
+<li><p>EWSSWE: <span class="math inline">\(E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]\)</span></p></li>
+</ol>
+<div class="fragment">
+<ul>
+<li>#3 and #4 are true even if random variables are <em>not</em> independent</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>These rules make up a <strong>very</strong> important property</li>
+</ul>
+</div>
+</section>
 <section id="linearity-of-expectations" class="slide level2">
 <h2>Linearity of expectations</h2>
-
 <p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be random variables, then <span class="math inline">\(\forall a, b, c \in \mathbb{R}\)</span></p>
 <div class="fragment">
 <p><span class="math display">\[
 E[aX + bY + c] = a E[X] + bE[Y] + c
 \]</span></p>
 </div>
+<div class="fragment">
+<p><strong>Implication:</strong> Expected value is a <em>linear operator</em></p>
+</div>
+<div class="fragment">
+<p>Meaning we can rearrange terms for easier calculation</p>
+</div>
+<div class="fragment">
+<p>For other things, linearity is <strong>not</strong> true unless you are explicitly told otherwise</p>
+
+</div>
 <aside><div>
-<p>This is a very important property!</p>
+<p>This holds for discrete random variables with joint PMF <span class="math inline">\(f\)</span>, jointly continuous random variables with joint PDF <span class="math inline">\(f\)</span>, and for X discrete and Y continuous or the other way around (but math is cumbersome)</p>
+</div></aside></section>
+<section id="more-generally" class="slide level2">
+<h2>More generally</h2>
+<p>We can describe a random variable by its <strong>moments</strong></p>
+<div class="fragment">
+<p><span class="math inline">\(\mu'_j = E[X^j]\)</span> is the <span class="math inline">\(j\)</span>th <strong>raw moment</strong></p>
+</div>
+<div class="fragment">
+<p>So <span class="math inline">\(E[X] = E[X^1] = \mu'_1\)</span> is the <em>first</em> raw moment</p>
+
+</div>
+<aside><div>
+<p>The concept of moment is borrowed from physics. As in torque being the moment of a force.</p>
+</div></aside></section>
+<section id="more-generally-1" class="slide level2">
+<h2>More generally</h2>
+<p><span class="math inline">\(\mu'_j = E[X^j]\)</span> is the <span class="math inline">\(j\)</span>th <strong>raw moment</strong></p>
+<div class="fragment">
+<p>Raw moments describe “location”</p>
+</div>
+<div class="fragment">
+<p>Sometimes we also want to characterize “spread”, <em>independent from the expected value</em></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\mu_j = E[(X - E[X])^j]
+\]</span></p>
+<p>is the <span class="math inline">\(j\)</span>th <strong>central moment</strong></p>
+</div>
+<div class="fragment">
+<p>They are “central” because they convey spread <em>centered in the expected value</em></p>
+
+</div>
+<aside><div>
+<p>The existence of arbitrary moments is important because there is an estimation technique called the <a href="https://online.stat.psu.edu/stat415/lesson/1/1.4">method of moments</a> that we do not cover in the sequence.</p>
 </div></aside></section>
 <section id="variance-and-standard-deviation" class="slide level2">
 <h2>Variance and standard deviation</h2>

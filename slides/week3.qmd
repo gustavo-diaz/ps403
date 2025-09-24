@@ -49,6 +49,8 @@ $$
 
 &nbsp;
 
+. . .
+
 Continuous:
 
 $$
@@ -76,13 +78,79 @@ $$
 These are just weighted averages of each value and its corresponding probability
 :::
 
+## Why do we like the expected value?
 
+. . .
+
+Averages (and average-like things) have nice **properties** that facilitate statistical inference
+
+. . .
+
+Meaning they *usually* produce single number summaries that are *reliable* or *useful*
+
+. . .
+
+**Next week:** Statistical properties
+
+**This week:** Mathematical properties
+
+## Rules of expectations
+
+1. If $a$ is a constant, then $E[a] = a$
+
+. . .
+
+2. Extension: $E[aX] = a E[X]$
+
+. . .
+
+3. $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+
+. . .
+
+> *Expectations of summations are summations of expectations* (ESSE)
+
+## Rules of expectations
+
+1. If $a$ is a constant, then $E[a] = a$
+
+
+2. Extension: $E[aX] = a E[X]$
+
+
+3. ESSE: $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+
+. . .
+
+4. $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+
+. . .
+
+> _Expectations of **weighted** summations are summations of **weighted** expectations_ (EWSSWE)
+
+## Rules of expectations
+
+1. If $a$ is a constant, then $E[a] = a$
+
+
+2. Extension: $E[aX] = a E[X]$
+
+
+3. ESSE: $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+
+4. EWSSWE: $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+
+. . .
+
+- #3 and #4 are true even if random variables are *not* independent
+
+. . .
+
+- These rules make up a **very** important property
 
 ## Linearity of expectations
 
-::: aside
-This is a very important property!
-:::
+
 
 Let $X$ and $Y$ be random variables, then $\forall a, b, c \in \mathbb{R}$
 
@@ -91,6 +159,71 @@ Let $X$ and $Y$ be random variables, then $\forall a, b, c \in \mathbb{R}$
 $$
 E[aX + bY + c] = a E[X] + bE[Y] + c
 $$
+
+. . .
+
+**Implication:** Expected value is a *linear operator*
+
+. . .
+
+Meaning we can rearrange terms for easier calculation
+
+. . .
+
+For other things, linearity is **not** true unless you are explicitly told otherwise
+
+::: aside
+This holds for discrete random variables with joint PMF $f$, jointly continuous random variables with joint PDF $f$, and for X discrete and Y continuous or the other way around (but math is cumbersome)
+:::
+
+## More generally
+
+We can describe a random variable by its **moments**
+
+. . .
+
+$\mu'_j = E[X^j]$ is the $j$th **raw moment**
+
+. . .
+
+So $E[X] = E[X^1] = \mu'_1$ is the *first* raw moment
+
+
+::: aside
+The concept of moment is borrowed from physics. As in torque being the moment of a force.
+:::
+
+## More generally
+
+$\mu'_j = E[X^j]$ is the $j$th **raw moment**
+
+. . .
+
+Raw moments describe "location"
+
+. . .
+
+Sometimes we also want to characterize "spread", *independent from the expected value*
+
+. . .
+
+$$
+\mu_j = E[(X - E[X])^j]
+$$
+
+is the $j$th **central moment**
+
+. . .
+
+They are "central" because they convey spread *centered in the expected value*
+
+::: aside
+The existence of arbitrary moments is important because there is an estimation technique called the [method of moments](https://online.stat.psu.edu/stat415/lesson/1/1.4) that we do not cover in the sequence.
+:::
+
+## Central moments
+
+[The first central moment is zero by definition, but the second central moment is variance]
 
 ## Variance and standard deviation
 
