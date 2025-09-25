@@ -82,17 +82,19 @@ These are just weighted averages of each value and its corresponding probability
 
 . . .
 
-Averages (and average-like things) have nice **properties** that facilitate statistical inference
+We said a **function** applied to a random variable yields a *random variable*
 
 . . .
 
-Meaning they *usually* produce single number summaries that are *reliable* or *useful*
+But an **operator** of a random variable can be treated as a **constant**
 
 . . .
 
-**Next week:** Statistical properties
+So we can think of them as (theoretical) *one-number summaries* of a random variable
 
-**This week:** Mathematical properties
+. . .
+
+Averages (and average-like things) have **properties** that make them good one-number summaries (most of the time)
 
 ## Rules of expectations
 
@@ -122,7 +124,7 @@ Meaning they *usually* produce single number summaries that are *reliable* or *u
 
 . . .
 
-4. $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+4. $E[b_1X_1 + \ldots + b_pX_p] = b_1E[X_1] + \ldots + b_pE[X_p]$
 
 . . .
 
@@ -138,7 +140,7 @@ Meaning they *usually* produce single number summaries that are *reliable* or *u
 
 3. ESSE: $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
 
-4. EWSSWE: $E[X_1 + \ldots + X_p] = E[X_1] + \ldots + E[X_p]$
+4. EWSSWE: $E[b_1X_1 + \ldots + b_pX_p] = b_1E[X_1] + \ldots + b_pE[X_p]$
 
 . . .
 
@@ -241,7 +243,7 @@ $$E[X-E[X]] \\ = E[X] - E[X] \\ = 0$$
 
 . . .
 
-Whis is not very useful
+Which is not very useful
 
 ## Central moments
 
@@ -316,34 +318,11 @@ Which is called the **standard deviation**
 
 ## Joint distributions
 
-[Continue here covariance, correlation, variances are not linear operators]
+Sometimes what we want to convey is the relationship between two random variables.
 
-## Measuring fit
+## Joint distributions
 
-::: aside
-Eventually, $c$ will become something more meaningful
-:::
-
-$$
-MSE = E[(X-c)^2]
-$$
-
-. . .
-
-
-- $E[X]$ minimizes MSE (cf. Theorems 2.1.23 and 2.1.24)
-
-. . .
-
-$$
-E[(X-c)^2] = V[X] + (E[X]-c)^2
-$$
-
-## Summarizing joint distributions
-
-. . .
-
-**Covariance**
+We can generalize the formula for *variance* to the *bivariate* case, which gives the **covariance**
 
 $$
 \text{Cov}[X,Y] = E[(X-E[X])(Y-E[Y])]
@@ -351,8 +330,59 @@ $$
 
 . . .
 
-**Correlation:**
+Alternative formula
 
+$$
+\text{Cov}{[X,Y]} = E[XY] - E[X]E[Y]
+$$
+
+
+## Joint distributions
+
+We can generalize the formula for *variance* to the *bivariate* case, which gives the **covariance**
+
+$$
+\text{Cov}[X,Y] = E[(X-E[X])(Y-E[Y])]
+$$
+
+
+Alternative formula
+
+$$
+\text{Cov}{[X,Y]} = E[XY] - E[X]E[Y]
+$$
+
+::: aside
+The first formula is helpful to see the connection with centered distances. The second is easier to compute.
+:::
+
+## Why do we like the covariance?
+
+1. It conveys how much $X$ and $Y$ *travel* together
+
+::: incremental
+- **Positive:** $\uparrow X \Rightarrow \uparrow Y$
+- **Negative:** $\uparrow X \Rightarrow \downarrow Y$
+:::
+
+. . .
+
+**Correlation** is *rescaled* covariance (0 to 1)
+
+
+$$
+\rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
+$$
+
+::: aside
+BTW, regression coefficients are also a kind of rescaled covariance.
+:::
+
+## Aside: Rank correlation
+
+. . .
+
+$\rho$ is **Pearson's** correlation
 
 $$
 \rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
@@ -360,7 +390,59 @@ $$
 
 . . .
 
-**Variance rule:** $V[X+Y] = V[X] + \color{purple}{2\text{Cov}[X,Y]} + V[Y]$
+**Spearman's**
+
+$$
+r_s = \rho[R[X], R[Y]] = \frac{\text{Cov}[R[X],R[Y]}{\sigma[R[X]] \sigma[R[Y]]}
+$$
+
+## Aside: Rank correlation
+
+**Kendall's**
+
+. . .
+
+$$
+\tau = \frac{(\text{# concordant pairs}) - (\text{# discordant pairs})} {(\text{# total pairs})}
+$$
+
+. . .
+
+- **concordant:** $x_i > x_j$ *and* $y_i > y_j$ **OR** $x_i < x_j$ *and* $y_i < y_j$
+
+- **discordant** otherwise
+
+## Aside: Correlation in R
+
+```{r, eval = FALSE, echo = TRUE}
+cor(x, y, method = "pearson") # default
+
+cor(x, y, method = "spearman")
+
+cor(x, y, method = "kendall")
+```
+
+## Why do we like the covariance?
+
+1. It conveys how much $X$ and $Y$ *travel* together
+
+. . .
+
+2. It reminds us that the **variance is NOT a linear operator**
+
+. . .
+
+**Variance rule**
+
+$$V[X+Y] = V[X] + \color{purple}{2\text{Cov}[X,Y]} + V[Y]$$
+
+. . .
+
+Unless $\color{purple}{\text{Cov}[X,Y]} = 0$
+
+. . .
+
+Meaning?
 
 ## Independence
 
@@ -383,54 +465,142 @@ What does it mean for $X$ and $Y$ to be **independent**?
 
 . . .
 
-$\rho [X,Y] = 0$ $\not \Rightarrow$ independence
+$\rho [X,Y] = 0$ does not *imply* independence!
 
-## Rank correlation
+## Why?
 
-. . .
+![](fig/cor_zero.png){fig-align="center"}
 
-$\rho$ is **Pearson's** correlation
+::: aside
+[Distance correlation](https://arxiv.org/pdf/0803.4101) is a fancier measure that is zero *only* if two vectors are independent.
+:::
 
-$$
-\rho[X,Y] = \frac{\text{Cov}[X,Y]}{\sigma[X] \sigma[Y]}
-$$
+## Measuring fit
 
-. . .
-
-**Spearman's**
-
-$$
-r_s = \rho[R[X], R[Y]] = \frac{\text{Cov}[R[X],R[Y]}{\sigma[R[X]] \sigma[R[Y]]}
-$$
-
-## Rank correlation
-
-**Kendall's**
+Central moments are centered around the expected value
 
 . . .
 
+Example:
+
 $$
-\tau = \frac{(\text{# concordant pairs}) - (\text{# discordant pairs})} {(\text{# total pairs})}
+V[X] = E[(X - E[X])^2]
 $$
 
 . . .
 
-- **concordant:** $x_i > x_j$ *and* $y_i > y_j$ **OR** $x_i < x_j$ *and* $y_i < y_j$
+But we can technically center them on anything we want to
 
-- **discordant** otherwise
+## Measuring fit
 
-## Correlation in R
+$$
+E[(X-\color{purple}c)^2]
+$$
 
-```{r, eval = FALSE, echo = TRUE}
-cor(x, y, method = "pearson") # default
+## Measuring fit
 
-cor(x, y, method = "spearman")
+$$
+E[(X-\color{purple}c)^2]
+$$
 
-cor(x, y, method = "kendall")
-```
+This is called the
+
+## Measuring fit
+
+$$
+E[(X-\color{purple}c)^2]
+$$
+
+This is called the **M**ean
+
+## Measuring fit
+
+$$
+E[(X-\color{purple}c)^2]
+$$
+
+This is called the **M**ean **S**quared
+
+## Measuring fit
+
+$$
+E[(X-\color{purple}c)^2]
+$$
+
+This is called the **M**ean **S**quared **E**rror
+
+## Measuring fit
+
+$$
+E[(X-\color{purple}c)^2]
+$$
+
+This is called the **M**ean **S**quared **E**rror around $\color{purple}{c}$
+
+::: aside
+$\color{purple}c$ is for ~~cookie~~ **constant**
+:::
 
 
-## Best (linear) predictor
+
+## Measuring fit
+
+::: aside
+Eventually, $c$ will become something more meaningful
+:::
+
+$$
+MSE = E[(X-\color{purple}c)^2]
+$$
+
+. . .
+
+
+Plugging $\color{purple}{c = E[X]}$ minimizes MSE (cf. Theorems 2.1.23 and 2.1.24)
+
+. . .
+
+That's because you can rearrange to
+
+. . .
+
+$$
+E[(X-\color{purple}c)^2] = V[X] + (E[X]-\color{purple}c)^2
+$$
+
+## Measuring fit
+
+::: aside
+The implication is that the expected value is *generally* a good single-number prediction for what $X$ will look like
+:::
+
+$$
+MSE = E[(X-\color{purple}c)^2]
+$$
+
+
+Plugging $\color{purple}{c = E[X]}$ minimizes MSE (cf. Theorems 2.1.23 and 2.1.24)
+
+That's because you can rearrange to
+
+
+$$
+E[(X-\color{purple}{E[X]})^2] = V[X] +  (E[X]-\color{purple}{E[X]})^2
+$$
+
+. . .
+
+$$
+ = V[X]
+$$
+
+## Best predictor
+
+We can say that $E[X]$ is the **best predictor** of $X$ because it minimizes the MSE
+
+. . .
+
+This also extends to **conditional expectation functions** (CEF)
 
 . . .
 
@@ -438,7 +608,86 @@ CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
 
 . . .
 
-If we restrict ourselves to a linear functional form $Y = a + bX$, then the following minimize MSE of $Y$ given $X$:
+&nbsp;
+
+Wait hold on
+
+## Conditional expectation function
+
+Discrete:
+
+$$
+E[Y|X=x] = \sum_yyf_{Y|X}(y|x)
+$$
+
+
+Continuous:
+
+$$
+E[Y|X=x] = \int_{-\infty}^{+\infty}yf_{Y|X}(y|x)dy
+$$
+
+::: aside
+This is the conditional expectation of $Y$ given $X=x$. It looks like an operator but it is actually a function $G_Y(x)$ (technically, it is composed of many functions)
+:::
+
+## Conditional expectation function
+
+Note that we can also have
+
+$$
+G_Y(X) = E[Y|X=X] = E[Y|X]
+$$
+
+. . .
+
+To denote the *random variable* that results from applying the CEF (which is technically many functions) to $X$
+
+. . .
+
+We can just move on with calling $E[Y|X]$ the CEF
+
+## Properties of conditional expectations
+
+- **Linearity** (same as with unconditional expectations)
+
+## Properties of conditional expectations
+
+- **Linearity** (same as with unconditional expectations)
+
+- **Law of Iterated Expectations:**$E[Y] = E[E[Y|X]]$
+
+::: aside
+Unconditional expectation can be represented as a weighted average of conditional expectations
+:::
+
+## Properties of conditional expectations
+
+- **Linearity** (same as with unconditional expectations)
+
+- **Law of Iterated Expectations:**$E[Y] = E[E[Y|X]]$
+
+- **Law of Total Variance:**
+
+$$
+V[Y] = \underbrace{E[V[Y|X]]}_\text{Avg variability within X} + \underbrace{V[E[Y|X]]}_\text{Variability across X}
+$$
+
+::: aside
+We can decompose the variability in random variable $Y$ into the variability "within" and "across" values of $X$
+:::
+
+## Best *linear* predictor
+
+CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
+
+. . .
+
+If we restrict ourselves to a **linear** functional form $Y = a + bX$
+
+. . .
+
+Then the following minimizes MSE of $Y$ given $X$:
 
 . . .
 
@@ -448,5 +697,9 @@ If we restrict ourselves to a linear functional form $Y = a + bX$, then the foll
 
 
 ::: aside
-For now, just remember this will become very important
+For now, just remember this will become very important. The important part is that it can be useful to impose a linear form to the best predictor.
 :::
+
+## Wrapping up
+
+[Mean good thing]
