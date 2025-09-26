@@ -272,9 +272,6 @@ E[X] = \int_{-\infty}^{+\infty} xf(x)dx
 <div class="fragment">
 <p>So we can think of them as (theoretical) <em>one-number summaries</em> of a random variable</p>
 </div>
-<div class="fragment">
-<p>Averages (and average-like things) have <strong>properties</strong> that make them good one-number summaries (most of the time)</p>
-</div>
 </section>
 <section id="rules-of-expectations" class="slide level2">
 <h2>Rules of expectations</h2>
@@ -422,6 +419,14 @@ E[(X - E[X])^2]
 E[(X - E[X])^2]
 \]</span></p>
 <p>Which is called <strong>variance</strong></p>
+</section>
+<section id="central-moments-5" class="slide level2">
+<h2>Central moments</h2>
+<p>The <em>second</em> central moment is</p>
+<p><span class="math display">\[
+V[X] = E[(X - E[X])^2]
+\]</span></p>
+<p>Which is called <strong>variance</strong></p>
 <div class="fragment">
 <p>Rearrange to something more applicable:</p>
 <p><span class="math display">\[
@@ -432,7 +437,7 @@ V[X] = E[X^2] - E[X]^2
 <aside><div>
 <p><strong>Variance</strong> is the <em>squared</em> deviation from the expected value</p>
 </div></aside></section>
-<section id="central-moments-5" class="slide level2">
+<section id="central-moments-6" class="slide level2">
 <h2>Central moments</h2>
 <p>The <em>second</em> central moment is</p>
 <p><span class="math display">\[
@@ -795,8 +800,17 @@ V[Y] = \underbrace{E[V[Y|X]]}_\text{Avg variability within X} + \underbrace{V[E[
 </div></aside></section>
 <section id="wrapping-up" class="slide level2">
 <h2>Wrapping up</h2>
-<p>[Mean good thing]</p>
+<p>Do you need to memorize these properties?</p>
+<div class="fragment">
+<p>No, but a lot of the theory behind fancy methods relies on playing with the properties of expected values/moments of random variables</p>
+</div>
+<div class="fragment">
+<p><strong>Down the line:</strong> Averages (and average-like things) have <strong>statistical properties</strong> that make them good one-number summaries (most of the time)</p>
+</div>
+<div class="fragment">
+<p>You need a strong case to <strong>not</strong> use means or conditional means</p>
 
+</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

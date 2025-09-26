@@ -92,9 +92,7 @@ But an **operator** of a random variable can be treated as a **constant**
 
 So we can think of them as (theoretical) *one-number summaries* of a random variable
 
-. . .
 
-Averages (and average-like things) have **properties** that make them good one-number summaries (most of the time)
 
 ## Rules of expectations
 
@@ -259,6 +257,16 @@ The *second* central moment is
 
 $$
 E[(X - E[X])^2]
+$$
+
+Which is called **variance**
+
+## Central moments
+
+The *second* central moment is
+
+$$
+V[X] = E[(X - E[X])^2]
 $$
 
 Which is called **variance**
@@ -702,4 +710,16 @@ For now, just remember this will become very important. The important part is th
 
 ## Wrapping up
 
-[Mean good thing]
+Do you need to memorize these properties?
+
+. . .
+
+No, but a lot of the theory behind fancy methods relies on playing with the properties of expected values/moments of random variables
+
+. . .
+
+**Down the line:** Averages (and average-like things) have **statistical properties** that make them good one-number summaries (most of the time)
+
+. . .
+
+You need a strong case to **not** use means or conditional means
