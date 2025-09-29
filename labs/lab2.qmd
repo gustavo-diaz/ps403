@@ -1,0 +1,281 @@
+---
+title: "Lab 2: Summarizing distributions"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: October 06, 2025
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+    - \usepackage{float}
+    - \floatplacement{figure}{t}
+    - \floatplacement{table}{t}
+    - \usepackage{flafter}
+    - \usepackage[T1]{fontenc}
+    - \usepackage[utf8]{inputenc}
+    - \usepackage{ragged2e}
+    - \usepackage{booktabs}
+    - \usepackage{amsmath}
+    - \usepackage{url}
+    - \usepackage{fvextra}
+    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = TRUE)
+```
+
+# Setup {.unnumbered}
+
+Before starting, include all the relevant packages in this code chunk.
+
+```{r}
+library(tidyverse)
+library(tinytable)
+```
+
+# Overview {.unnumbered}
+
+AM Chapter 2 introduces many summary features of random variables. One nice feature of random variables is that they are technically functions but we can treat them as variables.^[This is called the *plug-in principle*, more on this next week.] This means the quantities introduced in the chapter also have an analogue that we can compute with actual data. Knowing this will be useful later to visualize the statistical properties of different *estimators*.^[This language is slowly filtering into our vocabulary, we will formalize it next week.]
+
+As an aside, the original name for this lab in the syllabus was "Quantities of interest." In statistics, that name is usually reserved for *inferential targets*, as in the quantities we are interested in but cannot observe, so we use data to approximate them. For example, the population mean is an inferential target, for which we may use the sample mean to learn something about.
+
+# Create data
+
+The following code simulates a data set.
+
+```{r}
+# Change the value of set.seed so that results are unique to you
+set.seed(1)
+data = data.frame(
+  
+  x = rnorm(n = 10000, mean = 5, sd = 2),
+  
+  y = rbinom(n = 10000, size = 1, prob = 0.6)
+)
+```
+
+## What does the object `data` contain?
+
+## How is `x` generated? What does each argument mean?
+
+## How is `y` generated? What does each argument mean?
+
+
+# Univariate summaries
+
+The code chunks below represent many quantities of interest we can compute. Under each chunk, explain:
+
+- What are we computing?
+- Does the **theoretical** version of this quantity have a name (e.g. expected value, variance)? 
+- Does the **empirical** version of this quantity have a name?
+- Why is this quantity useful/important?
+- Is there a dedicated function to calculate this in base R or the tidyverse? If so, show it
+
+::: {.callout-tip}
+## Hints
+
+1. Some of these may be repeats, but they are calculated in a different way to illustrate some useful statistical property. If applicable, explain what makes an alternative presentation of a quantity interesting, useful, or important
+
+2. The AM textbook only mentions them in a footnote. But some of the quantities below may be [standardized moments](https://en.wikipedia.org/wiki/Standardized_moment)
+:::
+
+
+##
+
+```{r, eval = FALSE}
+# The code chunk option eval = FALSE
+# Prints the code in the pdf but
+# does not evaluate it
+sum(data$x)/length(data$x)
+```
+
+
+##
+
+```{r, eval = FALSE}
+sum(data$x^2)/length(data$x)
+```
+
+##
+
+```{r, eval = FALSE}
+sum((data$x - 3)^2)/length(data$x)
+```
+
+##
+
+```{r, eval = FALSE}
+sum((data$x - 0)^2)/length(data$x)
+```
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     sum((x - (sum(x)/length(x)))^2)/length(x)
+     )
+```
+
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     sum(x^2/length(x)) -
+       (sum(x)/length(x))^2
+     )
+```
+
+##
+
+```{r, eval = FALSE}
+with(data, mean(x^2) - mean(x)^2)
+```
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     sqrt(mean(x^2) - mean(x)^2))
+```
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     sqrt(mean((x+5)^2) - mean(x+5)^2))
+```
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     sum((x - (sum(x)/length(x)))^3)/length(x)
+     )
+```
+
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     sum((x - (sum(x)/length(x)))^4)/length(x)
+     )
+```
+
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     (sum((x - (sum(x)/length(x)))^3)/length(x)) /
+       (sqrt(mean(x^2) - mean(x)^2)^3)
+     )
+```
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     (sum((x - (sum(x)/length(x)))^4)/length(x)) /
+       (sqrt(mean(x^2) - mean(x)^2)^4)
+     )
+```
+
+
+##
+
+```{r, eval = FALSE}
+with(data,
+     (mean(x^2) - mean(x)^2) +
+       (mean(x) - 3)^2
+     )
+```
+
+
+# Bivariate summaries
+
+Answer the same questions for the code chunks below.
+
+##
+
+```{r}
+with(data,
+     mean((x - mean(x)) * (y - mean(y)))
+     )
+
+```
+
+##
+
+```{r}
+with(data,
+     mean(x*y) - mean(x)*mean(y)
+     )
+```
+
+##
+
+```{r}
+with(data,
+     (mean(x*y) - mean(x)*mean(y)) /
+       ((sqrt(mean(x^2) - mean(x)^2)) * 
+          sqrt(mean(y^2) - mean(y)^2))
+     )
+```
+
+
+## Why are all these bivariate summaries so close to zero?
+
+# Apply to real data
+
+Load any data set you like into R. Pick two numerical variables. Briefly explain what the data is about and what the two variables you choose are measuring.
+
+Make a table that shows the following quantities:
+
+- The mean, variance, and standard deviation of the first variable (feel free to use base R functions for these)
+- The mean, variance, and standard deviation of the second variable
+- The covariance between variables
+- The correlation between variables
+
+What do we learn about the variables from each quantity? Given your application, does any quantity seem more informative than the others?
+
+You will get closer to a "satisfactory" mark if you:
+
+- Clean the data before making the table (e.g. filtering, renaming variables)
+- Present quantities at a meaningful level of precision (rounding if necessary)
+- Customize the table so that it is easy to read
+- Make the table look pretty in the pdf by using a table-drawing package like [`tinytable`](https://vincentarelbundock.github.io/tinytable/)
+
+## Work on your answer below
+
+This is a sketch, using the simulated data from the beginning, of how I would start working on this.
+
+```{r}
+data %>% 
+  summarize(evx = mean(x),
+            evy = mean(y)) %>% 
+  tt()
+```
+
+
+
+
+
