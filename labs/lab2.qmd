@@ -91,9 +91,11 @@ The code chunks below represent many quantities of interest we can compute. Unde
 ::: {.callout-tip}
 ## Hints
 
-1. Some of these may be repeats, but they are calculated in a different way to illustrate some useful statistical property. If applicable, explain what makes an alternative presentation of a quantity interesting, useful, or important
+1. It may help your understanding to rewrite these formula with pen and paper
 
-2. The AM textbook only mentions them in a footnote. But some of the quantities below may be [standardized moments](https://en.wikipedia.org/wiki/Standardized_moment)
+2. Some of these may be repeats, but they are calculated in a different way to illustrate some useful statistical property. If applicable, explain what makes an alternative presentation of a quantity interesting, useful, or important
+
+3. The AM textbook only mentions them in a footnote. But some of the quantities below may be [standardized moments](https://en.wikipedia.org/wiki/Standardized_moment)
 :::
 
 
