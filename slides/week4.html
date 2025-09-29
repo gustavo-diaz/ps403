@@ -6,11 +6,10 @@
 <script src="week4_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week4_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week4_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week4_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="week4_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.57">
+<link href="week4_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
-  <title>week4</title>
+  <title>Estimation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -29,8 +28,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -41,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -94,211 +94,13 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week4_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="week4_files/libs/revealjs/dist/theme/quarto-ee9ab3830bbe7759b42dda8416faf5cd.css">
   <link href="week4_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
-
-  .callout {
-    margin-top: 1em;
-    margin-bottom: 1em;  
-    border-radius: .25rem;
-  }
-
-  .callout.callout-style-simple { 
-    padding: 0em 0.5em;
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-    display: flex;
-  }
-
-  .callout.callout-style-default {
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-  }
-
-  .callout .callout-body-container {
-    flex-grow: 1;
-  }
-
-  .callout.callout-style-simple .callout-body {
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-style-default .callout-body {
-    font-size: 0.9rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-titled.callout-style-simple .callout-body {
-    margin-top: 0.2em;
-  }
-
-  .callout:not(.callout-titled) .callout-body {
-      display: flex;
-  }
-
-  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
-    padding-left: 1.6em;
-  }
-
-  .callout.callout-titled .callout-header {
-    padding-top: 0.2em;
-    margin-bottom: -0.2em;
-  }
-
-  .callout.callout-titled .callout-title  p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
-    
-  .callout.callout-titled.callout-style-simple .callout-content  p {
-    margin-top: 0;
-  }
-
-  .callout.callout-titled.callout-style-default .callout-content  p {
-    margin-top: 0.7em;
-  }
-
-  .callout.callout-style-simple div.callout-title {
-    border-bottom: none;
-    font-size: .9rem;
-    font-weight: 600;
-    opacity: 75%;
-  }
-
-  .callout.callout-style-default  div.callout-title {
-    border-bottom: none;
-    font-weight: 600;
-    opacity: 85%;
-    font-size: 0.9rem;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-default div.callout-content {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-simple .callout-icon::before {
-    height: 1rem;
-    width: 1rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 1rem 1rem;
-  }
-
-  .callout.callout-style-default .callout-icon::before {
-    height: 0.9rem;
-    width: 0.9rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 0.9rem 0.9rem;
-  }
-
-  .callout-title {
-    display: flex
-  }
-    
-  .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  .callout.no-icon::before {
-    display: none !important;
-  }
-
-  .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
-  }
-
-  .callout.callout-titled .callout-icon::before {
-    margin-top: .5rem;
-    padding-right: .5rem;
-  }
-
-  .callout:not(.callout-titled) .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  /* Callout Types */
-
-  div.callout-note {
-    border-left-color: #4582ec !important;
-  }
-
-  div.callout-note .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
-  }
-
-  div.callout-note.callout-style-default .callout-title {
-    background-color: #dae6fb
-  }
-
-  div.callout-important {
-    border-left-color: #d9534f !important;
-  }
-
-  div.callout-important .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-important.callout-style-default .callout-title {
-    background-color: #f7dddc
-  }
-
-  div.callout-warning {
-    border-left-color: #f0ad4e !important;
-  }
-
-  div.callout-warning .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-warning.callout-style-default .callout-title {
-    background-color: #fcefdc
-  }
-
-  div.callout-tip {
-    border-left-color: #02b875 !important;
-  }
-
-  div.callout-tip .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-tip.callout-style-default .callout-title {
-    background-color: #ccf1e3
-  }
-
-  div.callout-caution {
-    border-left-color: #fd7e14 !important;
-  }
-
-  div.callout-caution .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
-  }
-
-  div.callout-caution.callout-style-default .callout-title {
-    background-color: #ffe5d0
-  }
-
-  </style>
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -391,15 +193,47 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Estimation</h1>
+  <p class="subtitle">POLI_SCI 403: Probability and Statistics</p>
 
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="agenda" class="slide level2">
+<h2>Agenda</h2>
+<ul>
+<li><p>Random variables and random sampling</p></li>
+<li><p>Estimation</p></li>
+<li><p>Lab</p></li>
+</ul>
+</section>
+<section id="moving-toward-working-with-data" class="slide level2">
+<h2>Moving toward working with data</h2>
+<p><strong>Mean squared error around <span class="math inline">\(\color{purple}c\)</span></strong></p>
+<p><span class="math display">\[
+MSE = E[(X-\color{purple}c)^2]
+\]</span></p>
+<div class="fragment">
+<p>We said that <span class="math inline">\(\color{purple} c =E[X]\)</span> is the best predictor of <span class="math inline">\(X\)</span> because it would minimize MSE</p>
+</div>
+<div class="fragment">
+<p>But <span class="math inline">\(E[X]\)</span> is a theoretical quantity!</p>
+</div>
+<div class="fragment">
+<p>We can use data to <strong>approximate</strong> it</p>
+</div>
+<div class="fragment">
+<p>But how do we now if it is a <em>good</em> approximation?</p>
+</div>
+</section>
 <section id="ingredients-for-statistical-inference" class="slide level2">
 <h2>Ingredients for statistical inference</h2>
-<div>
 <ol type="1">
 <li class="fragment"><p>Estimand <span class="math inline">\(\theta\)</span></p></li>
 <li class="fragment"><p>Estimator <span class="math inline">\(\widehat \theta\)</span></p></li>
 </ol>
-</div>
 </section>
 <section id="ingredients-for-statistical-inference-1" class="slide level2">
 <h2>Ingredients for statistical inference</h2>
@@ -432,21 +266,7 @@
 <li><p>Estimator <span class="math inline">\(\widehat \mu\)</span></p></li>
 <li><p>Data <span class="math inline">\(X\)</span></p></li>
 <li><p>Estimate <span class="math inline">\(\overline X\)</span></p></li>
-<li><p>Quantify uncertainty</p></li>
-</ol>
-</section>
-<section id="ingredients-for-statistical-inference-5" class="slide level2">
-<h2>Ingredients for statistical inference</h2>
-<ol type="1">
-<li><p>Estimand <span class="math inline">\(\mu\)</span></p></li>
-<li><p>Estimator <span class="math inline">\(\widehat \mu\)</span></p></li>
-<li><p>Data <span class="math inline">\(X\)</span></p></li>
-<li><p>Estimate <span class="math inline">\(\overline X\)</span></p></li>
-<li><p>Quantify uncertainty</p>
-<ul>
-<li>Confidence intervals (lab)</li>
-<li>Hypothesis testing (week 8)</li>
-</ul></li>
+<li><p>Quantify uncertainty (next week)</p></li>
 </ol>
 <div class="fragment">
 <div style="text-align: center">
@@ -454,23 +274,88 @@
 </div>
 </div>
 </section>
+<section id="plug-in-principle" class="slide level2">
+<h2>Plug-in principle</h2>
+<p><strong>Idea:</strong> Use <em>sample quantities</em> to approximate <em>population parameters</em></p>
+<div class="fragment">
+<p>We can replace <span class="math inline">\(\theta = T(F)\)</span> with <span class="math inline">\(\widehat \theta = T(\widehat{F})\)</span></p>
+
+</div>
+<aside><div>
+<p><span class="math inline">\(F\)</span> is the (theoretical) CDF and <span class="math inline">\(\widehat F\)</span> is the <em>empirical</em> CDF</p>
+</div></aside></section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<p>If we have</p>
+<p><span class="math display">\[
+T_E(F) = E[X] = \int_{-\infty}^{\infty} xdF(x)
+\]</span></p>
+<div class="fragment">
+<p>We can <em>plug-in</em></p>
+<p><span class="math display">\[
+T_E(\widehat F) = \widehat E[X] = \frac{1}{n} \sum_{i=1}^n x_i
+\]</span></p>
+
+</div>
+<aside><div>
+<p>See Example 3.3.4 in AM (p.&nbsp;119)</p>
+</div></aside></section>
+<section id="example-1" class="slide level2">
+<h2>Example</h2>
+<p>If we have</p>
+<p><span class="math display">\[
+T_E(F) = E[X] = \int_{-\infty}^{\infty} xdF(x)
+\]</span></p>
+<p>We can <em>plug-in</em></p>
+<p><span class="math display">\[
+T_E(\widehat F) = \widehat E[X] = \overline X
+\]</span></p>
+<div class="fragment">
+<p>But how can we tell if any of this is legit?</p>
+
+</div>
+<aside><div>
+<p>See Example 3.3.4 in AM (p.&nbsp;119)</p>
+</div></aside></section>
 <section>
-<section id="why-random-sampling" class="title-slide slide level1 center">
-<h1>Why random sampling?</h1>
+<section id="random-sampling" class="title-slide slide level1 center">
+<h1>Random sampling</h1>
 
 </section>
 <section id="independent-identically-distributed" class="slide level2">
 <h2>Independent, identically distributed</h2>
+<p>We have random variables <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span></p>
+<div class="fragment">
+<p>with their respective CDFs <span class="math inline">\(F_1, F_2, \ldots, F_n\)</span></p>
+</div>
+<div class="fragment">
 <p>A collection of <strong>random variables</strong> is i.i.d. if they are:</p>
+</div>
 <div class="fragment">
 <ol type="1">
 <li><p>Mutually independent</p></li>
 <li><p>Identically distributed</p></li>
 </ol>
 </div>
+<div class="fragment">
+<p>Meaning we are taking <span class="math inline">\(n\)</span> draws of the same (identical) random variable independently from each other?</p>
+</div>
 </section>
-<section id="data" class="slide level2">
-<h2>Data</h2>
+<section id="illustration" class="slide level2">
+<h2>Illustration</h2>
+<p><strong>Question from the <a href="https://gss.norc.org">2022 General Social Survey</a></strong></p>
+<p>In 2020, you remember that Joe Biden ran for President on the Democratic ticket against Donald Trump for the Republicans. <em>Do you remember for sure whether or not you voted in that election?</em></p>
+<ul>
+<li class="fragment">Yes, I voted</li>
+<li class="fragment">No, I did not vote</li>
+<li class="fragment">I was not eligible to vote</li>
+</ul>
+
+<aside><div>
+<p><a href="https://gss.norc.org">gss.norc.org</a></p>
+</div></aside></section>
+<section id="gss-data" class="slide level2">
+<h2>GSS Data</h2>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Code</a></li><li><a href="#tabset-1-2">Data</a></li></ul>
 <div class="tab-content">
@@ -4416,70 +4301,62 @@
 <div class="fragment">
 <p><strong>Sample mean</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb8-2"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb8-3"><a href=""></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5</code></pre>
+<pre><code>[1] 0.6</code></pre>
 </div>
 </div>
 </div>
 <div class="fragment">
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Bias</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">mean</span>(x) <span class="sc">-</span> <span class="fu">mean</span>(gss<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<span id="cb10-2"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a href=""></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.2425181</code></pre>
+<pre><code>[1] 0.7</code></pre>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
-<p><strong>MSE</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(gss<span class="sc">$</span>vote))<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.308815</code></pre>
 </div>
-</div>
-</div></div>
+<div class="fragment">
+<p>Wait what’s the point of random sampling!?</p>
+<!-- :::: {.columns} -->
+<!-- ::: {.column width="50%"} -->
+<!-- **Bias** -->
+<!-- ```{r} -->
+<!-- mean(x) - mean(gss$vote) -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::: {.column width="50%"} -->
+<!-- **MSE** -->
+<!-- ```{r} -->
+<!-- mean((x - mean(gss$vote))^2) -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- :::: -->
 </div>
 </section>
 <section id="finite-sample-properties" class="slide level2">
 <h2>Finite-sample properties</h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Code</a></li><li><a href="#tabset-2-2">Output</a></li><li><a href="#tabset-2-3">Figure</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Code</a></li><li><a href="#tabset-2-2">Output</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>sample_mean <span class="ot">=</span> <span class="cf">function</span>(n){</span>
-<span id="cb14-2"><a href=""></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> n), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-3"><a href=""></a>}</span>
-<span id="cb14-4"><a href=""></a></span>
-<span id="cb14-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
-<span id="cb14-6"><a href=""></a>means <span class="ot">=</span> <span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">sample_mean</span>(<span class="dv">100</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>sample_mean <span class="ot">=</span> <span class="cf">function</span>(n){</span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> n), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-3"><a href=""></a>}</span>
+<span id="cb12-4"><a href=""></a></span>
+<span id="cb12-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
+<span id="cb12-6"><a href=""></a>means <span class="ot">=</span> <span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">sample_mean</span>(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-2-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.72 0.79 0.70 0.72 0.71 0.77 0.71 0.73 0.72 0.78</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-2-3">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> means)) <span class="sc">+</span></span>
-<span id="cb17-2"><a href=""></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb17-3"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(gss<span class="sc">$</span>vote), <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb17-4"><a href=""></a>  <span class="fu">xlim</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="week4_files/figure-revealjs/unnamed-chunk-13-1.png" style="width:70.0%" data-fig-pos="center"></p>
-</figure>
-</div>
+<pre><code> [1] 0.5 0.8 0.8 0.9 0.5 0.5 0.8 0.9 0.8 0.7</code></pre>
 </div>
 </div>
 </div>
@@ -4489,110 +4366,457 @@
 <section id="increase-the-number-of-replicates" class="slide level2">
 <h2>Increase the number of replicates</h2>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">10 replications</a></li><li><a href="#tabset-3-2">100 replications</a></li><li><a href="#tabset-3-3">1000 replications</a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Function</a></li><li><a href="#tabset-3-2">Map</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="week4_files/figure-revealjs/unnamed-chunk-14-1.png" data-fig-pos="center" width="960"></p>
-</figure>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>rep_means <span class="ot">=</span> <span class="cf">function</span>(reps){</span>
+<span id="cb15-2"><a href=""></a>  means <span class="ot">=</span> <span class="fu">replicate</span>(reps, <span class="fu">sample_mean</span>(<span class="dv">10</span>))</span>
+<span id="cb15-3"><a href=""></a>  out <span class="ot">=</span> <span class="fu">mean</span>(means)</span>
+<span id="cb15-4"><a href=""></a>  <span class="fu">return</span>(out)</span>
+<span id="cb15-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-3-2">
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="week4_files/figure-revealjs/unnamed-chunk-15-1.png" data-fig-pos="center" width="960"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20250115</span>)</span>
+<span id="cb16-2"><a href=""></a></span>
+<span id="cb16-3"><a href=""></a>obs <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">500</span>, <span class="at">by =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href=""></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">rep_means</span>(.)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href=""></a>  <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-3-3">
+</section>
+<section id="result" class="slide level2">
+<h2>Result</h2>
+
+<img data-src="week4_files/figure-revealjs/unnamed-chunk-15-1.gif" data-fig-pos="center" class="r-stretch"></section>
+<section id="result-1" class="slide level2">
+<h2>Result</h2>
+
+<img data-src="week4_files/figure-revealjs/unnamed-chunk-16-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
+<section id="weak-law-of-large-numbers-wlln" class="slide level2">
+<h2>Weak Law of Large Numbers (WLLN)</h2>
+<p>If you take i.i.d. draws from random variable <span class="math inline">\(X\)</span> a large number of times</p>
+<div class="fragment">
+<p><span class="math display">\[
+\overline X\xrightarrow{p} E[X]
+\]</span></p>
+</div>
+<div class="fragment">
+<p>Which implies that the sample mean with a large enough sample size has <em>negligible</em> probability of being far from the <em>true</em> population parameter</p>
+
+</div>
+<aside><div>
+<p>It’s a <strong>weak</strong> law because the only guarantee is <em>convergence in probability</em>. It does not imply that it will ever <em>reach</em> the population parameter.</p>
+</div></aside></section>
+<section id="asymptotic-properties" class="slide level2">
+<h2>Asymptotic properties</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Function</a></li><li><a href="#tabset-4-2">Scale up</a></li><li><a href="#tabset-4-3">Apply</a></li><li><a href="#tabset-4-4">Output</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
 <div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="week4_files/figure-revealjs/unnamed-chunk-16-1.png" data-fig-pos="center" width="960"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>draw_sample <span class="ot">=</span> <span class="cf">function</span>(data, n) {</span>
+<span id="cb17-2"><a href=""></a>  out <span class="ot">=</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href=""></a>    <span class="fu">sample_n</span>(<span class="at">size =</span> n) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href=""></a>    <span class="fu">summarize</span>(</span>
+<span id="cb17-5"><a href=""></a>      <span class="at">estimate =</span> <span class="fu">mean</span>(vote)</span>
+<span id="cb17-6"><a href=""></a>    ) <span class="sc">%&gt;%</span> .<span class="sc">$</span>estimate</span>
+<span id="cb17-7"><a href=""></a>  </span>
+<span id="cb17-8"><a href=""></a>  <span class="fu">return</span>(out)</span>
+<span id="cb17-9"><a href=""></a>}</span>
+<span id="cb17-10"><a href=""></a></span>
+<span id="cb17-11"><a href=""></a><span class="co"># Example</span></span>
+<span id="cb17-12"><a href=""></a><span class="fu">draw_sample</span>(gss, <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.79</code></pre>
 </div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>draw_many <span class="ot">=</span> <span class="cf">function</span>(reps, data, n){</span>
+<span id="cb19-2"><a href=""></a>  temp <span class="ot">=</span> <span class="fu">replicate</span>(reps, </span>
+<span id="cb19-3"><a href=""></a>                   <span class="fu">draw_sample</span>(data, n)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href=""></a>    <span class="fu">unlist</span>()</span>
+<span id="cb19-5"><a href=""></a>  </span>
+<span id="cb19-6"><a href=""></a>  out <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb19-7"><a href=""></a>    <span class="at">n =</span> n,</span>
+<span id="cb19-8"><a href=""></a>    <span class="at">prop =</span> temp</span>
+<span id="cb19-9"><a href=""></a>  )</span>
+<span id="cb19-10"><a href=""></a>  </span>
+<span id="cb19-11"><a href=""></a>  <span class="fu">return</span>(out)</span>
+<span id="cb19-12"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-4-3">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>samples <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">500</span>)</span>
+<span id="cb20-2"><a href=""></a></span>
+<span id="cb20-3"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20250929</span>)</span>
+<span id="cb20-4"><a href=""></a>df <span class="ot">=</span> samples <span class="sc">%&gt;%</span> </span>
+<span id="cb20-5"><a href=""></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">draw_many</span>(<span class="at">reps =</span> <span class="dv">100</span>, <span class="at">data =</span> gss, <span class="at">n =</span> .)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-6"><a href=""></a>  bind_rows <span class="sc">%&gt;%</span> </span>
+<span id="cb20-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">n =</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-4-4">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      n  prop
+1    10 0.800
+2    10 0.700
+3    10 1.000
+4    10 0.700
+5    10 0.800
+6    10 0.700
+7    10 1.000
+8    10 0.700
+9    10 0.700
+10   10 0.800
+11   10 0.600
+12   10 0.700
+13   10 0.900
+14   10 0.700
+15   10 0.800
+16   10 0.600
+17   10 0.900
+18   10 0.600
+19   10 0.800
+20   10 0.500
+21   10 0.500
+22   10 1.000
+23   10 0.900
+24   10 0.800
+25   10 0.600
+26   10 0.600
+27   10 0.600
+28   10 0.700
+29   10 0.800
+30   10 0.800
+31   10 0.800
+32   10 0.900
+33   10 0.800
+34   10 0.900
+35   10 0.800
+36   10 0.700
+37   10 0.800
+38   10 0.900
+39   10 0.600
+40   10 0.900
+41   10 0.800
+42   10 0.900
+43   10 0.600
+44   10 0.700
+45   10 0.900
+46   10 0.800
+47   10 0.700
+48   10 0.800
+49   10 0.300
+50   10 0.800
+51   10 0.600
+52   10 0.800
+53   10 0.600
+54   10 0.400
+55   10 0.800
+56   10 0.600
+57   10 0.700
+58   10 0.800
+59   10 0.600
+60   10 0.800
+61   10 1.000
+62   10 0.700
+63   10 0.600
+64   10 0.600
+65   10 0.700
+66   10 0.800
+67   10 0.900
+68   10 0.700
+69   10 0.600
+70   10 0.800
+71   10 0.800
+72   10 0.600
+73   10 1.000
+74   10 0.600
+75   10 0.600
+76   10 0.900
+77   10 1.000
+78   10 0.400
+79   10 0.800
+80   10 0.600
+81   10 0.700
+82   10 0.600
+83   10 0.700
+84   10 0.700
+85   10 0.800
+86   10 0.900
+87   10 0.800
+88   10 0.800
+89   10 0.800
+90   10 0.700
+91   10 0.800
+92   10 0.600
+93   10 0.800
+94   10 0.700
+95   10 1.000
+96   10 0.500
+97   10 0.600
+98   10 0.600
+99   10 0.500
+100  10 0.600
+101 100 0.730
+102 100 0.700
+103 100 0.720
+104 100 0.760
+105 100 0.750
+106 100 0.670
+107 100 0.780
+108 100 0.780
+109 100 0.770
+110 100 0.750
+111 100 0.730
+112 100 0.700
+113 100 0.730
+114 100 0.760
+115 100 0.780
+116 100 0.810
+117 100 0.690
+118 100 0.760
+119 100 0.750
+120 100 0.690
+121 100 0.700
+122 100 0.770
+123 100 0.700
+124 100 0.790
+125 100 0.800
+126 100 0.710
+127 100 0.650
+128 100 0.780
+129 100 0.760
+130 100 0.850
+131 100 0.850
+132 100 0.730
+133 100 0.730
+134 100 0.770
+135 100 0.790
+136 100 0.710
+137 100 0.830
+138 100 0.790
+139 100 0.780
+140 100 0.690
+141 100 0.770
+142 100 0.780
+143 100 0.750
+144 100 0.720
+145 100 0.770
+146 100 0.730
+147 100 0.660
+148 100 0.730
+149 100 0.740
+150 100 0.740
+151 100 0.800
+152 100 0.760
+153 100 0.720
+154 100 0.720
+155 100 0.770
+156 100 0.760
+157 100 0.750
+158 100 0.790
+159 100 0.660
+160 100 0.720
+161 100 0.780
+162 100 0.750
+163 100 0.720
+164 100 0.730
+165 100 0.700
+166 100 0.680
+167 100 0.740
+168 100 0.670
+169 100 0.740
+170 100 0.650
+171 100 0.820
+172 100 0.770
+173 100 0.700
+174 100 0.820
+175 100 0.740
+176 100 0.720
+177 100 0.710
+178 100 0.700
+179 100 0.730
+180 100 0.690
+181 100 0.800
+182 100 0.730
+183 100 0.770
+184 100 0.690
+185 100 0.720
+186 100 0.680
+187 100 0.710
+188 100 0.720
+189 100 0.840
+190 100 0.690
+191 100 0.750
+192 100 0.760
+193 100 0.750
+194 100 0.810
+195 100 0.770
+196 100 0.780
+197 100 0.790
+198 100 0.740
+199 100 0.730
+200 100 0.800
+201 500 0.780
+202 500 0.724
+203 500 0.732
+204 500 0.736
+205 500 0.726
+206 500 0.732
+207 500 0.762
+208 500 0.752
+209 500 0.766
+210 500 0.766
+211 500 0.732
+212 500 0.744
+213 500 0.732
+214 500 0.734
+215 500 0.762
+216 500 0.730
+217 500 0.720
+218 500 0.766
+219 500 0.716
+220 500 0.724
+221 500 0.706
+222 500 0.752
+223 500 0.726
+224 500 0.724
+225 500 0.734
+226 500 0.742
+227 500 0.766
+228 500 0.760
+229 500 0.710
+230 500 0.724
+231 500 0.748
+232 500 0.754
+233 500 0.716
+234 500 0.710
+235 500 0.762
+236 500 0.708
+237 500 0.738
+238 500 0.750
+239 500 0.724
+240 500 0.746
+241 500 0.736
+242 500 0.760
+243 500 0.724
+244 500 0.702
+245 500 0.712
+246 500 0.750
+247 500 0.758
+248 500 0.752
+249 500 0.748
+250 500 0.734
+251 500 0.764
+252 500 0.732
+253 500 0.722
+254 500 0.742
+255 500 0.748
+256 500 0.750
+257 500 0.778
+258 500 0.726
+259 500 0.740
+260 500 0.744
+261 500 0.728
+262 500 0.702
+263 500 0.770
+264 500 0.746
+265 500 0.720
+266 500 0.740
+267 500 0.722
+268 500 0.774
+269 500 0.744
+270 500 0.750
+271 500 0.762
+272 500 0.732
+273 500 0.742
+274 500 0.746
+275 500 0.732
+276 500 0.708
+277 500 0.738
+278 500 0.748
+279 500 0.768
+280 500 0.750
+281 500 0.746
+282 500 0.774
+283 500 0.750
+284 500 0.734
+285 500 0.734
+286 500 0.716
+287 500 0.770
+288 500 0.750
+289 500 0.770
+290 500 0.710
+291 500 0.758
+292 500 0.764
+293 500 0.778
+294 500 0.730
+295 500 0.734
+296 500 0.740
+297 500 0.720
+298 500 0.712
+299 500 0.736
+300 500 0.744</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="asymptotic-properties" class="slide level2">
-<h2>Asymptotic properties</h2>
-<div class="panel-tabset">
-<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Function</a></li><li><a href="#tabset-4-2">Scale up</a></li><li><a href="#tabset-4-3">Plot</a></li></ul>
-<div class="tab-content">
-<div id="tabset-4-1">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>draw_sample <span class="ot">=</span> <span class="cf">function</span>(data, n) {</span>
-<span id="cb18-2"><a href=""></a>  df <span class="ot">=</span> data <span class="sc">%&gt;%</span> </span>
-<span id="cb18-3"><a href=""></a>    <span class="fu">sample_n</span>(<span class="at">size =</span> n) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-4"><a href=""></a>    <span class="fu">summarize</span>(</span>
-<span id="cb18-5"><a href=""></a>      <span class="at">estimate =</span> <span class="fu">mean</span>(vote),</span>
-<span id="cb18-6"><a href=""></a>      <span class="at">std.error =</span> <span class="fu">sd</span>(vote),</span>
-<span id="cb18-7"><a href=""></a>      <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((vote <span class="sc">-</span> <span class="fu">mean</span>(gss<span class="sc">$</span>vote))<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb18-8"><a href=""></a>    )</span>
-<span id="cb18-9"><a href=""></a>  </span>
-<span id="cb18-10"><a href=""></a>  <span class="fu">return</span>(df)</span>
-<span id="cb18-11"><a href=""></a>}</span>
-<span id="cb18-12"><a href=""></a></span>
-<span id="cb18-13"><a href=""></a><span class="co"># Example</span></span>
-<span id="cb18-14"><a href=""></a><span class="fu">draw_sample</span>(gss, <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 3
-  estimate std.error  rmse
-     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-1     0.74     0.441 0.439</code></pre>
+<section id="result-2" class="slide level2">
+<h2>Result</h2>
+
+<img data-src="week4_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" data-fig-pos="center" width="960"></section>
+<section id="central-limit-theorem" class="slide level2">
+<h2>Central limit theorem</h2>
+<p>As sample size increases, the standardized sample mean</p>
+<div class="fragment">
+<p><span class="math display">\[
+Z \xrightarrow{d} N(0,1)
+\]</span></p>
 </div>
+<div class="fragment">
+<p>where</p>
+<p><span class="math display">\[
+Z = \frac{(\overline X - E[\overline X])}{\sigma[\overline X]}
+\]</span></p>
 </div>
+</section>
+<section id="central-limit-theorem-1" class="slide level2">
+<h2>Central limit theorem</h2>
+<p>As sample size increases, the standardized sample mean</p>
+<p><span class="math display">\[
+Z \xrightarrow{d} N(0,1)
+\]</span></p>
+<p>Or without standardizing</p>
+<p><span class="math display">\[
+\sqrt{n} (\overline X - E) \xrightarrow{d} N(0, \sigma^2)
+\]</span></p>
+<div class="fragment">
+<p>Which implies that if <span class="math inline">\(n\)</span> is large, then the sample mean will <strong>tend</strong> to have a normal distribution</p>
 </div>
-<div id="tabset-4-2">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>n <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
-<span id="cb20-2"><a href=""></a></span>
-<span id="cb20-3"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
-<span id="cb20-4"><a href=""></a>reps <span class="ot">=</span> n <span class="sc">%&gt;%</span> </span>
-<span id="cb20-5"><a href=""></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">draw_sample</span>(gss, <span class="at">n =</span> .)) <span class="sc">%&gt;%</span> </span>
-<span id="cb20-6"><a href=""></a>  bind_rows <span class="sc">%&gt;%</span> </span>
-<span id="cb20-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">n =</span> n)</span>
-<span id="cb20-8"><a href=""></a></span>
-<span id="cb20-9"><a href=""></a><span class="fu">head</span>(reps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  estimate std.error  rmse     n
-     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1    0.5       0.527 0.556    10
-2    0.8       0.410 0.404    20
-3    0.633     0.490 0.494    30
-4    0.8       0.405 0.404    40
-5    0.72      0.454 0.450    50
-6    0.867     0.343 0.362    60</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-4-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="week4_files/figure-revealjs/unnamed-chunk-19-1.png" data-fig-pos="center" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+</section>
+<section id="central-limit-theorem-2" class="slide level2">
+<h2>Central limit theorem</h2>
+<p>As sample size increases, the standardized sample mean</p>
+<p><span class="math display">\[
+Z \xrightarrow{d} N(0,1)
+\]</span></p>
+<p>Or without standardizing</p>
+<p><span class="math display">\[
+\sqrt{n} (\overline X - E) \xrightarrow{d} N(0, \sigma^2)
+\]</span></p>
+<p>Which implies that if <span class="math inline">\(n\)</span> is large, then the sample mean will <strong>tend</strong> to have a normal distribution <em>even if the population is not distributed normally</em></p>
 </section>
 <section id="variance" class="slide level2">
 <h2>Variance</h2>
@@ -4618,13 +4842,11 @@
 </section>
 <section id="properties-of-estimators" class="slide level2">
 <h2>Properties of estimators</h2>
-<div>
 <ul>
 <li class="fragment"><p><strong>Unbiasedness:</strong> <span class="math inline">\(E[\widehat \theta] = \theta\)</span></p></li>
 <li class="fragment"><p><strong>Efficiency:</strong> <span class="math inline">\(\widehat \theta_A\)</span> is more efficient that <span class="math inline">\(\widehat \theta_ B\)</span> if it has lower MSE</p></li>
 <li class="fragment"><p><strong>Consistency:</strong> <span class="math inline">\(\widehat \theta \overset{p}{\to} \theta\)</span></p></li>
 </ul>
-</div>
 </section>
 <section id="next-week-regression-am-chapter-4" class="slide level2 smaller">
 <h2>Next week: Regression (AM Chapter 4)</h2>
@@ -4664,14 +4886,14 @@
 <li>What does it mean for OLS to be BUE instead of BLUE? Why does it matter?</li>
 <li>History of OLS</li>
 </ul>
-<div class="quarto-auto-generated-content">
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
-</div>
-</section></section>
-    </div>
-  </div>
+</div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
   <script src="week4_files/libs/revealjs/dist/reveal.js"></script>
@@ -4701,7 +4923,8 @@
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
 'smaller': false,
  
@@ -4856,7 +5079,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -4921,192 +5144,172 @@
     </script>
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
-          }
-        }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
             }
           }
-          return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        // For code content inside modals, clipBoardJS needs to be initialized with a container option
-        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          return false;
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
             }
-          }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
         }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
               }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

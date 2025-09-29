@@ -1,11 +1,45 @@
 ---
+title: "Estimation"
+subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
     slide-number: false
     progress: false
-    chalkboard: true
     code-overflow: wrap
+    chalkboard: true
 ---
+
+## Agenda
+
+- Random variables and random sampling
+
+- Estimation
+
+- Lab
+
+## Moving toward working with data
+
+**Mean squared error around $\color{purple}c$**
+
+$$
+MSE = E[(X-\color{purple}c)^2]
+$$
+
+. . .
+
+We said that $\color{purple} c =E[X]$ is the best predictor of $X$ because it would minimize MSE
+
+. . .
+
+But $E[X]$ is a theoretical quantity!
+
+. . .
+
+We can use data to **approximate** it
+
+. . .
+
+But how do we now if it is a *good* approximation?
 
 ## Ingredients for statistical inference
 
@@ -49,24 +83,7 @@ format:
 
 4. Estimate $\overline X$
 
-5. Quantify uncertainty
-
-## Ingredients for statistical inference
-
-1. Estimand $\mu$
-
-2. Estimator $\widehat \mu$
-
-3. Data $X$
-
-4. Estimate $\overline X$
-
-5. Quantify uncertainty
-
-    - Confidence intervals (lab)
-    - Hypothesis testing (week 8)
-
-
+5. Quantify uncertainty (next week)
 
 
 . . .
@@ -79,9 +96,74 @@ $X \rightarrow \overline{X} \rightarrow \widehat{\mu} \xrightarrow{\text{hopeful
 
 
 
-# Why random sampling?
+## Plug-in principle
+
+**Idea:** Use *sample quantities* to approximate *population parameters*
+
+. . .
+
+We can replace $\theta = T(F)$ with $\widehat \theta = T(\widehat{F})$ 
+
+::: aside
+$F$ is the (theoretical) CDF and $\widehat F$ is the *empirical* CDF
+:::
+
+## Example
+
+If we have
+
+$$
+T_E(F) = E[X] = \int_{-\infty}^{\infty} xdF(x)
+$$
+
+. . .
+
+We can *plug-in*
+
+$$
+T_E(\widehat F) = \widehat E[X] = \frac{1}{n} \sum_{i=1}^n x_i
+$$
+
+::: aside
+See Example 3.3.4 in AM (p. 119)
+:::
+
+## Example
+
+If we have
+
+$$
+T_E(F) = E[X] = \int_{-\infty}^{\infty} xdF(x)
+$$
+
+
+We can *plug-in*
+
+$$
+T_E(\widehat F) = \widehat E[X] = \overline X
+$$
+
+. . .
+
+But how can we tell if any of this is legit?
+
+::: aside
+See Example 3.3.4 in AM (p. 119)
+:::
+
+# Random sampling
+
+
 
 ## Independent, identically distributed
+
+We have random variables $X_1, X_2, \ldots, X_n$
+
+. . .
+
+with their respective CDFs $F_1, F_2, \ldots, F_n$
+
+. . .
 
 A collection of **random variables** is i.i.d. if they are:
 
@@ -91,7 +173,27 @@ A collection of **random variables** is i.i.d. if they are:
 
 2. Identically distributed
 
-## Data
+. . .
+
+Meaning we are taking $n$ draws of the same (identical) random variable independently from each other?
+
+## Illustration
+
+**Question from the [2022 General Social Survey](https://gss.norc.org)**
+
+In 2020, you remember that Joe Biden ran for President on the Democratic ticket against Donald Trump for the Republicans. *Do you remember for sure whether or not you voted in that election?*
+
+::: incremental
+- Yes, I voted
+- No, I did not vote
+- I was not eligible to vote
+:::
+
+:::aside
+[gss.norc.org](https://gss.norc.org)
+:::
+
+## GSS Data
 
 ```{r setup, include=FALSE}
 # Global options for the rendering behavior of all subsequent code chunks
@@ -177,34 +279,45 @@ mean(gss$vote)
 **Sample mean**
 
 ```{r}
-set.seed(20241009)
+set.seed(1)
 x = sample(gss$vote, size = 10, replace = FALSE)
 mean(x)
 ```
 
 . . .
 
-:::: {.columns}
-
-::: {.column width="50%"}
-**Bias**
 
 ```{r}
-mean(x) - mean(gss$vote)
+set.seed(2)
+x = sample(gss$vote, size = 10, replace = FALSE)
+mean(x)
 ```
 
-:::
+. . .
 
-::: {.column width="50%"}
-**MSE**
+Wait what's the point of random sampling!?
 
-```{r}
-mean((x - mean(gss$vote))^2)
-```
+<!-- :::: {.columns} -->
 
-:::
+<!-- ::: {.column width="50%"} -->
+<!-- **Bias** -->
 
-::::
+<!-- ```{r} -->
+<!-- mean(x) - mean(gss$vote) -->
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- ::: {.column width="50%"} -->
+<!-- **MSE** -->
+
+<!-- ```{r} -->
+<!-- mean((x - mean(gss$vote))^2) -->
+<!-- ``` -->
+
+<!-- ::: -->
+
+<!-- :::: -->
 
 ## Finite-sample properties
 
@@ -217,7 +330,7 @@ sample_mean = function(n){
 }
 
 set.seed(20241009)
-means = replicate(10, sample_mean(100))
+means = replicate(10, sample_mean(10))
 ```
 
 ## Output
@@ -226,8 +339,6 @@ means = replicate(10, sample_mean(100))
 means
 ```
 
-## Figure
-
 ```{r, include = FALSE}
 # ggplot global options
 library(tidyverse)
@@ -235,55 +346,97 @@ theme_set(theme_gray(base_size = 20))
 ggdodge = position_dodge(width = 0.5)
 ```
 
-```{r, out.width="70%"}
-ggplot(mapping = aes(x = means)) +
-  geom_density() +
-  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
-  xlim(0,1)
-```
+
 
 :::
+
 
 
 ## Increase the number of replicates
 
 ::: {.panel-tabset}
-## 10 replications
+## Function
 
-```{r, echo = FALSE}
-ggplot(mapping = aes(x = means)) +
-  geom_density() +
-  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
-    xlim(0,1)
+```{r}
+rep_means = function(reps){
+  means = replicate(reps, sample_mean(10))
+  out = mean(means)
+  return(out)
+}
 ```
 
 
-## 100 replications
+## Map
 
-```{r, echo = FALSE}
-means100 = replicate(100, sample_mean(100))
+```{r}
+set.seed(20250115)
 
-ggplot(mapping = aes(x = means100)) +
-  geom_density() +
-  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
-    xlim(0,1) +
-  labs(x = "means")
-```
-
-## 1000 replications
-
-```{r, echo = FALSE}
-means1000 = replicate(1000, sample_mean(100))
-
-ggplot(mapping = aes(x = means1000)) +
-  geom_density() +
-  geom_vline(xintercept = mean(gss$vote), linetype = "dashed") +
-    xlim(0,1) +
-  labs(x = "means")
+obs = seq(10, 500, by = 10) %>% 
+  map(~rep_means(.)) %>% 
+  unlist()
 ```
 
 :::
 
+
+
+## Result
+
+```{r, echo = FALSE}
+weak_law = data.frame(
+  reps = seq(10, 500, by = 10),
+  avg_prop = obs
+)
+
+wl_plot = ggplot(weak_law) +
+  aes(x = reps, y = obs) +
+  geom_hline(yintercept = 0.74,
+             linetype = "dashed") +
+  geom_point(color = "#4E2A84", size = 2) +
+  labs(x = "Number of attempts",
+       y = "Avgerage proportion") +
+  scale_x_continuous(breaks = seq(0, 500, by = 100))
+```
+
+```{r, cache = TRUE, echo = FALSE}
+library(gganimate)
+
+wl_plot +
+  transition_manual(reps, cumulative = TRUE)
+```
+
+## Result
+
+```{r, echo = FALSE}
+
+ggplot(weak_law) +
+  aes(x = reps, y = obs) +
+  geom_hline(yintercept = 0.74,
+             linetype = "dashed") +
+  geom_point(color = "#4E2A84", size = 2) +
+  geom_path(color = "#4E2A84") +
+  labs(x = "Number of attempts",
+       y = "Avgerage proportion") +
+  scale_x_continuous(breaks = seq(0, 500, by = 100))
+```
+
+## Weak Law of Large Numbers (WLLN)
+
+If you take i.i.d. draws from random variable $X$ a large number of times
+
+. . .
+
+$$
+\overline X\xrightarrow{p} E[X]
+$$
+
+. . .
+
+Which implies that the sample mean with a large enough sample size has *negligible* probability of being far from the *true* population parameter 
+
+::: aside
+It's a **weak** law because the only guarantee is *convergence in probability*. It does not imply that it will ever *reach* the population parameter.
+:::
 
 ## Asymptotic properties
 
@@ -292,15 +445,13 @@ ggplot(mapping = aes(x = means1000)) +
 
 ```{r}
 draw_sample = function(data, n) {
-  df = data %>% 
+  out = data %>% 
     sample_n(size = n) %>% 
     summarize(
-      estimate = mean(vote),
-      std.error = sd(vote),
-      rmse = sqrt(mean((vote - mean(gss$vote))^2))
-    )
+      estimate = mean(vote)
+    ) %>% .$estimate
   
-  return(df)
+  return(out)
 }
 
 # Example
@@ -310,34 +461,131 @@ draw_sample(gss, 100)
 ## Scale up
 
 ```{r}
-n = seq(10, 1000, by = 10)
+draw_many = function(reps, data, n){
+  temp = replicate(reps, 
+                   draw_sample(data, n)) %>% 
+    unlist()
+  
+  out = data.frame(
+    n = n,
+    prop = temp
+  )
+  
+  return(out)
+}
 
-set.seed(20241009)
-reps = n %>% 
-  map(~draw_sample(gss, n = .)) %>% 
+
+```
+
+## Apply
+
+```{r}
+samples = c(10, 100, 500)
+
+set.seed(20250929)
+df = samples %>% 
+  map(~draw_many(reps = 100, data = gss, n = .)) %>% 
   bind_rows %>% 
   mutate(n = n)
-
-head(reps)
 ```
 
-## Plot
+## Output
 
 ```{r, echo = FALSE}
-reps_df = reps %>% 
-  pivot_longer(!n,
-               names_to = "statistic",
-               values_to = "value")
-
-ggplot(reps_df) +
-  aes(x = n, y = value) +
-  geom_line() +
-  facet_wrap(~statistic, scales = "free_y")
+df
 ```
 
-
-
 :::
+
+## Result
+
+```{r, fig.align='center', echo = FALSE}
+df = df %>% 
+  mutate(samp = paste(n, "people 100 times"))
+
+ggplot(df) +
+  aes(x = prop) + 
+  geom_line(
+    stat = "density",
+    linewidth = 2,
+    color = "#4E2A84") +
+  labs(y = "Density",
+       x = "Proportion who recall voting") +
+  xlim(0.4, 1) +
+  facet_wrap(~samp)
+```
+
+## Central limit theorem (CLT)
+
+As sample size increases, the standardized sample mean
+
+. . .
+
+$$
+Z \xrightarrow{d} N(0,1)
+$$
+
+. . .
+
+where
+
+$$
+Z = \frac{(\overline X - E[\overline X])}{\sigma[\overline X]}
+$$
+
+
+## Central limit theorem (CLT)
+
+As sample size increases, the standardized sample mean
+
+
+$$
+Z \xrightarrow{d} N(0,1)
+$$
+
+Or without standardizing
+
+$$
+\sqrt{n} (\overline X - E) \xrightarrow{d} N(0, \sigma^2)
+$$
+
+. . .
+
+Which implies that if $n$ is large, then the sample mean will **tend** to have a normal distribution 
+
+## Central limit theorem (CLT)
+
+As sample size increases, the standardized sample mean
+
+
+$$
+Z \xrightarrow{d} N(0,1)
+$$
+
+Or without standardizing
+
+$$
+\sqrt{n} (\overline X - E) \xrightarrow{d} N(0, \sigma^2)
+$$
+
+
+Which implies that if $n$ is large, then the sample mean will **tend** to have a normal distribution *even if the population is not distributed normally*
+
+## Moving on
+
+WLLN and CLT hold for sample means under random sampling
+
+. . .
+
+So you do not need to prove them *empirically* to justify statistical inference
+
+. . .
+
+This is not true for other estimators...
+
+## Example: Variance estimation
+
+[Continue here not sure if show numbers first or formula]
 
 ## Variance
 
