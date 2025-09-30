@@ -1,0 +1,172 @@
+---
+title: "Lab 3: Estimation"
+author: 
+  - FirstName LastName
+  - <YourEmail@u.northwestern.edu>
+date: October 13, 2025
+date-format: "**[D]ue:** MMMM D, YYYY"
+format: 
+     pdf:
+       documentclass: article
+fontsize: 12pt
+urlcolor: blue
+number-sections: true
+geometry:
+      - left=1in
+      - right=1in
+      - top=1in
+      - bottom=1in
+header-includes:
+    - \usepackage{setspace}
+    - \doublespacing
+    - \usepackage{float}
+    - \floatplacement{figure}{h}
+    - \floatplacement{table}{h}
+    - \usepackage{flafter}
+    - \usepackage[T1]{fontenc}
+    - \usepackage[utf8]{inputenc}
+    - \usepackage{ragged2e}
+    - \usepackage{booktabs}
+    - \usepackage{amsmath}
+    - \usepackage{url}
+    - \usepackage{fvextra}
+    - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+---
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      tidy = TRUE)
+
+# Packages, add more here as needed
+library(tidyverse)
+library(tinytable)
+```
+
+# Overview {.unnumbered}
+
+The purpose of this lab is to learn and write about the statistical properties of various estimators.
+
+## Data {.unnumbered}
+
+For this lab, we will work with data from the General Social Survey (GSS). The R package [`gssr`](https://kjhealy.github.io/gssr/index.html) helps us load the data. However, this package is too big to host in CRAN (the official R repository), so we need to install the package from GitHub.^[There is a companion package that lists all the variables included: <https://kjhealy.github.io/gssrdoc/>. You can technically install this too, but I recommend you just browse the website.]
+
+```{r}
+## You may need to run the two commented lines the first time
+
+# install.packages("remotes")
+
+# remotes::install_github("kjhealy/gssr")
+library(gssr)
+library(mosaic) # for do() function
+```
+
+The package has data for the 1972-2022 period. We will focus on the most recent survey. For demonstration, I will focus on whether the respondent recalls having voted in the 2020 election (`vote20`).
+
+The following code selects the variable and recodes it as a binary indicator.
+
+```{r, results="hide"}
+gss22 = gss_get_yr(2022)
+
+gss = gss22 %>% 
+  select(vote20) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0)) %>% 
+  drop_na()
+
+gss # This will print in RStudio but not on the PDF
+```
+
+Notice that we are dropping missing observations. For now, we will pretend this is not a big deal. On Week 9, we will discuss when and how missing data is a problem, and what to do about it.
+
+You can learn more about the GSS [here](https://gss.norc.org/content/dam/gss/get-documentation/pdf/codebook/GSS%202022%20Codebook.pdf).
+
+## Diagnosing statistical properties {.unnumbered}
+
+For the purposes of the lab, we will pretend that the entire data set is a population. That way, we can "know" the true population quantity of interest.
+
+Let's say we are interested in the proportion of people who remember voting in the 2022 election.
+
+```{r}
+vote_pop = mean(gss$vote)
+
+vote_pop
+```
+
+We then want to simulate a study that randomly samples one hundred individuals from the population (withour replacement since this is a realistic example) and then calculates the mean response.
+
+```{r}
+set.seed(1234)
+
+x = sample(gss$vote, size = 100, replace = FALSE)
+
+mean(x)
+```
+
+How close is this to the true proportion? We cannot know without repeating the process multiple times.
+
+For that, we need a function that automates drawing a sample of size `n` and calculating the mean
+
+```{r}
+sample_mean = function(data, n){
+  data %>% 
+    sample_n(size = n) %>% 
+    summarize(
+      mean = mean(vote)
+    )
+}
+
+# Apply to see if it works
+sample_mean(gss, 100)
+```
+
+We then need to repeat the process multiple times to simulate many independent studies. The easiest way to do this is with the `do()` function in the mosaic package.
+
+```{r, results="hide"}
+# number of studies
+reps = 1000
+
+set.seed(1234)
+vote_df = do(reps) * sample_mean(gss, 100)
+
+# check output
+vote_df
+```
+
+We can then visualize the figure in `ggplot2`.
+
+```{r}
+ggplot(vote_df) +
+  aes(x = mean) +
+  geom_density() +
+  geom_vline(xintercept = vote_pop,
+             linetype = "dashed",
+             color = "purple")
+```
+
+We can then use this figure to talk about some of the statistical properties of this estimator. 
+
+Because we are pretending that we know the population, we can also quantify bias and efficiency (measured as mean squared error, MSE)
+
+```{r}
+vote_df %>% 
+  summarize(
+    bias = mean(mean - vote_pop),
+    mse = mean((mean - vote_pop)^2)
+  ) %>% 
+  tt()
+```
+
+
+{{< pagebreak >}}
+
+# New variable
+
+[CONTINUE HERE LOOK AT DOCUMENTATION]
+
+# Sample variance
+
+# Your own estimator
+
+[This may be too much]
