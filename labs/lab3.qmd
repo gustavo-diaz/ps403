@@ -169,4 +169,4 @@ vote_df %>%
 
 # Your own estimator
 
-[This may be too much]
+[This may be too much unless you give them a list]
