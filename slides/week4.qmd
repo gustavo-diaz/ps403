@@ -104,6 +104,12 @@ $X \rightarrow \overline{X} \rightarrow \widehat{\mu} \xrightarrow{\text{hopeful
 
 We can replace $\theta = T(F)$ with $\widehat \theta = T(\widehat{F})$ 
 
+Where $T(*)$ is a **statistical functional**
+
+. . .
+
+(Meaning whatever summary quantity of the CDF you care about)
+
 ::: aside
 $F$ is the (theoretical) CDF and $\widehat F$ is the *empirical* CDF
 :::
@@ -266,7 +272,11 @@ x8 = sample(gss$vote, size = 1)
 x9 = sample(gss$vote, size = 1)
 ```
 
-## Pretend our data is the population
+# What happens if i.i.d. does not hold?
+
+## Back to illustration
+
+Pretend our data is the population
 
 **Population mean**
 
@@ -297,27 +307,7 @@ mean(x)
 
 Wait what's the point of random sampling!?
 
-<!-- :::: {.columns} -->
 
-<!-- ::: {.column width="50%"} -->
-<!-- **Bias** -->
-
-<!-- ```{r} -->
-<!-- mean(x) - mean(gss$vote) -->
-<!-- ``` -->
-
-<!-- ::: -->
-
-<!-- ::: {.column width="50%"} -->
-<!-- **MSE** -->
-
-<!-- ```{r} -->
-<!-- mean((x - mean(gss$vote))^2) -->
-<!-- ``` -->
-
-<!-- ::: -->
-
-<!-- :::: -->
 
 ## Finite-sample properties
 
@@ -581,13 +571,29 @@ So you do not need to prove them *empirically* to justify statistical inference
 
 . . .
 
-This is not true for other estimators...
+We need additional language to know what happens when they don't hold
+
+
+## Properties of estimators
+
+::: incremental
+- **Unbiasedness:** $E[\widehat \theta] = \theta$, otherwise **biased**
+
+- **Efficiency:**  $\widehat \theta_A$ is more efficient than $\widehat \theta_ B$ if it has lower MSE
+
+- **Consistency:** $\widehat \theta \overset{p}{\to} \theta$, otherwise **inconsistent**
+:::
+
+::: aside
+The first two are finite-sample properties and have an **asymptotic** analogue, demonstrating asymptotic properties almost always requires mathematical proof, so it is a more stringent standard.
+:::
+
+## Another way to think about it
+
+![](fig/bias_variance.jpg){fig-align="center"}
 
 ## Example: Variance estimation
 
-[Continue here not sure if show numbers first or formula]
-
-## Variance
 
 Why is there a difference?
 
@@ -605,49 +611,75 @@ gss %>%
   
 ```
 
-## Properties of estimators
+. . .
 
-::: incremental
-- **Unbiasedness:** $E[\widehat \theta] = \theta$
+[Check the help file](https://r-universe.dev/manuals/stats.html#cor)
 
-- **Efficiency:**  $\widehat \theta_A$ is more efficient that $\widehat \theta_ B$ if it has lower MSE
+## Hold on
 
-- **Consistency:** $\widehat \theta \overset{p}{\to} \theta$
+There are two kinds of variance estimators
+
+. . .
+
+**_Sample_ variance:** $\widehat V[X]$
+
+. . .
+
+**_Sampling_ variance:** $V[\overline X]$
+
+## Hold on
+
+There are two kinds of variance estimators
+
+**_Sample_ variance:** $\widehat V[X]$ (...of random variable $X$)
+
+**_Sampling_ variance:** $V[\overline X]$ (...of an estimator)
+
+. . .
+
+We are talking about **_sample_ variance**
+
+. . .
+
+**Remember:** Standard *deviation* and standard *error* are different things!
+
+::: aside
+We will return to sampling variance next week
 :::
 
-## Next week: Regression (AM Chapter 4) {.smaller}
+## Sample variance estimation
 
-Important:
+A straightforward candidate from plug-in principle and the alternative formula for variance would be:
 
-- Estimation (Connection to BLP)
-- Inference (3 types of standard errors)
-- Application (Clean water and infant mortality)
+. . .
 
-Less important (POLI_SCI 405):
+$$
+\widehat V^*[X] = \overline{X^2} - \overline{X}^2
+$$
 
-- Polynomials
-- Interactions
-- Overfitting
-- Average partial derivatives vs. partial derivative at the average (aka marginal effects)
+. . .
 
-Ignore:
+But it turns out this estimator is *biased* but consistent
 
-- Sieve estimation
-- Penalized regression
+. . .
 
-## Next week: Other readings {.smaller}
+We need to *correct* the original formula to get an **unbiased sample variance**
 
-**Berk (2010)**
+$$
+\widehat V[X] = \frac{n}{n-1}(\overline{X^2} - \overline{X}^2)
+$$
 
-- Regression level I, II, III
 
-**Achen (2005)**
+::: aside
+More in the lab!
+:::
 
-- Why are "garbage-can" regressions a problem?
-- Total vs direct effects
-- Linearity vs. monotonicity
+## Wrapping up
 
-**Hansen (2022)** (skip proofs)
+- Random sampling justifies statistical inference via plug-in principle
 
-- What does it mean for OLS to be BUE instead of BLUE? Why does it matter?
-- History of OLS
+- If this does not hold, we need more theory to connect data to population quantities
+
+- In practice, there is always a mismatch between *estimates* and *estimands*
+
+- **Next week:** Conveying our uncertainty about the mismatch
