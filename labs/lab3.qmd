@@ -51,7 +51,7 @@ The purpose of this lab is to learn and write about the statistical properties o
 
 ## Data {.unnumbered}
 
-For this lab, we will work with data from the General Social Survey (GSS). The R package [`gssr`](https://kjhealy.github.io/gssr/index.html) helps us load the data. However, this package is too big to host in CRAN (the official R repository), so we need to install the package from GitHub.^[There is a companion package that lists all the variables included: <https://kjhealy.github.io/gssrdoc/>. You can technically install this too, but I recommend you just browse the website.]
+For this lab, we will work with data from the General Social Survey (GSS). The R package [`{gssr}`](https://kjhealy.github.io/gssr/index.html) helps us load the data. However, this package is too big to host in CRAN (the official R repository), so we need to install the package from GitHub.^[There is a companion package that lists all the variables included: <https://kjhealy.github.io/gssrdoc/>. You can technically install this too, but I recommend you just browse the website.]
 
 ```{r}
 ## You may need to run the two commented lines the first time
@@ -134,7 +134,7 @@ vote_df = do(reps) * sample_mean(gss, 100)
 vote_df
 ```
 
-We can then visualize the figure in `ggplot2`.
+This is often referred to as a (re)sampling distribution. We can then visualize it in `ggplot2`. 
 
 ```{r}
 ggplot(vote_df) +
@@ -163,9 +163,35 @@ vote_df %>%
 
 # New variable
 
-[CONTINUE HERE LOOK AT DOCUMENTATION]
+Look at the [`{gssr}` documentation](https://kjhealy.github.io/gssrdoc/reference/index.html), then choose a variable that interests you.
+
+Explain what the variable contains, why you chose it, and how it is coded. Recode it as numerical or binary if necessary so that we can apply some estimators. If you recode it, explain the logic behind it.
+
+# Sample mean again
+
+Diagnose the statistical properties for the sample mean for this variable (making a figure of the sampling distribution and/or a table of bias and mse, whatever feels more useful).
+
+
+**Questions:**
+
+- *How does the statistcal properties compare to the mean of `vote`? Explain*
+- *What would be the ideal sample size to ensure the sample mean for the new variablehas good statistical properties? Show at least three options and explain. You will commit to this sample size for the remainder of the lab*
 
 # Sample variance
+
+Using the new variable you selected, diagnose the statistical properties of the following two candidates for an estimator of the sample variance (these are the same we discussed in class).
+
+[MINUS SIGNS ARE NOT SHOWING!]
+
+$$
+\textbf{Option 1: }\widehat V^*[X] = \overline{X^2}-\overline{X}^2
+$$
+
+$$
+\textbf{Option 2: }\widehat V[X] = \frac{n}{n-1}(\overline{X^2}-\overline{X}^2)
+$$
+
+[CONTINUE HERE COMPARE]
 
 # Your own estimator
 
