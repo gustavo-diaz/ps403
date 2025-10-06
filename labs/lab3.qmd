@@ -23,7 +23,6 @@ header-includes:
     - \floatplacement{figure}{h}
     - \floatplacement{table}{h}
     - \usepackage{flafter}
-    - \usepackage[T1]{fontenc}
     - \usepackage[utf8]{inputenc}
     - \usepackage{ragged2e}
     - \usepackage{booktabs}
@@ -35,14 +34,19 @@ header-includes:
 
 ```{r setup, include=FALSE}
 # Global options for the rendering behavior of all subsequent code chunks
+# Set tidy = TRUE if code overflows
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE,
                       message = FALSE,
-                      tidy = TRUE)
+                      tidy = FALSE) 
 
 # Packages, add more here as needed
 library(tidyverse)
 library(tinytable)
+library(mosaic) # easy resampling
+
+# Set your own seed with something like your Wildcard ID number
+seed = 1234
 ```
 
 # Overview {.unnumbered}
@@ -60,7 +64,6 @@ For this lab, we will work with data from the General Social Survey (GSS). The R
 
 # remotes::install_github("kjhealy/gssr")
 library(gssr)
-library(mosaic) # for do() function
 ```
 
 The package has data for the 1972-2022 period. We will focus on the most recent survey. For demonstration, I will focus on whether the respondent recalls having voted in the 2020 election (`vote20`).
@@ -97,7 +100,7 @@ vote_pop
 We then want to simulate a study that randomly samples one hundred individuals from the population (withour replacement since this is a realistic example) and then calculates the mean response.
 
 ```{r}
-set.seed(1234)
+set.seed(seed)
 
 x = sample(gss$vote, size = 100, replace = FALSE)
 
@@ -127,14 +130,14 @@ We then need to repeat the process multiple times to simulate many independent s
 # number of studies
 reps = 1000
 
-set.seed(1234)
+set.seed(seed)
 vote_df = do(reps) * sample_mean(gss, 100)
 
 # check output
 vote_df
 ```
 
-This is often referred to as a (re)sampling distribution. We can then visualize it in `ggplot2`. 
+This is often referred to as a (re)sampling distribution. We can then visualize it in `{ggplot2}`. 
 
 ```{r}
 ggplot(vote_df) +
@@ -169,19 +172,17 @@ Explain what the variable contains, why you chose it, and how it is coded. Recod
 
 # Sample mean again
 
-Diagnose the statistical properties for the sample mean for this variable (making a figure of the sampling distribution and/or a table of bias and mse, whatever feels more useful).
+Diagnose the statistical properties for the sample mean for this variable. Make a well formatted figure(s) or table(s) similar to those presented above. Remember that if you show a figure or table, you need to write about it.
 
 
 **Questions:**
 
-- *How does the statistcal properties compare to the mean of `vote`? Explain*
-- *What would be the ideal sample size to ensure the sample mean for the new variablehas good statistical properties? Show at least three options and explain. You will commit to this sample size for the remainder of the lab*
+1.  *How do the statistical properties of the sample mean of your new variable compare to the properties of the mean of `vote`? Explain*
+2. *What would be the ideal sample size to ensure the sample mean for the new variablehas good statistical properties? Show at least three options and explain. You will commit to this sample size for the remainder of the lab*
 
 # Sample variance
 
 Using the new variable you selected, diagnose the statistical properties of the following two candidates for an estimator of the sample variance (these are the same we discussed in class).
-
-[MINUS SIGNS ARE NOT SHOWING!]
 
 $$
 \textbf{Option 1: }\widehat V^*[X] = \overline{X^2}-\overline{X}^2
@@ -191,8 +192,45 @@ $$
 \textbf{Option 2: }\widehat V[X] = \frac{n}{n-1}(\overline{X^2}-\overline{X}^2)
 $$
 
-[CONTINUE HERE COMPARE]
+Option 2 is just the `var` function in base R. For option 1, we may need to create a custom function. It may be a good idea to work together to make sure everyone is using the right function.
+
+
+**Questions**
+
+1. *Which estimator of the sample variance has better statistical properties? Explain*
+
+2. *In general terms, why do we need a bias-corrected estimator for the sample variance? Is there a case in which we do not need it?*
+
+3. *Generally speaking, when is an estimator of the sample variance useful or important? Think about a case in which you would prefer to report the sample variance (or standard deviation) over the sample mean.*
+
 
 # Your own estimator
 
-[This may be too much unless you give them a list]
+Repeat the process above for at least one new estimator of your choosing. This would be a decent approximation of the process of learning about a new method. You may select from the following list:
+
+- Sample median
+- Sample mode
+- Sample quantile or percentile (e.g. 0.2, 0.95)
+- The covariance or correlation between two variables (which would need picking a second  variable)
+- The rank correlation between two variables (remember there is two)
+- Truncated or trimmed mean
+- Winsorized mean
+- The difference in means between two groups in the data (e.g. by binary sex, democrat vs. republican supporters, white vs. others)
+- The ratio of the variance between two groups, or between two variables (this is usually called an F-test or F-statistic)
+- The $\Beta$ coefficient in OLS regression (bivariate or multivariate)
+- The $\Beta$ coefficient in logistic regression (bivariate or multivariate)
+
+Or pick another estimator that you may want to learn about. In either case, the expectation is that you would include appropriate references.
+
+**Questions:**
+
+1. *In theory, why would someone want to use this estimator? Describe a scenario relevant to your subfield or discipline*
+2. *What is the target estimand? What do we need to assume to believe the estimator produces a reasonable approximation of the estimand? Pay special attention to required assumptions beyond i.i.d. sampling*
+3. *Explain how this estimator is applied to data (e.g. the mean is the sum of all values divided by the numbers of observations) and how one should implement it in R*
+4. *Use the strategies from previous sections of this lab to diagnose the estimator (remember to walk the reader through the process)*
+5. *Based on the variable(s) you chose, would you recommend using this estimator?*
+
+     - *If no, under what circumstances would you recommend using this estimator (e.g. larger sample size, different kind of variables)?*
+     - *If yes, when do you think the estimator will perform poorly?*
+     
+&nbsp; &nbsp; *For this last question, you do not need to show new code or results.*

@@ -637,7 +637,7 @@ There are two kinds of variance estimators
 
 . . .
 
-We are talking about **_sample_ variance**
+We are talking about **_sample_ variance** today
 
 . . .
 
