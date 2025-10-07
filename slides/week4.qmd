@@ -536,7 +536,7 @@ $$
 Or without standardizing
 
 $$
-\sqrt{n} (\overline X - E) \xrightarrow{d} N(0, \sigma^2)
+\sqrt{n} (\overline X - E[X]) \xrightarrow{d} N(0, \sigma^2)
 $$
 
 . . .

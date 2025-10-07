@@ -1,466 +1,305 @@
 ---
+title: "Uncertainty"
+subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
     slide-number: false
     progress: false
-    chalkboard: true
     code-overflow: wrap
+    chalkboard: true
 ---
 
+# Agenda
 
 ```{r setup, include=FALSE}
 # Global options for the rendering behavior of all subsequent code chunks
+# Set tidy = TRUE if code overflows
 knitr::opts_chunk$set(echo = TRUE, 
                       warning = FALSE,
                       message = FALSE,
-                      fig.pos = "center")
+                      tidy = FALSE) 
 
-
-```
-
-## MSE and expected value
-
-. . .
-
-$$
-\text{MSE} = E[(X-\color{purple}c)^2]
-$$
-
-. . .
-
-Alternative formula
-
-$$
-\text{MSE} = V[X] + (E[X] - \color{purple}c)^2
-$$
-
-. . .
-
-$E[X]$ minimizes MSE
-
-$$
-\text{MSE} = V[X] + (E[X] - \color{purple}{E[X]})^2
-$$
-
-## Moving to conditional expectations
-
-. . .
-
-CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
-
-. . .
-
-If we restrict ourselves to a linear functional form $Y = a + bX$, then the following minimize MSE of $Y$ given $X$:
-
-. . .
-
-- $g(X) = \alpha + \beta X$ where
-- $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
-- $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
-
-## Plug-in principle
-
-. . .
-
-**Estimand**
-
-$\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X] \qquad \beta = \frac{\text{Cov}[X,Y]}{V[X]}$
-
-&nbsp;
-
-. . .
-
-**Estimator**
-
-$\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2} \overline{X} \qquad \widehat{\beta} = \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2}$
-
-. . .
-
-Regression *consistently* estimates the minimum MSE *linear* approximation of the BLP
-
-::: aside
-$\widehat{\alpha}$: intercept; $\widehat{\beta}$: slope
-:::
-
-## Ordinary Least Squares (OLS)
-
-. . .
-
-Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
-
-. . .
-
-Such that
-
-$$
-\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
-$$
-
-. . .
-
-Where
-
-$$
-e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
-$$
-
-::: aside
-OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
-:::
-
-## Visualizing OLS
-
-![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
-
-
-
-## ANES 2016 data
-
-
-
-```{r}
+# Packages, add more here as needed
 library(tidyverse)
 library(tinytable)
-library(broom) # tidy regression output
+library(mosaic) # easy resampling
 
-# remotes::install_github("jamesmartherus/anesr")
-library(anesr)
+# ggplot global options
+theme_set(theme_gray(base_size = 20))
 
-
-data(timeseries_2016)
+#tinytable math
+options(tinytable_html_mathjax = TRUE)
 ```
 
-## Variables
 
-::: aside
-**Codebook:**  <https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf>
+
+- Confidence intervals
+
+- Hypothesis testing
+
+- Lab
+
+# So far
+
+- Random variables to think about statistical properties before collecting data
+
+- i.i.d. sample to enable inference from *estimators* to *estimands*
+
+- Statistical properties of (point) estimators
+
+. . .
+
+**This week:** Convey uncertainty around *estimates*
+
+## Remember
+
+There are two kinds of variance *estimators*
+
+**_Sample_ variance:** $\widehat V[X]$ (...of random variable $X$)
+
+**_Sampling_ variance:** $V[\overline X]$ (...of an estimator)
+
+. . .
+
+We *usually* report **sample** variance (or SD) to describe our data
+
+. . .
+
+We use **sampling** variance to convey uncertainty around the estimates we produce
+
+# Data
+
+## Back to GSS
+
+::: {.panel-tabset}
+## Code
+```{r}
+library(gssr)
+
+gss22 = gss_get_yr(2022)
+
+gss = gss22 %>% 
+  select(vote20) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0)) %>% 
+  drop_na()
+```
+
+## Output
+
+```{r}
+gss
+```
 :::
+
+
+## Pretend whole sample is the population
+
+Make function to get sample mean
+
+```{r}
+sample_mean = function(data, n){
+  data %>% 
+    sample_n(size = n) %>% 
+    summarize(
+      mean = mean(vote)
+    )
+}
+```
+
+. . .
+
+Check
+
+```{r}
+set.seed(1234)
+sample_mean(gss, 100)
+```
+
+## Repeat many times
 
 ::: {.panel-tabset}
 ## Code
 
 ```{r}
-nes16 = timeseries_2016 %>% 
-  select(
-    V162079, # Feeling thermometer for TRUMP [POST]
-    V162230x, # Better if man works and woman takes care of home [POST]
-    V162255, # Is Barack Obama Muslim (yes/no) [POST]
-    V161267, # Respondent Age [PRE]
-    V161270, # Highest level of Education (Years) [PRE]
-    V161158x # Party ID [PRE]
-  )
+set.seed(1234)
+vote_df = do(1000) * sample_mean(gss, 100)
 ```
 
-## Data
 
-```{r, echo = FALSE}
-nes16
+## Output
+
+```{r}
+vote_df
 ```
 
 :::
 
-## Recode
+## This gives a resampling distribution
 
 ::: {.panel-tabset}
-## Mutate
+## Plot
+
+```{r, echo = FALSE}
+#| fig-align: "center"
+
+ggplot(vote_df) +
+  aes(x = mean) +
+  geom_density(linewidth = 2,
+               color = "purple") +
+  labs(x = "Estimate",
+       y = "Density")
+```
+
+## Code
+
+```{r, eval = FALSE}
+ggplot(vote_df) +
+  aes(x = mean) +
+  geom_density(linewidth = 2,
+               color = "purple") +
+  labs(x = "Estimate",
+       y = "Density")
+```
+:::
+
+## Then we estimate the variance of the resampling distribution
 
 ```{r}
-nes16 = nes16 %>% 
-  mutate(
-    ft_trump_post = ifelse(V162079 < 0 | V162079 == 998, NA, V162079),
-    women_at_home = case_when(V162230x < 0 ~ NA,
-                              V162230x <= 3 ~ 1,
-                              V162230x <= 7 ~ 0),
-    obamamuslim = ifelse(V162255 == 1, 1, 0),
-    age = ifelse(V161267 < 0, NA, V161267),
-    age0 = age - 18,
-    educ_hs = case_when(V161270 < 0 ~ NA,
-                        V161270 >= 90 ~ NA,
-                        V161270 >= 9 ~ 1,
-                        V161270 <= 8 ~ 0),
-    republican = case_when(V161158x < 0 ~ NA,
-                           V161158x <= 4 ~ 0,
-                           V161158x <= 7 ~ 1)
+vote_df %>% 
+  summarize(
+    variance = var(mean),
+    std.error = sd(mean)
   )
 ```
+# Good?
 
-## Select
+# Hold on
 
-```{r}
-nes = nes16 %>% 
-  select(ft_trump_post,
-         women_at_home, obamamuslim,
-         age, age0,
-         educ_hs, republican)
-```
+. . .
 
-## Data
+No one repeats the study many times!
 
-```{r, echo = FALSE}
-nes
-```
+. . .
 
+If you have resources for 100 participants 1,000 times
+
+. . .
+
+You have resources for 100,000 participants one time!
+
+## What we do instead
+
+Leverage asymptotic properties (CLT) to find a shortcut to calculate uncertainty around our estimate without having to redo the whole study many times
+
+. . .
+
+This is called calculating standard errors (confidence intervals, p-values) via **analytic derivation**
+
+. . .
+
+They are (only) **asymptotically valid** iff *i.i.d.* assumption holds
+
+. . .
+
+Which is implies the CLT will "kick in" with a large enough sample 
+
+# Confidence intervals
+
+## Steps
+
+. . .
+
+Choose $\alpha \in (0,1)$
+
+. . .
+
+**Confidence level** is $100 \times (1-\alpha)$
+
+
+. . .
+
+Choose estimand $\theta$ and estimator $\widehat \theta$
+
+::: aside
+The convention is $\alpha = 0.05$, which gives a 95% confidence interval. There is a good reason for this (coming soon), but nowadays it is mostly path dependency
 :::
 
-## Regression as conditional means
+## Steps
+
+Then we get **normal approximation-based confidence intervals**
+
+$$
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sqrt{\widehat V [\widehat{\theta}]}, \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sqrt{\widehat V [\widehat{\theta}]})
+$$ 
 
 . . .
 
-```{r}
-lm_race = lm(ft_trump_post ~ obamamuslim, data = nes)
+where $z_*$ denotes the quantile of the standard normal distribution $N(0,1)$
 
-coef(lm_race)
-```
+::: aside
+The convention is $\alpha = 0.05$, which gives a 95% confidence interval. There is a good reason for this (coming soon), but nowadays it is mostly path dependency
+:::
 
-. . .
+## Steps
 
-Compare with
+Then we get **normal approximation-based confidence intervals**
 
-```{r}
-nes %>% 
-  select(ft_trump_post, obamamuslim) %>% 
-  drop_na() %>% 
-  group_by(obamamuslim) %>% 
-  summarize(estimate = mean(ft_trump_post))
-```
+$$
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}])
+$$ 
 
-. . .
+where $z_*$ denotes the quantile of the standard normal distribution $N(0,1)$
 
-```{r}
-sum(coef(lm_race))
-```
+::: aside
+Clean up a bit to replace with the **standard error** of the estimator
+:::
 
-## Maybe just an education thing
+## Why the standard normal?
 
-. . .
+The idea is that by asymptotic normality
 
-```{r}
-coef(lm(obamamuslim ~ educ_hs, data = nes))
-```
+$$
+\sqrt{n} (\widehat \theta - \theta) \xrightarrow{d} N(0, \phi^2)
+$$
 
 . . .
 
-```{r}
-coef(lm(ft_trump_post ~ educ_hs, data = nes))
-```
+which is annoying because variance $\phi^2$ is unknown
 
 . . .
 
-```{r}
-with(nes, cor(educ_hs, obamamuslim, use = "pairwise.complete.obs"))
-```
+But if i.i.d. holds, there is transformation $Z$ with known distribution
 
 . . .
+
+$$
+Z \xrightarrow{d} N(0,1)
+$$
+
+::: aside
+The proof is annoying, it depends on **Slutsky's Theorem** and the **Continuous Mapping Theorem (CMT)**
+:::
+
+
+
+## Why the standard normal?
 
 ```{r, echo = FALSE}
-correlation = tribble(
-  ~`Absolute magnitude`, ~Effect,
-  .1, "Small",
-  .3, "Moderate",
-  .5, "Large"
+
+conf = tribble(
+  ~`Confidence level`, ~`$\\alpha$`, ~`$z$`,
+  "90%", 0.10, 1.64,
+  "95%", 0.05, 1.96,
+  "99%", 0.01, 2.58
 )
 
-correlation %>% 
-  tt()
-
+conf %>% tt()
 ```
 
+## Why 95%?
 
-## Or maybe an age thing
 
+![](fig/normal_conf.webp){fig-align="center" width="80%"}
 
-. . .
 
-```{r}
-coef(lm(obamamuslim ~ age, data = nes))
-```
-
-. . .
-
-```{r}
-summary(nes$age)
-```
-
-. . .
-
-```{r}
-summary(nes$age0)
-```
-
-
-. . .
-
-```{r}
-coef(lm(obamamuslim ~ age0, data = nes))
-```
-
-## Or maybe an age thing
-
-```{r}
-coef(lm(ft_trump_post ~ age0, data = nes))
-```
-
-. . .
-
-```{r}
-with(nes, cor(age, obamamuslim, use = "pairwise.complete.obs"))
-```
-
-
-## Or partisan motivated reasoning
-
-. . .
-
-```{r}
-coef(lm(obamamuslim ~ republican, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ republican, data = nes))
-```
-
-. . .
-
-```{r}
-with(nes, cor(republican, obamamuslim, use = "pairwise.complete.obs"))
-```
-
-## Adjusting for covariates
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim + educ_hs, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0 + republican,
-        data = nes))
-```
-
-## Interactions {.smaller}
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-**Code**
-
-:::
-
-::: {.column width="50%"}
-**Math**
-:::
-
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-coef(lm(ft_trump_post ~ women_at_home,
-        data = nes))
-```
-
-:::
-
-::: {.column width="50%"}
-$y = \beta_0 + \beta_1 \mathtt{\text{women_at_home}} + \varepsilon$
-:::
-
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-coef(lm(ft_trump_post ~ 
-          obamamuslim + women_at_home,
-        data = nes))
-```
-
-:::
-
-::: {.column width="50%"}
-$y = \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \varepsilon$
-:::
-
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-coef(lm(ft_trump_post ~ 
-          obamamuslim * women_at_home,
-        data = nes)) %>% 
-  tidy() # easier to read in slides
-```
-
-:::
-
-::: {.column width="50%"}
-$$
-\begin{align*}
-y = & \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \\
-& \beta_3 \mathtt{obamamuslim} \times  \mathtt{\text{women_at_home}} + \varepsilon
-\end{align*}
-$$
-:::
-
-::::
-
-## Next week: Parametric models (AM Chapter 5) {.smaller}
-
-**Important**
-
-- How are parametric models different from agnostic statistics?
-- Classical linear model vs. regression chapter
-- Logit model (not probit)
-- Main idea behind Maximum Likelihood Estimation
-- A Note on Models as Approximations
-
-**Ignore**
-
-- Mixture Models
-- Penalized Maximum Likelihood Regression
-
-## Next week: Other readings
-
-**Stigler (2007)**
-
-- Story of maximum likelihood (just for reference)
-
-**James et al (2021)**
-
-- A more intuitive explanation of logistic regression and maximum likelihood
-
-**Achen (2002)**
-
-- Why A Rule of Three (ART)?
-- *Less important:* Logit, scobit, power logit, microfoundations
+## Asymptotic validity

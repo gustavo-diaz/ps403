@@ -6,11 +6,10 @@
 <script src="week5_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week5_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week5_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week5_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="week5_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.57">
+<link href="week5_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
-  <title>week5</title>
+  <title>Uncertainty</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -29,8 +28,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -41,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -94,211 +94,13 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week5_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="week5_files/libs/revealjs/dist/theme/quarto-ee9ab3830bbe7759b42dda8416faf5cd.css">
   <link href="week5_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="week5_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="week5_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
   <link href="week5_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
   <link href="week5_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="week5_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
-
-  .callout {
-    margin-top: 1em;
-    margin-bottom: 1em;  
-    border-radius: .25rem;
-  }
-
-  .callout.callout-style-simple { 
-    padding: 0em 0.5em;
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-    display: flex;
-  }
-
-  .callout.callout-style-default {
-    border-left: solid #acacac .3rem;
-    border-right: solid 1px silver;
-    border-top: solid 1px silver;
-    border-bottom: solid 1px silver;
-  }
-
-  .callout .callout-body-container {
-    flex-grow: 1;
-  }
-
-  .callout.callout-style-simple .callout-body {
-    font-size: 1rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-style-default .callout-body {
-    font-size: 0.9rem;
-    font-weight: 400;
-  }
-
-  .callout.callout-titled.callout-style-simple .callout-body {
-    margin-top: 0.2em;
-  }
-
-  .callout:not(.callout-titled) .callout-body {
-      display: flex;
-  }
-
-  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
-    padding-left: 1.6em;
-  }
-
-  .callout.callout-titled .callout-header {
-    padding-top: 0.2em;
-    margin-bottom: -0.2em;
-  }
-
-  .callout.callout-titled .callout-title  p {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
-    
-  .callout.callout-titled.callout-style-simple .callout-content  p {
-    margin-top: 0;
-  }
-
-  .callout.callout-titled.callout-style-default .callout-content  p {
-    margin-top: 0.7em;
-  }
-
-  .callout.callout-style-simple div.callout-title {
-    border-bottom: none;
-    font-size: .9rem;
-    font-weight: 600;
-    opacity: 75%;
-  }
-
-  .callout.callout-style-default  div.callout-title {
-    border-bottom: none;
-    font-weight: 600;
-    opacity: 85%;
-    font-size: 0.9rem;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-default div.callout-content {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-
-  .callout.callout-style-simple .callout-icon::before {
-    height: 1rem;
-    width: 1rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 1rem 1rem;
-  }
-
-  .callout.callout-style-default .callout-icon::before {
-    height: 0.9rem;
-    width: 0.9rem;
-    display: inline-block;
-    content: "";
-    background-repeat: no-repeat;
-    background-size: 0.9rem 0.9rem;
-  }
-
-  .callout-title {
-    display: flex
-  }
-    
-  .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  .callout.no-icon::before {
-    display: none !important;
-  }
-
-  .callout.callout-titled .callout-body > .callout-content > :last-child {
-    padding-bottom: 0.5rem;
-    margin-bottom: 0;
-  }
-
-  .callout.callout-titled .callout-icon::before {
-    margin-top: .5rem;
-    padding-right: .5rem;
-  }
-
-  .callout:not(.callout-titled) .callout-icon::before {
-    margin-top: 1rem;
-    padding-right: .5rem;
-  }
-
-  /* Callout Types */
-
-  div.callout-note {
-    border-left-color: #4582ec !important;
-  }
-
-  div.callout-note .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
-  }
-
-  div.callout-note.callout-style-default .callout-title {
-    background-color: #dae6fb
-  }
-
-  div.callout-important {
-    border-left-color: #d9534f !important;
-  }
-
-  div.callout-important .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-important.callout-style-default .callout-title {
-    background-color: #f7dddc
-  }
-
-  div.callout-warning {
-    border-left-color: #f0ad4e !important;
-  }
-
-  div.callout-warning .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-warning.callout-style-default .callout-title {
-    background-color: #fcefdc
-  }
-
-  div.callout-tip {
-    border-left-color: #02b875 !important;
-  }
-
-  div.callout-tip .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
-  }
-
-  div.callout-tip.callout-style-default .callout-title {
-    background-color: #ccf1e3
-  }
-
-  div.callout-caution {
-    border-left-color: #fd7e14 !important;
-  }
-
-  div.callout-caution .callout-icon::before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
-  }
-
-  div.callout-caution.callout-style-default .callout-title {
-    background-color: #ffe5d0
-  }
-
-  </style>
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -391,281 +193,1307 @@
   <div class="reveal">
     <div class="slides">
 
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Uncertainty</h1>
+  <p class="subtitle">POLI_SCI 403: Probability and Statistics</p>
 
-<section id="mse-and-expected-value" class="slide level2">
-<h2>MSE and expected value</h2>
-<div class="fragment">
-<p><span class="math display">\[
-\text{MSE} = E[(X-\color{purple}c)^2]
-\]</span></p>
+<div class="quarto-title-authors">
 </div>
-<div class="fragment">
-<p>Alternative formula</p>
-<p><span class="math display">\[
-\text{MSE} = V[X] + (E[X] - \color{purple}c)^2
-\]</span></p>
-</div>
-<div class="fragment">
-<p><span class="math inline">\(E[X]\)</span> minimizes MSE</p>
-<p><span class="math display">\[
-\text{MSE} = V[X] + (E[X] - \color{purple}{E[X]})^2
-\]</span></p>
-</div>
+
 </section>
-<section id="moving-to-conditional-expectations" class="slide level2">
-<h2>Moving to conditional expectations</h2>
-<div class="fragment">
-<p>CEF <span class="math inline">\(E[Y|X]\)</span> minimizes MSE of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span></p>
-</div>
-<div class="fragment">
-<p>If we restrict ourselves to a linear functional form <span class="math inline">\(Y = a + bX\)</span>, then the following minimize MSE of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>:</p>
-</div>
-<div class="fragment">
+<section id="agenda" class="title-slide slide level1 center">
+<h1>Agenda</h1>
 <ul>
-<li><span class="math inline">\(g(X) = \alpha + \beta X\)</span> where</li>
-<li><span class="math inline">\(\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]\)</span></li>
-<li><span class="math inline">\(\beta = \frac{\text{Cov}[X,Y]}{V[X]}\)</span></li>
+<li><p>Confidence intervals</p></li>
+<li><p>Hypothesis testing</p></li>
+<li><p>Lab</p></li>
 </ul>
+</section>
+
+<section>
+<section id="so-far" class="title-slide slide level1 center">
+<h1>So far</h1>
+<ul>
+<li><p>Random variables to think about statistical properties before collecting data</p></li>
+<li><p>i.i.d. sample to enable inference from <em>estimators</em> to <em>estimands</em></p></li>
+<li><p>Statistical properties of (point) estimators</p></li>
+</ul>
+<div class="fragment">
+<p><strong>This week:</strong> Convey uncertainty around <em>estimates</em></p>
 </div>
 </section>
-<section id="plug-in-principle" class="slide level2">
-<h2>Plug-in principle</h2>
+<section id="remember" class="slide level2">
+<h2>Remember</h2>
+<p>There are two kinds of variance <em>estimators</em></p>
+<p><strong><em>Sample</em> variance:</strong> <span class="math inline">\(\widehat V[X]\)</span> (…of random variable <span class="math inline">\(X\)</span>)</p>
+<p><strong><em>Sampling</em> variance:</strong> <span class="math inline">\(V[\overline X]\)</span> (…of an estimator)</p>
 <div class="fragment">
-<p><strong>Estimand</strong></p>
-<p><span class="math inline">\(\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X] \qquad \beta = \frac{\text{Cov}[X,Y]}{V[X]}\)</span></p>
-<p>&nbsp;</p>
+<p>We <em>usually</em> report <strong>sample</strong> variance (or SD) to describe our data</p>
 </div>
 <div class="fragment">
-<p><strong>Estimator</strong></p>
-<p><span class="math inline">\(\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2} \overline{X} \qquad \widehat{\beta} = \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2}\)</span></p>
+<p>We use <strong>sampling</strong> variance to convey uncertainty around the estimates we produce</p>
 </div>
-<div class="fragment">
-<p>Regression <em>consistently</em> estimates the minimum MSE <em>linear</em> approximation of the BLP</p>
+</section></section>
+<section>
+<section id="data" class="title-slide slide level1 center">
+<h1>Data</h1>
 
-</div>
-<aside><div>
-<p><span class="math inline">\(\widehat{\alpha}\)</span>: intercept; <span class="math inline">\(\widehat{\beta}\)</span>: slope</p>
-</div></aside></section>
-<section id="ordinary-least-squares-ols" class="slide level2">
-<h2>Ordinary Least Squares (OLS)</h2>
-<div class="fragment">
-<p>Function <span class="math inline">\(\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}\)</span></p>
-</div>
-<div class="fragment">
-<p>Such that</p>
-<p><span class="math display">\[
-\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
-\]</span></p>
-</div>
-<div class="fragment">
-<p>Where</p>
-<p><span class="math display">\[
-e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
-\]</span></p>
-
-</div>
-<aside><div>
-<p>OLS “finds” the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals – SSR)</p>
-</div></aside></section>
-<section id="visualizing-ols" class="slide level2">
-<h2>Visualizing OLS</h2>
-
-<img data-src="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif" class="r-stretch"></section>
-<section id="anes-2016-data" class="slide level2">
-<h2>ANES 2016 data</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tinytable)</span>
-<span id="cb1-3"><a href=""></a><span class="fu">library</span>(broom) <span class="co"># tidy regression output</span></span>
-<span id="cb1-4"><a href=""></a></span>
-<span id="cb1-5"><a href=""></a><span class="co"># remotes::install_github("jamesmartherus/anesr")</span></span>
-<span id="cb1-6"><a href=""></a><span class="fu">library</span>(anesr)</span>
-<span id="cb1-7"><a href=""></a></span>
-<span id="cb1-8"><a href=""></a></span>
-<span id="cb1-9"><a href=""></a><span class="fu">data</span>(timeseries_2016)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
-<section id="variables" class="slide level2">
-<h2>Variables</h2>
-
+<section id="back-to-gss" class="slide level2">
+<h2>Back to GSS</h2>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Code</a></li><li><a href="#tabset-1-2">Data</a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Code</a></li><li><a href="#tabset-1-2">Output</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>nes16 <span class="ot">=</span> timeseries_2016 <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href=""></a>  <span class="fu">select</span>(</span>
-<span id="cb2-3"><a href=""></a>    V162079, <span class="co"># Feeling thermometer for TRUMP [POST]</span></span>
-<span id="cb2-4"><a href=""></a>    V162230x, <span class="co"># Better if man works and woman takes care of home [POST]</span></span>
-<span id="cb2-5"><a href=""></a>    V162255, <span class="co"># Is Barack Obama Muslim (yes/no) [POST]</span></span>
-<span id="cb2-6"><a href=""></a>    V161267, <span class="co"># Respondent Age [PRE]</span></span>
-<span id="cb2-7"><a href=""></a>    V161270, <span class="co"># Highest level of Education (Years) [PRE]</span></span>
-<span id="cb2-8"><a href=""></a>    V161158x <span class="co"># Party ID [PRE]</span></span>
-<span id="cb2-9"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(gssr)</span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a>gss22 <span class="ot">=</span> <span class="fu">gss_get_yr</span>(<span class="dv">2022</span>)</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a>gss <span class="ot">=</span> gss22 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href=""></a>  <span class="fu">select</span>(vote20) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">vote =</span> <span class="fu">ifelse</span>(vote20 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href=""></a>  <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-2">
 <div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>gss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4,270 × 6
-   V162079    V162230x   V162255    V161267    V161270    V161158x  
-   &lt;hvn_lbll&gt; &lt;hvn_lbll&gt; &lt;hvn_lbll&gt; &lt;hvn_lbll&gt; &lt;hvn_lbll&gt; &lt;hvn_lbll&gt;
- 1 85         4           2         29          9         7         
- 2 60         4           1         26         13         6         
- 3 70         1           1         23          9         3         
- 4 60         1           2         58          9         5         
- 5 15         4           1         38          9         3         
- 6 65         4          -8         60         14         5         
- 7 50         4          -8         58          5         1         
- 8 85         1           1         56          9         4         
- 9 70         4           2         45          9         5         
-10 60         4          -8         30         10         3         
-# ℹ 4,260 more rows</code></pre>
+<pre><code># A tibble: 3,876 × 2
+   vote20            vote
+   &lt;dbl+lbl&gt;        &lt;dbl&gt;
+ 1 1 [voted]            1
+ 2 1 [voted]            1
+ 3 1 [voted]            1
+ 4 1 [voted]            1
+ 5 1 [voted]            1
+ 6 1 [voted]            1
+ 7 2 [did not vote]     0
+ 8 1 [voted]            1
+ 9 1 [voted]            1
+10 1 [voted]            1
+# ℹ 3,866 more rows</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<aside><div>
-<p><strong>Codebook:</strong> <a href="https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf" class="uri">https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf</a></p>
-</div></aside></section>
-<section id="recode" class="slide level2">
-<h2>Recode</h2>
+</section>
+<section id="pretend-whole-sample-is-the-population" class="slide level2">
+<h2>Pretend whole sample is the population</h2>
+<p>Make function to get sample mean</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>sample_mean <span class="ot">=</span> <span class="cf">function</span>(data, n){</span>
+<span id="cb4-2"><a href=""></a>  data <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href=""></a>    <span class="fu">sample_n</span>(<span class="at">size =</span> n) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href=""></a>    <span class="fu">summarize</span>(</span>
+<span id="cb4-5"><a href=""></a>      <span class="at">mean =</span> <span class="fu">mean</span>(vote)</span>
+<span id="cb4-6"><a href=""></a>    )</span>
+<span id="cb4-7"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Check</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb5-2"><a href=""></a><span class="fu">sample_mean</span>(gss, <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+   mean
+  &lt;dbl&gt;
+1   0.8</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="repeat-many-times" class="slide level2">
+<h2>Repeat many times</h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Mutate</a></li><li><a href="#tabset-2-2">Select</a></li><li><a href="#tabset-2-3">Data</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Code</a></li><li><a href="#tabset-2-2">Output</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>nes16 <span class="ot">=</span> nes16 <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href=""></a>  <span class="fu">mutate</span>(</span>
-<span id="cb4-3"><a href=""></a>    <span class="at">ft_trump_post =</span> <span class="fu">ifelse</span>(V162079 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">|</span> V162079 <span class="sc">==</span> <span class="dv">998</span>, <span class="cn">NA</span>, V162079),</span>
-<span id="cb4-4"><a href=""></a>    <span class="at">women_at_home =</span> <span class="fu">case_when</span>(V162230x <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="cn">NA</span>,</span>
-<span id="cb4-5"><a href=""></a>                              V162230x <span class="sc">&lt;=</span> <span class="dv">3</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb4-6"><a href=""></a>                              V162230x <span class="sc">&lt;=</span> <span class="dv">7</span> <span class="sc">~</span> <span class="dv">0</span>),</span>
-<span id="cb4-7"><a href=""></a>    <span class="at">obamamuslim =</span> <span class="fu">ifelse</span>(V162255 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb4-8"><a href=""></a>    <span class="at">age =</span> <span class="fu">ifelse</span>(V161267 <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="cn">NA</span>, V161267),</span>
-<span id="cb4-9"><a href=""></a>    <span class="at">age0 =</span> age <span class="sc">-</span> <span class="dv">18</span>,</span>
-<span id="cb4-10"><a href=""></a>    <span class="at">educ_hs =</span> <span class="fu">case_when</span>(V161270 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="cn">NA</span>,</span>
-<span id="cb4-11"><a href=""></a>                        V161270 <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="cn">NA</span>,</span>
-<span id="cb4-12"><a href=""></a>                        V161270 <span class="sc">&gt;=</span> <span class="dv">9</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb4-13"><a href=""></a>                        V161270 <span class="sc">&lt;=</span> <span class="dv">8</span> <span class="sc">~</span> <span class="dv">0</span>),</span>
-<span id="cb4-14"><a href=""></a>    <span class="at">republican =</span> <span class="fu">case_when</span>(V161158x <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="cn">NA</span>,</span>
-<span id="cb4-15"><a href=""></a>                           V161158x <span class="sc">&lt;=</span> <span class="dv">4</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb4-16"><a href=""></a>                           V161158x <span class="sc">&lt;=</span> <span class="dv">7</span> <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb4-17"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb7-2"><a href=""></a>vote_df <span class="ot">=</span> <span class="fu">do</span>(<span class="dv">1000</span>) <span class="sc">*</span> <span class="fu">sample_mean</span>(gss, <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-2-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>nes <span class="ot">=</span> nes16 <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href=""></a>  <span class="fu">select</span>(ft_trump_post,</span>
-<span id="cb5-3"><a href=""></a>         women_at_home, obamamuslim,</span>
-<span id="cb5-4"><a href=""></a>         age, age0,</span>
-<span id="cb5-5"><a href=""></a>         educ_hs, republican)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div id="tabset-2-3">
-<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>vote_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4,270 × 7
-   ft_trump_post women_at_home obamamuslim   age  age0 educ_hs republican
-           &lt;dbl&gt;         &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;      &lt;dbl&gt;
- 1            85             0           0    29    11       1          1
- 2            60             0           1    26     8       1          1
- 3            70             1           1    23     5       1          0
- 4            60             1           0    58    40       1          1
- 5            15             0           1    38    20       1          0
- 6            65             0           0    60    42       1          1
- 7            50             0           0    58    40       0          0
- 8            85             1           1    56    38       1          0
- 9            70             0           0    45    27       1          1
-10            60             0           0    30    12       1          0
-# ℹ 4,260 more rows</code></pre>
+<pre><code>     mean
+1    0.74
+2    0.75
+3    0.76
+4    0.72
+5    0.75
+6    0.69
+7    0.79
+8    0.76
+9    0.75
+10   0.69
+11   0.71
+12   0.73
+13   0.78
+14   0.68
+15   0.73
+16   0.73
+17   0.74
+18   0.80
+19   0.69
+20   0.76
+21   0.68
+22   0.71
+23   0.75
+24   0.66
+25   0.72
+26   0.77
+27   0.78
+28   0.69
+29   0.76
+30   0.75
+31   0.72
+32   0.71
+33   0.78
+34   0.80
+35   0.79
+36   0.73
+37   0.71
+38   0.71
+39   0.74
+40   0.70
+41   0.79
+42   0.73
+43   0.66
+44   0.70
+45   0.68
+46   0.79
+47   0.69
+48   0.76
+49   0.70
+50   0.74
+51   0.71
+52   0.71
+53   0.76
+54   0.72
+55   0.70
+56   0.68
+57   0.78
+58   0.76
+59   0.75
+60   0.83
+61   0.78
+62   0.72
+63   0.75
+64   0.72
+65   0.78
+66   0.68
+67   0.76
+68   0.71
+69   0.80
+70   0.63
+71   0.73
+72   0.67
+73   0.82
+74   0.75
+75   0.69
+76   0.72
+77   0.75
+78   0.73
+79   0.69
+80   0.68
+81   0.74
+82   0.72
+83   0.70
+84   0.81
+85   0.74
+86   0.69
+87   0.74
+88   0.70
+89   0.76
+90   0.70
+91   0.70
+92   0.80
+93   0.72
+94   0.65
+95   0.74
+96   0.64
+97   0.71
+98   0.70
+99   0.73
+100  0.74
+101  0.74
+102  0.71
+103  0.77
+104  0.77
+105  0.76
+106  0.76
+107  0.72
+108  0.73
+109  0.73
+110  0.68
+111  0.69
+112  0.75
+113  0.76
+114  0.72
+115  0.74
+116  0.80
+117  0.81
+118  0.77
+119  0.75
+120  0.72
+121  0.76
+122  0.73
+123  0.75
+124  0.69
+125  0.71
+126  0.72
+127  0.78
+128  0.77
+129  0.75
+130  0.78
+131  0.74
+132  0.65
+133  0.76
+134  0.72
+135  0.68
+136  0.79
+137  0.79
+138  0.73
+139  0.70
+140  0.78
+141  0.76
+142  0.72
+143  0.74
+144  0.68
+145  0.74
+146  0.76
+147  0.72
+148  0.72
+149  0.75
+150  0.77
+151  0.82
+152  0.73
+153  0.77
+154  0.67
+155  0.73
+156  0.73
+157  0.67
+158  0.75
+159  0.79
+160  0.80
+161  0.74
+162  0.75
+163  0.70
+164  0.75
+165  0.73
+166  0.69
+167  0.69
+168  0.84
+169  0.75
+170  0.81
+171  0.82
+172  0.68
+173  0.68
+174  0.76
+175  0.75
+176  0.71
+177  0.72
+178  0.75
+179  0.74
+180  0.71
+181  0.78
+182  0.70
+183  0.75
+184  0.73
+185  0.66
+186  0.71
+187  0.74
+188  0.78
+189  0.76
+190  0.67
+191  0.71
+192  0.74
+193  0.74
+194  0.75
+195  0.73
+196  0.74
+197  0.71
+198  0.74
+199  0.76
+200  0.70
+201  0.81
+202  0.75
+203  0.69
+204  0.68
+205  0.80
+206  0.80
+207  0.79
+208  0.65
+209  0.79
+210  0.71
+211  0.79
+212  0.71
+213  0.82
+214  0.77
+215  0.76
+216  0.75
+217  0.71
+218  0.68
+219  0.74
+220  0.75
+221  0.77
+222  0.77
+223  0.67
+224  0.72
+225  0.76
+226  0.78
+227  0.67
+228  0.69
+229  0.74
+230  0.76
+231  0.73
+232  0.75
+233  0.77
+234  0.71
+235  0.79
+236  0.70
+237  0.83
+238  0.72
+239  0.74
+240  0.76
+241  0.74
+242  0.74
+243  0.69
+244  0.78
+245  0.78
+246  0.69
+247  0.79
+248  0.76
+249  0.79
+250  0.73
+251  0.75
+252  0.71
+253  0.74
+254  0.73
+255  0.76
+256  0.68
+257  0.68
+258  0.77
+259  0.79
+260  0.72
+261  0.77
+262  0.74
+263  0.72
+264  0.68
+265  0.78
+266  0.73
+267  0.69
+268  0.76
+269  0.73
+270  0.71
+271  0.82
+272  0.83
+273  0.76
+274  0.82
+275  0.78
+276  0.71
+277  0.74
+278  0.77
+279  0.81
+280  0.79
+281  0.74
+282  0.72
+283  0.77
+284  0.73
+285  0.70
+286  0.81
+287  0.76
+288  0.76
+289  0.71
+290  0.76
+291  0.87
+292  0.77
+293  0.75
+294  0.76
+295  0.72
+296  0.75
+297  0.72
+298  0.74
+299  0.74
+300  0.69
+301  0.75
+302  0.77
+303  0.69
+304  0.76
+305  0.82
+306  0.81
+307  0.70
+308  0.79
+309  0.73
+310  0.74
+311  0.70
+312  0.73
+313  0.75
+314  0.74
+315  0.77
+316  0.80
+317  0.75
+318  0.71
+319  0.74
+320  0.75
+321  0.75
+322  0.79
+323  0.73
+324  0.74
+325  0.79
+326  0.78
+327  0.72
+328  0.74
+329  0.70
+330  0.76
+331  0.79
+332  0.74
+333  0.71
+334  0.72
+335  0.72
+336  0.66
+337  0.71
+338  0.77
+339  0.71
+340  0.77
+341  0.74
+342  0.74
+343  0.77
+344  0.72
+345  0.71
+346  0.67
+347  0.62
+348  0.72
+349  0.81
+350  0.77
+351  0.78
+352  0.71
+353  0.81
+354  0.73
+355  0.73
+356  0.79
+357  0.71
+358  0.75
+359  0.70
+360  0.78
+361  0.76
+362  0.83
+363  0.79
+364  0.79
+365  0.72
+366  0.77
+367  0.74
+368  0.72
+369  0.68
+370  0.78
+371  0.74
+372  0.74
+373  0.81
+374  0.74
+375  0.75
+376  0.79
+377  0.68
+378  0.74
+379  0.77
+380  0.80
+381  0.74
+382  0.75
+383  0.77
+384  0.71
+385  0.74
+386  0.74
+387  0.70
+388  0.74
+389  0.76
+390  0.78
+391  0.66
+392  0.63
+393  0.71
+394  0.77
+395  0.71
+396  0.74
+397  0.81
+398  0.73
+399  0.67
+400  0.72
+401  0.70
+402  0.76
+403  0.73
+404  0.70
+405  0.73
+406  0.78
+407  0.71
+408  0.71
+409  0.77
+410  0.73
+411  0.72
+412  0.71
+413  0.74
+414  0.70
+415  0.78
+416  0.77
+417  0.79
+418  0.74
+419  0.78
+420  0.81
+421  0.77
+422  0.78
+423  0.74
+424  0.81
+425  0.70
+426  0.77
+427  0.69
+428  0.70
+429  0.78
+430  0.73
+431  0.64
+432  0.77
+433  0.76
+434  0.80
+435  0.65
+436  0.78
+437  0.74
+438  0.79
+439  0.67
+440  0.81
+441  0.78
+442  0.72
+443  0.74
+444  0.76
+445  0.74
+446  0.72
+447  0.80
+448  0.73
+449  0.73
+450  0.71
+451  0.71
+452  0.69
+453  0.67
+454  0.71
+455  0.71
+456  0.78
+457  0.79
+458  0.81
+459  0.77
+460  0.85
+461  0.73
+462  0.70
+463  0.76
+464  0.70
+465  0.75
+466  0.74
+467  0.68
+468  0.68
+469  0.70
+470  0.79
+471  0.76
+472  0.69
+473  0.75
+474  0.71
+475  0.70
+476  0.79
+477  0.75
+478  0.76
+479  0.77
+480  0.71
+481  0.67
+482  0.73
+483  0.83
+484  0.67
+485  0.65
+486  0.69
+487  0.77
+488  0.78
+489  0.73
+490  0.82
+491  0.76
+492  0.76
+493  0.77
+494  0.72
+495  0.68
+496  0.77
+497  0.76
+498  0.69
+499  0.72
+500  0.81
+501  0.73
+502  0.71
+503  0.74
+504  0.70
+505  0.72
+506  0.64
+507  0.73
+508  0.74
+509  0.72
+510  0.76
+511  0.75
+512  0.69
+513  0.73
+514  0.74
+515  0.73
+516  0.68
+517  0.79
+518  0.78
+519  0.80
+520  0.71
+521  0.81
+522  0.75
+523  0.78
+524  0.79
+525  0.67
+526  0.73
+527  0.79
+528  0.72
+529  0.76
+530  0.84
+531  0.73
+532  0.75
+533  0.69
+534  0.70
+535  0.83
+536  0.81
+537  0.68
+538  0.80
+539  0.74
+540  0.81
+541  0.77
+542  0.74
+543  0.70
+544  0.69
+545  0.74
+546  0.76
+547  0.70
+548  0.77
+549  0.81
+550  0.77
+551  0.74
+552  0.72
+553  0.71
+554  0.80
+555  0.74
+556  0.74
+557  0.69
+558  0.77
+559  0.75
+560  0.80
+561  0.77
+562  0.73
+563  0.78
+564  0.72
+565  0.81
+566  0.75
+567  0.77
+568  0.79
+569  0.77
+570  0.77
+571  0.73
+572  0.81
+573  0.76
+574  0.76
+575  0.74
+576  0.82
+577  0.72
+578  0.78
+579  0.71
+580  0.64
+581  0.81
+582  0.76
+583  0.73
+584  0.71
+585  0.74
+586  0.79
+587  0.80
+588  0.71
+589  0.76
+590  0.68
+591  0.75
+592  0.69
+593  0.73
+594  0.80
+595  0.74
+596  0.69
+597  0.81
+598  0.68
+599  0.75
+600  0.78
+601  0.67
+602  0.82
+603  0.80
+604  0.75
+605  0.75
+606  0.82
+607  0.88
+608  0.71
+609  0.73
+610  0.75
+611  0.81
+612  0.65
+613  0.68
+614  0.76
+615  0.72
+616  0.80
+617  0.76
+618  0.71
+619  0.77
+620  0.78
+621  0.77
+622  0.73
+623  0.71
+624  0.74
+625  0.76
+626  0.79
+627  0.75
+628  0.73
+629  0.82
+630  0.69
+631  0.81
+632  0.75
+633  0.79
+634  0.77
+635  0.75
+636  0.75
+637  0.70
+638  0.76
+639  0.71
+640  0.74
+641  0.71
+642  0.76
+643  0.74
+644  0.77
+645  0.69
+646  0.69
+647  0.80
+648  0.71
+649  0.75
+650  0.63
+651  0.70
+652  0.70
+653  0.72
+654  0.72
+655  0.75
+656  0.71
+657  0.81
+658  0.77
+659  0.70
+660  0.86
+661  0.71
+662  0.71
+663  0.67
+664  0.74
+665  0.82
+666  0.71
+667  0.73
+668  0.76
+669  0.79
+670  0.75
+671  0.79
+672  0.80
+673  0.78
+674  0.74
+675  0.71
+676  0.79
+677  0.79
+678  0.80
+679  0.79
+680  0.71
+681  0.76
+682  0.77
+683  0.74
+684  0.69
+685  0.77
+686  0.79
+687  0.76
+688  0.69
+689  0.75
+690  0.71
+691  0.67
+692  0.76
+693  0.74
+694  0.71
+695  0.74
+696  0.71
+697  0.71
+698  0.71
+699  0.79
+700  0.71
+701  0.74
+702  0.81
+703  0.73
+704  0.71
+705  0.79
+706  0.77
+707  0.74
+708  0.75
+709  0.71
+710  0.73
+711  0.73
+712  0.78
+713  0.72
+714  0.74
+715  0.70
+716  0.81
+717  0.73
+718  0.72
+719  0.67
+720  0.73
+721  0.68
+722  0.70
+723  0.80
+724  0.78
+725  0.79
+726  0.68
+727  0.74
+728  0.71
+729  0.76
+730  0.87
+731  0.75
+732  0.69
+733  0.66
+734  0.74
+735  0.75
+736  0.79
+737  0.77
+738  0.69
+739  0.76
+740  0.71
+741  0.73
+742  0.70
+743  0.71
+744  0.73
+745  0.70
+746  0.78
+747  0.74
+748  0.70
+749  0.83
+750  0.68
+751  0.67
+752  0.77
+753  0.77
+754  0.81
+755  0.71
+756  0.71
+757  0.66
+758  0.72
+759  0.77
+760  0.78
+761  0.69
+762  0.71
+763  0.65
+764  0.74
+765  0.69
+766  0.70
+767  0.71
+768  0.70
+769  0.72
+770  0.74
+771  0.75
+772  0.79
+773  0.77
+774  0.74
+775  0.76
+776  0.74
+777  0.75
+778  0.78
+779  0.66
+780  0.73
+781  0.66
+782  0.77
+783  0.77
+784  0.71
+785  0.76
+786  0.74
+787  0.75
+788  0.78
+789  0.74
+790  0.75
+791  0.79
+792  0.75
+793  0.80
+794  0.72
+795  0.74
+796  0.75
+797  0.72
+798  0.84
+799  0.77
+800  0.72
+801  0.73
+802  0.67
+803  0.80
+804  0.76
+805  0.71
+806  0.79
+807  0.79
+808  0.83
+809  0.67
+810  0.76
+811  0.72
+812  0.83
+813  0.74
+814  0.83
+815  0.77
+816  0.76
+817  0.80
+818  0.82
+819  0.72
+820  0.80
+821  0.72
+822  0.77
+823  0.65
+824  0.67
+825  0.82
+826  0.78
+827  0.77
+828  0.75
+829  0.76
+830  0.77
+831  0.72
+832  0.74
+833  0.74
+834  0.70
+835  0.69
+836  0.78
+837  0.69
+838  0.67
+839  0.77
+840  0.74
+841  0.72
+842  0.73
+843  0.72
+844  0.79
+845  0.74
+846  0.69
+847  0.79
+848  0.71
+849  0.70
+850  0.71
+851  0.72
+852  0.63
+853  0.75
+854  0.71
+855  0.79
+856  0.68
+857  0.73
+858  0.71
+859  0.70
+860  0.77
+861  0.76
+862  0.71
+863  0.77
+864  0.66
+865  0.81
+866  0.80
+867  0.83
+868  0.71
+869  0.75
+870  0.74
+871  0.72
+872  0.68
+873  0.73
+874  0.72
+875  0.79
+876  0.71
+877  0.72
+878  0.76
+879  0.72
+880  0.76
+881  0.72
+882  0.77
+883  0.81
+884  0.69
+885  0.84
+886  0.75
+887  0.71
+888  0.78
+889  0.73
+890  0.80
+891  0.79
+892  0.80
+893  0.66
+894  0.79
+895  0.76
+896  0.78
+897  0.71
+898  0.66
+899  0.75
+900  0.78
+901  0.72
+902  0.75
+903  0.69
+904  0.76
+905  0.79
+906  0.70
+907  0.70
+908  0.69
+909  0.77
+910  0.78
+911  0.77
+912  0.77
+913  0.77
+914  0.80
+915  0.85
+916  0.71
+917  0.75
+918  0.70
+919  0.76
+920  0.75
+921  0.79
+922  0.77
+923  0.71
+924  0.77
+925  0.71
+926  0.72
+927  0.77
+928  0.71
+929  0.69
+930  0.76
+931  0.77
+932  0.77
+933  0.78
+934  0.73
+935  0.67
+936  0.77
+937  0.70
+938  0.75
+939  0.71
+940  0.72
+941  0.80
+942  0.70
+943  0.75
+944  0.72
+945  0.77
+946  0.75
+947  0.75
+948  0.77
+949  0.78
+950  0.78
+951  0.78
+952  0.78
+953  0.74
+954  0.72
+955  0.72
+956  0.74
+957  0.81
+958  0.78
+959  0.72
+960  0.81
+961  0.74
+962  0.70
+963  0.71
+964  0.78
+965  0.71
+966  0.80
+967  0.67
+968  0.70
+969  0.66
+970  0.83
+971  0.78
+972  0.86
+973  0.70
+974  0.76
+975  0.74
+976  0.72
+977  0.74
+978  0.73
+979  0.77
+980  0.76
+981  0.65
+982  0.73
+983  0.78
+984  0.72
+985  0.72
+986  0.71
+987  0.76
+988  0.83
+989  0.74
+990  0.81
+991  0.78
+992  0.77
+993  0.68
+994  0.68
+995  0.82
+996  0.73
+997  0.74
+998  0.69
+999  0.74
+1000 0.67</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="regression-as-conditional-means" class="slide level2">
-<h2>Regression as conditional means</h2>
-<div class="fragment">
+<section id="this-gives-a-resampling-distribution" class="slide level2">
+<h2>This gives a resampling distribution</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Plot</a></li><li><a href="#tabset-3-2">Code</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week5_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>lm_race <span class="ot">=</span> <span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> obamamuslim, <span class="at">data =</span> nes)</span>
-<span id="cb7-2"><a href=""></a></span>
-<span id="cb7-3"><a href=""></a><span class="fu">coef</span>(lm_race)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept) obamamuslim 
-   32.16788    35.03717 </code></pre>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">ggplot</span>(vote_df) <span class="sc">+</span></span>
+<span id="cb10-2"><a href=""></a>  <span class="fu">aes</span>(<span class="at">x =</span> mean) <span class="sc">+</span></span>
+<span id="cb10-3"><a href=""></a>  <span class="fu">geom_density</span>(<span class="at">linewidth =</span> <span class="dv">2</span>,</span>
+<span id="cb10-4"><a href=""></a>               <span class="at">color =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Estimate"</span>,</span>
+<span id="cb10-6"><a href=""></a>       <span class="at">y =</span> <span class="st">"Density"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</div>
-<div class="fragment">
-<p>Compare with</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>nes <span class="sc">%&gt;%</span> </span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">select</span>(ft_trump_post, obamamuslim) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-3"><a href=""></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb9-4"><a href=""></a>  <span class="fu">group_by</span>(obamamuslim) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-5"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">estimate =</span> <span class="fu">mean</span>(ft_trump_post))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-  obamamuslim estimate
-        &lt;dbl&gt;    &lt;dbl&gt;
-1           0     32.2
-2           1     67.2</code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">sum</span>(<span class="fu">coef</span>(lm_race))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 67.20505</code></pre>
 </div>
 </div>
 </div>
 </section>
-<section id="maybe-just-an-education-thing" class="slide level2">
-<h2>Maybe just an education thing</h2>
-<div class="fragment">
+<section id="then-we-estimate-the-variance-of-the-resampling-distribution" class="slide level2">
+<h2>Then we estimate the variance of the resampling distribution</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(obamamuslim <span class="sc">~</span> educ_hs, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>vote_df <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">summarize</span>(</span>
+<span id="cb11-3"><a href=""></a>    <span class="at">variance =</span> <span class="fu">var</span>(mean),</span>
+<span id="cb11-4"><a href=""></a>    <span class="at">std.error =</span> <span class="fu">sd</span>(mean)</span>
+<span id="cb11-5"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)     educ_hs 
- 0.28368794 -0.04484413 </code></pre>
+<pre><code>    variance  std.error
+1 0.00182398 0.04270808</code></pre>
 </div>
 </div>
+</section></section>
+<section id="good" class="title-slide slide level1 center">
+<h1>Good?</h1>
+
+</section>
+
+<section>
+<section id="hold-on" class="title-slide slide level1 center">
+<h1>Hold on</h1>
+<div class="fragment">
+<p>No one repeats the study many times!</p>
 </div>
 <div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> educ_hs, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)     educ_hs 
-  44.991228   -3.083431 </code></pre>
-</div>
-</div>
+<p>If you have resources for 100 participants 1,000 times</p>
 </div>
 <div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">with</span>(nes, <span class="fu">cor</span>(educ_hs, obamamuslim, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.02613526</code></pre>
+<p>You have resources for 100,000 participants one time!</p>
 </div>
-</div>
+</section>
+<section id="what-we-do-instead" class="slide level2">
+<h2>What we do instead</h2>
+<p>Leverage asymptotic properties (CLT) to find a shortcut to calculate uncertainty around our estimate without having to redo the whole study many times</p>
+<div class="fragment">
+<p>This is called calculating standard errors (confidence intervals, p-values) via <strong>analytic derivation</strong></p>
 </div>
 <div class="fragment">
+<p>They are (only) <strong>asymptotically valid</strong> iff <em>i.i.d.</em> assumption holds</p>
+</div>
+<div class="fragment">
+<p>Which is implies the CLT will “kick in” with a large enough sample</p>
+</div>
+</section></section>
+<section>
+<section id="confidence-intervals" class="title-slide slide level1 center">
+<h1>Confidence intervals</h1>
+
+</section>
+<section id="steps" class="slide level2">
+<h2>Steps</h2>
+<div class="fragment">
+<p>Choose <span class="math inline">\(\alpha \in (0,1)\)</span></p>
+</div>
+<div class="fragment">
+<p><strong>Confidence level</strong> is <span class="math inline">\(100 \times (1-\alpha)\)</span></p>
+</div>
+<div class="fragment">
+<p>Choose estimand <span class="math inline">\(\theta\)</span> and estimator <span class="math inline">\(\widehat \theta\)</span></p>
+
+</div>
+<aside><div>
+<p>The convention is <span class="math inline">\(\alpha = 0.05\)</span>, which gives a 95% confidence interval. There is a good reason for this (coming soon), but nowadays it is mostly path dependency</p>
+</div></aside></section>
+<section id="steps-1" class="slide level2">
+<h2>Steps</h2>
+<p>Then we get <strong>normal approximation-based confidence intervals</strong></p>
+<p><span class="math display">\[
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sqrt{\widehat V [\widehat{\theta}]}, \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sqrt{\widehat V [\widehat{\theta}]})
+\]</span></p>
+<div class="fragment">
+<p>where <span class="math inline">\(z_*\)</span> denotes the quantile of the standard normal distribution <span class="math inline">\(N(0,1)\)</span></p>
+
+</div>
+<aside><div>
+<p>The convention is <span class="math inline">\(\alpha = 0.05\)</span>, which gives a 95% confidence interval. There is a good reason for this (coming soon), but nowadays it is mostly path dependency</p>
+</div></aside></section>
+<section id="steps-2" class="slide level2">
+<h2>Steps</h2>
+<p>Then we get <strong>normal approximation-based confidence intervals</strong></p>
+<p><span class="math display">\[
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}])
+\]</span></p>
+<p>where <span class="math inline">\(z_*\)</span> denotes the quantile of the standard normal distribution <span class="math inline">\(N(0,1)\)</span></p>
+
+<aside><div>
+<p>Clean up a bit to replace with the <strong>standard error</strong> of the estimator</p>
+</div></aside></section>
+<section id="why-the-standard-normal" class="slide level2">
+<h2>Why the standard normal?</h2>
+<p>The idea is that by asymptotic normality</p>
+<p><span class="math display">\[
+\sqrt{n} (\widehat \theta - \theta) \xrightarrow{d} N(0, \phi^2)
+\]</span></p>
+<div class="fragment">
+<p>which is annoying because variance <span class="math inline">\(\phi^2\)</span> is unknown</p>
+</div>
+<div class="fragment">
+<p>But if i.i.d. holds, there is transformation <span class="math inline">\(Z\)</span> with known distribution</p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+Z \xrightarrow{d} N(0,1)
+\]</span></p>
+
+</div>
+<aside><div>
+<p>The proof is annoying, it depends on <strong>Slutsky’s Theorem</strong> and the <strong>Continuous Mapping Theorem (CMT)</strong></p>
+</div></aside></section>
+<section id="why-the-standard-normal-1" class="slide level2">
+<h2>Why the standard normal?</h2>
 <div class="cell">
 <div class="cell-output-display">
 <!-- preamble start -->
 
+    <!-- tinytable mathjax start -->
+    <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
-      function styleCell_14d66yx3ubxz04s5wv1v(i, j, css_id) {
-        var table = document.getElementById("tinytable_14d66yx3ubxz04s5wv1v");
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <!-- tinytable mathjax end -->
+
+    <script>
+      function styleCell_n3wokzw700p5t9n6r601(i, j, css_id) {
+        var table = document.getElementById("tinytable_n3wokzw700p5t9n6r601");
         table.rows[i].cells[j].classList.add(css_id);
       }
       function insertSpanRow(i, colspan, content) {
-        var table = document.getElementById('tinytable_14d66yx3ubxz04s5wv1v');
+        var table = document.getElementById('tinytable_n3wokzw700p5t9n6r601');
         var newRow = table.insertRow(i);
         var newCell = newRow.insertCell(0);
         newCell.setAttribute("colspan", colspan);
@@ -673,8 +1501,8 @@ e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
         // this may be unsafe, but innerText does not interpret <br>
         newCell.innerHTML = content;
       }
-      function spanCell_14d66yx3ubxz04s5wv1v(i, j, rowspan, colspan) {
-        var table = document.getElementById("tinytable_14d66yx3ubxz04s5wv1v");
+      function spanCell_n3wokzw700p5t9n6r601(i, j, rowspan, colspan) {
+        var table = document.getElementById("tinytable_n3wokzw700p5t9n6r601");
         const targetRow = table.rows[i];
         const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
@@ -700,35 +1528,40 @@ e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
         targetCell.rowSpan = rowspan;
         targetCell.colSpan = colspan;
       }
-window.addEventListener('load', function () { styleCell_14d66yx3ubxz04s5wv1v(0, 0, 'tinytable_css_idr4sxbtztak86klhie6ag') })
-window.addEventListener('load', function () { styleCell_14d66yx3ubxz04s5wv1v(0, 1, 'tinytable_css_idr4sxbtztak86klhie6ag') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 0, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 1, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 2, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
     </script>
 
     <style>
-    .table td.tinytable_css_idr4sxbtztak86klhie6ag, .table th.tinytable_css_idr4sxbtztak86klhie6ag {  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idk8wgi4zi4n6l760rbgzs, .table th.tinytable_css_idk8wgi4zi4n6l760rbgzs {  border-bottom: solid 0.1em #d3d8dc; }
     </style>
     <div class="container">
-      <table class="table table-borderless" id="tinytable_14d66yx3ubxz04s5wv1v" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
+      <table class="table table-borderless" id="tinytable_n3wokzw700p5t9n6r601" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
-                <th scope="col">Absolute magnitude</th>
-                <th scope="col">Effect</th>
+                <th scope="col">Confidence level</th>
+                <th scope="col">$\alpha$</th>
+                <th scope="col">$z$</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td>0.1</td>
-                  <td>Small   </td>
+                  <td>90%</td>
+                  <td>0.10</td>
+                  <td>1.64</td>
                 </tr>
                 <tr>
-                  <td>0.3</td>
-                  <td>Moderate</td>
+                  <td>95%</td>
+                  <td>0.05</td>
+                  <td>1.96</td>
                 </tr>
                 <tr>
-                  <td>0.5</td>
-                  <td>Large   </td>
+                  <td>99%</td>
+                  <td>0.01</td>
+                  <td>2.58</td>
                 </tr>
         </tbody>
       </table>
@@ -736,240 +1569,21 @@ window.addEventListener('load', function () { styleCell_14d66yx3ubxz04s5wv1v(0, 
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
-</div>
 </section>
-<section id="or-maybe-an-age-thing" class="slide level2">
-<h2>Or maybe an age thing</h2>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(obamamuslim <span class="sc">~</span> age, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)         age 
-0.176466090 0.001301993 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">summary</span>(nes<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-  18.00   34.00   50.00   49.58   63.00   90.00     121 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">summary</span>(nes<span class="sc">$</span>age0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-   0.00   16.00   32.00   31.58   45.00   72.00     121 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(obamamuslim <span class="sc">~</span> age0, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)        age0 
-0.199901973 0.001301993 </code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="or-maybe-an-age-thing-1" class="slide level2">
-<h2>Or maybe an age thing</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> age0, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)        age0 
- 34.3998310   0.2424554 </code></pre>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">with</span>(nes, <span class="fu">cor</span>(age, obamamuslim, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.05350295</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="or-partisan-motivated-reasoning" class="slide level2">
-<h2>Or partisan motivated reasoning</h2>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(obamamuslim <span class="sc">~</span> republican, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)  republican 
-  0.1445592   0.2388995 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> republican, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept)  republican 
-   24.21449    43.88579 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">with</span>(nes, <span class="fu">cor</span>(republican, obamamuslim, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2741116</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="adjusting-for-covariates" class="slide level2">
-<h2>Adjusting for covariates</h2>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> obamamuslim, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept) obamamuslim 
-   32.16788    35.03717 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> obamamuslim <span class="sc">+</span> educ_hs, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept) obamamuslim     educ_hs 
- 32.7625038  34.8518643  -0.5570192 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> obamamuslim <span class="sc">+</span> educ_hs <span class="sc">+</span> age0, <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> (Intercept)  obamamuslim      educ_hs         age0 
-26.557225629 34.563705332  0.006911287  0.183081786 </code></pre>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> obamamuslim <span class="sc">+</span> educ_hs <span class="sc">+</span> age0 <span class="sc">+</span> republican,</span>
-<span id="cb43-2"><a href=""></a>        <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>(Intercept) obamamuslim     educ_hs        age0  republican 
- 23.1524906  22.2249306  -6.2160330   0.1007929  37.5392727 </code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="interactions" class="slide level2 smaller">
-<h2>Interactions</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p><strong>Code</strong></p>
-</div><div class="column" style="width:50%;">
-<p><strong>Math</strong></p>
-</div></div>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> women_at_home,</span>
-<span id="cb45-2"><a href=""></a>        <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  (Intercept) women_at_home 
-     35.84525      17.58167 </code></pre>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<p><span class="math inline">\(y = \beta_0 + \beta_1 \mathtt{\text{women_at_home}} + \varepsilon\)</span></p>
-</div></div>
-</div>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> </span>
-<span id="cb47-2"><a href=""></a>          obamamuslim <span class="sc">+</span> women_at_home,</span>
-<span id="cb47-3"><a href=""></a>        <span class="at">data =</span> nes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  (Intercept)   obamamuslim women_at_home 
-     28.21032      32.92204      12.66395 </code></pre>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<p><span class="math inline">\(y = \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \varepsilon\)</span></p>
-</div></div>
-</div>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:50%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">coef</span>(<span class="fu">lm</span>(ft_trump_post <span class="sc">~</span> </span>
-<span id="cb49-2"><a href=""></a>          obamamuslim <span class="sc">*</span> women_at_home,</span>
-<span id="cb49-3"><a href=""></a>        <span class="at">data =</span> nes)) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-4"><a href=""></a>  <span class="fu">tidy</span>() <span class="co"># easier to read in slides</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  names                         x
-  &lt;chr&gt;                     &lt;dbl&gt;
-1 (Intercept)               27.7 
-2 obamamuslim               34.9 
-3 women_at_home             14.2 
-4 obamamuslim:women_at_home -4.74</code></pre>
-</div>
-</div>
-</div><div class="column" style="width:50%;">
-<p><span class="math display">\[
-\begin{align*}
-y = &amp; \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \\
-&amp; \beta_3 \mathtt{obamamuslim} \times  \mathtt{\text{women_at_home}} + \varepsilon
-\end{align*}
-\]</span></p>
-</div></div>
-</div>
-</section>
-<section id="next-week-parametric-models-am-chapter-5" class="slide level2 smaller">
-<h2>Next week: Parametric models (AM Chapter 5)</h2>
-<p><strong>Important</strong></p>
-<ul>
-<li>How are parametric models different from agnostic statistics?</li>
-<li>Classical linear model vs.&nbsp;regression chapter</li>
-<li>Logit model (not probit)</li>
-<li>Main idea behind Maximum Likelihood Estimation</li>
-<li>A Note on Models as Approximations</li>
-</ul>
-<p><strong>Ignore</strong></p>
-<ul>
-<li>Mixture Models</li>
-<li>Penalized Maximum Likelihood Regression</li>
-</ul>
-</section>
-<section id="next-week-other-readings" class="slide level2">
-<h2>Next week: Other readings</h2>
-<p><strong>Stigler (2007)</strong></p>
-<ul>
-<li>Story of maximum likelihood (just for reference)</li>
-</ul>
-<p><strong>James et al (2021)</strong></p>
-<ul>
-<li>A more intuitive explanation of logistic regression and maximum likelihood</li>
-</ul>
-<p><strong>Achen (2002)</strong></p>
-<ul>
-<li>Why A Rule of Three (ART)?</li>
-<li><em>Less important:</em> Logit, scobit, power logit, microfoundations</li>
-</ul>
-<div class="quarto-auto-generated-content">
+<section id="why-95" class="slide level2">
+<h2>Why 95%?</h2>
+
+<img data-src="fig/normal_conf.webp" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="asymptotic-validity" class="slide level2">
+<h2>Asymptotic validity</h2>
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
 
 </div>
-</div>
-</section>
-    </div>
-  </div>
+</div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
   <script src="week5_files/libs/revealjs/dist/reveal.js"></script>
@@ -999,7 +1613,8 @@ y = &amp; \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_a
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
 'smaller': false,
  
@@ -1154,7 +1769,7 @@ y = &amp; \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_a
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1219,192 +1834,172 @@ y = &amp; \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_a
     </script>
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
-          }
-        }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
             }
           }
-          return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        // For code content inside modals, clipBoardJS needs to be initialized with a container option
-        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          return false;
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
             }
-          }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
         }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
-          }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
               }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>
