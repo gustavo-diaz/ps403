@@ -23,7 +23,7 @@ Click [here](/syllabus.pdf) for the most recent version.
 
 [Week 4: Estimation](slides/week4.html)
 
-<!-- [Week 5: Regression](slides/week5.html) -->
+[Week 5: Uncertainty](slides/week5.html)
 
 <!-- [Week 6: Parametric Models](slides/week6.html) -->
 
