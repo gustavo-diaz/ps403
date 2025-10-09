@@ -555,7 +555,7 @@ $$
 Or without standardizing
 
 $$
-\sqrt{n} (\overline X - E) \xrightarrow{d} N(0, \sigma^2)
+\sqrt{n} (\overline X - E[X]) \xrightarrow{d} N(0, \sigma^2)
 $$
 
 
@@ -659,7 +659,7 @@ $$
 
 . . .
 
-But it turns out this estimator is *biased* but consistent
+But it turns out this estimator is *biased* but *consistent*
 
 . . .
 
