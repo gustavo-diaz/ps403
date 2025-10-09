@@ -188,6 +188,8 @@
       margin-right: 0; 
     }
   </style>
+  <script src="week5_files/libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="week5_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -1439,7 +1441,7 @@ CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sqrt{\wideh
 <h2>Steps</h2>
 <p>Then we get <strong>normal approximation-based confidence intervals</strong></p>
 <p><span class="math display">\[
-CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}])
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}])
 \]</span></p>
 <p>where <span class="math inline">\(z_*\)</span> denotes the quantile of the standard normal distribution <span class="math inline">\(N(0,1)\)</span></p>
 
@@ -1471,21 +1473,627 @@ Z \xrightarrow{d} N(0,1)
 <h2>Why the standard normal?</h2>
 <div class="cell">
 <div class="cell-output-display">
-<!-- preamble start -->
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Confidence level</th>
+<th style="text-align: right;"><span class="math inline">\(\alpha\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(z\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">90%</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">1.64</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">95%</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">1.96</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99%</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">2.58</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="why-95" class="slide level2">
+<h2>Why 95%?</h2>
 
-    <!-- tinytable mathjax start -->
-    <script id="MathJax-script" async="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      },
-      svg: {
-        fontCache: 'global'
-      }
-    };
-    </script>
-    <!-- tinytable mathjax end -->
+<img data-src="fig/normal_conf.webp" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="cis-for-the-sample-mean" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}])
+\]</span></p>
+</section>
+<section id="cis-for-the-sample-mean-1" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{1-\alpha}(\mu) = (\widehat \mu - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\mu}], \widehat \mu  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\mu}])
+\]</span></p>
+
+<aside><div>
+<p>Plug-in sample mean</p>
+</div></aside></section>
+<section id="cis-for-the-sample-mean-2" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = (\widehat \mu - z_{(0.975)} \sigma [\widehat{\mu}], \widehat \mu  + z_{(0.975)} \sigma [\widehat{\mu}])
+\]</span></p>
+
+<aside><div>
+<p>Choose <span class="math inline">\(\alpha = 0.05\)</span></p>
+</div></aside></section>
+<section id="cis-for-the-sample-mean-3" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = (\widehat \mu - 1.96 \times \sigma [\widehat{\mu}], \widehat \mu  + 1.96 \times \sigma [\widehat{\mu}])
+\]</span></p>
+
+<aside><div>
+<p>Substitute with corresponding quantile in <span class="math inline">\(Z\)</span> distribution</p>
+</div></aside></section>
+<section id="cis-for-the-sample-mean-4" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = (\overline X - 1.96 \times \widehat \sigma [\overline{X}], \overline X  + 1.96 \times \widehat \sigma [\overline{X}])
+\]</span></p>
+
+<aside><div>
+<p>Plug in sample mean <span class="math inline">\(\overline X\)</span></p>
+</div></aside></section>
+<section id="cis-for-the-sample-mean-5" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = (\overline X - 1.96 \times \text{SE}, \overline X  + 1.96 \times \text{SE})
+\]</span></p>
+
+<aside><div>
+<p>Call <span class="math inline">\(\widehat \sigma[\overline{X}]\)</span> the <strong>standard error</strong> (SE)</p>
+</div></aside></section>
+<section id="cis-for-the-sample-mean-6" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+\]</span></p>
+
+<aside><div>
+<p>Make it shorter</p>
+</div></aside></section>
+<section id="cis-for-the-sample-mean-7" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p>So we go from this</p>
+<p><span class="math display">\[
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}])
+\]</span></p>
+<div class="fragment">
+<p>To this</p>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+\]</span></p>
+</div>
+</section>
+<section id="cis-for-the-sample-mean-8" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+\]</span></p>
+<p><em>How do we interpret?</em></p>
+<div class="fragment">
+<p><strong>Informally:</strong> With 95% probability,</p>
+</div>
+</section>
+<section id="cis-for-the-sample-mean-9" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+\]</span></p>
+<p><em>How do we interpret?</em></p>
+<p><strong>Informally:</strong> With 95% probability, this interval contains <span class="math inline">\(E[X]\)</span></p>
+<div class="fragment">
+<p><strong>Formally:</strong></p>
+<p><span class="math display">\[
+Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
+\]</span></p>
+</div>
+</section>
+<section id="cis-for-the-sample-mean-10" class="slide level2">
+<h2>CIs for the sample mean</h2>
+<p><span class="math display">\[
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+\]</span></p>
+<p><em>How do we interpret?</em></p>
+<p><strong>Informally:</strong> With 95% probability, this interval contains <span class="math inline">\(E[X]\)</span></p>
+<p><strong>Formally:</strong></p>
+<p><span class="math display">\[
+Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
+\]</span></p>
+
+<aside><div>
+<p>You can also interpret it as the interval containing all the hypotheses we cannot reject at <span class="math inline">\(\alpha = 0.05\)</span>. This interpretation sees CIs as <strong>inverted hypothesis tests</strong> (more in the lab)</p>
+</div></aside></section>
+<section id="in-r" class="slide level2">
+<h2>In R</h2>
+<div class="fragment">
+<p><strong>Base R</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  gss$vote
+t = 105.71, df = 3875, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.7287468 0.7562894
+sample estimates:
+mean of x 
+0.7425181 </code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)<span class="sc">$</span>conf.int</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7287468 0.7562894
+attr(,"conf.level")
+[1] 0.95</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="in-r-1" class="slide level2">
+<h2>In R</h2>
+<p><strong>Base R</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  gss$vote
+t = 105.71, df = 3875, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.7287468 0.7562894
+sample estimates:
+mean of x 
+0.7425181 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)<span class="sc">$</span>conf.int[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7287468</code></pre>
+</div>
+</div>
+</section>
+<section id="in-r-2" class="slide level2">
+<h2>In R</h2>
+<p><strong>Base R</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  gss$vote
+t = 105.71, df = 3875, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.7287468 0.7562894
+sample estimates:
+mean of x 
+0.7425181 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)<span class="sc">$</span>conf.int[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7562894</code></pre>
+</div>
+</div>
+</section>
+<section id="in-r-3" class="slide level2">
+<h2>In R</h2>
+<p><strong>Tidyverse</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">library</span>(infer)</span>
+<span id="cb25-2"><a href=""></a></span>
+<span id="cb25-3"><a href=""></a>gss <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href=""></a>  <span class="fu">t_test</span>(<span class="at">response =</span> vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      106.  3875       0 two.sided      0.743    0.729    0.756</code></pre>
+</div>
+</div>
+
+<aside><div>
+<p>In this case, we have to specify that the first argument is <code>response</code> because the default is a formula of the form <code>y ~ x</code></p>
+</div></aside></section>
+<section id="in-r-4" class="slide level2">
+<h2>In R</h2>
+<p><strong>Tidyverse</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">library</span>(infer)</span>
+<span id="cb27-2"><a href=""></a></span>
+<span id="cb27-3"><a href=""></a>gss <span class="sc">%&gt;%</span> </span>
+<span id="cb27-4"><a href=""></a>  <span class="fu">t_test</span>(<span class="at">response =</span> vote) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-5"><a href=""></a>  <span class="fu">select</span>(estimate, lower_ci, upper_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  estimate lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1    0.743    0.729    0.756</code></pre>
+</div>
+</div>
+
+<aside><div>
+<p>In this case, we have to specify that the first argument is <code>response</code> because the default is a formula of the form <code>y ~ x</code></p>
+</div></aside></section>
+<section id="tidyverse-is-easier-to-plot" class="slide level2">
+<h2>Tidyverse is easier to plot</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Code</a></li><li><a href="#tabset-4-2">Plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>conf_df <span class="ot">=</span> gss <span class="sc">%&gt;%</span> </span>
+<span id="cb29-2"><a href=""></a>  <span class="fu">t_test</span>(<span class="at">response =</span> vote)</span>
+<span id="cb29-3"><a href=""></a></span>
+<span id="cb29-4"><a href=""></a><span class="fu">ggplot</span>(conf_df) <span class="sc">+</span></span>
+<span id="cb29-5"><a href=""></a>  <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> estimate) <span class="sc">+</span></span>
+<span id="cb29-6"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb29-7"><a href=""></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span>, </span>
+<span id="cb29-8"><a href=""></a>                     <span class="at">ymin =</span> lower_ci,</span>
+<span id="cb29-9"><a href=""></a>                     <span class="at">ymax =</span> upper_ci),</span>
+<span id="cb29-10"><a href=""></a>                 <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href=""></a>  </span>
+<span id="cb29-12"><a href=""></a>  <span class="co"># hide the x axis</span></span>
+<span id="cb29-13"><a href=""></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-14"><a href=""></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-15"><a href=""></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="week5_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<aside><div>
+<p>This will be more helpful if you want to show many estimates and CIs side by side</p>
+</div></aside></section>
+<section id="asymptotic-validity" class="slide level2">
+<h2>Asymptotic validity</h2>
+<p>Confidence intervals are only valid <strong>asymptotically</strong></p>
+<div class="fragment">
+<p>Meaning</p>
+<p><span class="math display">\[
+\lim_{n \rightarrow \infty} Pr[\theta \in CI_{(1-\alpha)}] \geq 1- \alpha
+\]</span></p>
+</div>
+<div class="fragment">
+<p>They only have <strong>coverage</strong> <span class="math inline">\((1-\alpha)\)</span> with <em>very large n</em></p>
+</div>
+</section>
+<section id="asymptotic-validity-1" class="slide level2">
+<h2>Asymptotic validity</h2>
+<p>Confidence intervals are only valid <strong>asymptotically</strong></p>
+<p><em>Distinction:</em></p>
+<div class="fragment">
+<ol type="1">
+<li><strong>Nominal coverage:</strong> Intended coverage probability <span class="math inline">\((1 - \alpha)\)</span></li>
+</ol>
+</div>
+<div class="fragment">
+<ol start="2" type="1">
+<li><strong>Actual coverage:</strong> <em>Empirical</em> coverage probability (more in the lab)</li>
+</ol>
+
+</div>
+<aside><div>
+<p>See AM Section 3.4.4 for details. The idea is that actual coverage goes below nominal rate because we are <strong>estimating</strong> the standard error, which on itself has some uncertainty around it</p>
+</div></aside></section></section>
+<section>
+<section id="hypothesis-testing" class="title-slide slide level1 center">
+<h1>Hypothesis Testing</h1>
+
+</section>
+<section id="the-lady-tasting-tea" class="slide level2">
+<h2>The lady tasting tea</h2>
+<div class="fragment">
+<p><em>A lady declares that by tasting a cup of tea made with milk she can discriminate whether the milk or the tea infusion was first added to the cup</em></p>
+
+</div>
+<div class="fragment">
+<p>How do you evaluate this?</p>
+</div>
+<aside><div>
+<p>Adapted from Fisher, R.A. 1935. <a href="https://mimno.infosci.cornell.edu/info3350/readings/fisher.pdf"><em>The design of experiments</em></a>. Oliver &amp; Boyd. Chapter 2</p>
+</div></aside></section>
+<section id="an-experiment" class="slide level2">
+<h2>An experiment</h2>
+<ul>
+<li class="fragment"><p>Suppose we have eight milk tea cups</p></li>
+<li class="fragment"><p>4 milk first, 4 tea first</p></li>
+<li class="fragment"><p>We arrange them in random order</p></li>
+<li class="fragment"><p>Lady knows there are 4 of each, but not which ones</p></li>
+</ul>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+True Order
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Lady's Guesses</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Tea First</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Milk First</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tea First</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Milk First</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li class="fragment"><p>Lady gets it right <span class="math inline">\(6/8\)</span> times</p></li>
+<li class="fragment"><p>What can we conclude?</p></li>
+</ul>
+</section>
+<section id="problem" class="slide level2">
+<h2>Problem</h2>
+<ul>
+<li class="fragment"><p>How does “being able to discriminate” look like?</p></li>
+<li class="fragment"><p>WE DON’T KNOW!</p></li>
+<li class="fragment"><p>We <strong>do know</strong> how a person <em>without</em> the ability to discriminate milk/tea order looks like</p></li>
+<li class="fragment"><p>This is our <strong>null hypothesis</strong> (<span class="math inline">\(H_0\)</span>)</p></li>
+<li class="fragment"><p>Which lets us make <strong>probability statements</strong> about this <strong>hypothetical world of no effect</strong></p></li>
+</ul>
+</section>
+<section id="a-person-with-no-ability" class="slide level2">
+<h2>A person with no ability</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Possible combinations</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">xxxx</td>
+<td style="text-align: left; color: white !important;">\(1 \times 1 = 1\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">xxxo, xxox, xoxx, oxxx</td>
+<td style="text-align: left; color: white !important;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">xxoo, xoxo, xoox, oxox, ooxx, oxxo</td>
+<td style="text-align: left; color: white !important;">\(6 \times 6 = 36\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">xooo, oxoo, ooxo, ooox</td>
+<td style="text-align: left; color: white !important;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">oooo</td>
+<td style="text-align: left; color: white !important;">\(1 \times 1 = 1\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="fragment">
+<ul>
+<li>This is a symmetrical problem!</li>
+</ul>
+</div>
+<aside><div>
+<p>Ways of getting a number of tea-first cups right</p>
+</div></aside></section>
+<section id="a-person-with-no-ability-1" class="slide level2" data-visiblity="uncounted">
+<h2>A person with no ability</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Possible combinations</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">xxxx</td>
+<td style="text-align: left; color: white !important;">\(1 \times 1 = 1\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">xxxo, xxox, xoxx, oxxx</td>
+<td style="text-align: left; color: white !important;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">xxoo, xoxo, xoox, oxox, ooxx, oxxo</td>
+<td style="text-align: left; color: white !important;">\(6 \times 6 = 36\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">xooo, oxoo, ooxo, ooox</td>
+<td style="text-align: left; color: white !important;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">oooo</td>
+<td style="text-align: left; color: white !important;">\(1 \times 1 = 1\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<aside><div>
+<p>Ways of getting a number of milk-first cups right</p>
+</div></aside></section>
+<section id="a-person-with-no-ability-2" class="slide level2" data-visiblity="uncounted">
+<h2>A person with no ability</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Possible combinations</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">xxxx</td>
+<td style="text-align: left;">\(1 \times 1 = 1\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">xxxo, xxox, xoxx, oxxx</td>
+<td style="text-align: left;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">xxoo, xoxo, xoox, oxox, ooxx, oxxo</td>
+<td style="text-align: left;">\(6 \times 6 = 36\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">xooo, oxoo, ooxo, ooox</td>
+<td style="text-align: left;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">oooo</td>
+<td style="text-align: left;">\(1 \times 1 = 1\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>A person guessing at random gets <span class="math inline">\(6/8\)</span> cups right with probability <span class="math inline">\(\frac{16}{70} \approx 0.23\)</span></li>
+</ul>
+
+</div>
+<aside><div>
+<p>Ways of getting a number of tea-first <strong>and</strong> milk-first cups right</p>
+</div></aside></section>
+<section id="a-person-with-no-ability-3" class="slide level2" data-visiblity="uncounted">
+<h2>A person with no ability</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Count</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Possible combinations</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">xxxx</td>
+<td style="text-align: left;">\(1 \times 1 = 1\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">xxxo, xxox, xoxx, oxxx</td>
+<td style="text-align: left;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">xxoo, xoxo, xoox, oxox, ooxx, oxxo</td>
+<td style="text-align: left;">\(6 \times 6 = 36\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">xooo, oxoo, ooxo, ooox</td>
+<td style="text-align: left;">\(4 \times 4 = 16\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">oooo</td>
+<td style="text-align: left;">\(1 \times 1 = 1\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>And <strong>at least</strong> <span class="math inline">\(6/8\)</span> cups with <span class="math inline">\(\frac{16 + 1}{70} \approx 0.24\)</span></li>
+</ul>
+
+<aside><div>
+<p>Ways of getting a number of tea-first <strong>and</strong> milk-first cups right</p>
+</div></aside></section>
+<section id="another-way-to-look-at-it" class="slide level2">
+<h2>Another way to look at it</h2>
+<div class="cell">
+<div class="cell-output-display">
+<!-- preamble start -->
 
     <script>
       function styleCell_n3wokzw700p5t9n6r601(i, j, css_id) {
@@ -1531,6 +2139,7 @@ Z \xrightarrow{d} N(0,1)
 window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 0, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
 window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 1, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
 window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 2, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 3, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
     </script>
 
     <style>
@@ -1541,27 +2150,43 @@ window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 
         <thead>
         
               <tr>
-                <th scope="col">Confidence level</th>
-                <th scope="col">$\alpha$</th>
-                <th scope="col">$z$</th>
+                <th scope="col">Count</th>
+                <th scope="col">Correct</th>
+                <th scope="col">Combinations</th>
+                <th scope="col">Probability</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td>90%</td>
-                  <td>0.10</td>
-                  <td>1.64</td>
-                </tr>
-                <tr>
-                  <td>95%</td>
-                  <td>0.05</td>
-                  <td>1.96</td>
-                </tr>
-                <tr>
-                  <td>99%</td>
+                  <td>0</td>
+                  <td>0/8</td>
+                  <td>1/70 </td>
                   <td>0.01</td>
-                  <td>2.58</td>
+                </tr>
+                <tr>
+                  <td>1</td>
+                  <td>2/8</td>
+                  <td>16/70</td>
+                  <td>0.23</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>4/8</td>
+                  <td>36/70</td>
+                  <td>0.51</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>6/8</td>
+                  <td>16/70</td>
+                  <td>0.23</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>8/8</td>
+                  <td>1/70 </td>
+                  <td>0.01</td>
                 </tr>
         </tbody>
       </table>
@@ -1569,15 +2194,242 @@ window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 
 <!-- hack to avoid NA insertion in last line -->
 </div>
 </div>
+<div class="fragment">
+<p><strong>Random guesser:</strong> pick 0-8 right with corresponding probability</p>
+</div>
+<div class="fragment">
+<p>Simulate 1000 times to make a <strong>probability distribution</strong></p>
+</div>
 </section>
-<section id="why-95" class="slide level2">
-<h2>Why 95%?</h2>
+<section class="slide level2">
 
-<img data-src="fig/normal_conf.webp" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
-<section id="asymptotic-validity" class="slide level2">
-<h2>Asymptotic validity</h2>
 
-</section></section>
+<img data-src="week5_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+
+<img data-src="week5_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+
+<img data-src="week5_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Random guesser gets <em>at least</em> 6/8 cups right <span class="math inline">\(\frac{(199+12)}{1000} \approx 0.21\)</span> of the time</p>
+</div>
+</section>
+<section id="p-values" class="slide level2">
+<h2>p-values</h2>
+<p>If the lady is <strong>not</strong> able to discriminate milk-tea order, the probability of observing <span class="math inline">\(6/8\)</span> correct guesses or better is <span class="math inline">\(0.24\)</span></p>
+<div class="fragment">
+<p><strong>p-value</strong>: Probability of observing a result <em>equal or more extreme</em> than what is originally observed</p>
+</div>
+</section>
+<section id="p-values-1" class="slide level2">
+<h2>p-values</h2>
+<p>If the lady is <strong>not</strong> able to discriminate milk-tea order, the probability of observing <span class="math inline">\(6/8\)</span> correct guesses or better is <span class="math inline">\(0.24\)</span></p>
+<p><strong>p-value</strong>: Probability of observing a result <em>equal or more extreme</em> than what is originally observed <em>when</em> the <strong>null hypothesis</strong> is true</p>
+<ul>
+<li class="fragment"><p>Smaller p-values give more evidence <strong>against</strong> the null</p></li>
+<li class="fragment"><p>Implying observed value is <em>less likely to have emerged by chance</em></p></li>
+</ul>
+
+<aside><div>
+<p>This is Fisher’s interpretation of p-values, which is closest to modern day NHST. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4347431/">Neyman and Pearson had different ideas</a> about hypothesis testing</p>
+</div></aside></section>
+<section id="more-formally" class="slide level2">
+<h2>More formally</h2>
+<p><strong>Lower one-tailed</strong></p>
+<p><span class="math display">\[
+p = \Pr_{\theta_0} \left[\widehat \theta \leq \widehat \theta^*\right]
+\]</span></p>
+<div class="fragment">
+<p><strong>Upper one-tailed</strong></p>
+<p><span class="math display">\[
+p = \Pr_{\theta_0}\left[\widehat \theta \geq \widehat \theta^*\right]
+\]</span></p>
+
+</div>
+<aside><div>
+<p><span class="math inline">\(\widehat \theta\)</span> is the <em>test statistic</em> (estimator) and <span class="math inline">\(\widehat \theta^*\)</span> is the observed statistic. We assume null hypothesis <span class="math inline">\(\theta_0\)</span> is true</p>
+</div></aside></section>
+<section id="more-formally-1" class="slide level2">
+<h2>More formally</h2>
+<p><strong>Two-tailed</strong></p>
+<p><span class="math display">\[
+p = \Pr_{\theta_0}\left[|\widehat \theta - \theta_0| \geq |\widehat \theta^* - \theta_0|\right]
+\]</span></p>
+
+<aside><div>
+<p><span class="math inline">\(\widehat \theta\)</span> is the <em>test statistic</em> (estimator) and <span class="math inline">\(\widehat \theta^*\)</span> is its observed statistic. We assume null hypothesis <span class="math inline">\(\theta_0\)</span> is true</p>
+</div></aside></section>
+<section id="rules-of-thumb" class="slide level2">
+<h2>Rules of thumb</h2>
+<ul>
+<li class="fragment"><p>A convention in the social sciences is to claim that something with <span class="math inline">\(p &lt; 0.05\)</span> is <em>statistically significant</em></p></li>
+<li class="fragment"><p>Meaning we have enough evidence</p></li>
+<li class="fragment"><p>Committing to a <strong>significance level</strong> <span class="math inline">\(\alpha\)</span> implies accepting that sometimes we will get <span class="math inline">\(p &lt; 0.05\)</span> by chance</p></li>
+<li class="fragment"><p>This is a <strong>false positive</strong> result</p></li>
+</ul>
+
+<aside><div>
+<p>No good reason for <span class="math inline">\(\alpha = 0.05\)</span> other than path dependency.</p>
+</div></aside></section>
+<section id="types-of-error" class="slide level2">
+<h2>Types of error</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Unobserved reality
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Decision</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">\(H_0\) true</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">\(H_0\) not true</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; border-right: 1px solid;">Don't reject \(H_0\)</td>
+<td style="text-align: left; width: 8cm;">True negative</td>
+<td style="text-align: left; width: 8cm;">False negative (type II error)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; border-right: 1px solid;">Reject \(H_0\)</td>
+<td style="text-align: left; width: 8cm;">False positive (type I error)</td>
+<td style="text-align: left; width: 8cm;">True positive</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="hypothesis-testing-1" class="slide level2">
+<h2>Hypothesis testing</h2>
+<ul>
+<li class="fragment"><p>We just computed p-values via <em>permutation</em> testing</p></li>
+<li class="fragment"><p>Congenial with <em>agnostic statistics</em> because we do not need to assume anything beyond how the data was collected</p></li>
+</ul>
+
+<div class="fragment">
+<p>Can apply CLT properties to calculate p-values via <strong>normal approximation</strong></p>
+</div>
+<aside><div>
+<p>More about permutation testing on the week about causal inference</p>
+</div></aside></section>
+<section id="normal-approximation-p-values" class="slide level2">
+<h2>Normal-approximation p-values</h2>
+<p><span class="math inline">\(\mathbf{t}\)</span><strong>-statistic</strong></p>
+<div class="fragment">
+<p><span class="math display">\[
+t = \frac{\widehat \theta^* - \theta_0}{\sqrt{\widehat V[\theta]}}
+\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+t = \frac{\text{observed} - \text{null}}{\text{standardized}}
+\]</span></p>
+
+</div>
+<aside><div>
+<p>The <span class="math inline">\(t\)</span> statistic/distribution is analogous to the <span class="math inline">\(z\)</span> statistic/distribution. The first is attributed to William Gosset (writing as Student), the second is traced back as far as Carl Friedrich Gauss.</p>
+</div></aside></section>
+<section id="normal-approximation-p-values-1" class="slide level2">
+<h2>Normal-approximation p-values</h2>
+<p><strong>Lower one-tailed:</strong></p>
+<p><span class="math display">\[
+p = \Phi \left( \frac{\widehat \theta^* - \theta_0}{\sqrt{\widehat V[\theta]}} \right) = \phi(t)
+\]</span></p>
+<div class="fragment">
+<p><strong>Upper one-tailed:</strong> <span class="math inline">\(p = 1- \phi(t)\)</span></p>
+</div>
+<div class="fragment">
+<p><strong>Two-tailed:</strong> <span class="math inline">\(p = 2 \left(1-\phi(|t|)\right)\)</span></p>
+
+</div>
+<aside><div>
+<p>These are also only <em>asymptotically</em> valid. Meaning actual false positive rates may be <strong>higher</strong> than nominal</p>
+</div></aside></section>
+<section id="in-r-5" class="slide level2">
+<h2>In R</h2>
+<p><strong>Base R</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  gss$vote
+t = 105.71, df = 3875, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 0.7287468 0.7562894
+sample estimates:
+mean of x 
+0.7425181 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)<span class="sc">$</span>statistic</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     t 
+105.71 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">t.test</span>(gss<span class="sc">$</span>vote)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="in-r-6" class="slide level2">
+<h2>In R</h2>
+<p><strong>Tidyverse</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">library</span>(infer)</span>
+<span id="cb36-2"><a href=""></a></span>
+<span id="cb36-3"><a href=""></a>gss <span class="sc">%&gt;%</span> </span>
+<span id="cb36-4"><a href=""></a>  <span class="fu">t_test</span>(<span class="at">response =</span> vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      106.  3875       0 two.sided      0.743    0.729    0.756</code></pre>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>gss <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href=""></a>  <span class="fu">t_test</span>(<span class="at">response =</span> vote) <span class="sc">%&gt;%</span> </span>
+<span id="cb38-3"><a href=""></a>  <span class="fu">select</span>(estimate, statistic, p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  estimate statistic p_value
+     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1    0.743      106.       0</code></pre>
+</div>
+</div>
+</section>
+<section id="wrapping-up" class="slide level2">
+<h2>Wrapping up</h2>
+<ul>
+<li><p>Normal approximation enables estimation AND inference</p></li>
+<li><p>Confidence intervals (standard errors) and p-values follow from CLT but use different logic</p></li>
+<li><p>Report whichever makes more sense for the application<sup>1</sup></p></li>
+<li><p>More complicated methods will require you to adjust/correct your standard errors or p-values (e.g.&nbsp;clustered standard errors)</p></li>
+</ul>
+
+<aside><ol class="aside-footnotes"><li id="fn1"><p>People usually report both and I think it’s redundant</p></li></ol></aside></section></section>
+
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

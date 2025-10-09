@@ -22,13 +22,11 @@ knitr::opts_chunk$set(echo = TRUE,
 # Packages, add more here as needed
 library(tidyverse)
 library(tinytable)
+library(kableExtra)
 library(mosaic) # easy resampling
 
 # ggplot global options
 theme_set(theme_gray(base_size = 20))
-
-#tinytable math
-options(tinytable_html_mathjax = TRUE)
 ```
 
 
@@ -245,7 +243,7 @@ The convention is $\alpha = 0.05$, which gives a 95% confidence interval. There 
 Then we get **normal approximation-based confidence intervals**
 
 $$
-CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \widehat {SE} [\widehat{\theta}])
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}])
 $$ 
 
 where $z_*$ denotes the quantile of the standard normal distribution $N(0,1)$
@@ -293,7 +291,7 @@ conf = tribble(
   "99%", 0.01, 2.58
 )
 
-conf %>% tt()
+conf %>% kable(escape = FALSE)
 ```
 
 ## Why 95%?
@@ -301,5 +299,741 @@ conf %>% tt()
 
 ![](fig/normal_conf.webp){fig-align="center" width="80%"}
 
+## CIs for the sample mean
+
+$$
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}])
+$$ 
+
+
+
+## CIs for the sample mean
+
+$$
+CI_{1-\alpha}(\mu) = (\widehat \mu - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\mu}], \widehat \mu  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\mu}])
+$$ 
+
+::: aside
+Plug-in sample mean
+:::
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = (\widehat \mu - z_{(0.975)} \sigma [\widehat{\mu}], \widehat \mu  + z_{(0.975)} \sigma [\widehat{\mu}])
+$$ 
+
+::: aside
+Choose $\alpha = 0.05$
+:::
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = (\widehat \mu - 1.96 \times \sigma [\widehat{\mu}], \widehat \mu  + 1.96 \times \sigma [\widehat{\mu}])
+$$
+
+::: aside
+Substitute with corresponding quantile in $Z$ distribution
+:::
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = (\overline X - 1.96 \times \widehat \sigma [\overline{X}], \overline X  + 1.96 \times \widehat \sigma [\overline{X}])
+$$
+
+::: aside
+Plug in sample mean $\overline X$
+:::
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = (\overline X - 1.96 \times \text{SE}, \overline X  + 1.96 \times \text{SE})
+$$
+
+
+::: aside
+Call $\widehat \sigma[\overline{X}]$ the **standard error** (SE)
+:::
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+$$
+
+::: aside
+Make it shorter
+:::
+
+## CIs for the sample mean
+
+So we go from this
+
+$$
+CI_{1-\alpha}(\theta) = (\widehat \theta - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}], \widehat \theta  + z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\theta}])
+$$ 
+
+. . .
+
+To this
+
+$$
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+$$
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+$$
+
+_How do we interpret?_
+
+. . .
+
+**Informally:** With 95% probability, 
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+$$
+
+_How do we interpret?_
+
+**Informally:** With 95% probability, this interval contains $E[X]$
+
+. . .
+
+**Formally:**
+
+$$
+Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
+$$
+
+## CIs for the sample mean
+
+$$
+CI_{0.95}(\mu) = \overline X \pm 1.96 \times \text{SE}
+$$
+
+_How do we interpret?_
+
+**Informally:** With 95% probability, this interval contains $E[X]$
+
+
+**Formally:**
+
+$$
+Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
+$$
+
+::: aside
+You can also interpret it as the interval containing all the hypotheses we cannot reject at $\alpha = 0.05$. This interpretation sees CIs as **inverted hypothesis tests** (more in the lab)
+:::
+
+## In R
+
+. . .
+
+**Base R**
+
+```{r}
+t.test(gss$vote)
+```
+
+. . .
+
+```{r}
+t.test(gss$vote)$conf.int
+```
+
+## In R
+
+**Base R**
+
+```{r}
+t.test(gss$vote)
+```
+
+
+```{r}
+t.test(gss$vote)$conf.int[1]
+```
+
+## In R
+
+**Base R**
+
+```{r}
+t.test(gss$vote)
+```
+
+
+```{r}
+t.test(gss$vote)$conf.int[2]
+```
+
+## In R
+
+**Tidyverse**
+
+```{r}
+library(infer)
+
+gss %>% 
+  t_test(response = vote)
+```
+
+::: aside
+In this case, we have to specify that the first argument is `response` because the default is a formula of the form `y ~ x`
+:::
+
+## In R
+
+**Tidyverse**
+
+```{r}
+library(infer)
+
+gss %>% 
+  t_test(response = vote) %>% 
+  select(estimate, lower_ci, upper_ci)
+```
+
+::: aside
+In this case, we have to specify that the first argument is `response` because the default is a formula of the form `y ~ x`
+:::
+
+## Tidyverse is easier to plot
+
+
+::: {.panel-tabset}
+## Code
+
+```{r, eval = FALSE}
+conf_df = gss %>% 
+  t_test(response = vote)
+
+ggplot(conf_df) +
+  aes(x = 1, y = estimate) +
+  geom_point(size = 3) +
+  geom_linerange(aes(x = 1, 
+                     ymin = lower_ci,
+                     ymax = upper_ci),
+                 linewidth = 1) +
+  
+  # hide the x axis
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+
+
+## Plot
+
+```{r, echo = FALSE, out.width="80%", fig.align="center"}
+conf_df = gss %>% 
+  t_test(response = vote)
+
+ggplot(conf_df) +
+  aes(x = 1, y = estimate) +
+  geom_point(size = 3) +
+  geom_linerange(aes(x = 1, 
+                     ymin = lower_ci,
+                     ymax = upper_ci),
+                 linewidth = 1) +
+  
+  # hide the x axis
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank())
+```
+:::
+
+::: aside
+This will be more helpful if you want to show many estimates and CIs side by side
+:::
+
 
 ## Asymptotic validity
+
+Confidence intervals are only valid **asymptotically**
+
+. . .
+
+Meaning
+
+$$
+\lim_{n \rightarrow \infty} Pr[\theta \in CI_{(1-\alpha)}] \geq 1- \alpha
+$$
+
+. . .
+
+They only have **coverage** $(1-\alpha)$ with _very large n_
+
+## Asymptotic validity
+
+Confidence intervals are only valid **asymptotically**
+
+_Distinction:_
+
+. . .
+
+1. **Nominal coverage:** Intended coverage probability $(1 - \alpha)$
+
+. . .
+
+2. **Actual coverage:** _Empirical_ coverage probability (more in the lab)
+
+::: aside
+See AM Section 3.4.4 for details. The idea is that actual coverage goes below nominal rate because we are **estimating** the standard error, which on itself has some uncertainty around it
+:::
+
+# Hypothesis Testing
+
+## The lady tasting tea
+
+. . . 
+
+*A lady declares that by tasting a cup of tea made with milk she can discriminate whether the milk or the tea infusion was first added to the cup*
+
+::: aside
+Adapted from Fisher, R.A. 1935. [*The design of experiments*](https://mimno.infosci.cornell.edu/info3350/readings/fisher.pdf). Oliver & Boyd. Chapter 2
+:::
+
+. . .
+
+How do you evaluate this?
+
+## An experiment
+
+::: incremental
+- Suppose we have eight milk tea cups
+
+- 4 milk first, 4 tea first
+
+- We arrange them in random order
+
+- Lady knows there are 4 of each, but not which ones
+:::
+
+## Results
+
+```{r, echo = FALSE}
+tea = tribble(
+  ~Lady, ~Tea, ~Milk,
+  "Tea", 3, 1,
+  "Milk", 1, 3
+)
+
+tea = tea %>% mutate(
+  Lady = ifelse(Lady == "Tea", 
+                "Tea First",
+                "Milk First"))
+
+colnames(tea) = c("Lady's Guesses", "Tea First", "Milk First")
+
+tea %>% 
+  kbl() %>% 
+  add_header_above(c(" " = 1, "True Order" = 2))
+```
+
+::: incremental
+- Lady gets it right $6/8$ times
+
+- What can we conclude?
+:::
+
+## Problem
+
+::: incremental
+- How does "being able to discriminate" look like?
+
+- WE DON'T KNOW!
+
+- We **do know** how a person *without* the ability to discriminate milk/tea order looks like
+
+- This is our **null hypothesis** ($H_0$)
+
+- Which lets us make **probability statements** about this **hypothetical world of no effect** 
+:::
+
+## A person with no ability
+
+```{r, echo = FALSE}
+nulldist = tribble(
+  ~count, ~combinations, ~number,
+  0, "xxxx", "\\(1 \\times 1 = 1\\)",
+  1, "xxxo, xxox, xoxx, oxxx", "\\(4 \\times 4 = 16\\)", 
+  2, "xxoo, xoxo, xoox, oxox, ooxx, oxxo", "\\(6 \\times 6 = 36\\)",
+  3, "xooo, oxoo, ooxo, ooox", "\\(4 \\times 4 = 16\\)",
+  4, "oooo", "\\(1 \\times 1 = 1\\)"
+)
+
+colnames(nulldist) = c("Count", "Possible combinations", "Total")
+
+nulldist %>% 
+  kbl(escape = FALSE) %>% 
+  column_spec(3, color = "white")
+  
+```
+
+::: aside
+Ways of getting a number of tea-first cups right
+:::
+
+. . .
+
+- This is a symmetrical problem!
+
+## A person with no ability {visiblity="uncounted"}
+
+```{r, echo = FALSE}
+nulldist = tribble(
+  ~count, ~combinations, ~number,
+  0, "xxxx", "\\(1 \\times 1 = 1\\)",
+  1, "xxxo, xxox, xoxx, oxxx", "\\(4 \\times 4 = 16\\)", 
+  2, "xxoo, xoxo, xoox, oxox, ooxx, oxxo", "\\(6 \\times 6 = 36\\)",
+  3, "xooo, oxoo, ooxo, ooox", "\\(4 \\times 4 = 16\\)",
+  4, "oooo", "\\(1 \\times 1 = 1\\)"
+)
+
+colnames(nulldist) = c("Count", "Possible combinations", "Total")
+
+nulldist %>% 
+  kbl(escape = FALSE) %>% 
+  column_spec(3, color = "white")
+  
+```
+
+::: aside
+Ways of getting a number of milk-first cups right
+:::
+
+
+## A person with no ability {visiblity="uncounted"}
+
+```{r, echo = FALSE}
+nulldist %>% 
+  kbl(escape = FALSE)
+```
+
+. . .
+
+- A person guessing at random gets $6/8$ cups right with probability $\frac{16}{70} \approx 0.23$
+
+
+::: aside
+Ways of getting a number of tea-first **and** milk-first cups right
+:::
+
+## A person with no ability {visiblity="uncounted"}
+
+```{r, echo = FALSE}
+nulldist %>% 
+  kbl(escape = FALSE)
+```
+
+- And **at least** $6/8$ cups with $\frac{16 + 1}{70} \approx 0.24$
+
+
+::: aside
+Ways of getting a number of tea-first **and** milk-first cups right
+:::
+
+## Another way to look at it
+
+
+
+```{r, echo = FALSE}
+milk_tea = data.frame(
+  Count = 0:4,
+  Correct = c("0/8", "2/8", "4/8", "6/8", "8/8"),
+  Combinations = c("1/70", "16/70", "36/70", "16/70", "1/70"),
+  Probability = c(1/70, 16/70, 36/70, 16/70, 1/70)
+)
+
+milk_tea %>% tt(digits = 1)
+```
+
+. . .
+
+**Random guesser:** pick 0-8 right with corresponding probability
+
+. . .
+
+Simulate 1000 times to make a **probability distribution**
+
+---
+
+```{r, echo = FALSE}
+set.seed(20250116)
+
+sims = sample(milk_tea$Count, 
+              size = 1000,
+              replace = TRUE,
+              prob = milk_tea$Probability)
+
+sims_df = data.frame(sims) %>% 
+  group_by(sims) %>% 
+  tally() %>% 
+  mutate(signif = ifelse(sims >= 3, 1, 0),
+         correct = recode(sims,
+                          `0` = "0/8",
+                          `1` = "2/8",
+                          `2` = "4/8",
+                          `3` = "6/8",
+                          `4` = "8/8"))
+
+ggplot(sims_df) +
+  aes(x = correct, y = n) +
+  labs(
+    x = "Correct cups",
+    y = "Frequency"
+  ) +
+  geom_col(alpha = 0)
+```
+
+---
+
+```{r, echo = FALSE}
+ggplot(sims_df) +
+  aes(x = correct, y = n) +
+  labs(
+    x = "Correct cups",
+    y = "Frequency"
+  ) +
+  geom_col() +
+  geom_text(
+    aes(
+      x = correct,
+      y = n + 20,
+      label = n)
+    )
+```
+
+---
+
+```{r, echo = FALSE}
+ggplot(sims_df) +
+  aes(x = correct, y = n, fill = as.factor(signif)) +
+  labs(
+    x = "Correct cups",
+    y = "Frequency"
+  ) +
+  geom_col() +
+  theme(legend.position = "none") +
+  scale_fill_manual(
+    values = c("grey35", "#4E2A84")
+  ) +
+  geom_text(
+    aes(
+      x = correct,
+      y = n + 20,
+      label = n)
+    )
+```
+
+. . .
+
+Random guesser gets *at least* 6/8 cups right $\frac{(199+12)}{1000} \approx 0.21$ of the time
+
+## p-values
+
+If the lady is **not** able to discriminate milk-tea order, the probability of observing $6/8$ correct guesses or better is $0.24$
+
+. . .
+
+**p-value**: Probability of observing a result *equal or more extreme* than what is originally observed 
+
+## p-values
+
+If the lady is **not** able to discriminate milk-tea order, the probability of observing $6/8$ correct guesses or better is $0.24$
+
+**p-value**: Probability of observing a result *equal or more extreme* than what is originally observed *when* the **null hypothesis** is true
+
+::: incremental
+- Smaller p-values give more evidence **against** the null
+
+- Implying observed value is *less likely to have emerged by chance*
+:::
+
+::: aside
+This is Fisher's interpretation of p-values, which is closest to modern day NHST. [Neyman and Pearson had different ideas](https://pmc.ncbi.nlm.nih.gov/articles/PMC4347431/) about hypothesis testing
+:::
+
+## More formally
+
+**Lower one-tailed**
+
+$$
+p = \Pr_{\theta_0} \left[\widehat \theta \leq \widehat \theta^*\right]
+$$
+
+. . .
+
+**Upper one-tailed**
+
+$$
+p = \Pr_{\theta_0}\left[\widehat \theta \geq \widehat \theta^*\right]
+$$
+
+::: aside
+$\widehat \theta$ is the *test statistic* (estimator) and $\widehat \theta^*$ is the observed statistic. We assume null hypothesis $\theta_0$ is true
+:::
+
+## More formally
+
+**Two-tailed**
+
+$$
+p = \Pr_{\theta_0}\left[|\widehat \theta - \theta_0| \geq |\widehat \theta^* - \theta_0|\right]
+$$
+
+::: aside
+$\widehat \theta$ is the *test statistic* (estimator) and $\widehat \theta^*$ is its observed statistic. We assume null hypothesis $\theta_0$ is true
+:::
+
+
+
+## Rules of thumb
+
+::: incremental
+
+- A convention in the social sciences is to claim that something with $p < 0.05$ is *statistically significant*
+
+- Meaning we have enough evidence 
+
+- Committing to a **significance level** $\alpha$ implies accepting that sometimes we will get $p < 0.05$ by chance
+
+- This is a **false positive** result
+
+::: aside
+No good reason for $\alpha = 0.05$ other than path dependency.
+:::
+
+:::
+
+## Types of error
+
+```{r, echo = FALSE}
+error_types = tribble(
+  ~Decision, ~`\\(H_0\\) true`, ~`\\(H_0\\) not true`,
+  "Don't reject \\(H_0\\)", "True negative", "False negative (type II error)",
+  "Reject \\(H_0\\)", "False positive (type I error)", "True positive"
+)
+
+
+
+error_types %>% 
+  kbl(escape = FALSE) %>% 
+  column_spec(1, bold = TRUE, border_right = TRUE) %>% 
+  column_spec(2:3, width = "8cm") %>% 
+  add_header_above(c(" ", "Unobserved reality" = 2))
+```
+
+## Hypothesis testing
+
+::: incremental
+- We just computed p-values via *permutation* testing
+
+
+- Congenial with *agnostic statistics* because we do not need to assume anything beyond how the data was collected
+:::
+
+::: aside
+More about permutation testing on the week about causal inference
+:::
+
+. . .
+
+Can apply CLT properties to calculate p-values via **normal approximation**
+
+## Normal-approximation p-values
+
+$\mathbf{t}$**-statistic**
+
+. . .
+
+$$
+t = \frac{\widehat \theta^* - \theta_0}{\sqrt{\widehat V[\theta]}}
+$$
+
+. . .
+
+$$
+t = \frac{\text{observed} - \text{null}}{\text{standardized}}
+$$
+
+::: aside
+The $t$ statistic/distribution is analogous to the $z$ statistic/distribution. The first is attributed to William Gosset (writing as Student), the second is traced back as far as Carl Friedrich Gauss.
+:::
+
+## Normal-approximation p-values
+
+**Lower one-tailed:**
+
+$$
+p = \Phi \left( \frac{\widehat \theta^* - \theta_0}{\sqrt{\widehat V[\theta]}} \right) = \phi(t)
+$$
+
+. . .
+
+**Upper one-tailed:** $p = 1- \phi(t)$
+
+. . .
+
+**Two-tailed:** $p = 2 \left(1-\phi(|t|)\right)$
+
+::: aside
+These are also only *asymptotically* valid. Meaning actual false positive rates may be **higher** than nominal
+:::
+
+## In R
+
+**Base R**
+
+```{r}
+t.test(gss$vote)
+```
+
+```{r}
+t.test(gss$vote)$statistic
+```
+
+```{r}
+t.test(gss$vote)$p.value
+```
+
+## In R
+
+**Tidyverse**
+
+```{r}
+library(infer)
+
+gss %>% 
+  t_test(response = vote)
+```
+
+&nbsp;
+
+```{r}
+gss %>% 
+  t_test(response = vote) %>% 
+  select(estimate, statistic, p_value)
+```
+
+## Wrapping up
+
+- Normal approximation enables estimation AND inference
+
+- Confidence intervals (standard errors) and p-values follow from CLT but use different logic
+
+- Report whichever makes more sense for the application^[People usually report both and I think it's redundant]
+
+- More complicated methods will require you to adjust/correct your standard errors or p-values (e.g. clustered standard errors)
