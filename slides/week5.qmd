@@ -314,7 +314,7 @@ CI_{1-\alpha}(\mu) = (\widehat \mu - z_{(1-\frac{\alpha}{2})} \sigma [\widehat{\
 $$ 
 
 ::: aside
-Plug-in sample mean
+Plug-in population mean $\mu$
 :::
 
 ## CIs for the sample mean
@@ -432,7 +432,7 @@ Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
 $$
 
 ::: aside
-You can also interpret it as the interval containing all the hypotheses we cannot reject at $\alpha = 0.05$. This interpretation sees CIs as **inverted hypothesis tests** (more in the lab)
+You can also interpret it as the interval containing all the hypotheses we cannot reject at our chosen $\alpha$. This interpretation sees CIs as **inverted hypothesis tests** (more in the lab)
 :::
 
 ## In R
@@ -591,6 +591,14 @@ _Distinction:_
 
 ::: aside
 See AM Section 3.4.4 for details. The idea is that actual coverage goes below nominal rate because we are **estimating** the standard error, which on itself has some uncertainty around it
+:::
+
+## How large?
+
+![](fig/ps_underpowered.png){fig-align="center" width=80%}
+
+::: aside
+[doi.org/10.1086/734279](https://doi.org/10.1086/734279)
 :::
 
 # Hypothesis Testing
@@ -906,7 +914,7 @@ $\widehat \theta$ is the *test statistic* (estimator) and $\widehat \theta^*$ is
 
 - A convention in the social sciences is to claim that something with $p < 0.05$ is *statistically significant*
 
-- Meaning we have enough evidence 
+- Meaning we have enough evidence to **reject** the null
 
 - Committing to a **significance level** $\alpha$ implies accepting that sometimes we will get $p < 0.05$ by chance
 
@@ -978,16 +986,16 @@ The $t$ statistic/distribution is analogous to the $z$ statistic/distribution. T
 **Lower one-tailed:**
 
 $$
-p = \Phi \left( \frac{\widehat \theta^* - \theta_0}{\sqrt{\widehat V[\theta]}} \right) = \phi(t)
+p = \Phi \left( \frac{\widehat \theta^* - \theta_0}{\sqrt{\widehat V[\theta]}} \right) = \Phi(t)
 $$
 
 . . .
 
-**Upper one-tailed:** $p = 1- \phi(t)$
+**Upper one-tailed:** $p = 1- \Phi(t)$
 
 . . .
 
-**Two-tailed:** $p = 2 \left(1-\phi(|t|)\right)$
+**Two-tailed:** $p = 2 \left(1-\Phi(|t|)\right)$
 
 ::: aside
 These are also only *asymptotically* valid. Meaning actual false positive rates may be **higher** than nominal
