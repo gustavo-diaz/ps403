@@ -432,7 +432,7 @@ Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
 $$
 
 ::: aside
-You can also interpret it as the interval containing all the hypotheses we cannot reject at our chosen $\alpha$. This interpretation sees CIs as **inverted hypothesis tests** (more in the lab)
+You can also interpret it as the interval containing all the hypotheses we cannot reject at our chosen $\alpha$. This interpretation sees CIs as **inverted hypothesis tests** (more if we have time)
 :::
 
 ## In R
@@ -561,7 +561,7 @@ This will be more helpful if you want to show many estimates and CIs side by sid
 
 ## Asymptotic validity
 
-Confidence intervals are only valid **asymptotically**
+Confidence intervals are valid **asymptotically**
 
 . . .
 
@@ -577,7 +577,7 @@ They only have **coverage** $(1-\alpha)$ with _very large n_
 
 ## Asymptotic validity
 
-Confidence intervals are only valid **asymptotically**
+Confidence intervals are valid **asymptotically**
 
 _Distinction:_
 
@@ -587,7 +587,7 @@ _Distinction:_
 
 . . .
 
-2. **Actual coverage:** _Empirical_ coverage probability (more in the lab)
+2. **Actual coverage:** _Empirical_ coverage probability
 
 ::: aside
 See AM Section 3.4.4 for details. The idea is that actual coverage goes below nominal rate because we are **estimating** the standard error, which on itself has some uncertainty around it
@@ -921,7 +921,7 @@ $\widehat \theta$ is the *test statistic* (estimator) and $\widehat \theta^*$ is
 - This is a **false positive** result
 
 ::: aside
-No good reason for $\alpha = 0.05$ other than path dependency.
+No good reason for $\alpha = 0.05$ other than path dependency. You may choose to just interpret raw p-values as evidence against the null.
 :::
 
 :::
@@ -1045,3 +1045,89 @@ gss %>%
 - Report whichever makes more sense for the application^[People usually report both and I think it's redundant]
 
 - More complicated methods will require you to adjust/correct your standard errors or p-values (e.g. clustered standard errors)
+
+## Fun stuff: CIs as inverted hypothesis tests
+
+The straightforward null hypothesis is the $\mu = 0$
+
+. . .
+
+But you can test against whatever null you want
+
+. . .
+
+```{r}
+gss %>% t_test(response = vote) %>% select(estimate, statistic, p_value)
+```
+
+. . .
+
+```{r}
+gss %>% t_test(response = vote, mu = 0.5) %>% select(estimate, statistic, p_value)
+```
+
+
+## Fun stuff: CIs as inverted hypothesis tests
+
+The straightforward null hypothesis is the $\mu = 0$
+
+But you can test against whatever null you want
+
+So we can commit to a significance level $\alpha = 0.05$ and then look at a wide range of hypotheses.
+
+## Fun stuff: CIs as inverted hypothesis tests
+
+::: {.panel-tabset}
+
+## Parameters
+
+```{r}
+alpha = 0.05
+
+hyps = seq(0, 1, by = 0.001) # 1k hypotheses
+```
+
+## Map
+
+```{r, cache = TRUE}
+inverted_ci = hyps %>% 
+  map(~t_test(
+    x = gss,
+    response = vote,
+    conf.level = (1-alpha),
+    mu = .
+  )) %>% 
+  bind_rows() %>% 
+  select(p_value) %>% 
+  mutate(mu = hyps)
+```
+
+
+## Output
+
+```{r}
+inverted_ci
+```
+
+
+:::
+
+## Find the bounds
+
+```{r}
+inverted_ci %>% 
+  filter(p_value > alpha) %>% 
+  summarize(
+    lower_ci = min(mu),
+    upper_ci = max(mu)
+  )
+```
+
+. . .
+
+Compare with `t_test`
+
+```{r}
+gss %>% t_test(response = vote) %>% select(lower_ci, upper_ci)
+```
+

@@ -1616,7 +1616,7 @@ Pr[\theta \in CI_{(1-\alpha)}] \geq 1-\alpha
 \]</span></p>
 
 <aside><div>
-<p>You can also interpret it as the interval containing all the hypotheses we cannot reject at our chosen <span class="math inline">\(\alpha\)</span>. This interpretation sees CIs as <strong>inverted hypothesis tests</strong> (more in the lab)</p>
+<p>You can also interpret it as the interval containing all the hypotheses we cannot reject at our chosen <span class="math inline">\(\alpha\)</span>. This interpretation sees CIs as <strong>inverted hypothesis tests</strong> (more if we have time)</p>
 </div></aside></section>
 <section id="in-r" class="slide level2">
 <h2>In R</h2>
@@ -1784,7 +1784,7 @@ mean of x
 </div></aside></section>
 <section id="asymptotic-validity" class="slide level2">
 <h2>Asymptotic validity</h2>
-<p>Confidence intervals are only valid <strong>asymptotically</strong></p>
+<p>Confidence intervals are valid <strong>asymptotically</strong></p>
 <div class="fragment">
 <p>Meaning</p>
 <p><span class="math display">\[
@@ -1797,7 +1797,7 @@ mean of x
 </section>
 <section id="asymptotic-validity-1" class="slide level2">
 <h2>Asymptotic validity</h2>
-<p>Confidence intervals are only valid <strong>asymptotically</strong></p>
+<p>Confidence intervals are valid <strong>asymptotically</strong></p>
 <p><em>Distinction:</em></p>
 <div class="fragment">
 <ol type="1">
@@ -1806,7 +1806,7 @@ mean of x
 </div>
 <div class="fragment">
 <ol start="2" type="1">
-<li><strong>Actual coverage:</strong> <em>Empirical</em> coverage probability (more in the lab)</li>
+<li><strong>Actual coverage:</strong> <em>Empirical</em> coverage probability</li>
 </ol>
 
 </div>
@@ -2294,7 +2294,7 @@ p = \Pr_{\theta_0}\left[|\widehat \theta - \theta_0| \geq |\widehat \theta^* - \
 </ul>
 
 <aside><div>
-<p>No good reason for <span class="math inline">\(\alpha = 0.05\)</span> other than path dependency.</p>
+<p>No good reason for <span class="math inline">\(\alpha = 0.05\)</span> other than path dependency. You may choose to just interpret raw p-values as evidence against the null.</p>
 </div></aside></section>
 <section id="types-of-error" class="slide level2">
 <h2>Types of error</h2>
@@ -2450,8 +2450,122 @@ mean of x
 <li><p>Report whichever makes more sense for the application<sup>1</sup></p></li>
 <li><p>More complicated methods will require you to adjust/correct your standard errors or p-values (e.g.&nbsp;clustered standard errors)</p></li>
 </ul>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>People usually report both and I think it’s redundant</p></li></ol></aside></section>
+<section id="fun-stuff-cis-as-inverted-hypothesis-tests" class="slide level2">
+<h2>Fun stuff: CIs as inverted hypothesis tests</h2>
+<p>The straightforward null hypothesis is the <span class="math inline">\(\mu = 0\)</span></p>
+<div class="fragment">
+<p>But you can test against whatever null you want</p>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>gss <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(<span class="at">response =</span> vote) <span class="sc">%&gt;%</span> <span class="fu">select</span>(estimate, statistic, p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  estimate statistic p_value
+     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+1    0.743      106.       0</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>gss <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(<span class="at">response =</span> vote, <span class="at">mu =</span> <span class="fl">0.5</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(estimate, statistic, p_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  estimate statistic   p_value
+     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1    0.743      34.5 5.37e-228</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="fun-stuff-cis-as-inverted-hypothesis-tests-1" class="slide level2">
+<h2>Fun stuff: CIs as inverted hypothesis tests</h2>
+<p>The straightforward null hypothesis is the <span class="math inline">\(\mu = 0\)</span></p>
+<p>But you can test against whatever null you want</p>
+<p>So we can commit to a significance level <span class="math inline">\(\alpha = 0.05\)</span> and then look at a wide range of hypotheses.</p>
+</section>
+<section id="fun-stuff-cis-as-inverted-hypothesis-tests-2" class="slide level2">
+<h2>Fun stuff: CIs as inverted hypothesis tests</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Parameters</a></li><li><a href="#tabset-5-2">Map</a></li><li><a href="#tabset-5-3">Output</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb44-2"><a href=""></a></span>
+<span id="cb44-3"><a href=""></a>hyps <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.001</span>) <span class="co"># 1k hypotheses</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-5-2">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>inverted_ci <span class="ot">=</span> hyps <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href=""></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">t_test</span>(</span>
+<span id="cb45-3"><a href=""></a>    <span class="at">x =</span> gss,</span>
+<span id="cb45-4"><a href=""></a>    <span class="at">response =</span> vote,</span>
+<span id="cb45-5"><a href=""></a>    <span class="at">conf.level =</span> (<span class="dv">1</span><span class="sc">-</span>alpha),</span>
+<span id="cb45-6"><a href=""></a>    <span class="at">mu =</span> .</span>
+<span id="cb45-7"><a href=""></a>  )) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-8"><a href=""></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb45-9"><a href=""></a>  <span class="fu">select</span>(p_value) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-10"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">mu =</span> hyps)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-5-3">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>inverted_ci</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,001 × 2
+   p_value    mu
+     &lt;dbl&gt; &lt;dbl&gt;
+ 1       0 0    
+ 2       0 0.001
+ 3       0 0.002
+ 4       0 0.003
+ 5       0 0.004
+ 6       0 0.005
+ 7       0 0.006
+ 8       0 0.007
+ 9       0 0.008
+10       0 0.009
+# ℹ 991 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="find-the-bounds" class="slide level2">
+<h2>Find the bounds</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a>inverted_ci <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href=""></a>  <span class="fu">filter</span>(p_value <span class="sc">&gt;</span> alpha) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-3"><a href=""></a>  <span class="fu">summarize</span>(</span>
+<span id="cb48-4"><a href=""></a>    <span class="at">lower_ci =</span> <span class="fu">min</span>(mu),</span>
+<span id="cb48-5"><a href=""></a>    <span class="at">upper_ci =</span> <span class="fu">max</span>(mu)</span>
+<span id="cb48-6"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1    0.729    0.756</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Compare with <code>t_test</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a>gss <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(<span class="at">response =</span> vote) <span class="sc">%&gt;%</span> <span class="fu">select</span>(lower_ci, upper_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1    0.729    0.756</code></pre>
+</div>
+</div>
 
-<aside><ol class="aside-footnotes"><li id="fn1"><p>People usually report both and I think it’s redundant</p></li></ol></aside></section></section>
+</div>
+</section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
