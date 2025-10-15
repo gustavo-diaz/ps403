@@ -6,8 +6,8 @@
 <script src="week5_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week5_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week5_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week5_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="week5_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
   <title>Uncertainty</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -2107,109 +2107,97 @@ True Order
 <!-- preamble start -->
 
     <script>
-
       function styleCell_n3wokzw700p5t9n6r601(i, j, css_id) {
-          var table = document.getElementById("tinytable_n3wokzw700p5t9n6r601");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
+        var table = document.getElementById("tinytable_n3wokzw700p5t9n6r601");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_n3wokzw700p5t9n6r601');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
       }
       function spanCell_n3wokzw700p5t9n6r601(i, j, rowspan, colspan) {
         var table = document.getElementById("tinytable_n3wokzw700p5t9n6r601");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
             }
           }
         }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
       }
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: '5', j: 0 }, { i: '5', j: 1 }, { i: '5', j: 2 }, { i: '5', j: 3 },  ], css_id: 'tinytable_css_1r7hl3b7betmgutgg4nu',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 },  ], css_id: 'tinytable_css_elmsnfz1v9aii0aeqs3a',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  styleCell_n3wokzw700p5t9n6r601(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 0, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 1, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 2, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
+window.addEventListener('load', function () { styleCell_n3wokzw700p5t9n6r601(0, 3, 'tinytable_css_idk8wgi4zi4n6l760rbgzs') })
     </script>
 
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_1r7hl3b7betmgutgg4nu, .table th.tinytable_css_1r7hl3b7betmgutgg4nu { border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_elmsnfz1v9aii0aeqs3a, .table th.tinytable_css_elmsnfz1v9aii0aeqs3a { border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    .table td.tinytable_css_idk8wgi4zi4n6l760rbgzs, .table th.tinytable_css_idk8wgi4zi4n6l760rbgzs {  border-bottom: solid 0.1em #d3d8dc; }
     </style>
     <div class="container">
       <table class="table table-borderless" id="tinytable_n3wokzw700p5t9n6r601" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
-                <th scope="col" data-row="0" data-col="0">Count</th>
-                <th scope="col" data-row="0" data-col="1">Correct</th>
-                <th scope="col" data-row="0" data-col="2">Combinations</th>
-                <th scope="col" data-row="0" data-col="3">Probability</th>
+                <th scope="col">Count</th>
+                <th scope="col">Correct</th>
+                <th scope="col">Combinations</th>
+                <th scope="col">Probability</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">0</td>
-                  <td data-row="1" data-col="1">0/8</td>
-                  <td data-row="1" data-col="2">1/70</td>
-                  <td data-row="1" data-col="3">0.01</td>
+                  <td>0</td>
+                  <td>0/8</td>
+                  <td>1/70 </td>
+                  <td>0.01</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0">1</td>
-                  <td data-row="2" data-col="1">2/8</td>
-                  <td data-row="2" data-col="2">16/70</td>
-                  <td data-row="2" data-col="3">0.23</td>
+                  <td>1</td>
+                  <td>2/8</td>
+                  <td>16/70</td>
+                  <td>0.23</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">2</td>
-                  <td data-row="3" data-col="1">4/8</td>
-                  <td data-row="3" data-col="2">36/70</td>
-                  <td data-row="3" data-col="3">0.51</td>
+                  <td>2</td>
+                  <td>4/8</td>
+                  <td>36/70</td>
+                  <td>0.51</td>
                 </tr>
                 <tr>
-                  <td data-row="4" data-col="0">3</td>
-                  <td data-row="4" data-col="1">6/8</td>
-                  <td data-row="4" data-col="2">16/70</td>
-                  <td data-row="4" data-col="3">0.23</td>
+                  <td>3</td>
+                  <td>6/8</td>
+                  <td>16/70</td>
+                  <td>0.23</td>
                 </tr>
                 <tr>
-                  <td data-row="5" data-col="0">4</td>
-                  <td data-row="5" data-col="1">8/8</td>
-                  <td data-row="5" data-col="2">1/70</td>
-                  <td data-row="5" data-col="3">0.01</td>
+                  <td>4</td>
+                  <td>8/8</td>
+                  <td>1/70 </td>
+                  <td>0.01</td>
                 </tr>
         </tbody>
       </table>
@@ -2363,7 +2351,7 @@ t = \frac{\text{observed} - \text{null}}{\text{standardized}}
 
 </div>
 <aside><div>
-<p>The <span class="math inline">\(t\)</span> statistic/distribution is analogous to the <span class="math inline">\(z\)</span> statistic/distribution. The first is attributed to William Gosset (writing as Student), the second is traced back as far as Carl Friedrich Gauss.</p>
+<p>The <span class="math inline">\(t\)</span> statistic/distribution is analogous to the <span class="math inline">\(z\)</span> statistic/distribution. The first is attributed to William Gosset (writing as Student), the second is traced back to Carl Friedrich Gauss.</p>
 </div></aside></section>
 <section id="normal-approximation-p-values-1" class="slide level2">
 <h2>Normal-approximation p-values</h2>

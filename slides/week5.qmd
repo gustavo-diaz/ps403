@@ -978,7 +978,7 @@ t = \frac{\text{observed} - \text{null}}{\text{standardized}}
 $$
 
 ::: aside
-The $t$ statistic/distribution is analogous to the $z$ statistic/distribution. The first is attributed to William Gosset (writing as Student), the second is traced back as far as Carl Friedrich Gauss.
+The $t$ statistic/distribution is analogous to the $z$ statistic/distribution. The first is attributed to William Gosset (writing as Student), the second is traced back to Carl Friedrich Gauss.
 :::
 
 ## Normal-approximation p-values
