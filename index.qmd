@@ -25,10 +25,10 @@ Click [here](/syllabus.pdf) for the most recent version.
 
 [Week 5: Uncertainty](slides/week5.html)
 
-<!-- [Week 6: Parametric Models](slides/week6.html) -->
+Week 6: Final Paper Discussion
 
-<!-- [Week 7: Missing Data](slides/week7.html) -->
+<!-- [Week 7: Regression](slides/week7.html) -->
 
-<!-- [Week 8: Causal Inference I](slides/week8.html) -->
+<!-- [Week 8: Missing Data (slides/week8.html) -->
 
-<!-- [Week 9: Causal Inference II](slides/week9.html) -->
+<!-- [Week 9: Causal Inference](slides/week9.html) -->
