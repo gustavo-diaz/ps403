@@ -17,16 +17,33 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       fig.pos = "center")
 
+library(tidyverse)
+library(tinytable)
+library(broom) # tidy regression output
+library(gt)
+library(modelsummary)
+library(kableExtra)
+library(tidyr)
+
+# ggplot global options
+theme_set(theme_gray(base_size = 20))
+
+# set NU purple
+nu_purple = "#4E2A84"
 
 ```
 
 # Agenda
 
-- Regression theory (OLS)
+- Bivariate regression
 
-- Regression in practice (ANES data)
+- Multivariate regression
 
 - Inference (lab)
+
+- Regression with matrix algebra (if we have time)
+
+# Bivariate regression
 
 ## So far
 
@@ -89,7 +106,131 @@ We usually want to tell more nuanced stories:
 
 ## Toy example
 
-[Cookies]
+```{r make-cookies, include=FALSE}
+cookies <- tibble(happiness = c(0.5, 2, 1, 2.5, 3, 1.5, 2, 2.5, 2, 3),
+                  cookies = 1:10)
+
+cookies_data <- cookies
+cookies_model <- lm(happiness ~ cookies, data = cookies)
+cookies_fitted <- augment(cookies_model)
+```
+
+```{r cookies-base, echo = FALSE}
+cookies_base <- ggplot(cookies_fitted, aes(x = cookies, y = happiness)) +
+  geom_point(size = 3) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 3)) +
+  scale_x_continuous(breaks = 0:10) +
+  labs(x = "Cookies eaten", y = "Level of happiness")
+
+cookies_base
+```
+
+## How to summarize?
+
+```{r, echo=FALSE}
+cookies_base
+```
+
+
+## Connect with a line
+
+```{r cookies-spline, echo=FALSE}
+cookies_base +
+  geom_smooth(method = lm, color = nu_purple, formula = y ~ splines::bs(x, 7), se = FALSE)
+```
+
+## Maybe smoother?
+
+```{r cookies-loess, echo = FALSE}
+cookies_base +
+  geom_smooth(method = "loess", color = nu_purple, se = FALSE)
+```
+
+## A straight line?
+
+```{r cookies-lm, echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple, se = FALSE)
+```
+
+## Straight lines are good
+
+. . .
+
+They can be written as a **linear equation**
+
+. . .
+
+$$
+y = a + bx
+$$
+
+. . .
+
+```{=html}
+<table>
+  <tr>
+    <td class="cell-center">\(y\)</td>
+    <td class="cell-left">&ensp;Outcome variable</td>
+  </tr>
+  <tr>
+    <td class="cell-center">\(x\)</td>
+    <td class="cell-left">&ensp;Explanatory variable</td>
+  </tr>
+  <tr>
+    <td class="cell-center">\(b\)</td>
+    <td class="cell-left">&ensp;Slope (\(\frac{\text{rise}}{\text{run}}\))</td>
+  </tr>
+  <tr>
+    <td class="cell-center">\(a\)</td>
+    <td class="cell-left">&ensp;y-intercept</td>
+  </tr>
+</table>
+```
+
+. . .
+
+This is the *smallest number of parameters* to draw a line
+
+. . .
+
+We can think of *intercept* and *slope* as **estimands**
+
+## Straight lines are good
+
+They can be written as a **linear equation**
+
+
+$$
+Y = \alpha + \beta X
+$$
+
+
+```{=html}
+<table>
+  <tr>
+    <td class="cell-center">\(Y\)</td>
+    <td class="cell-left">&ensp;Outcome variable</td>
+  </tr>
+  <tr>
+    <td class="cell-center">\(X\)</td>
+    <td class="cell-left">&ensp;Explanatory variable</td>
+  </tr>
+  <tr>
+    <td class="cell-center">\(\beta\)</td>
+    <td class="cell-left">&ensp;Slope (\(\frac{\text{rise}}{\text{run}}\))</td>
+  </tr>
+  <tr>
+    <td class="cell-center">\(\alpha\)</td>
+    <td class="cell-left">&ensp;y-intercept</td>
+  </tr>
+</table>
+```
+
+
+This is the *smallest number of parameters* to draw a line
+
+We can think of *intercept* and *slope* as **estimands**
 
 ## Conditional expectations
 
@@ -99,7 +240,11 @@ CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
 
 . . .
 
-If we restrict ourselves to a linear functional form $Y = a + bX$, then the following minimize MSE of $Y$ given $X$:
+If we restrict ourselves to a linear functional form $Y = a + bX$
+
+. . .
+
+then the following minimize MSE of $Y$ given $X$:
 
 . . .
 
@@ -107,7 +252,164 @@ If we restrict ourselves to a linear functional form $Y = a + bX$, then the foll
 - $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
 - $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
 
-## Plug-in principle
+. . .
+
+So it's really all about $\beta$
+
+## Aside: Regression and correlation
+
+. . .
+
+Informally, we use regression coefficients (slopes) to determine whether two variables are **correlated**
+
+. . .
+
+Technically, they are related but on a different scale
+
+. . .
+
+**Regression coefficient:** $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
+
+. . .
+
+**Correlation:** $\rho = \frac{\text{Cov}[X,Y]}{SD[X] SD[Y]}$
+
+## Aside: Regression and correlation
+
+Informally, we use regression coefficients (slopes) to determine whether two variables are **correlated**
+
+Technically, they are related but on a different scale
+
+**Regression coefficient:** $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$ $\Rightarrow$ in units of Y (happiness)
+
+**(Pearson's) correlation:** $\rho = \frac{\text{Cov}[X,Y]}{SD[X] SD[Y]}$
+
+
+
+## Aside: Regression and correlation
+
+Informally, we use regression coefficients (slopes) to determine whether two variables are **correlated**
+
+Technically, they are related but on a different scale
+
+**Regression coefficient:** $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$ $\Rightarrow$ in units of Y (happiness)
+
+**(Pearson's) correlation:** $\rho = \frac{\text{Cov}[X,Y]}{SD[X] SD[Y]}$ $\Rightarrow$ [-1, 1] scale
+
+
+## What are we doing?
+
+::: incremental
+- **Before:** Assume there is a *true parameter* that we do not observe (e.g. population mean, ATE)
+
+- **Now:** Assume there is a *true line* that best describes the relationship between X and Y
+
+- There is a **best linear predictor** that we want to *estimate*
+:::
+
+. . .
+
+But how do we find it!?
+
+## Which line is a better summary?
+
+![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+
+## More formally
+
+::: incremental
+- The **best linear predictor** is the line that minimizes the distance of each observation to the line
+
+- That distance is known as **residual** or **error**
+:::
+
+## Visualizing residuals
+
+::: {.panel-tabset}
+
+## Plot
+
+```{r, echo = FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple, se = FALSE)
+```
+
+## Code
+
+```{r, eval = FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple, se = FALSE)
+```
+:::
+
+## Visualizing residuals
+
+::: {.panel-tabset}
+
+## Plot 
+
+```{r, echo = FALSE}
+cookies_with_residual <- cookies_base +
+  geom_smooth(method = "lm", color = nu_purple, se = FALSE) +
+  geom_segment(aes(xend = cookies, yend = .fitted), color = "#FF851B", size = 1)
+
+cookies_with_residual
+```
+
+## Code
+
+```{r, eval = FALSE}
+cookies_with_residual <- cookies_base +
+  geom_smooth(method = "lm", color = nu_purple, se = FALSE) +
+  geom_segment(aes(xend = cookies, yend = .fitted), color = "#FF851B", size = 1)
+
+cookies_with_residual
+```
+
+:::
+
+## More formally
+
+- The **best linear predictor** is the line that minimizes the distance of each observation to to the line
+
+- That distance is know as a **residual** or **error**
+
+. . .
+
+$$
+e_i = (y_i - \widehat y_i)
+$$
+
+## More formally
+
+- The **best linear predictor** is the line that minimizes the distance of each observation to to the line
+
+- That distance is know as a **residual** or **error**
+
+
+$$
+e_i = (y_i - (b_0 + b_1 x_{1i}))
+$$
+
+## Minimizing residuals
+
+We want to find a **vector of coefficients** ($\widehat \beta_0$, $\widehat \beta_1$) that minimizes the **sum of squared residuals**
+
+. . .
+
+$$
+SSR = \sum_{i=1}^n e_i^2
+$$
+
+. . .
+
+We could try many lines until we find the the smallest SSR
+
+. . .
+
+Or use a method called **Ordinary Least Squares** (OLS)
+
+## OLS regression by plug-in principle
 
 . . .
 
@@ -123,15 +425,409 @@ $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X] \qquad \beta = \frac{\text{Cov
 
 $\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2} \overline{X} \qquad \widehat{\beta} = \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2}$
 
-. . .
 
-Regression *consistently* estimates the minimum MSE *linear* approximation of the BLP
 
 ::: aside
 $\widehat{\alpha}$: intercept; $\widehat{\beta}$: slope
 :::
 
+
+## Back to cookies
+
+. . .
+
+$$
+\widehat{y} = \widehat \beta_0 + \widehat \beta_1 x_1
+$$
+
+## Back to cookies
+
+$$
+\widehat{\text{happiness}} = \beta_0 + \beta
+_1 \text{cookies}
+$$
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
+:::
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = TRUE,
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+:::
+
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+:::
+
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+:::
+
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+**On average**
+
+:::
+
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+**On average**, one additional cookie
+
+:::
+
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+**On average**, one additional cookie increases happiness by 0.16 points
+
+:::
+
+::::
+
+## Helpful for comparison
+
+. . .
+
+Is 0.16 happiness points per cookie a lot?
+
+. . .
+
+We cannot tell without a point of reference
+
+. . .
+
+But correlation is a reference on its own:
+
+```{r, echo = FALSE}
+correlation = tribble(
+  ~`Absolute magnitude`, ~Effect,
+  .1, "Small",
+  .3, "Moderate",
+  .5, "Large"
+)
+
+correlation %>% 
+  tt()
+
+```
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+**On average**, one additional cookie increases happiness by 0.16 points
+
+:::
+
+::::
+
+## Back to cookies
+
+:::: {.columns}
+
+::: {.column width="50%"}
+$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
+
+```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
+cookies_base +
+  geom_smooth(method = "lm", color = nu_purple) +
+  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
+```
+:::
+
+::: {.column width="50%"}
+
+```{r, echo=FALSE}
+happiness_model <- 
+  lm(happiness ~ cookies,
+     data = cookies_data)
+
+mod = modelsummary(list("happinness" = happiness_model),
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "kableExtra")
+
+mod %>% 
+  kable_styling(font_size = 25)
+```
+
+
+**On average**, one additional cookie increases happiness by 0.16 points
+
+Corresponds to $\rho =$ `r round(cor(cookies$cookies, cookies$happiness), 2)`
+
+:::
+
+::::
+
+# Multivariate regression
+
+## Problem
+
+What if we wanted to include more variables?
+
+. . .
+
+Of course we can!
+
+. . .
+
+But why would we want do that?
+
+## Depends on what you want to say
+
+::: incremental
+- **Level 1:** Description of *conditional means*
+
+- **Level 2:** Statistical inference (needs CIs or p-values)
+
+- **Level 3:** Causal inference (needs **assumptions**)
+:::
+
+. . .
+
+**My take:** You only care about level 2 because you have (at least) a *proto-causal* story
+
+. . .
+
+Meaning there is a focal X and Y relationship we want to measure, but it is "contaminated" by some confounder
+
+. . .
+
+We need to "adjust" or "control" the effect of X on Y (more in 3 weeks)
+
 ## Ordinary Least Squares (OLS)
+
+Rewrite with an arbitrary number of variables
 
 . . .
 
@@ -147,30 +843,61 @@ $$
 
 . . .
 
-Where
-
-$$
-e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))
-$$
+Where $e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))$
 
 ::: aside
-OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
 :::
 
-## Visualizing OLS
 
-![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+## Ordinary Least Squares (OLS)
+
+Rewrite with an arbitrary number of variables
 
 
+Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
+
+
+Such that
+
+$$
+\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
+$$
+
+
+Where $e_i = (Y_i - \widehat Y_i)$
+
+::: aside
+Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+:::
+
+## Ordinary Least Squares (OLS)
+
+Rewrite with an arbitrary number of variables
+
+
+Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
+
+
+Such that
+
+$$
+\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
+$$
+
+
+Where $e_i = (\text{actual} - \text{predicted})$
+
+::: aside
+Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+:::
 
 ## ANES 2016 data
 
 
 
 ```{r}
-library(tidyverse)
-library(tinytable)
-library(broom) # tidy regression output
+
 
 # remotes::install_github("jamesmartherus/anesr")
 library(anesr)
@@ -178,6 +905,7 @@ library(anesr)
 
 data(timeseries_2016)
 ```
+
 
 ## Variables
 
@@ -251,17 +979,82 @@ nes
 
 :::
 
+
+## Main relationship
+
+::: {.panel-tabset}
+
+## Plot
+
+```{r, echo = FALSE}
+ggplot(nes) +
+  aes(x = obamamuslim,
+      y = ft_trump_post) +
+  geom_jitter(size = 1, 
+              width = 0.3,
+              alpha = 0.8,
+              color = nu_purple) +
+  scale_x_continuous(breaks = c(0, 1))
+```
+
+## Code
+
+```{r, eval = FALSE}
+ggplot(nes) +
+  aes(x = obamamuslim,
+      y = ft_trump_post) +
+  geom_jitter(size = 1, 
+              width = 0.3,
+              alpha = 0.8,
+              color = nu_purple) +
+  scale_x_continuous(breaks = c(0, 1))
+```
+
+:::
+
 ## Regression as conditional means
+
+. . .
+
+$\widehat{\texttt{ft_trump_post}} = \beta_0 + \beta_1 \cdot \texttt{obamamuslim}$
 
 . . .
 
 ```{r}
 lm_race = lm(ft_trump_post ~ obamamuslim, data = nes)
-
-coef(lm_race)
 ```
 
-. . .
+
+```{r echo = FALSE}
+lm_race %>% 
+  tidy() %>% 
+  select(term, estimate, std.error, p.value) %>% 
+  kbl(digits = 2)
+```
+
+## Regression as conditional means
+
+$\widehat{\texttt{ft_trump_post}} = 32.17 + 35.04 \cdot \texttt{obamamuslim}$
+
+```{r}
+lm_race = lm(ft_trump_post ~ obamamuslim, data = nes)
+```
+
+
+```{r echo = FALSE}
+lm_race %>% 
+  tidy() %>% 
+  select(term, estimate, std.error, p.value) %>% 
+  kbl(digits = 2)
+```
+
+::: incremental
+- What is the average feeling thermometer for someone who *does not* believe Obama is a Muslim?
+
+- What is the average feeling thermometer for someone who *does* believe Obama is a Muslim?
+:::
+
+## Regression as conditional means
 
 Compare with
 
@@ -376,10 +1169,6 @@ coef(lm(ft_trump_post ~ republican, data = nes))
 with(nes, cor(republican, obamamuslim, use = "pairwise.complete.obs"))
 ```
 
-## Regression and correlation
-
-[HERE SHOW THEY ARE JUST DIFFERENT WAYS TO RESCALE COVARIANCE]
-
 ## Adjusting for covariates
 
 . . .
@@ -406,6 +1195,171 @@ coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0, data = nes))
 coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0 + republican,
         data = nes))
 ```
+
+## Side by side
+
+```{r, echo = FALSE}
+lm0 = lm(ft_trump_post ~ obamamuslim, data = nes)
+
+lm1 = lm(ft_trump_post ~ obamamuslim + educ_hs, data = nes)
+
+lm2 = lm(ft_trump_post ~ obamamuslim + age, data = nes)
+
+lm3 = lm(ft_trump_post ~ obamamuslim + republican, data = nes)
+
+lm4 = lm(ft_trump_post ~ obamamuslim + educ_hs +
+           age + republican, data = nes)
+```
+
+```{r echo = FALSE}
+models = list(lm0, lm1, lm2, lm3, lm4)
+
+mods = modelsummary(models,
+             gof_map = c("nobs", "r.squared"),
+             stars = c('*' = .05),
+             output = "gt")
+
+mods %>% 
+  tab_style(
+    style = cell_text(color = "#00000000"),
+    locations = cells_body(columns = 2:6)) %>% 
+    tab_style(
+    style = cell_fill(color = "#B6ACD1"),
+    locations = cells_body(rows = 3:4)
+  )
+```
+
+## Side by side
+
+```{r echo = FALSE}
+mods %>% 
+  tab_style(
+    style = cell_text(color = "#00000000"),
+    locations = cells_body(columns = 3:6)) %>% 
+  tab_style(
+    style = cell_fill(color = "#B6ACD1"),
+    locations = cells_body(rows = 3:4)
+  )
+```
+
+
+## Side by side
+
+```{r echo = FALSE}
+mods %>% 
+  tab_style(
+    style = cell_text(color = "#00000000"),
+    locations = cells_body(columns = 4:6)) %>% 
+    tab_style(
+    style = cell_fill(color = "#B6ACD1"),
+    locations = cells_body(rows = 3:4)
+  )
+```
+
+## Side by side
+
+```{r echo = FALSE}
+mods %>% 
+  tab_style(
+    style = cell_text(color = "#00000000"),
+    locations = cells_body(columns = 5:6)) %>% 
+    tab_style(
+    style = cell_fill(color = "#B6ACD1"),
+    locations = cells_body(rows = 3:4)
+  )
+```
+
+## Side by side
+
+```{r echo = FALSE}
+mods %>% 
+  tab_style(
+    style = cell_text(color = "#00000000"),
+    locations = cells_body(columns = 6)) %>% 
+    tab_style(
+    style = cell_fill(color = "#B6ACD1"),
+    locations = cells_body(rows = 3:4)
+  )
+```
+
+
+
+## Side by side
+
+```{r echo = FALSE}
+mods %>% 
+    tab_style(
+    style = cell_fill(color = "#B6ACD1"),
+    locations = cells_body(rows = 3:4)
+  )
+```
+
+. . .
+
+We are (presumably) *reducing bias*, but *increasing variance* (standard errors)
+
+
+## Visualizing
+
+```{r echo = FALSE}
+names(models) = c("none",
+                  "educ_hs",
+                  "age",
+                  "republican",
+                  "all")
+
+modelplot(models, coef_map = "obamamuslim") +
+  labs(color = "Controls") +
+  theme(legend.position = "bottom", 
+        axis.text.y = element_text(
+          angle = 90, hjust = 0.5)
+        ) +
+  geom_vline(xintercept = 0, linetype = "dashed")
+```
+
+## Everything else constant {.smaller}
+
+Plug-in coefficients in equations:
+
+. . .
+
+$\widehat{\texttt{ft_trump_post}} = 32.17 + 35.04 \cdot \texttt{obamamuslim}$
+
+. . .
+
+$\widehat{\texttt{ft_trump_post}} =  32.76 + 34.85 \cdot \texttt{obamamuslim}  -0.56 \cdot \texttt{educ_hs}$
+
+. . .
+
+$\widehat{\texttt{ft_trump_post}} = 23.09 + 34.72 \cdot \texttt{obamamuslim} + 0.19 \cdot \texttt{age}$
+
+. . .
+
+$\widehat{\texttt{ft_trump_post}} = 20.367 + 22.74 \cdot \texttt{obamamuslim} + 37.53 \cdot \texttt{republican}$
+
+. . .
+
+$\widehat{\texttt{ft_trump_post}} = 21.34 + 22.23 \cdot \texttt{obamamuslim}  -6.22 \cdot  \texttt{educ_hs} +\\ 0.10 \cdot \texttt{age} + 37.54 \cdot \texttt{republican}$
+
+. . .
+
+&nbsp;
+
+::: {.r-stack}
+Coefficients now need to be interpreted as **marginal means** or **marginal slopes**
+:::
+
+. . .
+
+&nbsp; 
+
+::: {.r-stack}
+These only make sense if you think *at least one variable* is a **focal point**
+:::
+
+## Heterogeneous effects
+
+What if we believed the effect of obamamuslim varies depending on attitudes about gender roles?
 
 ## Interactions {.smaller}
 
@@ -488,4 +1442,213 @@ $$
 
 ::::
 
+## Caution
+
+. . .
+
+The linear model setup is flexible
+
+. . .
+
+ $$\widehat{y} = \widehat \beta_0 + \widehat \beta_1 x_1 + \widehat \beta_2 x_2 + \ldots + \widehat \beta_K x_K$$
+
+. . .
+
+You can technically put *whatever* you want in a regression as long as $\text{observations} > \text{variables}$
+
+. . .
+
+But for *statistical* or *causal inference*, anything with more than 2-3 control variables doesn't make much sense
+
+## Increasing dimensions
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](fig/3d.webp)
+:::
+
+::::
+
+## Increasing dimensions
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](fig/3d.webp)
+:::
+
+::: {.column width="50%"}
+More dimensions $\rightarrow$ more likely to see:
+
+::: incremental
+- **Extrapolation:** Fitting line beyond actual range
+
+- **Interpolation:** Gaps within actual range
+
+:::
+
+:::
+
+::::
+
+. . .
+
+Illusion of learning from **empty space**!
+
+## Wrapping up
+
+- Regression as the go-to method to estimate conditional means
+
+- **B**est **L**inear **U**nbiased **E**stimator (BLUE)
+
+- Multivariate regression only makes sense with a 
+*marginal means* interpretation
+
+- Which requires a (proto-)causal story
+
+- And stops making sense with too many controls
+
+## Fun: OLS with matrix algebra
+
+**Outcome:** $n \times 1$ column vector
+
+$$Y = \begin{bmatrix}
+y_1 \\
+y_2 \\
+y_3 \\
+\vdots \\
+y_n
+\end{bmatrix}$$
+
+## Fun: OLS with matrix algebra
+
+**Explanatory variables:** $n \times (k+1)$ matrix
+
+$$X= \begin{bmatrix}
+1 & x_{11} & \dots & x_{1k} \\
+1 & x_{21} & \dots & x_{2k} \\
+\vdots & \vdots & \dots & \vdots \\
+1 & x_{n1} & \dots & x_{nk}
+\end{bmatrix}$$
+
+. . .
+
+$x_{ij}$ is the $i$-th observation of the $j$-th explanatory variable.
+
+## Linear regression model
+
+Let's say we have 173 observations (n = 173) and 2 explanatory variables (k = 3)
+
+. . .
+
+Equation: $y = \beta_0 + \beta_1x_1 + \beta_2x_2$
+
+. . .
+
+Matrix form: $$\begin{aligned} \begin{bmatrix}
+    y_1 \\
+    y_2 \\
+    \vdots \\
+    y_n
+    \end{bmatrix} = \begin{bmatrix}
+    1 & x_{11} & x_{21} \\
+    1 & x_{21} & x_{22} \\
+    \vdots & \vdots & \vdots \\
+    1 & x_{1173} & x_{2173} 
+    \end{bmatrix} \begin{bmatrix}
+    \beta_0 \\
+    \beta_1 \\
+    \beta_2 
+    \end{bmatrix}\end{aligned} $$
+    
+::: aside
+Sometimes you also see an error term $\epsilon$, we do not need it for "nonparametric" regression
+:::
+    
+## Estimation
+
+$$\hat{\beta} = (X'X)^{-1}X'Y$$
+
+::: {.r-stack}
+"X prime X inverse, X prime Y"
+:::
+
+## Example
+
+```{r}
+cars_df = mtcars
+```
+
+. . .
+
+```{r}
+Y = as.matrix(cars_df$mpg)
+```
+
+. . .
+
+```{r, echo = FALSE}
+Y
+```
+
+## Example
+
+```{r}
+cars_df = mtcars
+```
+
+```{r}
+Y = as.matrix(cars_df$mpg)
+```
+
+```{r}
+# create two separate matrices for IVs
+X1 = as.matrix(cars_df$hp)
+X2 = as.matrix(cars_df$wt)
+
+# bind them altogether into one matrix
+# with constant column
+constant =  rep(1, nrow(cars_df))
+X = cbind(constant, X1, X2)
+```
+
+. . .
+
+```{r echo=FALSE}
+X
+```
+
+## Calculate $\hat{\beta} = (X'X)^{-1}X'Y$
+
+```{r}
+# X prime X
+XpX = t(X) %*% X
+
+# X prime X inverse
+XpXinv = solve(XpX)
+
+# X prime Y
+XpY = t(X) %*% Y
+
+# beta coefficient estimates
+# X prime X inverse, X prime Y
+bhat = XpXinv %*% XpY
+```
+
+. . .
+
+Compare:
+
+. . .
+
+```{r}
+c(bhat)
+```
+
+. . .
+
+```{r}
+lm(mpg ~ hp + wt, data = mtcars) %>% coef()
+```
 
