@@ -27,7 +27,7 @@ Click [here](/syllabus.pdf) for the most recent version.
 
 Week 6: Final Paper Discussion
 
-<!-- [Week 7: Regression](slides/week7.html) -->
+[Week 7: Regression](slides/week7.html)
 
 <!-- [Week 8: Missing Data (slides/week8.html) -->
 
