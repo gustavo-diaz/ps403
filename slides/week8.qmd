@@ -1,0 +1,434 @@
+---
+title: "Parametric Models"
+subtitle: "POLI_SCI 403: Probability and Statistics"
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    code-overflow: wrap
+    chalkboard: true
+---
+
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = TRUE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.pos = "center")
+
+
+```
+
+## What does "parametric" mean?
+
+::: incremental
+- **Parametric:** Assume full functional form with finite number of parameters
+
+- **Nonparametric:** Assume functional form is unknown, possibly infinite number of parameters
+
+- **Semiparametric:** ¯\\_(ツ)_/¯
+:::
+
+## Ingredients of a parametric model
+
+::: incremental
+- Set of functions $g$
+- Indexed by parameter vector $\theta$
+- Model is true for every $\theta$ if...
+- $f_{Y|X}(y|x) = g(y,x; \theta)$
+:::
+
+. . .
+
+We assume there exists a function $g$ with parameters $\theta$
+
+. . .
+
+If you know $\theta$, then you can *fully characterize* the PMF/PDF of $Y$ given $X$
+
+. . .
+
+Then we can say $\theta$ is a *sufficient statistic*
+
+## Toy example: Biased coin flip
+
+. . .
+
+$$
+f_Y(y) = g(y;p) = 
+  \begin{cases}
+  1-p &:& y = 0\\
+  p &:& y=1\\
+  0 &:& \text{otherwise.}
+  \end{cases}
+$$
+
+::: incremental
+- $\theta = p$
+- If you know $p$, then you fully know the distribution of random variable $Y$
+:::
+
+## Classical linear model
+
+. . .
+
+$$
+Y = \boldsymbol{X \beta} + \varepsilon
+$$
+
+::: incremental
+- $Y$: Response (Outcome)
+- $X$: Matrix of predictors (explanatory variables)
+- $\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_K)^T$ Vector of coefficients
+- $\varepsilon \sim N(0, \sigma^2)$ Errors (residuals) i.i.d. normal with expectation zero 
+:::
+
+. . .
+
+If you know $\boldsymbol{\beta}$ and $\sigma^2$, then you can fully characterize the PMF/PDF of $Y$ given $X$
+
+## Why do we need $\varepsilon \sim N(0, \sigma^2)$?
+
+::: incremental
+- $\boldsymbol{\beta}$ represents the variation in $Y$ that comes from predictors $\boldsymbol{X}$
+- $\varepsilon$ represents variation in $Y$ that **cannot** be attributed to $\boldsymbol{X}$
+- If errors are i.i.d. then they are also *independent* of $\boldsymbol{X}$
+- We need this so that our *estimator* is **unbiased** by definition
+:::
+
+. . .
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \varepsilon
+$$
+
+. . .
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \color{purple}{\beta_2 X_2} + \varepsilon
+$$
+
+::: aside
+[Dr. Huntington-Klein explains it better](https://youtu.be/0Aukw3CdB-Q?si=A6mQhm2l9QE3ObHM)
+:::
+
+## Logistic regression
+
+::: aside
+Called logit model in the AM textbook
+:::
+
+. . .
+
+Parametric model
+
+$$
+g(y, \boldsymbol{X}; \beta) = 
+\begin{cases}
+1-h(\boldsymbol{X\beta}) &:& y = 0\\
+h(\boldsymbol{X\beta}) &:& y = 1 \\
+0 &:& \text{otherwise.}
+\end{cases}
+$$
+
+. . .
+
+Let $h(\boldsymbol{X\beta}) = Pr(Y = 1 | X) = p(X)$ for simplicity
+
+## Logistic regression
+
+::: aside
+Called logit model in the AM textbook
+:::
+
+Parametric model
+
+$$
+g(y, \boldsymbol{X}; \beta) = 
+\begin{cases}
+1-h(\boldsymbol{X\beta}) &:& y = 0\\
+h(\boldsymbol{X\beta}) &:& y = 1 \\
+0 &:& \text{otherwise.}
+\end{cases}
+$$
+
+## Logistic regression
+
+::: aside
+Called logit model in the AM textbook
+:::
+
+Parametric model
+
+$$
+g(y, \boldsymbol{X}; \beta) = 
+\begin{cases}
+1-p(X) &:& y = 0\\
+p(X) &:& y = 1 \\
+0 &:& \text{otherwise.}
+\end{cases}
+$$
+
+::: incremental
+- $\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_K)^T$ 
+- $p(X)$ or $h(\boldsymbol{X\beta})$ is the *mean* or *link* function
+- We need the link to bound $y$ in the $[0,1]$ range
+:::
+
+## Logistic regression
+
+
+<!-- My old cheatsheet -->
+<!-- https://drive.google.com/drive/folders/1y0SwNYAjG5_uDGj7MaaJJoS3TpZ_5HuL -->
+
+For the logit model, the link is the *logistic function*
+
+$$
+p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
+$$
+
+. . .
+
+
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
+library(tidyverse)
+
+theme_set(theme_gray(base_size = 25))
+
+ggplot(data = data.frame(x = c(-3,3))) +
+  aes(x) +
+  stat_function(fun = function(x) exp(x)/(1+exp(x)), n = 100, linewidth = 2) +
+  ylim(0,1) +
+  labs(y = "p(X)")
+  
+```
+
+## Logistic regression
+
+
+For the logit model, the link is the *logistic function*
+
+$$
+p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
+$$
+
+. . .
+
+Rearrange to get the *odds ratio*
+
+$$
+\frac{p(X)}{1-p(X)} = e^{{X\beta}}
+$$
+
+## Logistic regression
+
+
+Taking the natural logarithm gives the *log odds*
+
+$$
+log \left (\frac{p(X)}{1-p(X)} \right) = X\beta
+$$
+
+::: incremental
+- Weird to interpret, easy to estimate
+- It's called *logit* because you need to *log* *it* to make it easier to estimate
+- How do we estimate?
+:::
+
+## Maximum likelihood estimation (MLE)
+
+::: aside
+[Dr. King explains it better](https://youtu.be/P79af1fkUsk?si=9eIT50q7KK0uh2nx&t=1313)
+:::
+
+<!-- Show intuition with math, then example from ISLR -->
+::: incremental
+- Knowing $\theta$ is enough to characterize conditional PMF of $Y$ given $X$
+- But we do not know $\theta$! We only know the data we observe
+- We can try many different values for $\theta$ and see what sticks
+- **Trick:** Find $\theta$ that *would have maximized the probability of obtaining the data we observe*
+- **Restated:** Find *parameters* that would have made outcomes *as likely as possible*
+:::
+
+## Example: Which line makes observed data more likely?
+
+![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+
+## More formally
+
+. . .
+
+Likelihood function $\mathcal{L}(t|Y, \boldsymbol{X})$
+
+. . .
+
+Maximum likelihood estimator
+
+$$
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}\mathcal{L}(t|Y, \boldsymbol{X}) = \underset{t\in\Theta}{\text{argmax}} \prod_{i=1}^n\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+$$
+
+. . .
+
+Products are hard, maximize *log-likelihood* instead
+
+$$
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}[\text{log}\mathcal{L}(t|Y, \boldsymbol{X})] = \underset{t\in\Theta}{\text{argmax}} \sum_{i=1}^n\text{log}\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+$$
+
+## With data
+
+```{r}
+library(ISLR)
+
+head(Default)
+```
+
+. . .
+
+```{r}
+Default$default01 = ifelse(Default$default == "Yes", 1, 0)
+
+with(Default, table(default, default01))
+```
+
+## Estimation
+
+. . .
+
+Linear probability model
+
+```{r}
+ols = lm(default01 ~ student + balance + income, data = Default)
+
+coef(ols) # very small numbers
+```
+
+
+## Estimation
+
+Linear probability model
+
+```{r}
+ols = lm(default01 ~ student + balance + income, data = Default)
+
+coef(ols) %>% round(5) # easier to read
+```
+
+. . .
+
+Logit model
+
+```{r}
+logit = glm(default01 ~ student + balance + income, 
+            data = Default, family = binomial)
+
+coef(logit) %>% round(5)
+```
+
+. . .
+
+Logit coefficients are expressed in *log-odds*
+
+## Convert to probabilities
+
+```{r}
+get_logit_prob = function(fit){
+  coefs = coef(fit) # extract coefficients from logit fit
+  odds = exp(coefs) # transform log-odds to odds
+  prob = odds / (1 + odds) # convert odds to probabilities
+  prob = round(prob, 5) # round for easy interpretation
+  return(prob)
+}
+```
+
+. . .
+
+```{r}
+get_logit_prob(logit)
+```
+
+. . .
+
+```{r}
+coef(ols) %>% round(5)
+```
+
+## Why so different?
+
+::: {.panel-tabset}
+## Plot
+
+```{r, echo = FALSE}
+library(marginaleffects)
+
+# Extract predictions
+p_ols = plot_predictions(ols,
+                 condition = "balance",
+                 draw = FALSE)
+
+p_log = plot_predictions(logit,
+                         condition = "balance",
+                         draw = FALSE)
+
+# Combine and label
+pred_df = bind_rows(
+  p_ols %>% mutate(Estimator = "OLS"),
+  p_log %>% mutate(Estimator = "Logit")
+)
+
+# Visualize
+ggplot(Default) +
+  aes(x = balance, y = default01) +
+  geom_jitter(alpha = 0.3, height = 0.1) +
+  geom_line(
+    data = pred_df,
+    aes(x = balance, 
+        y = estimate,
+        color = Estimator),
+    linewidth = 2) +
+  scale_color_viridis_d(begin = 0, end = 0.8) +
+  labs(x = "Balance",
+       y = "Pr(Default)")
+```
+
+
+## Code
+
+```{r, eval = FALSE}
+library(marginaleffects)
+
+# Extract predictions
+p_ols = plot_predictions(ols,
+                 condition = "balance",
+                 draw = FALSE)
+
+p_log = plot_predictions(logit,
+                         condition = "balance",
+                         draw = FALSE)
+
+# Combine and label
+pred_df = bind_rows(
+  p_ols %>% mutate(Estimator = "OLS"),
+  p_log %>% mutate(Estimator = "Logit")
+)
+
+# Visualize
+ggplot(Default) +
+  aes(x = balance, y = default01) +
+  geom_jitter(alpha = 0.3, height = 0.1) +
+  geom_line(
+    data = pred_df,
+    aes(x = balance, 
+        y = estimate,
+        color = Estimator),
+    linewidth = 2) +
+  scale_color_viridis_d(begin = 0, end = 0.8) +
+  labs(x = "Balance",
+       y = "Pr(Default)")
+```
+
+
+:::
+
