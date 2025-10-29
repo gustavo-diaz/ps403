@@ -1496,6 +1496,10 @@ More dimensions $\rightarrow$ more likely to see:
 
 Illusion of learning from **empty space**!
 
+. . .
+
+AM call this **overfitting**
+
 ## Wrapping up
 
 - Regression as the go-to method to estimate conditional means
