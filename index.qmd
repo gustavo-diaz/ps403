@@ -29,6 +29,8 @@ Week 6: Final Paper Discussion
 
 [Week 7: Regression](slides/week7.html)
 
-<!-- [Week 8: Missing Data (slides/week8.html) -->
+[Week 8: Parametric Models](slides/week8.html)
 
-<!-- [Week 9: Causal Inference](slides/week9.html) -->
+<!-- [Week 9: Missing Data](slides/week9.html) -->
+
+<!-- [Week 10: Causal Inference](slides/week10.html) -->
