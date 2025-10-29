@@ -1500,6 +1500,11 @@ Illusion of learning from **empty space**!
 
 AM call this **overfitting**
 
+
+## Wrapping up
+
+{{< video https://packaged-media.redd.it/8uql22tz6mb81/pb/m2-res_480p.mp4?m=DASHPlaylist.mpd&v=1&e=1761782400&s=df9e818ddb2641c0817cdfcc9d09c77188ecf303 >}}
+
 ## Wrapping up
 
 - Regression as the go-to method to estimate conditional means
@@ -1512,6 +1517,7 @@ AM call this **overfitting**
 - Which requires a (proto-)causal story
 
 - And stops making sense with too many controls
+
 
 ## Fun: OLS with matrix algebra
 

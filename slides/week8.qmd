@@ -20,6 +20,26 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```
 
+# Agenda
+
+- Main idea
+- Parametric regression
+- Binary choice models (logistic regression)
+- Maximum likelihood estimation
+- Lab
+
+# Parametric Models
+
+## So far 
+
+- **Agnostic statistics approach:** Assume only what can be gleaned from data
+
+- No need to make *distributional* assumptions, only i.i.d. process
+
+- Meaning our approach is *non-parametric*
+
+- **Alternative:** Parametric models
+
 ## What does "parametric" mean?
 
 ::: incremental
@@ -69,6 +89,13 @@ $$
 - If you know $p$, then you fully know the distribution of random variable $Y$
 :::
 
+# Regression
+
+::: {style="font-size: 40%;"}
+again
+:::
+
+
 ## Classical linear model
 
 . . .
@@ -112,6 +139,8 @@ $$
 ::: aside
 [Dr. Huntington-Klein explains it better](https://youtu.be/0Aukw3CdB-Q?si=A6mQhm2l9QE3ObHM)
 :::
+
+# Binary Choice Models
 
 ## Logistic regression
 
@@ -221,6 +250,11 @@ $$
 \frac{p(X)}{1-p(X)} = e^{{X\beta}}
 $$
 
+::: aside
+This is still a **linear model** in the sense that it is *linear in parameters*
+:::
+
+
 ## Logistic regression
 
 
@@ -234,6 +268,10 @@ $$
 - Weird to interpret, easy to estimate
 - It's called *logit* because you need to *log* *it* to make it easier to estimate
 - How do we estimate?
+:::
+
+::: aside
+Notice we are not making assumptions about an error term because we are modeling a Bernoulli distribution
 :::
 
 ## Maximum likelihood estimation (MLE)
@@ -276,6 +314,48 @@ Products are hard, maximize *log-likelihood* instead
 $$
 \widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}[\text{log}\mathcal{L}(t|Y, \boldsymbol{X})] = \underset{t\in\Theta}{\text{argmax}} \sum_{i=1}^n\text{log}\mathcal{L}(t|Y_i, \boldsymbol{X_i})
 $$
+
+## Another way to look at it
+
+![](fig/mle_viz.png){fig-align="center"}
+
+## How do you find the maximum likehihood?
+
+. . .
+
+**Analytically**
+
+::: incremental
+- Take the derivative of $\text{log}\mathcal{L}(\theta|Y, X)$ w.r.t. $\theta$
+
+- Set to $0$, solve for $\theta$ and label it $\widehat \theta$ (if possible)
+
+- Check if second derivative is negative (so it is maximum not minimum)
+:::
+
+## How do you find the maximum likehihood?
+
+**Numerically**
+
+. . .
+
+Computer will do it for you
+
+. . .
+
+Use optimization algorithm to find maxima (if any)
+
+. . .
+
+Computationally intensive to write on your own
+
+. . .
+
+Most MLE methods have fast pre-packaged functions
+
+. . .
+
+**Rule of thumb:** If the algorithm takes too long, don't believe the result!
 
 ## With data
 
@@ -432,3 +512,176 @@ ggplot(Default) +
 
 :::
 
+## Why would you want to do this?
+
+. . .
+
+**Critique:** You can reverse engineer MLE so that your preferred parameters are optimal
+
+. . .
+
+**Achen (2002, ARPS):** Stop making up new parametric models!
+
+. . .
+
+Or, rather, motivate your parametric models with well-laid out formal model
+
+. . .
+
+So you get as close as possible to the **microfoundations**
+
+. . .
+
+**Microfoundations:** Explaining macro-level phenomena by modeling the behavior of individual agents
+
+
+## MLE finite sample properties
+
+
+. . .
+
+We said OLS was **BLUE**
+
+. . .
+
+MLE find the **MVUE** instead
+
+## MLE finite sample properties
+
+1. **M**inimum
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+. . .
+
+- **Unbiased:** $E[\widehat \theta] = \theta$
+
+. . .
+
+- **Minimum variance:** Efficiency
+
+. . .
+
+*IF* there is a MVUE, ML will find it
+
+. . .
+
+If *not*, it can still find something good enough
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+. . .
+
+2. Invariance to Reparameterization
+
+. . .
+
+- If $\widehat \theta$ is the MLE of $\theta$, then for any function $f(\theta)$ its MLE is $f(\widehat \theta)$
+
+. . .
+
+- **Example:** $\widehat \sigma$ is the MLE of $\sigma$, $\widehat \sigma^2$ is the MLE of $\sigma^2$
+
+. . .
+
+- Not true for other modes of inference!
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+2. Invariance to Reparameterization
+
+. . .
+
+3. Invariance to sampling plans
+
+. . .
+
+- We are making not relyng on i.i.d. sampling to connect $\theta$ and $\widehat \theta$
+
+. . .
+
+- So collecting more data after looking at results is perfectly fine!
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+2. Invariance to Reparameterization
+
+3. Invariance to sampling plans
+
+::: aside
+In textbooks, (2) and (3) are jointly referred to as the **invariance property** of MLE
+:::
+
+## Asymptotic properties
+
+. . .
+
+1. **Consistency:** WLLN implies that as $ n \rightarrow \infty$, the sampling distribution of the MLE collapses to a spike over the parameter value
+
+. . .
+
+2. **Asymptotic normality:** CLT implies that as  $n \rightarrow \infty$, the distribution of the standardized MLE converges to $N(0,1)$
+
+. . .
+
+3. **Asymptotic efficiency:** Because MLE is a sufficient statistic by definition
+
+::: aside
+**Lab:** MLE will often give the same answers and a non-parametric estimator because the asymptotic properties are the same
+:::
+
+## What about inference?
+
+. . .
+
+**Short answer:** Normal-approximation standard errors/CIs/p-values are fine because asymptotic normality usually holds
+
+. . .
+
+**Long answer:**
+ 
+. . .
+
+You can conduct inference via likelihood-ratio tests of between parameters of interest
+
+. . .
+
+But too much work to test all points of interest
+
+. . .
+
+**AM:** Don't take your models too seriously! Ok to be agnostic and compute robust/bootstrapped standard errors (more in the lab)
+
+::: aside
+See [here](https://projects.iq.harvard.edu/files/gov2001/files/inferencep_3.pdf) for more notes on likelihood-ratio based inference
+:::
+
+## Wrapping up
+
+- Parametric models as alternative way to think about inference
+
+- Makes more sense when i.i.d. is (really truly) untenable, but requires careful justification
+
+- Estimated via MLE (alternative is [method of moments](https://online.stat.psu.edu/stat415/lesson/1/1.4))
+
+- Many different opinions on how to deal with uncertainty
+
+- Most people who prefer the model-based approach rely more on Bayesian statistics than MLE
+
+- Overfitting, micronumerosity, etc. are still problems here
