@@ -74,7 +74,23 @@ This is the domain of **nonparametric identification**
 
 ## Point-identification
 
-> We say that a statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional that is logically compatible with the CDF of the unobservable vector given the assumptions.
+> A statistical functional of a random vector 
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* 
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* by a set of assumptions
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional that is logically compatible with the CDF of the unobservable vector given the assumptions.
 
 ## Missing data problem
 
@@ -245,16 +261,81 @@ tt(tab2) %>%
 
 **Sharp bounds:** $\widehat E[Y_i] = [\frac{3}{6}, \frac{5}{6}]$
 
+## More formally
+
+You can write plug-in estimator as a *weighted average*
+
+. . .
+
+$$
+\textbf{Lower bound: } \frac{1}{n}\sum_{i=1}^n (Y_i^*R_i + \mathbf{a} (1-R_i))
+$$
+
+. . .
+
+$$
+\textbf{Upper bound: } \frac{1}{n}\sum_{i=1}^n (Y_i^*R_i + \mathbf{b} (1-R_i))
+$$
+
+. . .
+
+Meaning you do not need to know which are missing observations, just how many!
+
+::: aside
+$\mathbf a$ and $\mathbf b$ are the lowest/highest possible value of $Y_i$, respectively
+:::
+
+
+## Why *sharp* bounds?
+
+. . .
+
+They are **sharp** because we cannot improve them without additional assumptions that do not follow from the data
+
+. . .
+
+So we say $\widehat E[Y_i]$ is *partially identified* under these assumptions
+
+. . .
+
+Size of bounds is proportional to amount of missing data
+
+. . .
+
+And sometimes you can use *auxiliary information* to refine bounds
+
+. . .
+
+**Challenge:** Social scientists don't know what to do with bounds
+
+::: aside
+IDK exactly why "minimal assumptions" means "sharp", but this is a related yet different use of "sharp" compared to the concept of "sharp null" next week
+:::
+
+
 ## More heroic assumptions
 
+. . .
 
-::: incremental
-- **Baseline:** Missing not at random (MNAR/NMAR)
+**Baseline:** Missing not at random (MNAR/NMAR) 
 
-- **MCAR:** Missing completely at random
+$$Y_i \not\!\perp\!\!\!\perp R_i$$
 
-- **MAR:** Missing at random *once we condition on covariates* (aka *ignorability*)
-:::
+. . .
+
+**MCAR:** Missing completely at random
+
+$$
+Y_i \perp \!\!\! \perp R_i
+$$
+
+. . .
+
+**MAR:** Missing at random *after conditioning on covariates* (aka *ignorability*)
+
+$$
+Y_i \perp \!\!\! \perp R_i | \mathbf{X}_i
+$$
 
 ## MCAR
 
@@ -605,6 +686,25 @@ tt(pstab) %>%
 
 Impute values with nearest propensity score
 
+## Hot deck what?
+
+![](https://www.hnf.de/uploads/tx_templavoila/Kartenlocher_HNF_1.JPG){fig-align="center"}
+
+
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
@@ -716,21 +816,9 @@ $$
 \widehat E_{DR}[Y_i] = \text{Regression estimator} + \text{IPW correction}
 $$
 
-## Next week: Causal inference (Chapter 7) {.smaller}
+## With data
 
-**Parallels**
 
-- Stable outcomes framework $\rightarrow$ Potential outcomes framework
-- Average treatment effect bounds
-- MCAR $\rightarrow$ random assignment
-- MAR $\rightarrow$ strong ignorability
-- Regression, propensity score, matching, IPW, doubly robust estimation
-
-**Less important**
-
-- Post-treatment variables (but be wary!)
-- Generalizing beyond binary treatments.
-- Placebo testing
 
 
 
