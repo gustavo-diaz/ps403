@@ -32,6 +32,8 @@ options(tinytable_html_mathjax = TRUE)
 
 - Approaches to missing outcome data
 
+- Data example (if enough time)
+
 - Multiple imputation (lab)
 
 
@@ -819,6 +821,117 @@ $$
 ## With data
 
 
+```{r}
+library(gssr)
+
+gss22 = gss_get_yr(2022)
+
+gss = gss22 %>% 
+  select(vote20) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0))
+
+gss %>% 
+  group_by(vote) %>% 
+  tally()
+```
 
 
+## Bounds as weighted average
 
+Get proportion missing
+
+```{r}
+pr_response = mean(!is.na(gss$vote))
+
+pr_response
+```
+
+. . .
+
+Lower bound:
+
+```{r}
+mean(gss$vote, na.rm = TRUE) * pr_response + 0 *(1-pr_response)
+```
+
+. . .
+
+Upper bound:
+
+```{r}
+mean(gss$vote, na.rm = TRUE) * pr_response + 1 * (1-pr_response)
+```
+
+## Bounds by imputation
+
+```{r}
+gss %>% 
+  select(vote) %>% 
+  mutate(
+    vote_lo = ifelse(is.na(vote), 0, vote),
+    vote_hi = ifelse(is.na(vote), 1, vote)) %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    lower_bound = mean(vote_lo),
+    upper_bound = mean(vote_hi)
+  )
+```
+
+## MCAR by imputation
+
+```{r}
+vote_mean = mean(gss$vote, na.rm = TRUE)
+
+gss %>% 
+  select(vote) %>% 
+  mutate(
+    vote_mcar = ifelse(is.na(vote), vote_mean, vote)) %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    mcar = mean(vote_mcar)
+  )
+```
+
+::: aside
+The number is the same so the real value would come from being able to use more data in general. But also you should never do mean imputation.
+:::
+
+## Regression imputation (MAR)
+
+Make a new data with two more variables
+
+```{r}
+gss_wide = gss22 %>% 
+  select(vote20, sex, partyid) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0),
+         female = ifelse(sex == 2, 1, 0),
+         dem = ifelse(partyid <= 2, 1, 0)) %>% 
+  select(vote, female, dem)
+
+head(gss_wide, 3)
+```
+
+::: aside
+In practice, you want to convince yourself that you have enough variables to justify *conditional independence*
+:::
+
+## Regression imputation (MAR)
+
+```{r}
+outcome_model = lm(vote ~ female + dem,
+                   data = gss_wide)
+
+gss_wide$vote_pred = predict(outcome_model, 
+                    # newdata is by default current data in predict.lm
+                    newdata = gss_wide)
+
+head(gss_wide)
+```
+
+## Regression imputation (MAR)
+
+[CONTINUE HERE]
+
+## IPW (MAR)
+
+## Doubly robust (MAR)
