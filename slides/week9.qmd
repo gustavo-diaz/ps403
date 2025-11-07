@@ -28,7 +28,7 @@ options(tinytable_html_mathjax = TRUE)
 
 - Identification
 
-- Stable outcomes framework
+- Mising data: Stable outcomes framework
 
 - Approaches to missing outcome data
 
@@ -93,6 +93,13 @@ This is the domain of **nonparametric identification**
 ## Point-identification
 
 > A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional that is logically compatible with the CDF of the unobservable vector given the assumptions.
+
+
+# Missing Data
+
+. . .
+
+Should we worry?
 
 ## Missing data problem
 
@@ -930,8 +937,79 @@ head(gss_wide)
 
 ## Regression imputation (MAR)
 
-[CONTINUE HERE]
+```{r}
+gss_wide %>% 
+  mutate(
+    vote_reg = ifelse(is.na(vote), vote_pred, vote)
+  ) %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    # Some still missing have missing data in the covariates
+    mar_reg_1 = mean(vote_reg, na.rm = TRUE),
+    mar_reg_2 = mean(vote_pred, na.rm = TRUE)
+  )
+```
+
 
 ## IPW (MAR)
 
+```{r}
+# Make a binary indicator of missingness
+gss_wide = gss_wide %>% 
+  mutate(
+    response = ifelse(!is.na(vote), 1, 0)
+  ) %>% 
+  filter(!is.na(female) & !is.na(dem))
+
+pscore_model = glm(
+  response ~ female + dem,
+  family = binomial,
+  data = gss_wide
+)
+
+# Create variable with probabilities
+gss_wide$pscore = predict(pscore_model, type = "response")
+
+# Convert to IPW
+gss_wide$ipw = 1/gss_wide$pscore
+```
+
+## IPW (MAR)
+
+```{r}
+gss_wide %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    mar_ipw = weighted.mean(vote, w = ipw, na.rm = TRUE)
+    )
+```
+
+
 ## Doubly robust (MAR)
+
+```{r}
+doubly_robust = lm(vote ~ female + dem,
+                   data = gss_wide,
+                   weights = ipw)
+
+gss_wide$vote_dr = predict(doubly_robust,
+                           newdata = gss_wide)
+
+gss_wide %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    mar_dr = mean(vote_dr)
+  )
+```
+
+## Wrapping up
+
+- Missing data means i.i.d. assumption does not hold even with a random/representative sample
+
+- But i.i.d. is assumed out of convenience, not accuracy
+
+- Many are unbothered by missing data because it does not make a difference
+
+- But sometimes ignoring may present problems for inference or the application of other methods
+
+- You want to (at least) show that ignoring missing data is not a big deal
