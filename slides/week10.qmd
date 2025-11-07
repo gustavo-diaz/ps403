@@ -1,0 +1,698 @@
+---
+title: "Causal Inference"
+subtitle: "POLI_SCI 403: Probability and Statistics"
+format: 
+  revealjs:
+    slide-number: false
+    progress: false
+    code-overflow: wrap
+    chalkboard: true
+---
+
+
+```{r setup, include=FALSE}
+# Global options for the rendering behavior of all subsequent code chunks
+knitr::opts_chunk$set(echo = FALSE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.pos = "center")
+
+library(tidyverse)
+library(tinytable)
+library(kableExtra) # too lazy to change
+library(DeclareDesign) # Re-randomize
+library(infer)
+
+# tinytable options
+# options(tinytable_html_mathjax = TRUE)
+```
+
+
+## Making causal claims
+
+&nbsp;
+
+. . .
+
+:::{.r-stack}
+How do we know $X$ *causes* $Y$?
+:::
+
+&nbsp;
+
+. . .
+
+:::{.r-stack}
+Can data help us make causal claims?
+:::
+
+&nbsp;
+
+. . .
+
+:::{.r-stack}
+When is a causal claim *not* appropriate?
+:::
+
+# Agenda
+
+- Potential outcomes framework
+- Random assignment
+- Observational studies
+
+
+
+
+# Potential Outcomes Framework
+
+## Setup
+
+. . .
+
+**Notation**
+
+::: incremental
+- $D_i = \{0,1\}$ condition (0: control, 1: treatment)
+
+- $Y_i(D_i)$ is the individual **potential outcome**
+:::
+
+. . .
+
+$$
+Y_i = \begin{cases}
+Y_i(0) & : & D_i = 0 \\
+Y_i(1) & : & D_i = 1
+\end{cases}
+$$
+
+. . .
+
+Switching equation
+
+$$
+Y_i = Y_i(1) D_i + Y_i(0) (1 - D_i)
+$$
+
+## Toy example
+
+```{r}
+pop = declare_population(
+  N = 4,
+  female = c(0, 0, 1, 1),
+  Y0 = c(0, 0, 0, 1),
+  Y1 = c(0, 1, 1, 1)
+)
+
+pot = declare_potential_outcomes(Y ~ Y1 * Z + Y0 * (1-Z))
+
+estimand = declare_inquiry(ATE = mean(Y1 - Y0))
+
+assign = declare_assignment(Z = complete_ra(N, m = 2))
+
+reveal = declare_measurement(Y = reveal_outcomes(Y ~ Z))
+
+estimator = declare_estimator(Y ~ Z, inquiry = "ATE")
+
+design_1 = pop + pot + estimand + assign + reveal + estimator
+```
+
+```{r}
+set.seed(142)
+
+dat = draw_data(design_1)
+
+dat_0 = dat %>% select(ID, Y1, Y0)
+
+colnames(dat_0) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)")
+
+dat_0 %>% kbl(escape = FALSE)
+```
+
+. . .
+
+$\tau_i = Y_i(1) - Y_i(0)$ is the **unit-level treatment effect**
+
+&nbsp;
+
+## Toy example
+
+```{r}
+dat_1 = dat %>% 
+  select(ID, Y1, Y0) %>% 
+  mutate(tau = Y1 - Y0)
+
+colnames(dat_1) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)")
+
+dat_1 %>% kbl(escape = FALSE)
+```
+
+$\tau_i = Y_i(1) - Y_i(0)$ is the **unit-level treatment effect**
+
+&nbsp;
+
+. . .
+
+
+
+$E[\tau_i] = \frac{1}{n} \sum_{i=1}^n \tau_i$ is the  **average treatment effect** (ATE)
+
+## Assumption
+
+**Stable Unit Treatment Value (SUTVA)**
+
+. . .
+
+Potential outcomes are *stable*, meaning:
+
+::: incremental
+1.  *No unobserved multiple versions of the treatment:* Treatment is the same for everyone
+
+2. *No interference:* Unit $i$'s potential outcome is not affected by $j$'s potential outcome
+:::
+
+
+
+## Challenge
+
+
+```{r}
+dat_1 %>% 
+  kbl(escape = FALSE)
+```
+
+
+## Challenge
+
+```{r}
+dat_1 %>% 
+  kbl(escape = FALSE) %>% 
+  add_header_above(c(" ", "Unobserved" = 3))
+```
+
+. . .
+
+Assign condition $D_i$ (0: control, 1: treatment)
+
+## Challenge
+
+```{r}
+dat_2 = dat %>% 
+  select(ID, Y1, Y0, Z, Y) %>% 
+  mutate(tau = Y1 - Y0) %>% 
+  relocate(tau, .after = "Y0")
+
+colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+                    "\\(D_i\\)", "\\(Y_i\\)")
+
+dat_2 %>% 
+  kbl(escape = FALSE) %>%
+  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+```
+
+. . .
+
+To know $E[\tau_i]$ we need $(Y_i(1) - Y_i(0))$
+
+. . .
+
+But we only observe one at a time for each unit
+
+## Challenge
+
+```{r}
+dat_2 = dat %>% 
+  select(ID, Y1, Y0, Z, Y) %>% 
+  mutate(tau = Y1 - Y0) %>% 
+  relocate(tau, .after = "Y0")
+
+colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+                    "\\(D_i\\)", "\\(Y_i\\)")
+
+dat_2 %>% 
+  kbl(escape = FALSE) %>%
+  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+```
+
+This is the **FUNDAMENTAL PROBLEM OF CAUSAL INFERENCE**
+
+
+::: aside
+The term comes from: Holland, Paul W. 1986. ["Statistics and Causal Inference."](https://doi.org/10.2307/2289064) *Journal of the American Statistical Association* 81 (396): 945-960
+:::
+
+## Challenge
+
+```{r}
+dat_2 = dat %>% 
+  select(ID, Y1, Y0, Z, Y) %>% 
+  mutate(tau = Y1 - Y0) %>% 
+  relocate(tau, .after = "Y0")
+
+colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+                    "\\(D_i\\)", "\\(Y_i\\)")
+
+dat_2 %>% 
+  kbl(escape = FALSE) %>%
+  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+```
+
+How do we approximate $E[\tau_i]$ with observed data?
+
+## ATE decomposition
+
+$$
+E[\tau_i]
+$$
+
+. . .
+
+Substitute unit-level treatment effect
+
+## ATE decomposition
+
+$$
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)]
+\end{align}
+$$
+
+. . .
+
+Apply linearity of expectations
+
+## ATE decomposition
+
+$$
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)] \\
+  & = E[Y_i(1)] - E[Y_i(0)]
+\end{align}
+$$
+
+. . .
+
+We can only calculate
+
+. . .
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0] 
+$$
+
+. . .
+
+We need to convince ourselves that
+
+. . .
+
+$$
+E[Y_i(1)] - E[Y_i(0)] = E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+## ATE decomposition
+
+$$
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)] \\
+  & = E[Y_i(1)] - E[Y_i(0)]
+\end{align}
+$$
+
+
+We can only calculate
+
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0] 
+$$
+
+
+We need to convince ourselves that
+
+$$
+E[Y_i(1)] - E[Y_i(0)] = E[Y_i(1) \color{purple}{| D_i = 1}] - E[Y_i(0) \color{purple}{| D_i = 0}]
+$$
+
+
+## ATE decomposition
+
+$$
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)] \\
+  & = E[Y_i(1)] - E[Y_i(0)]
+\end{align}
+$$
+
+
+We can only calculate
+
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0] 
+$$
+
+
+We need to convince ourselves that [$D_i$ can be ignored]{style="color: purple;"}
+
+$$
+E[Y_i(1)] - E[Y_i(0)] = E[Y_i(1) \color{purple}{| D_i = 1}] - E[Y_i(0) \color{purple}{| D_i = 0}]
+$$
+
+## Obstacle
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+
+## Obstacle
+
+$$
+E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+. . .
+
+Rewrite to include $\tau_i$
+
+. . .
+
+
+$$
+= E[\color{purple}{\tau_i + Y_i(0)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+. . .
+
+Apply linearity of expectations again
+
+
+$$
+= E[\color{purple}{\tau_i} | D_i = 1] +
+E[\color{purple}{Y_i(0)} | D_i = 1] - 
+E[Y_i(0) | D_i = 0]
+$$
+
+
+## Obstacle
+
+$$
+E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+
+
+Rewrite to include $\tau_i$
+
+
+
+
+$$
+= E[\color{purple}{\tau_i + Y_i(0)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+
+
+Apply linearity of expectations again
+
+
+$$
+= \underbrace{E[\color{purple}{\tau_i} | D_i = 1]}_{\text{ATE on the treated (ATT)}} +
+\underbrace{E[\color{purple}{Y_i(0)} | D_i = 1] - E[Y_i(0) | D_i = 0]}_{\text{Selection bias}}
+$$
+
+. . .
+
+
+We want to eliminate **selection bias**
+
+# How?
+
+## Strategy 1: Random assignment
+
+. . .
+
+If treatment $D_i$ is *randomly assigned*
+
+::: incremental
+- Potential outcomes are independent from treatment: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i$
+- Positivity: $0 < \text{Pr}[D_i = 1] < 1$
+- ATE $E[\tau_i]$ is **point-identified**
+- Estimate with difference in means between treatment and control: $\widehat E_{DM}[\tau_i] = \widehat E[Y_i(1)] - \widehat E[Y_i(0)]$
+:::
+
+. . .
+
+```{r, echo = TRUE, eval = FALSE}
+difference_in_means(Y ~ D, data = data) # estimatr package
+```
+
+## Randomization inference
+
+::: incremental
+1. Choose a **test statistic** and **sharp null hypothesis**
+
+2. Calculate *observed* test statistic $T^{obs}$
+
+3. Randomly shuffle treatment assignment
+
+4. Calculate test statistic $\widetilde T_1$
+
+5. Repeat $K$ times to obtain distribution of test statistics $\widetilde T = \{\widetilde T_1, \ldots, \widetilde T_K \}$
+
+6. **p-value:**  Proportion in $\widetilde T >= T^{obs}$
+:::
+
+::: aside
+The **sharp null hypothesis** assumes no effect at all. $H_0 : \tau_i = Y_i(1) - Y_i(0) = 0 \forall i$
+:::
+
+## Example
+
+```{r}
+declaration = 
+  declare_model(N = 100, U = rnorm(N),
+                potential_outcomes(Y ~ 0.25 * Z + U)) +
+  declare_inquiry(ATE = mean(Y_Z_1 - Y_Z_0)) +
+  declare_assignment(Z = complete_ra(N, prob = 0.5)) +
+  declare_measurement(Y = reveal_outcomes(Y ~ Z)) +
+  declare_estimator(Y ~ Z, model = difference_in_means, 
+                    inquiry = "ATE")
+
+set.seed(20241108)
+experiment = draw_data(declaration) %>% 
+  rename(D = Z) %>% 
+  select(ID, Y, D) 
+```
+
+
+```{r, echo = TRUE}
+experiment
+```
+
+
+## Create randomization distribution
+
+::: aside
+Code relies on `tidyverse`, `infer` and `estimatr` packages
+:::
+
+::: {.panel-tabset}
+## Code
+
+```{r, echo = TRUE}
+#| code-line-numbers: "|3|4|5|6|7|8|9|10"
+set.seed(20241108)
+
+null_df = experiment %>% 
+  specify(Y ~ D) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  split(.$replicate) %>% 
+  map(~difference_in_means(Y ~ D, data = .)) %>% 
+  map(tidy) %>% 
+  bind_rows(.id = "replicate")
+```
+
+## Output
+
+```{r}
+null_df
+```
+
+:::
+
+## Visualize
+
+```{r}
+obs = difference_in_means(Y ~ D, data = experiment) %>%
+  tidy %>% .$estimate
+
+dens = density(null_df$estimate)
+
+data = tibble(estimate = dens$x,
+              dens = dens$y) %>% 
+  mutate(p = ifelse(abs(estimate) >= abs(obs), 1, 0))
+
+p0 = ggplot(data) + 
+  aes(x = estimate,
+      y = dens) + 
+  geom_line(linewidth = 2) +
+  labs(x = "ATEs under sharp null hypothesis",
+       y = "Density") +
+  theme_gray(base_size = 20)
+
+p0
+  
+```
+
+## Visualize
+
+```{r}
+
+p1 = p0 +
+  geom_vline(
+    xintercept = c(-obs, obs),
+    linetype = "dashed",
+    color = "purple",
+    linewidth = 1) +
+  annotate(
+    "text",
+    x = obs + 0.15,
+    y = 1.8,
+    label = "Observed ATE",
+    color = "purple"
+    )
+
+p1
+```
+
+## Visualize
+
+```{r}
+p2 = p1 +
+  geom_area(
+    data = filter(data, p == 1 & estimate > 0),
+    fill = "purple",
+    alpha = 0.5
+  ) +
+  geom_area(
+    data = filter(data, p == 1 & estimate < 0),
+    fill = "purple",
+    alpha = 0.5
+  ) 
+  
+p2
+```
+
+## Visualize
+
+```{r}
+p2
+```
+
+
+```{r, echo = TRUE}
+mean(abs(null_df$estimate) >= abs(obs))
+```
+
+## Normal-approximation inference
+
+```{r, echo = TRUE}
+mean(abs(null_df$estimate) >= abs(obs)) # randomization inference p-value
+```
+
+. . .
+
+Compare with:
+
+```{r, echo = TRUE}
+difference_in_means(Y ~ D, data = experiment) %>% tidy()  %>% .$p.value
+```
+
+::: incremental
+- Normal approximation compares test statistic to t-distribution
+
+- Based on "weak" null hypothesis $H_0: E[\tau_i] = 0$
+
+- vs. randomization inference sharp null $H_0 : \tau_i = Y_i(1) - Y_i(0) = 0 \forall i$
+:::
+
+# Using control variables
+
+[HERE AN EXAMPLE]
+
+
+
+
+# What if I don't have random assignment?
+
+
+## Strategy 2: Ignorability
+
+. . .
+
+What if we cannot assume random assignment?
+
+## Strategy 2: Ignorability
+
+We can still conduct valid causal inference if we believe treatment assignment is **strongly ignorable** (conditional on covariates)
+
+. . .
+
+Requirements:
+
+::: incremental
+- *Conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
+- *Positivity*: There exists $\epsilon > 0$ such that $$\epsilon < Pr[D_i = 1 | \mathbf{X}_i] < 1 - \epsilon$$
+:::
+
+::: aside
+*Weak ignorability* only requires $Y_i(d) \perp \!\!\! \perp D_i | \mathbf{X}_i \forall d \in \{0, 1\}$, which in most cases makes no difference
+:::
+
+## Strategy 2: Ignorability
+
+If strong ignorability holds:
+
+::: incremental
+- ATE $E[\tau_i]$  is **point-identified**
+- Conditional ATE (CATE) $E[\tau_i | \mathbf{X}_i]$ is **point-identified**
+:::
+
+. . .
+
+Estimation strategies (more in the lab):
+
+::: incremental
+- Conditioning on covariates (regression)
+- Propensity score matching
+- IPW estimation
+- Doubly robust estimation
+:::
+
+## Positivity and overlap
+
+
+## Post-treatment variables
+
+. . .
+
+Randomization implies *independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i$
+
+. . .
+
+Strong ignorability implies *conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
+
+. . .
+
+Neither needs to be true for **post-treatment variables**
+
+. . .
+
+Conditioning on post-treatment variables introduces *bias*
+
+## What to do?
+
+https://doi.org/10.1111/ajps.12357
