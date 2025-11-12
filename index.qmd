@@ -33,4 +33,4 @@ Week 6: Final Paper Discussion
 
 [Week 9: Missing Data](slides/week9.html)
 
-<!-- [Week 10: Causal Inference](slides/week10.html) -->
+[Week 10: Causal Inference](slides/week10.html)
