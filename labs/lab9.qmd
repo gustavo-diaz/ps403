@@ -400,7 +400,7 @@ ipw0 = lm_robust(
 
 <!-- Check for overlap -->
 
-One of the perils of conditioning on propensity scores is the problem of **overlap**. We should check how the distribution of propensity scores between groups (make the plot look prettier if you can).
+One of the perils of conditioning on propensity scores is the problem of **overlap**. We should compare the distribution of propensity scores between groups (make the plot look prettier if you can).
 
 ```{r}
 ggplot(dpp) +
