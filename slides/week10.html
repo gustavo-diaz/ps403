@@ -6,8 +6,8 @@
 <script src="week10_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week10_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week10_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week10_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="week10_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.33">
 
   <title>Causal Inference</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -5895,107 +5895,114 @@ E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
 <!-- preamble start -->
 
     <script>
-
       function styleCell_mvvhlp5i9h4o8hxwafs0(i, j, css_id) {
-          var table = document.getElementById("tinytable_mvvhlp5i9h4o8hxwafs0");
-          var cell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-          if (cell) {
-              console.log(`Styling cell at (${i}, ${j}) with class ${css_id}`);
-              cell.classList.add(css_id);
-          } else {
-              console.warn(`Cell at (${i}, ${j}) not found.`);
-          }
+        var table = document.getElementById("tinytable_mvvhlp5i9h4o8hxwafs0");
+        table.rows[i].cells[j].classList.add(css_id);
+      }
+      function insertSpanRow(i, colspan, content) {
+        var table = document.getElementById('tinytable_mvvhlp5i9h4o8hxwafs0');
+        var newRow = table.insertRow(i);
+        var newCell = newRow.insertCell(0);
+        newCell.setAttribute("colspan", colspan);
+        // newCell.innerText = content;
+        // this may be unsafe, but innerText does not interpret <br>
+        newCell.innerHTML = content;
       }
       function spanCell_mvvhlp5i9h4o8hxwafs0(i, j, rowspan, colspan) {
         var table = document.getElementById("tinytable_mvvhlp5i9h4o8hxwafs0");
-        const targetCell = table.querySelector(`[data-row="${i}"][data-col="${j}"]`);
-        if (!targetCell) {
-          console.warn(`Cell at (${i}, ${j}) not found.`);
-        }
-
-        // Get all cells that need to be removed
-        const cellsToRemove = [];
+        const targetRow = table.rows[i];
+        const targetCell = targetRow.cells[j];
         for (let r = 0; r < rowspan; r++) {
-          for (let c = 0; c < colspan; c++) {
-            if (r === 0 && c === 0) continue; // Skip the target cell
-            const cell = table.querySelector(`[data-row="${i + r}"][data-col="${j + c}"]`);
-            if (cell) {
-              cellsToRemove.push(cell);
+          // Only start deleting cells to the right for the first row (r == 0)
+          if (r === 0) {
+            // Delete cells to the right of the target cell in the first row
+            for (let c = colspan - 1; c > 0; c--) {
+              if (table.rows[i + r].cells[j + c]) {
+                table.rows[i + r].deleteCell(j + c);
+              }
+            }
+          }
+          // For rows below the first, delete starting from the target column
+          if (r > 0) {
+            for (let c = colspan - 1; c >= 0; c--) {
+              if (table.rows[i + r] && table.rows[i + r].cells[j]) {
+                table.rows[i + r].deleteCell(j);
+              }
             }
           }
         }
-
-        // Remove all cells
-        cellsToRemove.forEach(cell => cell.remove());
-
-        // Set rowspan and colspan of the target cell if it exists
-        if (targetCell) {
-          targetCell.rowSpan = rowspan;
-          targetCell.colSpan = colspan;
-        }
+        // Set rowspan and colspan of the target cell
+        targetCell.rowSpan = rowspan;
+        targetCell.colSpan = colspan;
       }
-      // tinytable span after
-      window.addEventListener('load', function () {
-          var cellsToStyle = [
-            // tinytable style arrays after
-          { positions: [ { i: '3', j: 0 }, { i: '3', j: 1 }, { i: '3', j: 2 }, { i: '3', j: 3 }, { i: '3', j: 4 }, { i: '3', j: 5 },  ], css_id: 'tinytable_css_0uo83tvh64y5t3jg3eya',}, 
-          { positions: [ { i: '1', j: 0 }, { i: '2', j: 0 }, { i: '1', j: 1 }, { i: '2', j: 1 }, { i: '1', j: 2 }, { i: '2', j: 2 }, { i: '1', j: 3 }, { i: '2', j: 3 }, { i: '1', j: 4 }, { i: '2', j: 4 }, { i: '1', j: 5 }, { i: '2', j: 5 },  ], css_id: 'tinytable_css_4cf16obn3dv6kxxc86lh',}, 
-          { positions: [ { i: '0', j: 0 }, { i: '0', j: 1 }, { i: '0', j: 2 }, { i: '0', j: 3 }, { i: '0', j: 4 }, { i: '0', j: 5 },  ], css_id: 'tinytable_css_e7agl06zlrq4wmrvojdu',}, 
-          ];
-
-          // Loop over the arrays to style the cells
-          cellsToStyle.forEach(function (group) {
-              group.positions.forEach(function (cell) {
-                  styleCell_mvvhlp5i9h4o8hxwafs0(cell.i, cell.j, group.css_id);
-              });
-          });
-      });
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(0, 0, 'tinytable_css_idpio9x5lpvegnciplqz0u') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(0, 1, 'tinytable_css_idpio9x5lpvegnciplqz0u') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(0, 2, 'tinytable_css_idpio9x5lpvegnciplqz0u') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(0, 3, 'tinytable_css_idpio9x5lpvegnciplqz0u') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(0, 4, 'tinytable_css_idpio9x5lpvegnciplqz0u') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(0, 5, 'tinytable_css_idpio9x5lpvegnciplqz0u') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(1, 0, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(1, 1, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(1, 2, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(1, 3, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(1, 4, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(1, 5, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(2, 0, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(2, 1, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(2, 2, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(2, 3, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(2, 4, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(2, 5, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(3, 0, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(3, 1, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(3, 2, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(3, 3, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(3, 4, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
+window.addEventListener('load', function () { styleCell_mvvhlp5i9h4o8hxwafs0(3, 5, 'tinytable_css_idnebxrdsxtuqe4n3cnl0s') })
     </script>
 
     <style>
-      /* tinytable css entries after */
-      .table td.tinytable_css_0uo83tvh64y5t3jg3eya, .table th.tinytable_css_0uo83tvh64y5t3jg3eya { font-size: 0.8em; border-bottom: solid #d3d8dc 0.1em; }
-      .table td.tinytable_css_4cf16obn3dv6kxxc86lh, .table th.tinytable_css_4cf16obn3dv6kxxc86lh { font-size: 0.8em; }
-      .table td.tinytable_css_e7agl06zlrq4wmrvojdu, .table th.tinytable_css_e7agl06zlrq4wmrvojdu { font-size: 0.8em; border-top: solid #d3d8dc 0.1em; border-bottom: solid #d3d8dc 0.05em; }
+    .table td.tinytable_css_idpio9x5lpvegnciplqz0u, .table th.tinytable_css_idpio9x5lpvegnciplqz0u {  font-size: 0.8em;  border-bottom: solid 0.1em #d3d8dc; }
+    .table td.tinytable_css_idnebxrdsxtuqe4n3cnl0s, .table th.tinytable_css_idnebxrdsxtuqe4n3cnl0s {  font-size: 0.8em; }
     </style>
     <div class="container">
       <table class="table table-borderless" id="tinytable_mvvhlp5i9h4o8hxwafs0" style="width: auto; margin-left: auto; margin-right: auto;" data-quarto-disable-processing="true">
         <thead>
         
               <tr>
-                <th scope="col" data-row="0" data-col="0">estimator</th>
-                <th scope="col" data-row="0" data-col="1">estimate</th>
-                <th scope="col" data-row="0" data-col="2">std.error</th>
-                <th scope="col" data-row="0" data-col="3">conf.low</th>
-                <th scope="col" data-row="0" data-col="4">conf.high</th>
-                <th scope="col" data-row="0" data-col="5">p.value</th>
+                <th scope="col">estimator</th>
+                <th scope="col">estimate</th>
+                <th scope="col">std.error</th>
+                <th scope="col">conf.low</th>
+                <th scope="col">conf.high</th>
+                <th scope="col">p.value</th>
               </tr>
         </thead>
         
         <tbody>
                 <tr>
-                  <td data-row="1" data-col="0">Diff. in means</td>
-                  <td data-row="1" data-col="1">0.476</td>
-                  <td data-row="1" data-col="2">0.119</td>
-                  <td data-row="1" data-col="3">0.242</td>
-                  <td data-row="1" data-col="4">0.709</td>
-                  <td data-row="1" data-col="5">0.0000662</td>
+                  <td>Diff. in means   </td>
+                  <td>0.476</td>
+                  <td>0.119</td>
+                  <td>0.242</td>
+                  <td>0.709</td>
+                  <td>0.0000662</td>
                 </tr>
                 <tr>
-                  <td data-row="2" data-col="0">OLS (no controls)</td>
-                  <td data-row="2" data-col="1">0.476</td>
-                  <td data-row="2" data-col="2">0.119</td>
-                  <td data-row="2" data-col="3">0.242</td>
-                  <td data-row="2" data-col="4">0.709</td>
-                  <td data-row="2" data-col="5">0.0000662</td>
+                  <td>OLS (no controls)</td>
+                  <td>0.476</td>
+                  <td>0.119</td>
+                  <td>0.242</td>
+                  <td>0.709</td>
+                  <td>0.0000662</td>
                 </tr>
                 <tr>
-                  <td data-row="3" data-col="0">OLS + controls</td>
-                  <td data-row="3" data-col="1">0.413</td>
-                  <td data-row="3" data-col="2">0.116</td>
-                  <td data-row="3" data-col="3">0.185</td>
-                  <td data-row="3" data-col="4">0.642</td>
-                  <td data-row="3" data-col="5">0.000392</td>
+                  <td>OLS + controls   </td>
+                  <td>0.413</td>
+                  <td>0.116</td>
+                  <td>0.185</td>
+                  <td>0.642</td>
+                  <td>0.000392 </td>
                 </tr>
         </tbody>
       </table>
@@ -6047,16 +6054,13 @@ E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
 </ul>
 </div>
 </section>
-<section id="positivity-and-overlap" class="slide level2">
-<h2>Positivity and overlap</h2>
-</section>
 <section id="post-treatment-variables" class="slide level2">
 <h2>Post-treatment variables</h2>
 <div class="fragment">
 <p>Randomization implies <em>independence</em>: <span class="math inline">\((Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i\)</span></p>
 </div>
 <div class="fragment">
-<p>Strong ignorability implies <em>conditional independence</em>: <span class="math inline">\((Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i\)</span></p>
+<p>Strong ignorability requires <em>conditional independence</em>: <span class="math inline">\((Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i\)</span></p>
 </div>
 <div class="fragment">
 <p>Neither needs to be true for <strong>post-treatment variables</strong></p>

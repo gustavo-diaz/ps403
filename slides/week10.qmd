@@ -757,8 +757,6 @@ Estimation strategies (more in the lab):
 - Doubly robust estimation
 :::
 
-## Positivity and overlap
-
 
 ## Post-treatment variables
 
@@ -768,7 +766,7 @@ Randomization implies *independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i$
 
 . . .
 
-Strong ignorability implies *conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
+Strong ignorability requires *conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
 
 . . .
 
