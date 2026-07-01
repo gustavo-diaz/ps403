@@ -37,7 +37,7 @@ $$
 
 . . .
 
-They important part is that we can **operate** on them, meaning we can *theorize about producing single number summaries* that describe them
+The important part is that we can **operate** on them, meaning we can *theorize about producing single number summaries* that describe them
 
 ## Expected value
 

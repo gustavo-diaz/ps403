@@ -1,5 +1,5 @@
 ---
-title: "Regression"
+title: "Parametric Models"
 subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
@@ -17,1648 +17,671 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       fig.pos = "center")
 
-library(tidyverse)
-library(tinytable)
-library(broom) # tidy regression output
-library(gt)
-library(modelsummary)
-library(kableExtra)
-library(tidyr)
-
-# ggplot global options
-theme_set(theme_gray(base_size = 20))
-
-# set NU purple
-nu_purple = "#4E2A84"
 
 ```
 
 # Agenda
 
-- Bivariate regression
+- Main idea
+- Parametric regression
+- Binary choice models (logistic regression)
+- Maximum likelihood estimation
+- Lab
 
-- Multivariate regression
+# Parametric Models
 
-- Inference (lab)
+## So far 
 
-- Regression with matrix algebra (if we have time)
+- **Agnostic statistics approach:** Assume only what can be gleaned from data
 
-# Bivariate regression
+- No need to make *distributional* assumptions, only i.i.d. process
 
-## So far
+- Meaning our approach is *non-parametric*
 
-**Ingredients for statistical inference**
+- **Alternative:** Parametric models
 
-1. Estimand $\theta$
-
-2. Estimator $\widehat \theta$
-
-3. Data $X$
-
-4. Estimate $\overline X$
-
-5. Quantify uncertainty (confidence intervals, p-values)
-
-
-::: {style="text-align: center"}
-
-$X \rightarrow \widehat{\theta} \rightarrow \overline{X}  \xrightarrow{\text{hopefully!}} \theta$
-
-:::
-
-## MSE and expected value
-
-. . .
-
-$$
-\text{MSE} = E[(X-\color{purple}c)^2]
-$$
-
-. . .
-
-Alternative formula
-
-$$
-\text{MSE} = V[X] + (E[X] - \color{purple}c)^2
-$$
-
-. . .
-
-$E[X]$ minimizes MSE
-
-$$
-\text{MSE} = V[X] + (E[X] - \color{purple}{E[X]})^2
-$$
-
-## In practice
-
-This is all about one variable at a time!
-
-. . .
-
-We usually want to tell more nuanced stories:
+## What does "parametric" mean?
 
 ::: incremental
-1. Difference between/across groups
-2. Relationship between two variables
-3. Difference in the relationship between two variables between/across groups
+- **Parametric:** Assume full functional form with finite number of parameters
+
+- **Nonparametric:** Assume functional form is unknown, possibly infinite number of parameters
+
+- **Semiparametric:** ¯\\_(ツ)_/¯
 :::
 
-## Toy example
-
-```{r make-cookies, include=FALSE}
-cookies <- tibble(happiness = c(0.5, 2, 1, 2.5, 3, 1.5, 2, 2.5, 2, 3),
-                  cookies = 1:10)
-
-cookies_data <- cookies
-cookies_model <- lm(happiness ~ cookies, data = cookies)
-cookies_fitted <- augment(cookies_model)
-```
-
-```{r cookies-base, echo = FALSE}
-cookies_base <- ggplot(cookies_fitted, aes(x = cookies, y = happiness)) +
-  geom_point(size = 3) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 3)) +
-  scale_x_continuous(breaks = 0:10) +
-  labs(x = "Cookies eaten", y = "Level of happiness")
-
-cookies_base
-```
-
-## How to summarize?
-
-```{r, echo=FALSE}
-cookies_base
-```
-
-
-## Connect with a line
-
-```{r cookies-spline, echo=FALSE}
-cookies_base +
-  geom_smooth(method = lm, color = nu_purple, formula = y ~ splines::bs(x, 7), se = FALSE)
-```
-
-## Maybe smoother?
-
-```{r cookies-loess, echo = FALSE}
-cookies_base +
-  geom_smooth(method = "loess", color = nu_purple, se = FALSE)
-```
-
-## A straight line?
-
-```{r cookies-lm, echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple, se = FALSE)
-```
-
-## Straight lines are good
-
-. . .
-
-They can be written as a **linear equation**
-
-. . .
-
-$$
-y = a + bx
-$$
-
-. . .
-
-```{=html}
-<table>
-  <tr>
-    <td class="cell-center">\(y\)</td>
-    <td class="cell-left">&ensp;Outcome variable</td>
-  </tr>
-  <tr>
-    <td class="cell-center">\(x\)</td>
-    <td class="cell-left">&ensp;Explanatory variable</td>
-  </tr>
-  <tr>
-    <td class="cell-center">\(b\)</td>
-    <td class="cell-left">&ensp;Slope (\(\frac{\text{rise}}{\text{run}}\))</td>
-  </tr>
-  <tr>
-    <td class="cell-center">\(a\)</td>
-    <td class="cell-left">&ensp;y-intercept</td>
-  </tr>
-</table>
-```
-
-. . .
-
-This is the *smallest number of parameters* to draw a line
-
-. . .
-
-We can think of *intercept* and *slope* as **estimands**
-
-## Straight lines are good
-
-They can be written as a **linear equation**
-
-
-$$
-Y = \alpha + \beta X
-$$
-
-
-```{=html}
-<table>
-  <tr>
-    <td class="cell-center">\(Y\)</td>
-    <td class="cell-left">&ensp;Outcome variable</td>
-  </tr>
-  <tr>
-    <td class="cell-center">\(X\)</td>
-    <td class="cell-left">&ensp;Explanatory variable</td>
-  </tr>
-  <tr>
-    <td class="cell-center">\(\beta\)</td>
-    <td class="cell-left">&ensp;Slope (\(\frac{\text{rise}}{\text{run}}\))</td>
-  </tr>
-  <tr>
-    <td class="cell-center">\(\alpha\)</td>
-    <td class="cell-left">&ensp;y-intercept</td>
-  </tr>
-</table>
-```
-
-
-This is the *smallest number of parameters* to draw a line
-
-We can think of *intercept* and *slope* as **estimands**
-
-## Conditional expectations
-
-. . .
-
-CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
-
-. . .
-
-If we restrict ourselves to a linear functional form $Y = a + bX$
-
-. . .
-
-then the following minimize MSE of $Y$ given $X$:
-
-. . .
-
-- $g(X) = \alpha + \beta X$ where
-- $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
-- $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
-
-. . .
-
-So it's really all about $\beta$
-
-## Aside: Regression and correlation
-
-. . .
-
-Informally, we use regression coefficients (slopes) to determine whether two variables are **correlated**
-
-. . .
-
-Technically, they are related but on a different scale
-
-. . .
-
-**Regression coefficient:** $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
-
-. . .
-
-**Correlation:** $\rho = \frac{\text{Cov}[X,Y]}{SD[X] SD[Y]}$
-
-## Aside: Regression and correlation
-
-Informally, we use regression coefficients (slopes) to determine whether two variables are **correlated**
-
-Technically, they are related but on a different scale
-
-**Regression coefficient:** $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$ $\Rightarrow$ in units of Y (happiness)
-
-**(Pearson's) correlation:** $\rho = \frac{\text{Cov}[X,Y]}{SD[X] SD[Y]}$
-
-
-
-## Aside: Regression and correlation
-
-Informally, we use regression coefficients (slopes) to determine whether two variables are **correlated**
-
-Technically, they are related but on a different scale
-
-**Regression coefficient:** $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$ $\Rightarrow$ in units of Y (happiness)
-
-**(Pearson's) correlation:** $\rho = \frac{\text{Cov}[X,Y]}{SD[X] SD[Y]}$ $\Rightarrow$ [-1, 1] scale
-
-
-## What are we doing?
+## Ingredients of a parametric model
 
 ::: incremental
-- **Before:** Assume there is a *true parameter* that we do not observe (e.g. population mean, ATE)
-
-- **Now:** Assume there is a *true line* that best describes the relationship between X and Y
-
-- There is a **best linear predictor** that we want to *estimate*
+- Set of functions $g$
+- Indexed by parameter vector $\theta$
+- Model is true for every $\theta$ if...
+- $f_{Y|X}(y|x) = g(y,x; \theta)$
 :::
 
 . . .
 
-But how do we find it!?
+We assume there exists a function $g$ with parameters $\theta$
 
-## Which line is a better summary?
+. . .
+
+If you know $\theta$, then you can *fully characterize* the PMF/PDF of $Y$ given $X$
+
+. . .
+
+Then we can say $\theta$ is a *sufficient statistic*
+
+## Toy example: Biased coin flip
+
+. . .
+
+$$
+f_Y(y) = g(y;p) = 
+  \begin{cases}
+  1-p &:& y = 0\\
+  p &:& y=1\\
+  0 &:& \text{otherwise.}
+  \end{cases}
+$$
+
+::: incremental
+- $\theta = p$
+- If you know $p$, then you fully know the distribution of random variable $Y$
+:::
+
+# Regression
+
+::: {style="font-size: 40%;"}
+again
+:::
+
+
+## Classical linear model
+
+. . .
+
+$$
+Y = \boldsymbol{X \beta} + \varepsilon
+$$
+
+::: incremental
+- $Y$: Response (Outcome)
+- $X$: Matrix of predictors (explanatory variables)
+- $\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_K)^T$ Vector of coefficients
+- $\varepsilon \sim N(0, \sigma^2)$ Errors (residuals) i.i.d. normal with expectation zero 
+:::
+
+. . .
+
+If you know $\boldsymbol{\beta}$ and $\sigma^2$, then you can fully characterize the PMF/PDF of $Y$ given $X$
+
+## Why do we need $\varepsilon \sim N(0, \sigma^2)$?
+
+::: incremental
+- $\boldsymbol{\beta}$ represents the variation in $Y$ that comes from predictors $\boldsymbol{X}$
+- $\varepsilon$ represents variation in $Y$ that **cannot** be attributed to $\boldsymbol{X}$
+- If errors are i.i.d. then they are also *independent* of $\boldsymbol{X}$
+- We need this so that our *estimator* is **unbiased** by definition
+:::
+
+. . .
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \varepsilon
+$$
+
+. . .
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \color{purple}{\beta_2 X_2} + \varepsilon
+$$
+
+::: aside
+[Dr. Huntington-Klein explains it better](https://youtu.be/0Aukw3CdB-Q?si=A6mQhm2l9QE3ObHM)
+:::
+
+# Binary Choice Models
+
+## Logistic regression
+
+::: aside
+Called logit model in the AM textbook
+:::
+
+. . .
+
+Parametric model
+
+$$
+g(y, \boldsymbol{X}; \beta) = 
+\begin{cases}
+1-h(\boldsymbol{X\beta}) &:& y = 0\\
+h(\boldsymbol{X\beta}) &:& y = 1 \\
+0 &:& \text{otherwise.}
+\end{cases}
+$$
+
+. . .
+
+Let $h(\boldsymbol{X\beta}) = Pr(Y = 1 | X) = p(X)$ for simplicity
+
+## Logistic regression
+
+::: aside
+Called logit model in the AM textbook
+:::
+
+Parametric model
+
+$$
+g(y, \boldsymbol{X}; \beta) = 
+\begin{cases}
+1-h(\boldsymbol{X\beta}) &:& y = 0\\
+h(\boldsymbol{X\beta}) &:& y = 1 \\
+0 &:& \text{otherwise.}
+\end{cases}
+$$
+
+## Logistic regression
+
+::: aside
+Called logit model in the AM textbook
+:::
+
+Parametric model
+
+$$
+g(y, \boldsymbol{X}; \beta) = 
+\begin{cases}
+1-p(X) &:& y = 0\\
+p(X) &:& y = 1 \\
+0 &:& \text{otherwise.}
+\end{cases}
+$$
+
+::: incremental
+- $\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_K)^T$ 
+- $p(X)$ or $h(\boldsymbol{X\beta})$ is the *mean* or *link* function
+- We need the link to bound $y$ in the $[0,1]$ range
+:::
+
+## Logistic regression
+
+
+<!-- My old cheatsheet -->
+<!-- https://drive.google.com/drive/folders/1y0SwNYAjG5_uDGj7MaaJJoS3TpZ_5HuL -->
+
+For the logit model, the link is the *logistic function*
+
+$$
+p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
+$$
+
+. . .
+
+
+```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
+library(tidyverse)
+
+theme_set(theme_gray(base_size = 25))
+
+ggplot(data = data.frame(x = c(-3,3))) +
+  aes(x) +
+  stat_function(fun = function(x) exp(x)/(1+exp(x)), n = 100, linewidth = 2) +
+  ylim(0,1) +
+  labs(y = "p(X)")
+  
+```
+
+## Logistic regression
+
+
+For the logit model, the link is the *logistic function*
+
+$$
+p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
+$$
+
+. . .
+
+Rearrange to get the *odds ratio*
+
+$$
+\frac{p(X)}{1-p(X)} = e^{{X\beta}}
+$$
+
+::: aside
+This is still a **linear model** in the sense that it is *linear in parameters*
+:::
+
+
+## Logistic regression
+
+
+Taking the natural logarithm gives the *log odds*
+
+$$
+log \left (\frac{p(X)}{1-p(X)} \right) = X\beta
+$$
+
+::: incremental
+- Weird to interpret, easy to estimate
+- It's called *logit* because you need to *log* *it* to make it easier to estimate
+- How do we estimate?
+:::
+
+::: aside
+Notice we are not making assumptions about an error term because we are modeling a Bernoulli distribution
+:::
+
+## Maximum likelihood estimation (MLE)
+
+::: aside
+[Dr. King explains it better](https://youtu.be/P79af1fkUsk?si=9eIT50q7KK0uh2nx&t=1313)
+:::
+
+<!-- Show intuition with math, then example from ISLR -->
+::: incremental
+- Knowing $\theta$ is enough to characterize conditional PMF of $Y$ given $X$
+- But we do not know $\theta$! We only know the data we observe
+- We can try many different values for $\theta$ and see what sticks
+- **Trick:** Find $\theta$ that *would have maximized the probability of obtaining the data we observe*
+- **Restated:** Find *parameters* that would have made outcomes *as likely as possible*
+:::
+
+## Example: Which line makes observed data more likely?
 
 ![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
 
 ## More formally
 
-::: incremental
-- The **best linear predictor** is the line that minimizes the distance of each observation to the line
+. . .
 
-- That distance is known as **residual** or **error**
-:::
-
-## Visualizing residuals
-
-::: {.panel-tabset}
-
-## Plot
-
-```{r, echo = FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple, se = FALSE)
-```
-
-## Code
-
-```{r, eval = FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple, se = FALSE)
-```
-:::
-
-## Visualizing residuals
-
-::: {.panel-tabset}
-
-## Plot 
-
-```{r, echo = FALSE}
-cookies_with_residual <- cookies_base +
-  geom_smooth(method = "lm", color = nu_purple, se = FALSE) +
-  geom_segment(aes(xend = cookies, yend = .fitted), color = "#FF851B", size = 1)
-
-cookies_with_residual
-```
-
-## Code
-
-```{r, eval = FALSE}
-cookies_with_residual <- cookies_base +
-  geom_smooth(method = "lm", color = nu_purple, se = FALSE) +
-  geom_segment(aes(xend = cookies, yend = .fitted), color = "#FF851B", size = 1)
-
-cookies_with_residual
-```
-
-:::
-
-## More formally
-
-- The **best linear predictor** is the line that minimizes the distance of each observation to to the line
-
-- That distance is know as a **residual** or **error**
+Likelihood function $\mathcal{L}(t|Y, \boldsymbol{X})$
 
 . . .
 
-$$
-e_i = (y_i - \widehat y_i)
-$$
-
-## More formally
-
-- The **best linear predictor** is the line that minimizes the distance of each observation to to the line
-
-- That distance is know as a **residual** or **error**
-
+Maximum likelihood estimator
 
 $$
-e_i = (y_i - (b_0 + b_1 x_{1i}))
-$$
-
-## Minimizing residuals
-
-We want to find a **vector of coefficients** ($\widehat \beta_0$, $\widehat \beta_1$) that minimizes the **sum of squared residuals**
-
-. . .
-
-$$
-SSR = \sum_{i=1}^n e_i^2
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}\mathcal{L}(t|Y, \boldsymbol{X}) = \underset{t\in\Theta}{\text{argmax}} \prod_{i=1}^n\mathcal{L}(t|Y_i, \boldsymbol{X_i})
 $$
 
 . . .
 
-We could try many lines until we find the the smallest SSR
-
-. . .
-
-Or use a method called **Ordinary Least Squares** (OLS)
-
-## OLS regression by plug-in principle
-
-. . .
-
-**Estimand**
-
-$\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X] \qquad \beta = \frac{\text{Cov}[X,Y]}{V[X]}$
-
-&nbsp;
-
-. . .
-
-**Estimator**
-
-$\widehat\alpha = \overline Y - \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2} \overline{X} \qquad \widehat{\beta} = \frac{\overline{XY} - \overline{X} \cdot \overline{Y}}{\overline{X^2} - \overline{X}^2}$
-
-
-
-::: aside
-$\widehat{\alpha}$: intercept; $\widehat{\beta}$: slope
-:::
-
-
-## Back to cookies
-
-. . .
+Products are hard, maximize *log-likelihood* instead
 
 $$
-\widehat{y} = \widehat \beta_0 + \widehat \beta_1 x_1
+\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}[\text{log}\mathcal{L}(t|Y, \boldsymbol{X})] = \underset{t\in\Theta}{\text{argmax}} \sum_{i=1}^n\text{log}\mathcal{L}(t|Y_i, \boldsymbol{X_i})
 $$
 
-## Back to cookies
+## Another way to look at it
 
-$$
-\widehat{\text{happiness}} = \beta_0 + \beta
-_1 \text{cookies}
-$$
+![](fig/mle_viz.png){fig-align="center"}
 
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
-:::
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = TRUE,
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-:::
-
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = \beta_0 + \beta_1 \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-:::
-
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-:::
-
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-**On average**
-
-:::
-
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-**On average**, one additional cookie
-
-:::
-
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-**On average**, one additional cookie increases happiness by 0.16 points
-
-:::
-
-::::
-
-## Helpful for comparison
+## How do you find the maximum likehihood?
 
 . . .
 
-Is 0.16 happiness points per cookie a lot?
-
-. . .
-
-We cannot tell without a point of reference
-
-. . .
-
-But correlation is a reference on its own:
-
-```{r, echo = FALSE}
-correlation = tribble(
-  ~`Absolute magnitude`, ~Effect,
-  .1, "Small",
-  .3, "Moderate",
-  .5, "Large"
-)
-
-correlation %>% 
-  tt()
-
-```
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-**On average**, one additional cookie increases happiness by 0.16 points
-
-:::
-
-::::
-
-## Back to cookies
-
-:::: {.columns}
-
-::: {.column width="50%"}
-$\widehat{\text{happiness}} = 1.10 + 0.16 \cdot \text{cookies}$
-
-```{r fig.dim=c(4.8, 4.2), out.width="100%", echo=FALSE}
-cookies_base +
-  geom_smooth(method = "lm", color = nu_purple) +
-  coord_cartesian(xlim = c(0, 10), ylim = c(0, 4))
-```
-:::
-
-::: {.column width="50%"}
-
-```{r, echo=FALSE}
-happiness_model <- 
-  lm(happiness ~ cookies,
-     data = cookies_data)
-
-mod = modelsummary(list("happinness" = happiness_model),
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "kableExtra")
-
-mod %>% 
-  kable_styling(font_size = 25)
-```
-
-
-**On average**, one additional cookie increases happiness by 0.16 points
-
-Corresponds to $\rho =$ `r round(cor(cookies$cookies, cookies$happiness), 2)`
-
-:::
-
-::::
-
-# Multivariate regression
-
-## Problem
-
-What if we wanted to include more variables?
-
-. . .
-
-Of course we can!
-
-. . .
-
-But why would we want do that?
-
-## Depends on what you want to say
+**Analytically**
 
 ::: incremental
-- **Level 1:** Description of *conditional means*
+- Take the derivative of $\text{log}\mathcal{L}(\theta|Y, X)$ w.r.t. $\theta$
 
-- **Level 2:** Statistical inference (needs CIs or p-values)
+- Set to $0$, solve for $\theta$ and label it $\widehat \theta$ (if possible)
 
-- **Level 3:** Causal inference (needs **assumptions**)
+- Check if second derivative is negative (so it is maximum not minimum)
 :::
 
-. . .
+## How do you find the maximum likehihood?
 
-**My take:** You only care about level 2 because you have (at least) a *proto-causal* story
-
-. . .
-
-Meaning there is a focal X and Y relationship we want to measure, but it is "contaminated" by some confounder
+**Numerically**
 
 . . .
 
-We need to "adjust" or "control" the effect of X on Y (more in 3 weeks)
-
-## Ordinary Least Squares (OLS)
-
-Rewrite with an arbitrary number of variables
+Computer will do it for you
 
 . . .
 
-Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
+Use optimization algorithm to find maxima (if any)
 
 . . .
 
-Such that
-
-$$
-\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
-$$
+Computationally intensive to write on your own
 
 . . .
 
-Where $e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))$
+Most MLE methods have fast pre-packaged functions
 
-::: aside
-Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
-:::
+. . .
 
+**Rule of thumb:** If the algorithm takes too long, don't believe the result!
 
-## Ordinary Least Squares (OLS)
-
-Rewrite with an arbitrary number of variables
-
-
-Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
-
-
-Such that
-
-$$
-\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
-$$
-
-
-Where $e_i = (Y_i - \widehat Y_i)$
-
-::: aside
-Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
-:::
-
-## Ordinary Least Squares (OLS)
-
-Rewrite with an arbitrary number of variables
-
-
-Function  $\widehat{g} = \widehat \beta_0 + \widehat \beta_1 X_{[1]} + \widehat \beta_2 X_{[2]} + \ldots + \widehat \beta_K X_{[K]}$
-
-
-Such that
-
-$$
-\mathbf{\widehat \beta} = (\widehat\beta_0, \widehat\beta_1, \ldots, \widehat\beta_K) = \underset{(b_0, b_1, \ldots, b_K) \in \mathbb{R}^{K + 1}}{\text{argmin}} \frac{1}{n} \sum_{i = 1}^n e_i^2
-$$
-
-
-Where $e_i = (\text{actual} - \text{predicted})$
-
-::: aside
-Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
-:::
-
-## ANES 2016 data
-
-
+## With data
 
 ```{r}
+library(ISLR)
 
-
-# remotes::install_github("jamesmartherus/anesr")
-library(anesr)
-
-
-data(timeseries_2016)
-```
-
-
-## Variables
-
-::: aside
-**Codebook:**  <https://electionstudies.org/wp-content/uploads/2018/12/anes_timeseries_2016_userguidecodebook.pdf>
-:::
-
-::: {.panel-tabset}
-## Code
-
-```{r}
-nes16 = timeseries_2016 %>% 
-  select(
-    V162079, # Feeling thermometer for TRUMP [POST]
-    V162230x, # Better if man works and woman takes care of home [POST]
-    V162255, # Is Barack Obama Muslim (yes/no) [POST]
-    V161267, # Respondent Age [PRE]
-    V161270, # Highest level of Education (Years) [PRE]
-    V161158x # Party ID [PRE]
-  )
-```
-
-## Data
-
-```{r, echo = FALSE}
-nes16
-```
-
-:::
-
-## Recode
-
-::: {.panel-tabset}
-## Mutate
-
-```{r}
-nes16 = nes16 %>% 
-  mutate(
-    ft_trump_post = ifelse(V162079 < 0 | V162079 == 998, NA, V162079),
-    women_at_home = case_when(V162230x < 0 ~ NA,
-                              V162230x <= 3 ~ 1,
-                              V162230x <= 7 ~ 0),
-    obamamuslim = ifelse(V162255 == 1, 1, 0),
-    age = ifelse(V161267 < 0, NA, V161267),
-    age0 = age - 18,
-    educ_hs = case_when(V161270 < 0 ~ NA,
-                        V161270 >= 90 ~ NA,
-                        V161270 >= 9 ~ 1,
-                        V161270 <= 8 ~ 0),
-    republican = case_when(V161158x < 0 ~ NA,
-                           V161158x <= 4 ~ 0,
-                           V161158x <= 7 ~ 1)
-  )
-```
-
-## Select
-
-```{r}
-nes = nes16 %>% 
-  select(ft_trump_post,
-         women_at_home, obamamuslim,
-         age, age0,
-         educ_hs, republican)
-```
-
-## Data
-
-```{r, echo = FALSE}
-nes
-```
-
-:::
-
-
-## Main relationship
-
-::: {.panel-tabset}
-
-## Plot
-
-```{r, echo = FALSE}
-ggplot(nes) +
-  aes(x = obamamuslim,
-      y = ft_trump_post) +
-  geom_jitter(size = 1, 
-              width = 0.3,
-              alpha = 0.8,
-              color = nu_purple) +
-  scale_x_continuous(breaks = c(0, 1))
-```
-
-## Code
-
-```{r, eval = FALSE}
-ggplot(nes) +
-  aes(x = obamamuslim,
-      y = ft_trump_post) +
-  geom_jitter(size = 1, 
-              width = 0.3,
-              alpha = 0.8,
-              color = nu_purple) +
-  scale_x_continuous(breaks = c(0, 1))
-```
-
-:::
-
-## Regression as conditional means
-
-. . .
-
-$\widehat{\texttt{ft_trump_post}} = \beta_0 + \beta_1 \cdot \texttt{obamamuslim}$
-
-. . .
-
-```{r}
-lm_race = lm(ft_trump_post ~ obamamuslim, data = nes)
-```
-
-
-```{r echo = FALSE}
-lm_race %>% 
-  tidy() %>% 
-  select(term, estimate, std.error, p.value) %>% 
-  kbl(digits = 2)
-```
-
-## Regression as conditional means
-
-$\widehat{\texttt{ft_trump_post}} = 32.17 + 35.04 \cdot \texttt{obamamuslim}$
-
-```{r}
-lm_race = lm(ft_trump_post ~ obamamuslim, data = nes)
-```
-
-
-```{r echo = FALSE}
-lm_race %>% 
-  tidy() %>% 
-  select(term, estimate, std.error, p.value) %>% 
-  kbl(digits = 2)
-```
-
-::: incremental
-- What is the average feeling thermometer for someone who *does not* believe Obama is a Muslim?
-
-- What is the average feeling thermometer for someone who *does* believe Obama is a Muslim?
-:::
-
-## Regression as conditional means
-
-Compare with
-
-```{r}
-nes %>% 
-  select(ft_trump_post, obamamuslim) %>% 
-  drop_na() %>% 
-  group_by(obamamuslim) %>% 
-  summarize(estimate = mean(ft_trump_post))
+head(Default)
 ```
 
 . . .
 
 ```{r}
-sum(coef(lm_race))
+Default$default01 = ifelse(Default$default == "Yes", 1, 0)
+
+with(Default, table(default, default01))
 ```
 
-## Maybe just an education thing
-
-. . .
-
-```{r}
-coef(lm(obamamuslim ~ educ_hs, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ educ_hs, data = nes))
-```
-
-. . .
-
-```{r}
-with(nes, cor(educ_hs, obamamuslim, use = "pairwise.complete.obs"))
-```
-
-. . .
-
-```{r, echo = FALSE}
-correlation = tribble(
-  ~`Absolute magnitude`, ~Effect,
-  .1, "Small",
-  .3, "Moderate",
-  .5, "Large"
-)
-
-correlation %>% 
-  tt()
-
-```
-
-
-## Or maybe an age thing
-
-
-. . .
-
-```{r}
-coef(lm(obamamuslim ~ age, data = nes))
-```
-
-. . .
-
-```{r}
-summary(nes$age)
-```
-
-. . .
-
-```{r}
-summary(nes$age0)
-```
-
-
-. . .
-
-```{r}
-coef(lm(obamamuslim ~ age0, data = nes))
-```
-
-## Or maybe an age thing
-
-```{r}
-coef(lm(ft_trump_post ~ age0, data = nes))
-```
-
-. . .
-
-```{r}
-with(nes, cor(age, obamamuslim, use = "pairwise.complete.obs"))
-```
-
-
-## Or partisan motivated reasoning
-
-. . .
-
-```{r}
-coef(lm(obamamuslim ~ republican, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ republican, data = nes))
-```
-
-. . .
-
-```{r}
-with(nes, cor(republican, obamamuslim, use = "pairwise.complete.obs"))
-```
-
-## Adjusting for covariates
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim + educ_hs, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0, data = nes))
-```
-
-. . .
-
-```{r}
-coef(lm(ft_trump_post ~ obamamuslim + educ_hs + age0 + republican,
-        data = nes))
-```
-
-## Side by side
-
-```{r, echo = FALSE}
-lm0 = lm(ft_trump_post ~ obamamuslim, data = nes)
-
-lm1 = lm(ft_trump_post ~ obamamuslim + educ_hs, data = nes)
-
-lm2 = lm(ft_trump_post ~ obamamuslim + age, data = nes)
-
-lm3 = lm(ft_trump_post ~ obamamuslim + republican, data = nes)
-
-lm4 = lm(ft_trump_post ~ obamamuslim + educ_hs +
-           age + republican, data = nes)
-```
-
-```{r echo = FALSE}
-models = list(lm0, lm1, lm2, lm3, lm4)
-
-mods = modelsummary(models,
-             gof_map = c("nobs", "r.squared"),
-             stars = c('*' = .05),
-             output = "gt")
-
-mods %>% 
-  tab_style(
-    style = cell_text(color = "#00000000"),
-    locations = cells_body(columns = 2:6)) %>% 
-    tab_style(
-    style = cell_fill(color = "#B6ACD1"),
-    locations = cells_body(rows = 3:4)
-  )
-```
-
-## Side by side
-
-```{r echo = FALSE}
-mods %>% 
-  tab_style(
-    style = cell_text(color = "#00000000"),
-    locations = cells_body(columns = 3:6)) %>% 
-  tab_style(
-    style = cell_fill(color = "#B6ACD1"),
-    locations = cells_body(rows = 3:4)
-  )
-```
-
-
-## Side by side
-
-```{r echo = FALSE}
-mods %>% 
-  tab_style(
-    style = cell_text(color = "#00000000"),
-    locations = cells_body(columns = 4:6)) %>% 
-    tab_style(
-    style = cell_fill(color = "#B6ACD1"),
-    locations = cells_body(rows = 3:4)
-  )
-```
-
-## Side by side
-
-```{r echo = FALSE}
-mods %>% 
-  tab_style(
-    style = cell_text(color = "#00000000"),
-    locations = cells_body(columns = 5:6)) %>% 
-    tab_style(
-    style = cell_fill(color = "#B6ACD1"),
-    locations = cells_body(rows = 3:4)
-  )
-```
-
-## Side by side
-
-```{r echo = FALSE}
-mods %>% 
-  tab_style(
-    style = cell_text(color = "#00000000"),
-    locations = cells_body(columns = 6)) %>% 
-    tab_style(
-    style = cell_fill(color = "#B6ACD1"),
-    locations = cells_body(rows = 3:4)
-  )
-```
-
-
-
-## Side by side
-
-```{r echo = FALSE}
-mods %>% 
-    tab_style(
-    style = cell_fill(color = "#B6ACD1"),
-    locations = cells_body(rows = 3:4)
-  )
-```
-
-. . .
-
-We are (presumably) *reducing bias*, but *increasing variance* (standard errors)
-
-
-## Visualizing
-
-```{r echo = FALSE}
-names(models) = c("none",
-                  "educ_hs",
-                  "age",
-                  "republican",
-                  "all")
-
-modelplot(models, coef_map = "obamamuslim") +
-  labs(color = "Controls") +
-  theme(legend.position = "bottom", 
-        axis.text.y = element_text(
-          angle = 90, hjust = 0.5)
-        ) +
-  geom_vline(xintercept = 0, linetype = "dashed")
-```
-
-## Everything else constant {.smaller}
-
-Plug-in coefficients in equations:
-
-. . .
-
-$\widehat{\texttt{ft_trump_post}} = 32.17 + 35.04 \cdot \texttt{obamamuslim}$
-
-. . .
-
-$\widehat{\texttt{ft_trump_post}} =  32.76 + 34.85 \cdot \texttt{obamamuslim}  -0.56 \cdot \texttt{educ_hs}$
-
-. . .
-
-$\widehat{\texttt{ft_trump_post}} = 23.09 + 34.72 \cdot \texttt{obamamuslim} + 0.19 \cdot \texttt{age}$
-
-. . .
-
-$\widehat{\texttt{ft_trump_post}} = 20.367 + 22.74 \cdot \texttt{obamamuslim} + 37.53 \cdot \texttt{republican}$
-
-. . .
-
-$\widehat{\texttt{ft_trump_post}} = 21.34 + 22.23 \cdot \texttt{obamamuslim}  -6.22 \cdot  \texttt{educ_hs} +\\ 0.10 \cdot \texttt{age} + 37.54 \cdot \texttt{republican}$
-
-. . .
-
-&nbsp;
-
-::: {.r-stack}
-Coefficients now need to be interpreted as **marginal means** or **marginal slopes**
-:::
-
-. . .
-
-&nbsp; 
-
-::: {.r-stack}
-These only make sense if you think *at least one variable* is a **focal point**
-:::
-
-## Heterogeneous effects
-
-What if we believed the effect of obamamuslim varies depending on attitudes about gender roles?
-
-## Interactions {.smaller}
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-**Code**
-
-:::
-
-::: {.column width="50%"}
-**Math**
-:::
-
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-coef(lm(ft_trump_post ~ women_at_home,
-        data = nes))
-```
-
-:::
-
-::: {.column width="50%"}
-$y = \beta_0 + \beta_1 \mathtt{\text{women_at_home}} + \varepsilon$
-:::
-
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-coef(lm(ft_trump_post ~ 
-          obamamuslim + women_at_home,
-        data = nes))
-```
-
-:::
-
-::: {.column width="50%"}
-$y = \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \varepsilon$
-:::
-
-::::
-
-. . .
-
-:::: {.columns}
-
-::: {.column width="50%"}
-
-```{r}
-coef(lm(ft_trump_post ~ 
-          obamamuslim * women_at_home,
-        data = nes)) %>% 
-  tidy() # easier to read in slides
-```
-
-:::
-
-::: {.column width="50%"}
-$$
-\begin{align*}
-y = & \beta_0 + \beta_1 \mathtt{obamamuslim} + \beta_2 \mathtt{\text{women_at_home}} + \\
-& \beta_3 \mathtt{obamamuslim} \times  \mathtt{\text{women_at_home}} + \varepsilon
-\end{align*}
-$$
-:::
-
-::::
-
-## Caution
-
-. . .
-
-The linear model setup is flexible
-
-. . .
-
- $$\widehat{y} = \widehat \beta_0 + \widehat \beta_1 x_1 + \widehat \beta_2 x_2 + \ldots + \widehat \beta_K x_K$$
-
-. . .
-
-You can technically put *whatever* you want in a regression as long as $\text{observations} > \text{variables}$
-
-. . .
-
-But for *statistical* or *causal inference*, anything with more than 2-3 control variables doesn't make much sense
-
-## Increasing dimensions
-
-:::: {.columns}
-
-::: {.column width="50%"}
-![](fig/3d.webp)
-:::
-
-::::
-
-## Increasing dimensions
-
-:::: {.columns}
-
-::: {.column width="50%"}
-![](fig/3d.webp)
-:::
-
-::: {.column width="50%"}
-More dimensions $\rightarrow$ more likely to see:
-
-::: incremental
-- **Extrapolation:** Fitting line beyond actual range
-
-- **Interpolation:** Gaps within actual range
-
-:::
-
-:::
-
-::::
-
-. . .
-
-Illusion of learning from **empty space**!
-
-. . .
-
-AM call this **overfitting**
-
-
-## Wrapping up
-
-{{< video https://packaged-media.redd.it/8uql22tz6mb81/pb/m2-res_480p.mp4?m=DASHPlaylist.mpd&v=1&e=1761782400&s=df9e818ddb2641c0817cdfcc9d09c77188ecf303 >}}
-
-## Wrapping up
-
-- Regression as the go-to method to estimate conditional means
-
-- **B**est **L**inear **U**nbiased **E**stimator (BLUE)
-
-- Multivariate regression only makes sense with a 
-*marginal means* interpretation
-
-- Which requires a (proto-)causal story
-
-- And stops making sense with too many controls
-
-
-## Fun: OLS with matrix algebra
-
-**Outcome:** $n \times 1$ column vector
-
-$$Y = \begin{bmatrix}
-y_1 \\
-y_2 \\
-y_3 \\
-\vdots \\
-y_n
-\end{bmatrix}$$
-
-## Fun: OLS with matrix algebra
-
-**Explanatory variables:** $n \times (k+1)$ matrix
-
-$$X= \begin{bmatrix}
-1 & x_{11} & \dots & x_{1k} \\
-1 & x_{21} & \dots & x_{2k} \\
-\vdots & \vdots & \dots & \vdots \\
-1 & x_{n1} & \dots & x_{nk}
-\end{bmatrix}$$
-
-. . .
-
-$x_{ij}$ is the $i$-th observation of the $j$-th explanatory variable.
-
-## Linear regression model
-
-Let's say we have 173 observations (n = 173) and 2 explanatory variables (k = 3)
-
-. . .
-
-Equation: $y = \beta_0 + \beta_1x_1 + \beta_2x_2$
-
-. . .
-
-Matrix form: $$\begin{aligned} \begin{bmatrix}
-    y_1 \\
-    y_2 \\
-    \vdots \\
-    y_n
-    \end{bmatrix} = \begin{bmatrix}
-    1 & x_{11} & x_{21} \\
-    1 & x_{21} & x_{22} \\
-    \vdots & \vdots & \vdots \\
-    1 & x_{1173} & x_{2173} 
-    \end{bmatrix} \begin{bmatrix}
-    \beta_0 \\
-    \beta_1 \\
-    \beta_2 
-    \end{bmatrix}\end{aligned} $$
-    
-::: aside
-Sometimes you also see an error term $\epsilon$, we do not need it for "nonparametric" regression
-:::
-    
 ## Estimation
 
-$$\hat{\beta} = (X'X)^{-1}X'Y$$
+. . .
 
-::: {.r-stack}
-"X prime X inverse, X prime Y"
-:::
-
-## Example
+Linear probability model
 
 ```{r}
-cars_df = mtcars
+ols = lm(default01 ~ student + balance + income, data = Default)
+
+coef(ols) # very small numbers
+```
+
+
+## Estimation
+
+Linear probability model
+
+```{r}
+ols = lm(default01 ~ student + balance + income, data = Default)
+
+coef(ols) %>% round(5) # easier to read
+```
+
+. . .
+
+Logit model
+
+```{r}
+logit = glm(default01 ~ student + balance + income, 
+            data = Default, family = binomial)
+
+coef(logit) %>% round(5)
+```
+
+. . .
+
+Logit coefficients are expressed in *log-odds*
+
+## Convert to probabilities
+
+```{r}
+get_logit_prob = function(fit){
+  coefs = coef(fit) # extract coefficients from logit fit
+  odds = exp(coefs) # transform log-odds to odds
+  prob = odds / (1 + odds) # convert odds to probabilities
+  prob = round(prob, 5) # round for easy interpretation
+  return(prob)
+}
 ```
 
 . . .
 
 ```{r}
-Y = as.matrix(cars_df$mpg)
+get_logit_prob(logit)
 ```
 
 . . .
+
+```{r}
+coef(ols) %>% round(5)
+```
+
+## Why so different?
+
+::: {.panel-tabset}
+## Plot
 
 ```{r, echo = FALSE}
-Y
+library(marginaleffects)
+
+# Extract predictions
+p_ols = plot_predictions(ols,
+                 condition = "balance",
+                 draw = FALSE)
+
+p_log = plot_predictions(logit,
+                         condition = "balance",
+                         draw = FALSE)
+
+# Combine and label
+pred_df = bind_rows(
+  p_ols %>% mutate(Estimator = "OLS"),
+  p_log %>% mutate(Estimator = "Logit")
+)
+
+# Visualize
+ggplot(Default) +
+  aes(x = balance, y = default01) +
+  geom_jitter(alpha = 0.3, height = 0.1) +
+  geom_line(
+    data = pred_df,
+    aes(x = balance, 
+        y = estimate,
+        color = Estimator),
+    linewidth = 2) +
+  scale_color_viridis_d(begin = 0, end = 0.8) +
+  labs(x = "Balance",
+       y = "Pr(Default)")
 ```
 
-## Example
 
-```{r}
-cars_df = mtcars
+## Code
+
+```{r, eval = FALSE}
+library(marginaleffects)
+
+# Extract predictions
+p_ols = plot_predictions(ols,
+                 condition = "balance",
+                 draw = FALSE)
+
+p_log = plot_predictions(logit,
+                         condition = "balance",
+                         draw = FALSE)
+
+# Combine and label
+pred_df = bind_rows(
+  p_ols %>% mutate(Estimator = "OLS"),
+  p_log %>% mutate(Estimator = "Logit")
+)
+
+# Visualize
+ggplot(Default) +
+  aes(x = balance, y = default01) +
+  geom_jitter(alpha = 0.3, height = 0.1) +
+  geom_line(
+    data = pred_df,
+    aes(x = balance, 
+        y = estimate,
+        color = Estimator),
+    linewidth = 2) +
+  scale_color_viridis_d(begin = 0, end = 0.8) +
+  labs(x = "Balance",
+       y = "Pr(Default)")
 ```
 
-```{r}
-Y = as.matrix(cars_df$mpg)
-```
 
-```{r}
-# create two separate matrices for IVs
-X1 = as.matrix(cars_df$hp)
-X2 = as.matrix(cars_df$wt)
+:::
 
-# bind them altogether into one matrix
-# with constant column
-constant =  rep(1, nrow(cars_df))
-X = cbind(constant, X1, X2)
-```
+## Why would you want to do this?
 
 . . .
 
-```{r echo=FALSE}
-X
-```
-
-## Calculate $\hat{\beta} = (X'X)^{-1}X'Y$
-
-```{r}
-# X prime X
-XpX = t(X) %*% X
-
-# X prime X inverse
-XpXinv = solve(XpX)
-
-# X prime Y
-XpY = t(X) %*% Y
-
-# beta coefficient estimates
-# X prime X inverse, X prime Y
-bhat = XpXinv %*% XpY
-```
+**Critique:** You can reverse engineer MLE so that your preferred parameters are optimal
 
 . . .
 
-Compare:
+**Achen (2002, ARPS):** Stop making up new parametric models!
 
 . . .
 
-```{r}
-c(bhat)
-```
+Or, rather, motivate your parametric models with well-laid out formal model
 
 . . .
 
-```{r}
-lm(mpg ~ hp + wt, data = mtcars) %>% coef()
-```
+So you get as close as possible to the **microfoundations**
 
+. . .
+
+**Microfoundations:** Explaining macro-level phenomena by modeling the behavior of individual agents
+
+
+## MLE finite sample properties
+
+
+. . .
+
+We said OLS was **BLUE**
+
+. . .
+
+MLE find the **MVUE** instead
+
+## MLE finite sample properties
+
+1. **M**inimum
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+. . .
+
+- **Unbiased:** $E[\widehat \theta] = \theta$
+
+. . .
+
+- **Minimum variance:** Efficiency
+
+. . .
+
+*IF* there is a MVUE, ML will find it
+
+. . .
+
+If *not*, it can still find something good enough
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+. . .
+
+2. Invariance to Reparameterization
+
+. . .
+
+- If $\widehat \theta$ is the MLE of $\theta$, then for any function $f(\theta)$ its MLE is $f(\widehat \theta)$
+
+. . .
+
+- **Example:** $\widehat \sigma$ is the MLE of $\sigma$, $\widehat \sigma^2$ is the MLE of $\sigma^2$
+
+. . .
+
+- Not true for other modes of inference!
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+2. Invariance to Reparameterization
+
+. . .
+
+3. Invariance to sampling plans
+
+. . .
+
+- We are not relyng on i.i.d. sampling to connect $\theta$ and $\widehat \theta$
+
+. . .
+
+- So collecting more data after looking at results is perfectly fine!
+
+## MLE finite sample properties
+
+1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
+
+2. Invariance to Reparameterization
+
+3. Invariance to sampling plans
+
+::: aside
+In textbooks, (2) and (3) are jointly referred to as the **invariance property** of MLE
+:::
+
+## Asymptotic properties
+
+. . .
+
+1. **Consistency:** WLLN implies that as $n \rightarrow \infty$, the sampling distribution of the MLE collapses to a spike over the parameter value
+
+. . .
+
+2. **Asymptotic normality:** CLT implies that as  $n \rightarrow \infty$, the distribution of the standardized MLE converges to $N(0,1)$
+
+. . .
+
+3. **Asymptotic efficiency:** Because MLE is a sufficient statistic by definition
+
+::: aside
+**Lab:** MLE will often give the same answers as a non-parametric estimator because the asymptotic properties are the same
+:::
+
+## What about inference?
+
+. . .
+
+**Short answer:** Normal-approximation standard errors/CIs/p-values are fine because asymptotic normality usually holds
+
+. . .
+
+**Long answer:**
+ 
+. . .
+
+You can conduct inference via likelihood-ratio tests between parameters of interest
+
+. . .
+
+But too much work to test all points of interest
+
+. . .
+
+**AM:** Don't take your models too seriously! Ok to be agnostic and compute robust/bootstrapped standard errors (more in the lab)
+
+::: aside
+See [here](https://projects.iq.harvard.edu/files/gov2001/files/inferencep_3.pdf) for more notes on likelihood-ratio based inference
+:::
+
+## Wrapping up
+
+- Parametric models as alternative way to think about inference
+
+- Makes more sense when i.i.d. is (really truly) untenable, but requires careful justification
+
+- Estimated via MLE (alternative is [method of moments](https://online.stat.psu.edu/stat415/lesson/1/1.4))
+
+- Many different opinions on how to deal with uncertainty
+
+- Most people who prefer the model-based approach rely more on Bayesian statistics than MLE
+
+- Overfitting, micronumerosity, etc. are still problems here

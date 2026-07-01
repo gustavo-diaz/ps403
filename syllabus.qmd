@@ -2,7 +2,7 @@
 title: |
        | POLI SCI 403
        | Probability and Statistics
-       | Fall 2025
+       | Fall 2026
 format: 
   typst:
     margin:
@@ -15,20 +15,22 @@ fontsize: 12pt
 #show link: set text(blue)
 ```
 
+::: {.block fill="rgb(\"E4E0EE\")" inset="10pt" radius="10pt" width="100%"}
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
 **Office Hours:** By appointment ([cal.com/gustavodiaz/](https://cal.com/gustavodiaz/))  
-**Office:** Scott Hall 103
+**Office:** Jacobs 3152
 
-**Teaching Assistant:** Artur Baranov (<artur.baranov@u.northwestern.edu>)  
-**Office Hours:** Fridays 9:30 -- 11:00am  
-**Office:** Scott Hall 110
+**Teaching Assistant:** TBD (<tbd@u.northwestern.edu>)  
+**Office Hours:** TBD  
+**Office:** TBD
 
-**Lecture:**  Thursdays 9:30am -- 12:20pm, Scott Hall 212  
-**Lab:** Fridays  11:00 -- 11:50am, Scott Hall 212  
+**Lecture:**  Tuesdays 9:30am -- 12:20pm, TBD  
+**Lab:** Thursdays  11:00 -- 11:50am, TBD    
 **GitHub Repository:** [github.com/gustavo-diaz/ps403](https://github.com/gustavo-diaz/ps403)  
-**Canvas:** [canvas.northwestern.edu/courses/235851](https://canvas.northwestern.edu/courses/235851)
+**Canvas:** TBD
 
+:::
  
 
 
@@ -41,7 +43,7 @@ This is the first course in the quantitative methods sequence for graduate stude
 
 # Learning Objectives
 
-The goal of statistical inference is to use the data we have to learn about something for which we do not have data. That connection requires making assumptions. This course aims at introducing tools and developing skills to conduct statistical inference with as few assumptions as possible.
+The goal of statistical inference is to use the data we have to learn about something for which we do not have data. Establishing that connection requires making assumptions. This course aims to introduce tools and develop skills to conduct statistical inference with as few assumptions as possible.
 
 
 By the end of the course, you will be able to apply statistical methods to conduct your own analyses, explain statistical tools and concepts in your own words, evaluate the credibility of applied and methodological work, and continue learning more advanced methods.
@@ -50,9 +52,9 @@ By the end of the course, you will be able to apply statistical methods to condu
 # Prerequisites
 
 <!-- Revise depending on what actually happens -->
-There are no formal requirements to take this course other than enrollment in the Political Science PhD program or express approval.
+There are no formal requirements to take this course other than enrollment in the Political Science PhD program or express approval by the instructor.
 
-This course does not assume prior training on statistics or quantitative methods beyond a grasp of US high school level algebra and calculus (which is covered in math camp). For example, you know that integrals have something to do with calculating the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work. For example, you are able to determine where a file is located in your laptop.
+This course does not assume prior training on statistics or quantitative methods beyond a grasp of US high school level algebra and calculus (which is covered in math camp). For example, you know that integrals have something to do with calculating the area under a curve, but you do not need to remember how to do integration by hand. I do assume you know how computer file systems work, meaning you are able to determine where a file is located in your laptop and can create new files and folders.
 
 I expect you to participate actively, productively, and respectfully in our meetings. Some of
 the material addresses complicated concepts or uses math extensively. I do not expect you to
@@ -62,7 +64,7 @@ understand every single equation for this course, but I do expect you to read ca
 
 ## Reading
 
-The main textbook we will follow is:
+The main textbook is:
 
 ::: {.callout-note}
 ## **Textbook**
@@ -72,9 +74,9 @@ Aronow, P.M. and Benjamin T. Miller. 2019. [*Foundations of Agnostic Statistics*
 
 
 <!-- Make sure to ask the library to stock this book -->
-The rest of the syllabus refers to this book as AM. A digital copy is available through the library subscription at no additional cost. You can purchase a physical copy directly from the publisher, although it is usually cheaper on online storefronts like Amazon. I advise purchasing a physical copy only if you see yourself referencing the book frequently after taking this course.
+The rest of the syllabus refers to this book as AM. A digital copy is available through the library subscription at no additional cost. You can purchase a physical copy directly from the publisher, although it is usually cheaper on online storefronts. I advise purchasing a physical copy only if you see yourself referencing the book frequently after taking this course.
 
-The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly otherwise. You can find URLs for additional readings in the Schedule section.
+The book tends to err on the side of brevity and mathematical rigor. Much of our class discussion, assignments, and additional reading will involve untangling and applying the topics in AM. Additional readings should be available through university library subscriptions or distributed promptly. You can find URLs for additional readings in the Schedule section.
 
 <!-- Consider adding recommended textbooks that are not required but helpful. Maybe restrict existing file only to course material alternatives -->
 
@@ -82,7 +84,7 @@ The book tends to err on the side of brevity and mathematical rigor. Much of our
 
 We will use [R](https://www.r-project.org/) and [RStudio](https://posit.co/downloads/) to work on assignments and classroom demonstrations.  The advantage of R is that it is free and open source, meaning that you will be able to apply everything you learn in this course anywhere else. The disadvantage is a somewhat steep learning curve. I believe the investment is worthwhile for anyone working with data or in data-adjacent careers. You are welcome to use different software for statistical computing, but I cannot guarantee I will be able to help with troubleshooting.
 
-You can install R and RStudio on your personal computer, which is the preferred use case. You can use [this link](https://sites.northwestern.edu/researchcomputing/resources/r-and-rstudio/) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
+You can install R and RStudio on your personal computer, which is the preferred use case. You can use [this link](https://rcdsdocs.it.northwestern.edu/tutorials/r/r-installation.html) for installation instructions on Windows and MacOS. See [this link](https://levente.littvay.hu/chromebook/) for installation instructions on Chromebooks, which is a bit more involved.
 
 <!-- Could we one day have a posit cloud server? -->
 You can also use [Posit Cloud](https://posit.cloud/) to access RStudio from any web browser. A free account should suffice for the purposes of this course and has the advantage of letting you access your work across devices.
@@ -95,8 +97,8 @@ If you ever need more computing resources than what a personal computer or a fre
 Your final grade in this course will depend on the following:
 
 - Participation
-- Lab assignments (9 total, due Mondays 11:59 PM)
-- Replication paper (due December 10 9AM)
+- Lab assignments (8 total, due Fridays 11:59 PM)
+- Correspondence paper (due December 9 9:00 AM)
 
 ## Participation
 
@@ -106,30 +108,32 @@ This course does not formally require attendance, but I do expect the usual leve
 
 We will have weekly assignments aimed at practicing the application of course material with statistical software. These will range from coding exercises to problems that help illustrate theorems. In general, the goal of the lab assignments is to learn why statistical analyses are (or should not be) conducted in a certain way.
 
-Usually, we will start working on the lab assignment during our class meeting on Thursdays. This will give you an opportunity to clarify goals and expectations. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
+We will dedicate a portion of the weekly lab meeting to lab assignments. This will give you an opportunity to collectively clarify goals and points of confusion. The expectation is that you will come to the meeting having already started working on the lab and have questions ready. On most weeks, you will need to work on your own time to finish the labs. You are welcome to work in groups during our meeting times and beyond, but you must submit individual reports.
 
 <!-- The goal is to give people enough time to prepare for next week's class  -->
-Labs are due on Mondays at 11:59PM the week after they are assigned and must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *satisfactory*, *unsatisfactory*, or *failed* (the last one applies if you did not submit or barely tried). I will mark late submissions as failed unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
+Labs are due on Fridays at 11:59PM the week after they are assigned and must be submitted through Canvas in PDF format (you may use the original lab `.qmd` files as templates). Labs will be marked as *satisfactory*, *unsatisfactory*, or *failed* (the last one applies if you did not submit or barely tried). I will mark late submissions as failed unless I give you written approval to submit later. You can resubmit any labs marked as unsatisfactory at any time up until the final paper deadline. If your lab is marked as unsatisfactory, I will give you detailed feedback on what needs to be done to receive a satisfactory mark.
 
 For most labs, I *expect* you to get stuck or be confused. Remember that the purpose of these assignments is to learn, and the quickest path to mastery is making mistakes. I find equal value on getting something right as I do on getting something wrong and doing your best to understand what went wrong or explaining how things should look like if they had gone right.
 
 The implication is that, to assign a satisfactory mark to your lab, I will be mostly looking for evidence that you have learned something useful.
 
 
-## Replication paper
+## Correspondence paper
 
-You will submit a short replication paper as your final assignment. The goal of this paper is to apply what you have learned this quarter on a topic of your interest by reproducing the analysis of a previously published article, reflecting on the way it was conducted, consider what could be done differently, and possibly improve upon it.
+You will submit a short correspondence paper as your final assignment. *Correspondence* is a new format adopted by the [*American Journal of Political Science*](https://onlinelibrary.wiley.com/journal/15405907) (AJPS) dedicated to scholarship that revisits the central empirical claims in previously published work. In the broader discipline, these are known as replication papers.
 
-You should think of this as the first step toward writing a publishable article in your field. You can find some guidelines on how to choose a publication to replicate [here](https://gking.harvard.edu/papers).
+The goal of the correspondence paper is to apply what you have learned this quarter on a topic of your interest by reproducing the analysis of a previously published article, reflecting on the way it was conducted, consider what could be done differently, and possibly improve upon it.
+
+You should think of this as the first step toward writing a publishable article in your field. Since the AJPS has a dedicated track for this form of scholarship, you are required to choose a paper published in the journal in the last five years (2021-2026).
 
 The paper does not need to be restricted to the methods covered in our class (the only requirement is some form of statistical analysis), but this means you should be willing to work to learn the new methods on your own. I believe this is a valuable skill to practice early on.
 
-You are allowed to work with co-authors or alone as you see fit. I am also open to discussing a different kind of paper if you know what you want to do.
+You are allowed to work with co-authors or alone as you see fit. I am also open to discussing a different kind of paper or a different target journal if you know what you want to do.
 
 You are required to schedule a meeting with me to discuss the topic of your replication paper. If we do not meet to discuss your paper at least once, your paper will be marked as failed. 
 
 <!-- As late as possible while giving me enough time to grade -->
-Final papers are due on Wednesday, December 10 at 9AM. You should submit your paper in PDF format through Canvas. Your paper should follow the format of a research note, around 3,000 words and focusing on the main point. You are also required to submit a link to a GitHub repository (or equivalent) including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in the appendix to keep the paper concise. You can read more about research notes in political science [here](https://resulumit.com/blog/polisci-research-notes/).
+Final papers are due on Wednesday, December 9 at 9AM. You should submit your paper in PDF format through Canvas. Your paper should follow the format listed in the [AJPS manuscript guidelines](https://ajps.org/guidelines-for-manuscripts/), up to 4,000 words and focusing on the main point. You are also required to submit a link to a GitHub repository (or equivalent) including all the code used to reproduce your tables, figures, and calculations. You may also include less important details in an appendix to keep the paper concise. You can read more about the correspondence format here: <https://ajps.org/2026/03/05/new-ajps-correspondence-and-corrections-policies/>
 
 Your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *failed*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline. I encourage submitting an incomplete paper for a temporary grade over asking for an incomplete course grade.
 
@@ -140,21 +144,21 @@ We will discuss more details about the final paper during Week 6 and throughout 
 
 This course uses a labor-based grading agreement, commonly known as contract grading. In this course, instead of being given a final grade based on how “good” your submitted assignments are, your final grade will be based on the amount of labor you put into the course. The goal is to decouple grades from performance and emphasize learning and effort.
 
-You will get a default grade if you meet the contract. It will go lower if you miss parts of the contract, it will go higher if you meet the baseline plus other criteria.
+You will get a default grade if you meet the baseline grading contract. It will go lower if you miss parts of the contract, it will go higher if you meet the baseline plus other criteria.
 
 To meet the baseline grading contract (B+), you should:
 
 - Complete Lab 0
 - Be late (by a maximum of 24 hours) on no more than one lab assignment
 - Submit the final paper before the deadline
-- Complete 7 out of 9 lab assignments with a satisfactory mark
+- Complete 6 out of 8 lab assignments with a satisfactory mark
 - Receive a satisfactory or outstanding mark in the final paper
 - Have a satisfactory participation status by the end of the semester
 
 
 To get an A-, you should meet the baseline grading contract AND meet at least one of the following:
 
-- Receive a satisfactory mark in 9 out of 9 lab assignments
+- Receive a satisfactory mark in 8 out of 8 lab assignments
 - Receive an outstanding mark in the final paper
 
 To get an A, you should complete the baseline contract AND both requirements listed to get an A-.
@@ -177,22 +181,24 @@ This course follows the [Northwestern University Syllabus Standards](https://www
 
 # Use of Generative AI Systems
 
-The use of generative artificial intelligence in this course is encouraged as long as it is used to amplify humans instead of replacing them. Any form of cheating, including improper use of content generated by artificial intelligence, constitutes a violation of Northwestern’s academic integrity policy.
+The use of generative artificial intelligence in this course is encouraged as long as it is used to amplify humans instead of replacing them. Any form of cheating, including improper use of content generated by artificial intelligence, constitutes a violation of Northwestern’s academic integrity policy. The instructor's general philosophy is that using LLMs for research, statistics, and coding hurts your learning, but can be helpful once you have a solid background.
 
-Copilot is the [University’s supported artificial intelligence service](https://www.it.northwestern.edu/about/news-events/2024/microsoft-copilot-available-university-community.html). When using Copilot while actively logged in with a Northwestern account, data is stored securely in Northwestern’s Microsoft tenant, and Microsoft will not use it for product improvement or to train its AI models. 
+Copilot is [Northwestern University’s supported artificial intelligence service](https://www.it.northwestern.edu/about/news-events/2024/microsoft-copilot-available-university-community.html). When using Copilot while actively logged in with a Northwestern account, data is stored securely in Northwestern’s Microsoft tenant, and Microsoft will not use it for product improvement or to train its AI models. 
 
 {{< pagebreak >}}
 
 # Schedule
 
-## Week 1 (September 18): Preliminaries
+## Week 1 (September 29): Preliminaries
 **Reading:**
 
 - AM Introduction
 
+<!-- Include a conversation about using AI for coding -->
+
 **Lab 0:** Project-oriented workflow in RStudio
 
-## Week 2 (September 25): Probability theory
+## Week 2 (October 6): Probability theory
 **Reading:**
 
 - AM Chapter 1
@@ -203,7 +209,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 
 **Lab 1:** Calculating and estimating probabilities in R
 
-## Week 3 (October 2): Random variables
+## Week 3 (October 13): Random variables
 
 **Reading:**
 
@@ -212,7 +218,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 
 **Lab 2:** Quantities of interest
 
-## Week 4 (October 9): Estimation
+## Week 4 (October 20): Estimation
 
 **Reading:**
 
@@ -223,7 +229,7 @@ Copilot is the [University’s supported artificial intelligence service](https:
 **Lab 3:** Estimation
 
 
-## Week 5 (October 16): Uncertainty
+## Week 5 (October 27): Uncertainty
 
 **Reading:**
 
@@ -240,19 +246,8 @@ Copilot is the [University’s supported artificial intelligence service](https:
 
 **Lab 4:** Quantifying uncertainty
 
-## Week 6 (October 23): Final project discussion
-**Reading:**
 
-- King, Gary. 2006. ["Publication, Publication."](https://doi.org/10.1017/S1049096506060252) *PS: Political Science and Politics* 39 (1): 119-125
-- King, Gary. ["How to Write a Publishable Paper as a Class Project"](https://gking.harvard.edu/papers)
-- Little, Andrew. 2016. ["Three Templates for Introductions to Political Science Articles"](https://anthlittle.github.io/files/little_intros.pdf)
-- Tai, Yuehong Cassandra, Yue Hu, and Frederick Solt. 2024. ["Democracy, Public Support, and Measurement Uncertainty."](https://doi.org/10.1017/S0003055422000429) *American Political Science Review* 118 (1): 512-518
-
-
-**Lab 5:** Final project proposal
-
-
-## Week 7 (October 30): Regression
+## Week 6 (November 3): Regression
 **Reading:**
 
 - AM Chapter 4
@@ -260,9 +255,9 @@ Copilot is the [University’s supported artificial intelligence service](https:
 <!-- - Achen, Christopher H. 2005. ["Let’s Put Garbage-Can Regressions and Garbage-Can Probits Where They Belong."](https://doi.org/10.1080/07388940500339167) *Conflict Management and Peace Science* 22 (4): 327-339 -->
 <!-- - Hansen, Bruce E. 2022. ["A Modern Gauss-Markov Theorem."](https://doi.org/10.3982/ECTA19255) *Econometrica* 90 (3): 1283-1294 -->
 
-**Lab 6:** Adjusting for covariates
+**Lab 5:** Adjusting for covariates
 
-## Week 8 (November 6): Parametric models
+## Week 7 (November 10): Parametric models
 **Reading:**
 
 - AM Chapter 5
@@ -271,9 +266,9 @@ Copilot is the [University’s supported artificial intelligence service](https:
 - Achen, Christopher. 2002. ["Toward a New Political Methodology: Microfoundations and ART."](https://doi.org/10.1146/annurev.polisci.5.112801.080943) *Annual Review of Political Science* 5: 423-450
 
 
-**Lab 7:** Maximum likelihood estimation
+**Lab 6:** Maximum likelihood estimation
 
-## Week 9 (November 13): Missing data
+## Week 8 (November 17): Missing data
 **Reading:** 
 
 <!-- https://www.john-fox.ca/Companion/appendices/Appendix-Multiple-Imputation.pdf -->
@@ -289,10 +284,10 @@ Copilot is the [University’s supported artificial intelligence service](https:
 <!-- - Rosenbaum, Paul R. 1987. ["Model-Based Direct Adjustment."](https://doi.org/10.2307/2289440) *Journal of the American Statistical Association* 82 (398): 387-394 -->
 <!-- - Kang, Joseph D.Y. and Joseph L. Schafer. 2007. ["Demystifying Double Robustness: A Comparison of Alternative Strategies for Estimating a Population Mean from Incomplete Data."](http://dx.doi.org/10.1214/07-STS227) *Statistical Science* 22 (4): 523-539 -->
 
-**Lab 8:** Dealing with missing data
+**Lab 7:** Dealing with missing data
 <!-- Make them simulate missingness in existing data, and then determine which correction method is more appropriate -->
 
-## Week 10 (November 20): Causal inference
+## Week 9 (November 24): Causal inference
 **Reading:**
 
 - AM Chapter 7
@@ -301,11 +296,9 @@ Copilot is the [University’s supported artificial intelligence service](https:
 <!-- - Rubin, Donald B. 1990. ["Comment: Neyman (1923) and Causal Inference in Experiments and Observational Studies."](https://doi.org/10.1214/ss/1177012032). *Statistical Science* 5 (4): 472-480 -->
 - Keele, Luke, Corrine McConnaughy, and Ismail White. 2012. ["Strengthening the Experimenter’s Toolbox: Statistical Estimation of Internal Validity."](https://doi.org/10.1111/j.1540-5907.2011.00576.x) *American Journal of Political Science* 56 (2): 484-499
 
-**Lab 9:** Randomization inference and hypothesis testing
-
-## Week 11 (November 27): NO CLASS THANKSGIVING BREAK
-
-## Week 12 (December 4): Review/make-up class
+**Lab 8:** Randomization inference and hypothesis testing
+ 
+## Week 10 (December 1): Review/make-up class
 
 <!-- {{< pagebreak >}} -->
 

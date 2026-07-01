@@ -6,17 +6,20 @@
 <script src="week1_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week1_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week1_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week1_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="week1_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Fall 2025">
-  <title>quarto-input772b23726cbf745e</title>
+  <title>quarto-input763bde63efb5b63d</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="week1_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="week1_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -29,7 +32,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="week1_files/libs/revealjs/dist/theme/quarto-ee9ab3830bbe7759b42dda8416faf5cd.css">
+  <link rel="stylesheet" href="week1_files/libs/revealjs/dist/theme/quarto-e7615ae3f47a09451c723600273e2044.css">
   <link href="week1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="week1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="week1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -357,6 +360,11 @@ NA: Fail</p>
 
 </section>
 
+<section id="ai-and-coding" class="title-slide slide level1 center">
+<h1>AI and Coding</h1>
+<p>Placeholder for a conversation</p>
+</section>
+
 <section id="lab-0" class="title-slide slide level1 center">
 <h1>Lab 0</h1>
 <p><a href="https://github.com/gustavo-diaz/ps403/blob/main/labs/lab0.qmd">github.com/gustavo-diaz/ps403/blob/main/labs/lab0.qmd</a></p>
@@ -551,7 +559,7 @@ NA: Fail</p>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -625,13 +633,14 @@ NA: Fail</p>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

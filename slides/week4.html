@@ -6,8 +6,8 @@
 <script src="week4_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="week4_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="week4_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="week4_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.33">
+<link href="week4_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Estimation</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="week4_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="week4_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -94,7 +97,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="week4_files/libs/revealjs/dist/theme/quarto-ee9ab3830bbe7759b42dda8416faf5cd.css">
+  <link rel="stylesheet" href="week4_files/libs/revealjs/dist/theme/quarto-e7615ae3f47a09451c723600273e2044.css">
   <link href="week4_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="week4_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -365,7 +368,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href=""></a><span class="co"># remotes::install_github("kjhealy/gssr")</span></span>
 <span id="cb1-3"><a href=""></a><span class="fu">library</span>(gssr)</span>
 <span id="cb1-4"><a href=""></a></span>
@@ -376,7 +379,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <span id="cb1-9"><a href=""></a>gss <span class="ot">=</span> gss22 <span class="sc">%&gt;%</span> </span>
 <span id="cb1-10"><a href=""></a>  <span class="fu">select</span>(vote20) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-11"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">vote =</span> <span class="fu">ifelse</span>(vote20 <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-12"><a href=""></a>  <span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href=""></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-1-2">
@@ -4269,18 +4272,18 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <h2>Which of the following implies i.i.d?</h2>
 <p><strong>Option 1</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="fragment">
 <p><strong>Option 2</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="fragment">
 <p><strong>Option 3</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>x0 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>x0 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
 <span id="cb5-2"><a href=""></a>x1 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
 <span id="cb5-3"><a href=""></a>x2 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
 <span id="cb5-4"><a href=""></a>x3 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
@@ -4289,7 +4292,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <span id="cb5-7"><a href=""></a>x6 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
 <span id="cb5-8"><a href=""></a>x7 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
 <span id="cb5-9"><a href=""></a>x8 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb5-10"><a href=""></a>x9 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href=""></a>x9 <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </section></section>
@@ -4303,7 +4306,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <p>Pretend our data is the population</p>
 <p><strong>Population mean</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">mean</span>(gss<span class="sc">$</span>vote)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">mean</span>(gss<span class="sc">$</span>vote)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7425181</code></pre>
 </div>
@@ -4311,9 +4314,9 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <div class="fragment">
 <p><strong>Sample mean</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
 <span id="cb8-2"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb8-3"><a href=""></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href=""></a><span class="fu">mean</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6</code></pre>
 </div>
@@ -4321,9 +4324,9 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">2</span>)</span>
 <span id="cb10-2"><a href=""></a>x <span class="ot">=</span> <span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-3"><a href=""></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href=""></a><span class="fu">mean</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.7</code></pre>
 </div>
@@ -4340,17 +4343,17 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>sample_mean <span class="ot">=</span> <span class="cf">function</span>(n){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>sample_mean <span class="ot">=</span> <span class="cf">function</span>(n){</span>
 <span id="cb12-2"><a href=""></a>  <span class="fu">mean</span>(<span class="fu">sample</span>(gss<span class="sc">$</span>vote, <span class="at">size =</span> n), <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb12-3"><a href=""></a>}</span>
 <span id="cb12-4"><a href=""></a></span>
 <span id="cb12-5"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
-<span id="cb12-6"><a href=""></a>means <span class="ot">=</span> <span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">sample_mean</span>(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href=""></a>means <span class="ot">=</span> <span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">sample_mean</span>(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-2-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>means</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>means</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.5 0.8 0.8 0.9 0.5 0.5 0.8 0.9 0.8 0.7</code></pre>
 </div>
@@ -4366,20 +4369,20 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>rep_means <span class="ot">=</span> <span class="cf">function</span>(reps){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>rep_means <span class="ot">=</span> <span class="cf">function</span>(reps){</span>
 <span id="cb15-2"><a href=""></a>  means <span class="ot">=</span> <span class="fu">replicate</span>(reps, <span class="fu">sample_mean</span>(<span class="dv">10</span>))</span>
 <span id="cb15-3"><a href=""></a>  out <span class="ot">=</span> <span class="fu">mean</span>(means)</span>
 <span id="cb15-4"><a href=""></a>  <span class="fu">return</span>(out)</span>
-<span id="cb15-5"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-5"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-3-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20250115</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20250115</span>)</span>
 <span id="cb16-2"><a href=""></a></span>
 <span id="cb16-3"><a href=""></a>obs <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">10</span>, <span class="dv">500</span>, <span class="at">by =</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb16-4"><a href=""></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">rep_means</span>(.)) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href=""></a>  <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-5"><a href=""></a>  <span class="fu">unlist</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -4415,7 +4418,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <div class="tab-content">
 <div id="tabset-4-1">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>draw_sample <span class="ot">=</span> <span class="cf">function</span>(data, n) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>draw_sample <span class="ot">=</span> <span class="cf">function</span>(data, n) {</span>
 <span id="cb17-2"><a href=""></a>  out <span class="ot">=</span> data <span class="sc">%&gt;%</span> </span>
 <span id="cb17-3"><a href=""></a>    <span class="fu">sample_n</span>(<span class="at">size =</span> n) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-4"><a href=""></a>    <span class="fu">summarize</span>(</span>
@@ -4426,7 +4429,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <span id="cb17-9"><a href=""></a>}</span>
 <span id="cb17-10"><a href=""></a></span>
 <span id="cb17-11"><a href=""></a><span class="co"># Example</span></span>
-<span id="cb17-12"><a href=""></a><span class="fu">draw_sample</span>(gss, <span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-12"><a href=""></a><span class="fu">draw_sample</span>(gss, <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.79</code></pre>
 </div>
@@ -4434,7 +4437,7 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 </div>
 <div id="tabset-4-2">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>draw_many <span class="ot">=</span> <span class="cf">function</span>(reps, data, n){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>draw_many <span class="ot">=</span> <span class="cf">function</span>(reps, data, n){</span>
 <span id="cb19-2"><a href=""></a>  temp <span class="ot">=</span> <span class="fu">replicate</span>(reps, </span>
 <span id="cb19-3"><a href=""></a>                   <span class="fu">draw_sample</span>(data, n)) <span class="sc">%&gt;%</span> </span>
 <span id="cb19-4"><a href=""></a>    <span class="fu">unlist</span>()</span>
@@ -4445,18 +4448,18 @@ T_E(\widehat F) = \widehat E[X] = \overline X
 <span id="cb19-9"><a href=""></a>  )</span>
 <span id="cb19-10"><a href=""></a>  </span>
 <span id="cb19-11"><a href=""></a>  <span class="fu">return</span>(out)</span>
-<span id="cb19-12"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-12"><a href=""></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-4-3">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>samples <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">500</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>samples <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">500</span>)</span>
 <span id="cb20-2"><a href=""></a></span>
 <span id="cb20-3"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20250929</span>)</span>
 <span id="cb20-4"><a href=""></a>df <span class="ot">=</span> samples <span class="sc">%&gt;%</span> </span>
 <span id="cb20-5"><a href=""></a>  <span class="fu">map</span>(<span class="sc">~</span><span class="fu">draw_many</span>(<span class="at">reps =</span> <span class="dv">100</span>, <span class="at">data =</span> gss, <span class="at">n =</span> .)) <span class="sc">%&gt;%</span> </span>
 <span id="cb20-6"><a href=""></a>  bind_rows <span class="sc">%&gt;%</span> </span>
-<span id="cb20-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">n =</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-7"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">n =</span> n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div id="tabset-4-4">
@@ -4844,14 +4847,14 @@ Z \xrightarrow{d} N(0,1)
 <p>Why is there a difference?</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">20241009</span>)</span>
 <span id="cb22-2"><a href=""></a>gss <span class="sc">%&gt;%</span></span>
 <span id="cb22-3"><a href=""></a>  <span class="co"># replace = FALSE by default</span></span>
 <span id="cb22-4"><a href=""></a>  <span class="fu">sample_n</span>(<span class="at">size =</span> <span class="dv">400</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb22-5"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">var1 =</span> <span class="fu">var</span>(vote),</span>
 <span id="cb22-6"><a href=""></a>            <span class="at">var2 =</span> <span class="fu">mean</span>(<span class="fu">mean</span>(vote<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fu">mean</span>(vote)<span class="sc">^</span><span class="dv">2</span>),</span>
 <span id="cb22-7"><a href=""></a>            <span class="at">var3 =</span> <span class="fu">mean</span>(<span class="fu">mean</span>(vote<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fu">mean</span>(vote)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> (<span class="dv">400</span><span class="sc">/</span>(<span class="dv">400-1</span>))</span>
-<span id="cb22-8"><a href=""></a>            )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-8"><a href=""></a>            )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
    var1  var2  var3
@@ -5111,7 +5114,7 @@ Z \xrightarrow{d} N(0,1)
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -5223,13 +5226,14 @@ Z \xrightarrow{d} N(0,1)
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

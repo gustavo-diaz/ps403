@@ -1,5 +1,5 @@
 ---
-title: "Parametric Models"
+title: "Missing Data"
 subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
@@ -17,671 +17,999 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       fig.pos = "center")
 
+library(tidyverse)
+library(tinytable)
 
+# tinytable options
+options(tinytable_html_mathjax = TRUE)
 ```
 
 # Agenda
 
-- Main idea
-- Parametric regression
-- Binary choice models (logistic regression)
-- Maximum likelihood estimation
-- Lab
+- Identification
 
-# Parametric Models
+- Mising data: Stable outcomes framework
 
-## So far 
+- Approaches to missing outcome data
 
-- **Agnostic statistics approach:** Assume only what can be gleaned from data
+- Data example (if enough time)
 
-- No need to make *distributional* assumptions, only i.i.d. process
+- Multiple imputation (lab)
 
-- Meaning our approach is *non-parametric*
 
-- **Alternative:** Parametric models
+# Identification
 
-## What does "parametric" mean?
+## So far
+
+**Statistical inference:** From *observed* to *unobserved*
+
+. . .
+
+Needs i.i.d. assumption to connect point estimates to population quantities
+
+. . .
+
+**Alternative approach:** We want to tell a story about what we *observe* that is true despite of what remains *unobserved*
+
+. . .
+
+Examples?
+
+. . .
+
+This is the domain of **nonparametric identification**
+
+## Identification
 
 ::: incremental
-- **Parametric:** Assume full functional form with finite number of parameters
+- A "model" is **identifiable** if it is *theoretically* possible to learn its true values
 
-- **Nonparametric:** Assume functional form is unknown, possibly infinite number of parameters
+- **Example:** If we can credibly approximate $E(X)$ with the sample mean, then we can say $E(X)$ is *identified*
 
-- **Semiparametric:** ¯\\_(ツ)_/¯
+- **Validity:** An estimator is *valid* if we believe that it measures what it claims to measure
+
+- Validity implies *low bias* and *consistency*
+
+- But remember these properties depend on the data!
+
 :::
 
-## Ingredients of a parametric model
+## Point-identification
 
-::: incremental
-- Set of functions $g$
-- Indexed by parameter vector $\theta$
-- Model is true for every $\theta$ if...
-- $f_{Y|X}(y|x) = g(y,x; \theta)$
-:::
+> A statistical functional of a random vector 
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* 
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* by a set of assumptions
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional
+
+## Point-identification
+
+> A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional that is logically compatible with the CDF of the unobservable vector given the assumptions.
+
+
+# Missing Data
 
 . . .
 
-We assume there exists a function $g$ with parameters $\theta$
+Should we worry?
 
-. . .
+## Missing data problem
 
-If you know $\theta$, then you can *fully characterize* the PMF/PDF of $Y$ given $X$
+:::: {.columns}
 
-. . .
+::: {.column width="50%"}
 
-Then we can say $\theta$ is a *sufficient statistic*
+```{r, echo = FALSE}
+tab0 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i$`,
+  1, 1, 1, 1,
+  2, -99, 0, 0, 
+  3, 1, 1, 1,
+  4, 0, 1, 0,
+  5, 1, 1, 1,
+  6, -99, 0, 0
+)
 
-## Toy example: Biased coin flip
-
-. . .
-
-$$
-f_Y(y) = g(y;p) = 
-  \begin{cases}
-  1-p &:& y = 0\\
-  p &:& y=1\\
-  0 &:& \text{otherwise.}
-  \end{cases}
-$$
-
-::: incremental
-- $\theta = p$
-- If you know $p$, then you fully know the distribution of random variable $Y$
-:::
-
-# Regression
-
-::: {style="font-size: 40%;"}
-again
-:::
-
-
-## Classical linear model
-
-. . .
-
-$$
-Y = \boldsymbol{X \beta} + \varepsilon
-$$
-
-::: incremental
-- $Y$: Response (Outcome)
-- $X$: Matrix of predictors (explanatory variables)
-- $\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_K)^T$ Vector of coefficients
-- $\varepsilon \sim N(0, \sigma^2)$ Errors (residuals) i.i.d. normal with expectation zero 
-:::
-
-. . .
-
-If you know $\boldsymbol{\beta}$ and $\sigma^2$, then you can fully characterize the PMF/PDF of $Y$ given $X$
-
-## Why do we need $\varepsilon \sim N(0, \sigma^2)$?
-
-::: incremental
-- $\boldsymbol{\beta}$ represents the variation in $Y$ that comes from predictors $\boldsymbol{X}$
-- $\varepsilon$ represents variation in $Y$ that **cannot** be attributed to $\boldsymbol{X}$
-- If errors are i.i.d. then they are also *independent* of $\boldsymbol{X}$
-- We need this so that our *estimator* is **unbiased** by definition
-:::
-
-. . .
-
-$$
-Y = \beta_0 + \beta_1 X_1 + \varepsilon
-$$
-
-. . .
-
-$$
-Y = \beta_0 + \beta_1 X_1 + \color{purple}{\beta_2 X_2} + \varepsilon
-$$
-
-::: aside
-[Dr. Huntington-Klein explains it better](https://youtu.be/0Aukw3CdB-Q?si=A6mQhm2l9QE3ObHM)
-:::
-
-# Binary Choice Models
-
-## Logistic regression
-
-::: aside
-Called logit model in the AM textbook
-:::
-
-. . .
-
-Parametric model
-
-$$
-g(y, \boldsymbol{X}; \beta) = 
-\begin{cases}
-1-h(\boldsymbol{X\beta}) &:& y = 0\\
-h(\boldsymbol{X\beta}) &:& y = 1 \\
-0 &:& \text{otherwise.}
-\end{cases}
-$$
-
-. . .
-
-Let $h(\boldsymbol{X\beta}) = Pr(Y = 1 | X) = p(X)$ for simplicity
-
-## Logistic regression
-
-::: aside
-Called logit model in the AM textbook
-:::
-
-Parametric model
-
-$$
-g(y, \boldsymbol{X}; \beta) = 
-\begin{cases}
-1-h(\boldsymbol{X\beta}) &:& y = 0\\
-h(\boldsymbol{X\beta}) &:& y = 1 \\
-0 &:& \text{otherwise.}
-\end{cases}
-$$
-
-## Logistic regression
-
-::: aside
-Called logit model in the AM textbook
-:::
-
-Parametric model
-
-$$
-g(y, \boldsymbol{X}; \beta) = 
-\begin{cases}
-1-p(X) &:& y = 0\\
-p(X) &:& y = 1 \\
-0 &:& \text{otherwise.}
-\end{cases}
-$$
-
-::: incremental
-- $\boldsymbol{\beta} = (\beta_0, \beta_1, \ldots, \beta_K)^T$ 
-- $p(X)$ or $h(\boldsymbol{X\beta})$ is the *mean* or *link* function
-- We need the link to bound $y$ in the $[0,1]$ range
-:::
-
-## Logistic regression
-
-
-<!-- My old cheatsheet -->
-<!-- https://drive.google.com/drive/folders/1y0SwNYAjG5_uDGj7MaaJJoS3TpZ_5HuL -->
-
-For the logit model, the link is the *logistic function*
-
-$$
-p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
-$$
-
-. . .
-
-
-```{r, echo = FALSE, fig.width=5, fig.height=4, fig.align='center'}
-library(tidyverse)
-
-theme_set(theme_gray(base_size = 25))
-
-ggplot(data = data.frame(x = c(-3,3))) +
-  aes(x) +
-  stat_function(fun = function(x) exp(x)/(1+exp(x)), n = 100, linewidth = 2) +
-  ylim(0,1) +
-  labs(y = "p(X)")
-  
+tt(tab0) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") %>% 
+  style_tt(j = 4,
+           color = "gray")
 ```
 
-## Logistic regression
+:::
+::::
+
+## Missing data problem
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r, echo = FALSE}
+tt(tab0) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") %>% 
+  style_tt(j = 4,
+           color = "gray")
+```
+
+:::
+
+::: {.column width="50%"}
+
+**Stable outcomes framework**
+
+::: incremental
+- $Y_i$: True outcome (unobserved)
+
+- $R_i$: Recorded (1) or missing (0)
+
+- $Y_i^*$: Observed outcome
+
+- $Y_i^* = Y_i R_i + (-99) (1-R_i)$
+
+- [$E[Y_i] = 3/6$]{style="color:gray;"}; $E[Y_i^*] = 3/4$
+:::
 
 
-For the logit model, the link is the *logistic function*
+:::
 
-$$
-p(X) = \frac{e^{X\beta}}{1+e^{X\beta}}
-$$
+::::
 
 . . .
 
-Rearrange to get the *odds ratio*
+**Challenge:** [$E[Y_i]$]{style="color:gray;"} is **not** *point-identified*
 
-$$
-\frac{p(X)}{1-p(X)} = e^{{X\beta}}
-$$
+## What can we do?
 
-::: aside
-This is still a **linear model** in the sense that it is *linear in parameters*
-:::
+1. Make minimal assumptions
+
+2. Make heroic assumptions
 
 
-## Logistic regression
+## Minimal assumption: $Y_i$ is *bounded*
 
 
-Taking the natural logarithm gives the *log odds*
+```{r, echo = FALSE}
+tab1 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`,
+  1, 1, 1,
+  2, -99, 0,
+  3, 1, 1,
+  4, 0, 1,
+  5, 1, 1,
+  6, -99, 0
+)
 
-$$
-log \left (\frac{p(X)}{1-p(X)} \right) = X\beta
-$$
+tt(tab1) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
 
-::: incremental
-- Weird to interpret, easy to estimate
-- It's called *logit* because you need to *log* *it* to make it easier to estimate
-- How do we estimate?
-:::
+. . .
 
-::: aside
-Notice we are not making assumptions about an error term because we are modeling a Bernoulli distribution
-:::
+Plug-in worst case scenario to find *lower* and *upper* bound
 
-## Maximum likelihood estimation (MLE)
+## Minimal assumption: $Y_i$ is *bounded*
 
-::: aside
-[Dr. King explains it better](https://youtu.be/P79af1fkUsk?si=9eIT50q7KK0uh2nx&t=1313)
-:::
 
-<!-- Show intuition with math, then example from ISLR -->
-::: incremental
-- Knowing $\theta$ is enough to characterize conditional PMF of $Y$ given $X$
-- But we do not know $\theta$! We only know the data we observe
-- We can try many different values for $\theta$ and see what sticks
-- **Trick:** Find $\theta$ that *would have maximized the probability of obtaining the data we observe*
-- **Restated:** Find *parameters* that would have made outcomes *as likely as possible*
-:::
+```{r, echo = FALSE}
+tab2 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i^L$`, ~`$Y_i^U$`,
+  1, 1, 1, 1, 1, 
+  2, -99, 0, 0, 1,
+  3, 1, 1, 1, 1,
+  4, 0, 1, 0, 0,
+  5, 1, 1, 1, 1,
+  6, -99, 0, 0, 1
+)
 
-## Example: Which line makes observed data more likely?
+tt(tab2) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") %>% 
+  style_tt(
+    i = 1:6,
+    j = 4:5,
+    color = "white"
+  )
+```
 
-![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+Plug-in worst case scenario to find *lower* and *upper* bound
+
+## Minimal assumption: $Y_i$ is *bounded*
+
+
+```{r, echo = FALSE}
+tt(tab2) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 4),
+           color = "purple") %>% 
+  style_tt(
+    i = 1:6,
+    j = 5,
+    color = "white"
+  )
+```
+
+Plug-in worst case scenario to find *lower* and *upper* bound
+
+## Minimal assumption: $Y_i$ is *bounded*
+
+
+```{r, echo = FALSE}
+tt(tab2) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 4, 5),
+           color = "purple")
+```
+
+Plug-in worst case scenario to find *lower* and *upper* bound
+
+## Minimal assumption: $Y_i$ is *bounded*
+
+
+```{r, echo = FALSE}
+tt(tab2) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 4, 5),
+           color = "purple")
+```
+
+**Sharp bounds:** $\widehat E[Y_i] = [\frac{3}{6}, \frac{5}{6}]$
 
 ## More formally
 
-. . .
-
-Likelihood function $\mathcal{L}(t|Y, \boldsymbol{X})$
+You can write plug-in estimator as a *weighted average*
 
 . . .
-
-Maximum likelihood estimator
 
 $$
-\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}\mathcal{L}(t|Y, \boldsymbol{X}) = \underset{t\in\Theta}{\text{argmax}} \prod_{i=1}^n\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+\textbf{Lower bound: } \frac{1}{n}\sum_{i=1}^n (Y_i^*R_i + \mathbf{a} (1-R_i))
 $$
 
 . . .
 
-Products are hard, maximize *log-likelihood* instead
-
 $$
-\widehat{\theta}_{ML} = \underset{t\in\Theta}{\text{argmax}}[\text{log}\mathcal{L}(t|Y, \boldsymbol{X})] = \underset{t\in\Theta}{\text{argmax}} \sum_{i=1}^n\text{log}\mathcal{L}(t|Y_i, \boldsymbol{X_i})
+\textbf{Upper bound: } \frac{1}{n}\sum_{i=1}^n (Y_i^*R_i + \mathbf{b} (1-R_i))
 $$
-
-## Another way to look at it
-
-![](fig/mle_viz.png){fig-align="center"}
-
-## How do you find the maximum likehihood?
 
 . . .
 
-**Analytically**
+Meaning you do not need to know which are missing observations, just how many!
 
-::: incremental
-- Take the derivative of $\text{log}\mathcal{L}(\theta|Y, X)$ w.r.t. $\theta$
-
-- Set to $0$, solve for $\theta$ and label it $\widehat \theta$ (if possible)
-
-- Check if second derivative is negative (so it is maximum not minimum)
+::: aside
+$\mathbf a$ and $\mathbf b$ are the lowest/highest possible value of $Y_i$, respectively
 :::
 
-## How do you find the maximum likehihood?
 
-**Numerically**
-
-. . .
-
-Computer will do it for you
+## Why *sharp* bounds?
 
 . . .
 
-Use optimization algorithm to find maxima (if any)
+They are **sharp** because we cannot improve them without additional assumptions that do not follow from the data
 
 . . .
 
-Computationally intensive to write on your own
+So we say $\widehat E[Y_i]$ is *partially identified* under these assumptions
 
 . . .
 
-Most MLE methods have fast pre-packaged functions
+Size of bounds is proportional to amount of missing data
 
 . . .
 
-**Rule of thumb:** If the algorithm takes too long, don't believe the result!
+And sometimes you can use *auxiliary information* to refine bounds
+
+. . .
+
+**Challenge:** Social scientists don't know what to do with bounds
+
+::: aside
+IDK exactly why "minimal assumptions" means "sharp", but this is a related yet different use of "sharp" compared to the concept of "sharp null" next week
+:::
+
+
+## More heroic assumptions
+
+. . .
+
+**Baseline:** Missing not at random (MNAR/NMAR) 
+
+$$Y_i \not\!\perp\!\!\!\perp R_i$$
+
+. . .
+
+**MCAR:** Missing completely at random
+
+$$
+Y_i \perp \!\!\! \perp R_i
+$$
+
+. . .
+
+**MAR:** Missing at random *after conditioning on covariates* (aka *ignorability*)
+
+$$
+Y_i \perp \!\!\! \perp R_i | \mathbf{X}_i
+$$
+
+## MCAR
+
+```{r, echo = FALSE}
+
+tt(tab1) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+. . .
+
+We assume the *distribution of outcomes is the same* for observed and unobserved
+
+## MCAR
+
+```{r, echo = FALSE}
+
+tt(tab1) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Which is equivalent to imputing missing obs with the sample mean
+
+
+## MCAR
+
+```{r, echo = FALSE}
+tab3 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i$`,
+  1, 1, 1, "1",
+  2, -99, 0, "$\\widehat E[Y_i] = 3/4$",
+  3, 1, 1, "1",
+  4, 0, 1, "0",
+  5, 1, 1, "1",
+  6, -99, 0, "$\\widehat E[Y_i] = 3/4$"
+)
+
+
+tt(tab3) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 4),
+           color = "purple")
+```
+
+Which is equivalent to imputing missing obs with the sample mean
+
+## MAR
+
+```{r, echo = FALSE}
+
+tt(tab1) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+. . .
+
+We assume *conditional independence*
+
+## MAR
+
+```{r, echo = FALSE}
+
+tt(tab1) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Imagine we now observe covariate $X_i$
+
+
+## MAR
+
+```{r, echo = FALSE}
+tab4 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_i$`,
+  1, 1, 1, 0,
+  2, -99, 0, 0,
+  3, 1, 1, 0,
+  4, 0, 1, 0,
+  5, 1, 1, 1,
+  6, -99, 0, 1
+)
+
+tt(tab4) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Imagine we now observe covariate $X_i$
+
+## MAR
+
+```{r, echo = FALSE}
+tt(tab4) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+MAR lets us impute the sample mean of units with the same covariate values
+
+## MAR
+
+```{r, echo = FALSE}
+tab5 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_i$`, ~`$Y_i$`,
+  1, 1, 1, 0, "1",
+  2, -99, 0, 0, "$\\widehat E[Y_i|X_i=0] = 2/3$",
+  3, 1, 1, 0, "1",
+  4, 0, 1, 0, "0",
+  5, 1, 1, 1, "1",
+  6, -99, 0, 1, "$\\widehat E[Y_i|X_i=1] = 1$"
+)
+
+tt(tab5) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 5),
+           color = "purple") 
+```
+
+We can impute the sample mean of units with the same covariate values
+
+## MAR with multiple covariates
+
+```{r, echo = FALSE}
+
+tt(tab1) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Imagine we observe covariates $X_{1i}$ and $X_{2i}$
+
+## MAR with multiple covariates
+
+```{r, echo = FALSE}
+tab6 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
+  1, 1, 1, 0, 3,
+  2, -99, 0, 0, 7,
+  3, 1, 1, 0, 9,
+  4, 0, 1, 0, 5,
+  5, 1, 1, 1, 4,
+  6, -99, 0, 1, 3
+)
+
+tt(tab6) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Imagine we observe covariates $X_{1i}$ and $X_{2i}$
+
+## Options
+
+1. Regression estimation
+
+2. Hot deck imputation
+
+3. Inverse-probability weighting (IPW)
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tt(tab6) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+
+. . .
+
+Estimate $\widehat Y_i^* = \widehat \beta_0 + \widehat \beta_1 X_{1i} + \widehat \beta_2 X_{2i}$ with observed data
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tt(tab6) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") 
+```
+
+Use coefficients to impute missing values
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tab7 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
+  1, 1, 1, 0, 3, "1",
+  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
+  3, 1, 1, 0, 9, "1",
+  4, 0, 1, 0, 5, "0",
+  5, 1, 1, 1, 4, "1",
+  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
+)
+
+tt(tab7) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2, 6),
+           color = "purple") 
+```
+
+. . .
+
+Which yields the same $\widehat E[Y_i]$ as
+
+## Regression estimation
+
+```{r, echo = FALSE}
+tab8 = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
+  1, 1, 1, 0, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 3$",
+  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
+  3, 1, 1, 0, 9, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 9$",
+  4, 0, 1, 0, 5, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 5$",
+  5, 1, 1, 1, 4, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 4$",
+  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
+)
+
+tt(tab8) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple") %>% 
+  style_tt(i = 1:6,
+           j = 6,
+           color = "purple")
+```
+
+. . .
+
+What if we could condition on a *function* of covariates instead?
+
+## Propensity score
+
+. . .
+
+**Response propensity function**
+
+$$
+p_R(\mathbf{x}) = Pr[R_i = 1 | \mathbf{X}_i = x]
+$$
+
+::: incremental
+- $p_R(\mathbf{X}_i)$ is the **propensity score** of unit $i$
+
+- Conditional probability of response given the covariates
+
+- Useful since you cannot condition on many covariates  *nonparametrically* 
+
+- Can estimate *consistently* via ML (usually logit)
+
+- Still need to assume *specification* is correct
+:::
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab = tribble(
+  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
+  1, 2, 1, 0, 3,
+  2, -99, 0, 0, 7,
+  3, 3, 1, 0, 9,
+  4, 10, 1, 0, 5,
+  5, 12, 1, 1, 4,
+  6, -99, 0, 1, 3
+) 
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple")
+  
+```
+
+. . .
+
+Add propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$p_R(\\mathbf{X}_i)$` = c(0.33, 0.14, 0.73, 0.35, 0.78, 0.70)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple")
+```
+
+Add propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = 2,
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$Y_i$` = c(
+  "2",
+  "$\\widehat E[Y_i|p_R(X_i) = 0.14]$",
+  "3",
+  "10",
+  "12",
+  "$\\widehat E[Y_i|p_R(X_i) = 0.70]$"
+)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck what?
+
+![](https://www.hnf.de/uploads/tx_templavoila/Kartenlocher_HNF_1.JPG){fig-align="center"}
+
+
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
+
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+Impute values with nearest propensity score
+
+## Hot deck imputation
+
+```{r, echo = FALSE}
+tt(pstab) %>% 
+  style_tt(i = c(2, 6),
+           j = c(2,7),
+           color = "purple")
+```
+
+**Not a good idea.** Discards a lot of information!
+
+## Inverse probability weighting (IPW)
+
+::: incremental
+- The problem is not missing data
+
+- But an unrepresentative sample
+
+- If MAR holds, we can use propensity score to *weight* observations
+
+- **Inverse probability weight** $\frac{1}{p_R(\mathbf{X}_i)}$
+
+:::
+
+## IPW estimator
+
+
+**Horvitz-Thompson estimator**
+
+$$
+\widehat E_{IPW}[Y_i] = \frac{1}{n} \sum_{i=1}^n \frac{Y_i^* R_i}{\widehat p_R(\mathbf{X}_i)}
+$$
+
+::: incremental
+
+- Low propensity scores are *underrepresented* $\rightarrow$ Assign greater weight
+
+- High-propensity scores $\rightarrow$ lower weight
+
+:::
+
+::: aside
+In practice, Hájek's stabilized IPW estimator is used more often because it avoids disproportional weights (cf. Definition 6.2.8 in AM Chapter 6)
+:::
+
+## Recap
+
+. . .
+
+**Options under MAR**
+
+1. Regression estimation
+
+2. Hot deck imputation
+
+3. Inverse-probability weighting (IPW)
+
+## Recap
+
+**Options under MAR**
+
+1. Regression estimation
+
+2. ~~Hot deck imputation~~
+
+3. Inverse-probability weighting (IPW)
+
+## Recap
+
+**Options under MAR**
+
+1. Regression estimation
+
+2. ~~Hot deck imputation~~
+
+3. Inverse-probability weighting (IPW)
+
+4. **Doubly robust estimation**
+
+## Doubly robust estimation
+
+::: incremental
+- Regression specification may be incorrect
+
+- Propensity score specification may be incorrect
+
+- Combining the two in a model that yields consistent estimates when *either* is correct
+:::
+
+. . .
+
+$$
+\begin{align}
+& \widehat E_{DR}[Y_i] = \\
+&\frac{1}{n} \sum_{i=1}^n \widehat E[Y_i^*|R_i = 1, \mathbf{X}_i] + \frac{1}{n} \sum_{i=1}^n \frac{R_i(Y_i^* - \widehat E[Y_i^* | R = 1, \mathbf{X}_i])}{\widehat{p}_R(\mathbf{X}_i)}
+\end{align}
+$$
+
+## Doubly robust estimation
+
+- Regression specification may be incorrect
+
+- Propensity score specification may be incorrect
+
+- Combining the two in a model that yields consistent estimates when *either* is correct
+
+
+$$
+\widehat E_{DR}[Y_i] = \text{Regression estimator} + \text{IPW correction}
+$$
 
 ## With data
 
-```{r}
-library(ISLR)
 
-head(Default)
+```{r}
+library(gssr)
+
+gss22 = gss_get_yr(2022)
+
+gss = gss22 %>% 
+  select(vote20) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0))
+
+gss %>% 
+  group_by(vote) %>% 
+  tally()
+```
+
+
+## Bounds as weighted average
+
+Get proportion missing
+
+```{r}
+pr_response = mean(!is.na(gss$vote))
+
+pr_response
 ```
 
 . . .
 
-```{r}
-Default$default01 = ifelse(Default$default == "Yes", 1, 0)
-
-with(Default, table(default, default01))
-```
-
-## Estimation
-
-. . .
-
-Linear probability model
+Lower bound:
 
 ```{r}
-ols = lm(default01 ~ student + balance + income, data = Default)
-
-coef(ols) # very small numbers
-```
-
-
-## Estimation
-
-Linear probability model
-
-```{r}
-ols = lm(default01 ~ student + balance + income, data = Default)
-
-coef(ols) %>% round(5) # easier to read
+mean(gss$vote, na.rm = TRUE) * pr_response + 0 *(1-pr_response)
 ```
 
 . . .
 
-Logit model
+Upper bound:
 
 ```{r}
-logit = glm(default01 ~ student + balance + income, 
-            data = Default, family = binomial)
-
-coef(logit) %>% round(5)
+mean(gss$vote, na.rm = TRUE) * pr_response + 1 * (1-pr_response)
 ```
 
-. . .
-
-Logit coefficients are expressed in *log-odds*
-
-## Convert to probabilities
+## Bounds by imputation
 
 ```{r}
-get_logit_prob = function(fit){
-  coefs = coef(fit) # extract coefficients from logit fit
-  odds = exp(coefs) # transform log-odds to odds
-  prob = odds / (1 + odds) # convert odds to probabilities
-  prob = round(prob, 5) # round for easy interpretation
-  return(prob)
-}
+gss %>% 
+  select(vote) %>% 
+  mutate(
+    vote_lo = ifelse(is.na(vote), 0, vote),
+    vote_hi = ifelse(is.na(vote), 1, vote)) %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    lower_bound = mean(vote_lo),
+    upper_bound = mean(vote_hi)
+  )
 ```
 
-. . .
+## MCAR by imputation
 
 ```{r}
-get_logit_prob(logit)
+vote_mean = mean(gss$vote, na.rm = TRUE)
+
+gss %>% 
+  select(vote) %>% 
+  mutate(
+    vote_mcar = ifelse(is.na(vote), vote_mean, vote)) %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    mcar = mean(vote_mcar)
+  )
 ```
 
-. . .
+::: aside
+The number is the same so the real value would come from being able to use more data in general. But also you should never do mean imputation.
+:::
+
+## Regression imputation (MAR)
+
+Make a new data with two more variables
 
 ```{r}
-coef(ols) %>% round(5)
+gss_wide = gss22 %>% 
+  select(vote20, sex, partyid) %>% 
+  mutate(vote = ifelse(vote20 == 1, 1, 0),
+         female = ifelse(sex == 2, 1, 0),
+         dem = ifelse(partyid <= 2, 1, 0)) %>% 
+  select(vote, female, dem)
+
+head(gss_wide, 3)
 ```
 
-## Why so different?
+::: aside
+In practice, you want to convince yourself that you have enough variables to justify *conditional independence*
+:::
 
-::: {.panel-tabset}
-## Plot
+## Regression imputation (MAR)
 
-```{r, echo = FALSE}
-library(marginaleffects)
+```{r}
+outcome_model = lm(vote ~ female + dem,
+                   data = gss_wide)
 
-# Extract predictions
-p_ols = plot_predictions(ols,
-                 condition = "balance",
-                 draw = FALSE)
+gss_wide$vote_pred = predict(outcome_model, 
+                    # newdata is by default current data in predict.lm
+                    newdata = gss_wide)
 
-p_log = plot_predictions(logit,
-                         condition = "balance",
-                         draw = FALSE)
+head(gss_wide)
+```
 
-# Combine and label
-pred_df = bind_rows(
-  p_ols %>% mutate(Estimator = "OLS"),
-  p_log %>% mutate(Estimator = "Logit")
+## Regression imputation (MAR)
+
+```{r}
+gss_wide %>% 
+  mutate(
+    vote_reg = ifelse(is.na(vote), vote_pred, vote)
+  ) %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    # Some still missing have missing data in the covariates
+    mar_reg_1 = mean(vote_reg, na.rm = TRUE),
+    mar_reg_2 = mean(vote_pred, na.rm = TRUE)
+  )
+```
+
+
+## IPW (MAR)
+
+```{r}
+# Make a binary indicator of missingness
+gss_wide = gss_wide %>% 
+  mutate(
+    response = ifelse(!is.na(vote), 1, 0)
+  ) %>% 
+  filter(!is.na(female) & !is.na(dem))
+
+pscore_model = glm(
+  response ~ female + dem,
+  family = binomial,
+  data = gss_wide
 )
 
-# Visualize
-ggplot(Default) +
-  aes(x = balance, y = default01) +
-  geom_jitter(alpha = 0.3, height = 0.1) +
-  geom_line(
-    data = pred_df,
-    aes(x = balance, 
-        y = estimate,
-        color = Estimator),
-    linewidth = 2) +
-  scale_color_viridis_d(begin = 0, end = 0.8) +
-  labs(x = "Balance",
-       y = "Pr(Default)")
+# Create variable with probabilities
+gss_wide$pscore = predict(pscore_model, type = "response")
+
+# Convert to IPW
+gss_wide$ipw = 1/gss_wide$pscore
+```
+
+## IPW (MAR)
+
+```{r}
+gss_wide %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    mar_ipw = weighted.mean(vote, w = ipw, na.rm = TRUE)
+    )
 ```
 
 
-## Code
+## Doubly robust (MAR)
 
-```{r, eval = FALSE}
-library(marginaleffects)
+```{r}
+doubly_robust = lm(vote ~ female + dem,
+                   data = gss_wide,
+                   weights = ipw)
 
-# Extract predictions
-p_ols = plot_predictions(ols,
-                 condition = "balance",
-                 draw = FALSE)
+gss_wide$vote_dr = predict(doubly_robust,
+                           newdata = gss_wide)
 
-p_log = plot_predictions(logit,
-                         condition = "balance",
-                         draw = FALSE)
-
-# Combine and label
-pred_df = bind_rows(
-  p_ols %>% mutate(Estimator = "OLS"),
-  p_log %>% mutate(Estimator = "Logit")
-)
-
-# Visualize
-ggplot(Default) +
-  aes(x = balance, y = default01) +
-  geom_jitter(alpha = 0.3, height = 0.1) +
-  geom_line(
-    data = pred_df,
-    aes(x = balance, 
-        y = estimate,
-        color = Estimator),
-    linewidth = 2) +
-  scale_color_viridis_d(begin = 0, end = 0.8) +
-  labs(x = "Balance",
-       y = "Pr(Default)")
+gss_wide %>% 
+  summarize(
+    complete_cases = mean(vote, na.rm = TRUE),
+    mar_dr = mean(vote_dr)
+  )
 ```
-
-
-:::
-
-## Why would you want to do this?
-
-. . .
-
-**Critique:** You can reverse engineer MLE so that your preferred parameters are optimal
-
-. . .
-
-**Achen (2002, ARPS):** Stop making up new parametric models!
-
-. . .
-
-Or, rather, motivate your parametric models with well-laid out formal model
-
-. . .
-
-So you get as close as possible to the **microfoundations**
-
-. . .
-
-**Microfoundations:** Explaining macro-level phenomena by modeling the behavior of individual agents
-
-
-## MLE finite sample properties
-
-
-. . .
-
-We said OLS was **BLUE**
-
-. . .
-
-MLE find the **MVUE** instead
-
-## MLE finite sample properties
-
-1. **M**inimum
-
-## MLE finite sample properties
-
-1. **M**inimum **V**ariance
-
-## MLE finite sample properties
-
-1. **M**inimum **V**ariance **U**nbiased
-
-## MLE finite sample properties
-
-1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
-
-. . .
-
-- **Unbiased:** $E[\widehat \theta] = \theta$
-
-. . .
-
-- **Minimum variance:** Efficiency
-
-. . .
-
-*IF* there is a MVUE, ML will find it
-
-. . .
-
-If *not*, it can still find something good enough
-
-## MLE finite sample properties
-
-1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
-
-. . .
-
-2. Invariance to Reparameterization
-
-. . .
-
-- If $\widehat \theta$ is the MLE of $\theta$, then for any function $f(\theta)$ its MLE is $f(\widehat \theta)$
-
-. . .
-
-- **Example:** $\widehat \sigma$ is the MLE of $\sigma$, $\widehat \sigma^2$ is the MLE of $\sigma^2$
-
-. . .
-
-- Not true for other modes of inference!
-
-## MLE finite sample properties
-
-1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
-
-2. Invariance to Reparameterization
-
-. . .
-
-3. Invariance to sampling plans
-
-. . .
-
-- We are making not relyng on i.i.d. sampling to connect $\theta$ and $\widehat \theta$
-
-. . .
-
-- So collecting more data after looking at results is perfectly fine!
-
-## MLE finite sample properties
-
-1. **M**inimum **V**ariance **U**nbiased **E**stimator (MVUE)
-
-2. Invariance to Reparameterization
-
-3. Invariance to sampling plans
-
-::: aside
-In textbooks, (2) and (3) are jointly referred to as the **invariance property** of MLE
-:::
-
-## Asymptotic properties
-
-. . .
-
-1. **Consistency:** WLLN implies that as $ n \rightarrow \infty$, the sampling distribution of the MLE collapses to a spike over the parameter value
-
-. . .
-
-2. **Asymptotic normality:** CLT implies that as  $n \rightarrow \infty$, the distribution of the standardized MLE converges to $N(0,1)$
-
-. . .
-
-3. **Asymptotic efficiency:** Because MLE is a sufficient statistic by definition
-
-::: aside
-**Lab:** MLE will often give the same answers and a non-parametric estimator because the asymptotic properties are the same
-:::
-
-## What about inference?
-
-. . .
-
-**Short answer:** Normal-approximation standard errors/CIs/p-values are fine because asymptotic normality usually holds
-
-. . .
-
-**Long answer:**
- 
-. . .
-
-You can conduct inference via likelihood-ratio tests of between parameters of interest
-
-. . .
-
-But too much work to test all points of interest
-
-. . .
-
-**AM:** Don't take your models too seriously! Ok to be agnostic and compute robust/bootstrapped standard errors (more in the lab)
-
-::: aside
-See [here](https://projects.iq.harvard.edu/files/gov2001/files/inferencep_3.pdf) for more notes on likelihood-ratio based inference
-:::
 
 ## Wrapping up
 
-- Parametric models as alternative way to think about inference
+- Missing data means i.i.d. assumption does not hold even with a random/representative sample
 
-- Makes more sense when i.i.d. is (really truly) untenable, but requires careful justification
+- But i.i.d. is assumed out of convenience, not accuracy
 
-- Estimated via MLE (alternative is [method of moments](https://online.stat.psu.edu/stat415/lesson/1/1.4))
+- Many are unbothered by missing data because it does not make a difference
 
-- Many different opinions on how to deal with uncertainty
+- But sometimes ignoring may present problems for inference or the application of other methods
 
-- Most people who prefer the model-based approach rely more on Bayesian statistics than MLE
-
-- Overfitting, micronumerosity, etc. are still problems here
+- You want to (at least) show that ignoring missing data is not a big deal

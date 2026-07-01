@@ -223,6 +223,10 @@ NA: Fail
 
 # Questions?
 
+# AI and Coding
+
+Placeholder for a conversation
+
 # Lab 0
 
 [github.com/gustavo-diaz/ps403/blob/main/labs/lab0.qmd](https://github.com/gustavo-diaz/ps403/blob/main/labs/lab0.qmd)

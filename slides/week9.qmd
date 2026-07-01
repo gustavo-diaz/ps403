@@ -1,5 +1,5 @@
 ---
-title: "Missing Data"
+title: "Causal Inference"
 subtitle: "POLI_SCI 403: Probability and Statistics"
 format: 
   revealjs:
@@ -12,1004 +12,1173 @@ format:
 
 ```{r setup, include=FALSE}
 # Global options for the rendering behavior of all subsequent code chunks
-knitr::opts_chunk$set(echo = TRUE, 
+knitr::opts_chunk$set(echo = FALSE, 
                       warning = FALSE,
                       message = FALSE,
                       fig.pos = "center")
 
 library(tidyverse)
 library(tinytable)
+library(kableExtra) # too lazy to change
+library(DeclareDesign) # Re-randomize
+library(infer)
 
 # tinytable options
-options(tinytable_html_mathjax = TRUE)
+# options(tinytable_html_mathjax = TRUE)
 ```
+
+
+## Making causal claims
+
+&nbsp;
+
+. . .
+
+:::{.r-stack}
+How do we know $X$ *causes* $Y$?
+:::
+
+&nbsp;
+
+. . .
+
+:::{.r-stack}
+Can data help us make causal claims?
+:::
+
+&nbsp;
+
+. . .
+
+:::{.r-stack}
+When is a causal claim *not* appropriate?
+:::
 
 # Agenda
 
-- Identification
-
-- Mising data: Stable outcomes framework
-
-- Approaches to missing outcome data
-
-- Data example (if enough time)
-
-- Multiple imputation (lab)
+- Potential outcomes framework
+- Random assignment
+- Observational studies
+- Quasi-experiments (if we have time)
+- Lab
 
 
-# Identification
 
-## So far
 
-**Statistical inference:** From *observed* to *unobserved*
+
+# Potential Outcomes Framework
+
+## Setup
 
 . . .
 
-Needs i.i.d. assumption to connect point estimates to population quantities
-
-. . .
-
-**Alternative approach:** We want to tell a story about what we *observe* that is true despite of what remains *unobserved*
-
-. . .
-
-Examples?
-
-. . .
-
-This is the domain of **nonparametric identification**
-
-## Identification
+**Notation**
 
 ::: incremental
-- A "model" is **identifiable** if it is *theoretically* possible to learn its true values
+- $D_i = \{0,1\}$ condition (0: control, 1: treatment)
 
-- **Example:** If we can credibly approximate $E(X)$ with the sample mean, then we can say $E(X)$ is *identified*
-
-- **Validity:** An estimator is *valid* if we believe that it measures what it claims to measure
-
-- Validity implies *low bias* and *consistency*
-
-- But remember these properties depend on the data!
-
+- $Y_i(D_i)$ is the individual **potential outcome**
 :::
-
-## Point-identification
-
-> A statistical functional of a random vector 
-
-## Point-identification
-
-> A statistical functional of a random vector is *point-identified* 
-
-## Point-identification
-
-> A statistical functional of a random vector is *point-identified* by a set of assumptions
-
-## Point-identification
-
-> A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional
-
-## Point-identification
-
-> A statistical functional of a random vector is *point-identified* by a set of assumptions if there exists one and only one value of that statistical functional that is logically compatible with the CDF of the unobservable vector given the assumptions.
-
-
-# Missing Data
 
 . . .
 
-Should we worry?
+$$
+Y_i = \begin{cases}
+Y_i(0) & : & D_i = 0 \\
+Y_i(1) & : & D_i = 1
+\end{cases}
+$$
 
-## Missing data problem
+. . .
 
-:::: {.columns}
+Switching equation
 
-::: {.column width="50%"}
+$$
+Y_i = Y_i(1) D_i + Y_i(0) (1 - D_i)
+$$
 
-```{r, echo = FALSE}
-tab0 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i$`,
-  1, 1, 1, 1,
-  2, -99, 0, 0, 
-  3, 1, 1, 1,
-  4, 0, 1, 0,
-  5, 1, 1, 1,
-  6, -99, 0, 0
+## Toy example
+
+```{r}
+pop = declare_population(
+  N = 4,
+  female = c(0, 0, 1, 1),
+  Y0 = c(0, 0, 0, 1),
+  Y1 = c(0, 1, 1, 1)
 )
 
-tt(tab0) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(j = 4,
-           color = "gray")
+pot = declare_potential_outcomes(Y ~ Y1 * Z + Y0 * (1-Z))
+
+estimand = declare_inquiry(ATE = mean(Y1 - Y0))
+
+assign = declare_assignment(Z = complete_ra(N, m = 2))
+
+reveal = declare_measurement(Y = reveal_outcomes(Y ~ Z))
+
+estimator = declare_estimator(Y ~ Z, inquiry = "ATE")
+
+design_1 = pop + pot + estimand + assign + reveal + estimator
 ```
 
-:::
-::::
+```{r}
+set.seed(142)
 
-## Missing data problem
+dat = draw_data(design_1)
 
-:::: {.columns}
+dat_0 = dat %>% select(ID, Y1, Y0)
 
-::: {.column width="50%"}
+colnames(dat_0) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)")
 
-```{r, echo = FALSE}
-tt(tab0) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(j = 4,
-           color = "gray")
+dat_0 %>% kbl(escape = FALSE)
 ```
 
-:::
+. . .
 
-::: {.column width="50%"}
+$\tau_i = Y_i(1) - Y_i(0)$ is the **unit-level treatment effect**
 
-**Stable outcomes framework**
+&nbsp;
+
+## Toy example
+
+```{r}
+dat_1 = dat %>% 
+  select(ID, Y1, Y0) %>% 
+  mutate(tau = Y1 - Y0)
+
+colnames(dat_1) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)")
+
+dat_1 %>% kbl(escape = FALSE)
+```
+
+$\tau_i = Y_i(1) - Y_i(0)$ is the **unit-level treatment effect**
+
+&nbsp;
+
+. . .
+
+
+
+$E[\tau_i] = \frac{1}{n} \sum_{i=1}^n \tau_i$ is the  **average treatment effect** (ATE)
+
+## Assumption
+
+**Stable Unit Treatment Value (SUTVA)**
+
+. . .
+
+Potential outcomes are *stable*, meaning:
 
 ::: incremental
-- $Y_i$: True outcome (unobserved)
+1.  *No unobserved multiple versions of the treatment:* Treatment is the same for everyone
 
-- $R_i$: Recorded (1) or missing (0)
-
-- $Y_i^*$: Observed outcome
-
-- $Y_i^* = Y_i R_i + (-99) (1-R_i)$
-
-- [$E[Y_i] = 3/6$]{style="color:gray;"}; $E[Y_i^*] = 3/4$
+2. *No interference:* Unit $i$'s potential outcome is not affected by $j$'s potential outcome
 :::
 
 
-:::
 
-::::
-
-. . .
-
-**Challenge:** [$E[Y_i]$]{style="color:gray;"} is **not** *point-identified*
-
-## What can we do?
-
-1. Make minimal assumptions
-
-2. Make heroic assumptions
+## Challenge
 
 
-## Minimal assumption: $Y_i$ is *bounded*
+```{r}
+dat_1 %>% 
+  kbl(escape = FALSE)
+```
 
 
-```{r, echo = FALSE}
-tab1 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`,
-  1, 1, 1,
-  2, -99, 0,
-  3, 1, 1,
-  4, 0, 1,
-  5, 1, 1,
-  6, -99, 0
-)
+## Challenge
 
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+```{r}
+dat_1 %>% 
+  kbl(escape = FALSE) %>% 
+  add_header_above(c(" ", "Unobserved" = 3))
 ```
 
 . . .
 
-Plug-in worst case scenario to find *lower* and *upper* bound
+Assign condition $D_i$ (0: control, 1: treatment)
 
-## Minimal assumption: $Y_i$ is *bounded*
+## Challenge
 
+```{r}
+dat_2 = dat %>% 
+  select(ID, Y1, Y0, Z, Y) %>% 
+  mutate(tau = Y1 - Y0) %>% 
+  relocate(tau, .after = "Y0")
 
-```{r, echo = FALSE}
-tab2 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i^L$`, ~`$Y_i^U$`,
-  1, 1, 1, 1, 1, 
-  2, -99, 0, 0, 1,
-  3, 1, 1, 1, 1,
-  4, 0, 1, 0, 0,
-  5, 1, 1, 1, 1,
-  6, -99, 0, 0, 1
-)
+colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+                    "\\(D_i\\)", "\\(Y_i\\)")
 
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(
-    i = 1:6,
-    j = 4:5,
-    color = "white"
-  )
+dat_2 %>% 
+  kbl(escape = FALSE) %>%
+  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
 ```
-
-Plug-in worst case scenario to find *lower* and *upper* bound
-
-## Minimal assumption: $Y_i$ is *bounded*
-
-
-```{r, echo = FALSE}
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4),
-           color = "purple") %>% 
-  style_tt(
-    i = 1:6,
-    j = 5,
-    color = "white"
-  )
-```
-
-Plug-in worst case scenario to find *lower* and *upper* bound
-
-## Minimal assumption: $Y_i$ is *bounded*
-
-
-```{r, echo = FALSE}
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4, 5),
-           color = "purple")
-```
-
-Plug-in worst case scenario to find *lower* and *upper* bound
-
-## Minimal assumption: $Y_i$ is *bounded*
-
-
-```{r, echo = FALSE}
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4, 5),
-           color = "purple")
-```
-
-**Sharp bounds:** $\widehat E[Y_i] = [\frac{3}{6}, \frac{5}{6}]$
-
-## More formally
-
-You can write plug-in estimator as a *weighted average*
 
 . . .
 
-$$
-\textbf{Lower bound: } \frac{1}{n}\sum_{i=1}^n (Y_i^*R_i + \mathbf{a} (1-R_i))
-$$
+To know $E[\tau_i]$ we need $(Y_i(1) - Y_i(0))$
 
 . . .
 
-$$
-\textbf{Upper bound: } \frac{1}{n}\sum_{i=1}^n (Y_i^*R_i + \mathbf{b} (1-R_i))
-$$
+But we only observe one at a time for each unit
 
-. . .
+## Challenge
 
-Meaning you do not need to know which are missing observations, just how many!
+```{r}
+dat_2 = dat %>% 
+  select(ID, Y1, Y0, Z, Y) %>% 
+  mutate(tau = Y1 - Y0) %>% 
+  relocate(tau, .after = "Y0")
+
+colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+                    "\\(D_i\\)", "\\(Y_i\\)")
+
+dat_2 %>% 
+  kbl(escape = FALSE) %>%
+  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+```
+
+This is the **FUNDAMENTAL PROBLEM OF CAUSAL INFERENCE**
+
 
 ::: aside
-$\mathbf a$ and $\mathbf b$ are the lowest/highest possible value of $Y_i$, respectively
+The term comes from: Holland, Paul W. 1986. ["Statistics and Causal Inference."](https://doi.org/10.2307/2289064) *Journal of the American Statistical Association* 81 (396): 945-960
 :::
 
+## Challenge
 
-## Why *sharp* bounds?
+```{r}
+dat_2 = dat %>% 
+  select(ID, Y1, Y0, Z, Y) %>% 
+  mutate(tau = Y1 - Y0) %>% 
+  relocate(tau, .after = "Y0")
 
-. . .
+colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+                    "\\(D_i\\)", "\\(Y_i\\)")
 
-They are **sharp** because we cannot improve them without additional assumptions that do not follow from the data
+dat_2 %>% 
+  kbl(escape = FALSE) %>%
+  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+```
 
-. . .
+How do we approximate $E[\tau_i]$ with observed data?
 
-So we say $\widehat E[Y_i]$ is *partially identified* under these assumptions
-
-. . .
-
-Size of bounds is proportional to amount of missing data
-
-. . .
-
-And sometimes you can use *auxiliary information* to refine bounds
-
-. . .
-
-**Challenge:** Social scientists don't know what to do with bounds
-
-::: aside
-IDK exactly why "minimal assumptions" means "sharp", but this is a related yet different use of "sharp" compared to the concept of "sharp null" next week
-:::
-
-
-## More heroic assumptions
-
-. . .
-
-**Baseline:** Missing not at random (MNAR/NMAR) 
-
-$$Y_i \not\!\perp\!\!\!\perp R_i$$
-
-. . .
-
-**MCAR:** Missing completely at random
+## ATE decomposition
 
 $$
-Y_i \perp \!\!\! \perp R_i
+E[\tau_i]
 $$
 
 . . .
 
-**MAR:** Missing at random *after conditioning on covariates* (aka *ignorability*)
+Substitute unit-level treatment effect
 
-$$
-Y_i \perp \!\!\! \perp R_i | \mathbf{X}_i
-$$
-
-## MCAR
-
-```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-. . .
-
-We assume the *distribution of outcomes is the same* for observed and unobserved
-
-## MCAR
-
-```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-Which is equivalent to imputing missing obs with the sample mean
-
-
-## MCAR
-
-```{r, echo = FALSE}
-tab3 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i$`,
-  1, 1, 1, "1",
-  2, -99, 0, "$\\widehat E[Y_i] = 3/4$",
-  3, 1, 1, "1",
-  4, 0, 1, "0",
-  5, 1, 1, "1",
-  6, -99, 0, "$\\widehat E[Y_i] = 3/4$"
-)
-
-
-tt(tab3) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4),
-           color = "purple")
-```
-
-Which is equivalent to imputing missing obs with the sample mean
-
-## MAR
-
-```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-. . .
-
-We assume *conditional independence*
-
-## MAR
-
-```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-Imagine we now observe covariate $X_i$
-
-
-## MAR
-
-```{r, echo = FALSE}
-tab4 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_i$`,
-  1, 1, 1, 0,
-  2, -99, 0, 0,
-  3, 1, 1, 0,
-  4, 0, 1, 0,
-  5, 1, 1, 1,
-  6, -99, 0, 1
-)
-
-tt(tab4) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-Imagine we now observe covariate $X_i$
-
-## MAR
-
-```{r, echo = FALSE}
-tt(tab4) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-MAR lets us impute the sample mean of units with the same covariate values
-
-## MAR
-
-```{r, echo = FALSE}
-tab5 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_i$`, ~`$Y_i$`,
-  1, 1, 1, 0, "1",
-  2, -99, 0, 0, "$\\widehat E[Y_i|X_i=0] = 2/3$",
-  3, 1, 1, 0, "1",
-  4, 0, 1, 0, "0",
-  5, 1, 1, 1, "1",
-  6, -99, 0, 1, "$\\widehat E[Y_i|X_i=1] = 1$"
-)
-
-tt(tab5) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 5),
-           color = "purple") 
-```
-
-We can impute the sample mean of units with the same covariate values
-
-## MAR with multiple covariates
-
-```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-Imagine we observe covariates $X_{1i}$ and $X_{2i}$
-
-## MAR with multiple covariates
-
-```{r, echo = FALSE}
-tab6 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
-  1, 1, 1, 0, 3,
-  2, -99, 0, 0, 7,
-  3, 1, 1, 0, 9,
-  4, 0, 1, 0, 5,
-  5, 1, 1, 1, 4,
-  6, -99, 0, 1, 3
-)
-
-tt(tab6) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-Imagine we observe covariates $X_{1i}$ and $X_{2i}$
-
-## Options
-
-1. Regression estimation
-
-2. Hot deck imputation
-
-3. Inverse-probability weighting (IPW)
-
-## Regression estimation
-
-```{r, echo = FALSE}
-tt(tab6) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-
-. . .
-
-Estimate $\widehat Y_i^* = \widehat \beta_0 + \widehat \beta_1 X_{1i} + \widehat \beta_2 X_{2i}$ with observed data
-
-## Regression estimation
-
-```{r, echo = FALSE}
-tt(tab6) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
-```
-
-Use coefficients to impute missing values
-
-## Regression estimation
-
-```{r, echo = FALSE}
-tab7 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
-  1, 1, 1, 0, 3, "1",
-  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
-  3, 1, 1, 0, 9, "1",
-  4, 0, 1, 0, 5, "0",
-  5, 1, 1, 1, 4, "1",
-  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
-)
-
-tt(tab7) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 6),
-           color = "purple") 
-```
-
-. . .
-
-Which yields the same $\widehat E[Y_i]$ as
-
-## Regression estimation
-
-```{r, echo = FALSE}
-tab8 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
-  1, 1, 1, 0, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 3$",
-  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
-  3, 1, 1, 0, 9, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 9$",
-  4, 0, 1, 0, 5, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 5$",
-  5, 1, 1, 1, 4, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 4$",
-  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
-)
-
-tt(tab8) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(i = 1:6,
-           j = 6,
-           color = "purple")
-```
-
-. . .
-
-What if we could condition on a *function* of covariates instead?
-
-## Propensity score
-
-. . .
-
-**Response propensity function**
-
-$$
-p_R(\mathbf{x}) = Pr[R_i = 1 | \mathbf{X}_i = x]
-$$
-
-::: incremental
-- $p_R(\mathbf{X}_i)$ is the **propensity score** of unit $i$
-
-- Conditional probability of response given the covariates
-
-- Useful since you cannot condition on many covariates  *nonparametrically* 
-
-- Can estimate *consistently* via ML (usually logit)
-
-- Still need to assume *specification* is correct
-:::
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-pstab = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
-  1, 2, 1, 0, 3,
-  2, -99, 0, 0, 7,
-  3, 3, 1, 0, 9,
-  4, 10, 1, 0, 5,
-  5, 12, 1, 1, 4,
-  6, -99, 0, 1, 3
-) 
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple")
-  
-```
-
-. . .
-
-Add propensity score
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-pstab$`$p_R(\\mathbf{X}_i)$` = c(0.33, 0.14, 0.73, 0.35, 0.78, 0.70)
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple")
-```
-
-Add propensity score
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple")
-```
-
-Impute values with nearest propensity score
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-pstab$`$Y_i$` = c(
-  "2",
-  "$\\widehat E[Y_i|p_R(X_i) = 0.14]$",
-  "3",
-  "10",
-  "12",
-  "$\\widehat E[Y_i|p_R(X_i) = 0.70]$"
-)
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
-```
-
-Impute values with nearest propensity score
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
-```
-
-Impute values with nearest propensity score
-
-## Hot deck what?
-
-![](https://www.hnf.de/uploads/tx_templavoila/Kartenlocher_HNF_1.JPG){fig-align="center"}
-
-
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
-```
-
-Impute values with nearest propensity score
-
-## Hot deck imputation
-
-```{r, echo = FALSE}
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
-```
-
-**Not a good idea.** Discards a lot of information!
-
-## Inverse probability weighting (IPW)
-
-::: incremental
-- The problem is not missing data
-
-- But an unrepresentative sample
-
-- If MAR holds, we can use propensity score to *weight* observations
-
-- **Inverse probability weight** $\frac{1}{p_R(\mathbf{X}_i)}$
-
-:::
-
-## IPW estimator
-
-
-**Horvitz-Thompson estimator**
-
-$$
-\widehat E_{IPW}[Y_i] = \frac{1}{n} \sum_{i=1}^n \frac{Y_i^* R_i}{\widehat p_R(\mathbf{X}_i)}
-$$
-
-::: incremental
-
-- Low propensity scores are *underrepresented* $\rightarrow$ Assign greater weight
-
-- High-propensity scores $\rightarrow$ lower weight
-
-:::
-
-::: aside
-In practice, Hájek's stabilized IPW estimator is used more often because it avoids disproportional weights (cf. Definition 6.2.8 in AM Chapter 6)
-:::
-
-## Recap
-
-. . .
-
-**Options under MAR**
-
-1. Regression estimation
-
-2. Hot deck imputation
-
-3. Inverse-probability weighting (IPW)
-
-## Recap
-
-**Options under MAR**
-
-1. Regression estimation
-
-2. ~~Hot deck imputation~~
-
-3. Inverse-probability weighting (IPW)
-
-## Recap
-
-**Options under MAR**
-
-1. Regression estimation
-
-2. ~~Hot deck imputation~~
-
-3. Inverse-probability weighting (IPW)
-
-4. **Doubly robust estimation**
-
-## Doubly robust estimation
-
-::: incremental
-- Regression specification may be incorrect
-
-- Propensity score specification may be incorrect
-
-- Combining the two in a model that yields consistent estimates when *either* is correct
-:::
-
-. . .
+## ATE decomposition
 
 $$
 \begin{align}
-& \widehat E_{DR}[Y_i] = \\
-&\frac{1}{n} \sum_{i=1}^n \widehat E[Y_i^*|R_i = 1, \mathbf{X}_i] + \frac{1}{n} \sum_{i=1}^n \frac{R_i(Y_i^* - \widehat E[Y_i^* | R = 1, \mathbf{X}_i])}{\widehat{p}_R(\mathbf{X}_i)}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)]
 \end{align}
 $$
 
-## Doubly robust estimation
+. . .
 
-- Regression specification may be incorrect
+Apply linearity of expectations
 
-- Propensity score specification may be incorrect
-
-- Combining the two in a model that yields consistent estimates when *either* is correct
-
+## ATE decomposition
 
 $$
-\widehat E_{DR}[Y_i] = \text{Regression estimator} + \text{IPW correction}
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)] \\
+  & = E[Y_i(1)] - E[Y_i(0)]
+\end{align}
 $$
-
-## With data
-
-
-```{r}
-library(gssr)
-
-gss22 = gss_get_yr(2022)
-
-gss = gss22 %>% 
-  select(vote20) %>% 
-  mutate(vote = ifelse(vote20 == 1, 1, 0))
-
-gss %>% 
-  group_by(vote) %>% 
-  tally()
-```
-
-
-## Bounds as weighted average
-
-Get proportion missing
-
-```{r}
-pr_response = mean(!is.na(gss$vote))
-
-pr_response
-```
 
 . . .
 
-Lower bound:
-
-```{r}
-mean(gss$vote, na.rm = TRUE) * pr_response + 0 *(1-pr_response)
-```
+We can only calculate
 
 . . .
 
-Upper bound:
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0] 
+$$
 
-```{r}
-mean(gss$vote, na.rm = TRUE) * pr_response + 1 * (1-pr_response)
-```
+. . .
 
-## Bounds by imputation
+We need to convince ourselves that
 
-```{r}
-gss %>% 
-  select(vote) %>% 
-  mutate(
-    vote_lo = ifelse(is.na(vote), 0, vote),
-    vote_hi = ifelse(is.na(vote), 1, vote)) %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    lower_bound = mean(vote_lo),
-    upper_bound = mean(vote_hi)
-  )
-```
+. . .
 
-## MCAR by imputation
+$$
+E[Y_i(1)] - E[Y_i(0)] = E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
 
-```{r}
-vote_mean = mean(gss$vote, na.rm = TRUE)
+## ATE decomposition
 
-gss %>% 
-  select(vote) %>% 
-  mutate(
-    vote_mcar = ifelse(is.na(vote), vote_mean, vote)) %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    mcar = mean(vote_mcar)
-  )
-```
+$$
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)] \\
+  & = E[Y_i(1)] - E[Y_i(0)]
+\end{align}
+$$
 
-::: aside
-The number is the same so the real value would come from being able to use more data in general. But also you should never do mean imputation.
+
+We can only calculate
+
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0] 
+$$
+
+
+We need to convince ourselves that
+
+$$
+E[Y_i(1)] - E[Y_i(0)] = E[Y_i(1) \color{purple}{| D_i = 1}] - E[Y_i(0) \color{purple}{| D_i = 0}]
+$$
+
+
+## ATE decomposition
+
+$$
+\begin{align}
+E[\tau_i] & = E[Y_i(1) - Y_i(0)] \\
+  & = E[Y_i(1)] - E[Y_i(0)]
+\end{align}
+$$
+
+
+We can only calculate
+
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0] 
+$$
+
+
+We need to convince ourselves that [$D_i$ can be ignored]{style="color: purple;"}
+
+$$
+E[Y_i(1)] - E[Y_i(0)] = E[Y_i(1) \color{purple}{| D_i = 1}] - E[Y_i(0) \color{purple}{| D_i = 0}]
+$$
+
+## Obstacle
+
+$$
+E[Y_i(1) | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+
+## Obstacle
+
+$$
+E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+. . .
+
+Rewrite to include $\tau_i$
+
+. . .
+
+
+$$
+= E[\color{purple}{\tau_i + Y_i(0)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+. . .
+
+Apply linearity of expectations again
+
+
+$$
+= E[\color{purple}{\tau_i} | D_i = 1] +
+E[\color{purple}{Y_i(0)} | D_i = 1] - 
+E[Y_i(0) | D_i = 0]
+$$
+
+
+## Obstacle
+
+$$
+E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+
+
+Rewrite to include $\tau_i$
+
+
+
+
+$$
+= E[\color{purple}{\tau_i + Y_i(0)} | D_i = 1] - E[Y_i(0) | D_i = 0]
+$$
+
+
+
+Apply linearity of expectations again
+
+
+$$
+= \underbrace{E[\color{purple}{\tau_i} | D_i = 1]}_{\text{ATE on the treated (ATT)}} +
+\underbrace{E[\color{purple}{Y_i(0)} | D_i = 1] - E[Y_i(0) | D_i = 0]}_{\text{Selection bias}}
+$$
+
+. . .
+
+
+We want to eliminate **selection bias**
+
+# How?
+
+## Strategy 1: Random assignment
+
+. . .
+
+If treatment $D_i$ is *randomly assigned*
+
+::: incremental
+- Potential outcomes are independent from treatment: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i$
+- Positivity: $0 < \text{Pr}[D_i = 1] < 1$
+- ATE $E[\tau_i]$ is **point-identified**
+- Estimate with difference in means between treatment and control: $\widehat E_{DM}[\tau_i] = \widehat E[Y_i(1)] - \widehat E[Y_i(0)]$
 :::
 
-## Regression imputation (MAR)
+. . .
 
-Make a new data with two more variables
-
-```{r}
-gss_wide = gss22 %>% 
-  select(vote20, sex, partyid) %>% 
-  mutate(vote = ifelse(vote20 == 1, 1, 0),
-         female = ifelse(sex == 2, 1, 0),
-         dem = ifelse(partyid <= 2, 1, 0)) %>% 
-  select(vote, female, dem)
-
-head(gss_wide, 3)
+```{r, echo = TRUE, eval = FALSE}
+difference_in_means(Y ~ D, data = data) # estimatr package
 ```
 
-::: aside
-In practice, you want to convince yourself that you have enough variables to justify *conditional independence*
+## Randomization inference
+
+::: incremental
+1. Choose a **test statistic** and **sharp null hypothesis**
+
+2. Calculate *observed* test statistic $T^{obs}$
+
+3. Randomly shuffle treatment assignment
+
+4. Calculate test statistic $\widetilde T_1$
+
+5. Repeat $K$ times to obtain distribution of test statistics $\widetilde T = \{\widetilde T_1, \ldots, \widetilde T_K \}$
+
+6. **p-value:**  Proportion in $\widetilde T >= T^{obs}$
 :::
 
-## Regression imputation (MAR)
+::: aside
+The **sharp null hypothesis** assumes no effect at all. $H_0 : \tau_i = Y_i(1) - Y_i(0) = 0 \forall i$
+:::
+
+## Example
 
 ```{r}
-outcome_model = lm(vote ~ female + dem,
-                   data = gss_wide)
+declaration = 
+  declare_model(N = 100, U = rnorm(N),
+                potential_outcomes(Y ~ 0.25 * Z + U)) +
+  declare_inquiry(ATE = mean(Y_Z_1 - Y_Z_0)) +
+  declare_assignment(Z = complete_ra(N, prob = 0.5)) +
+  declare_measurement(Y = reveal_outcomes(Y ~ Z)) +
+  declare_estimator(Y ~ Z, model = difference_in_means, 
+                    inquiry = "ATE")
 
-gss_wide$vote_pred = predict(outcome_model, 
-                    # newdata is by default current data in predict.lm
-                    newdata = gss_wide)
-
-head(gss_wide)
-```
-
-## Regression imputation (MAR)
-
-```{r}
-gss_wide %>% 
-  mutate(
-    vote_reg = ifelse(is.na(vote), vote_pred, vote)
-  ) %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    # Some still missing have missing data in the covariates
-    mar_reg_1 = mean(vote_reg, na.rm = TRUE),
-    mar_reg_2 = mean(vote_pred, na.rm = TRUE)
-  )
+set.seed(20241108)
+experiment = draw_data(declaration) %>% 
+  rename(D = Z) %>% 
+  select(ID, Y, D) 
 ```
 
 
-## IPW (MAR)
-
-```{r}
-# Make a binary indicator of missingness
-gss_wide = gss_wide %>% 
-  mutate(
-    response = ifelse(!is.na(vote), 1, 0)
-  ) %>% 
-  filter(!is.na(female) & !is.na(dem))
-
-pscore_model = glm(
-  response ~ female + dem,
-  family = binomial,
-  data = gss_wide
-)
-
-# Create variable with probabilities
-gss_wide$pscore = predict(pscore_model, type = "response")
-
-# Convert to IPW
-gss_wide$ipw = 1/gss_wide$pscore
+```{r, echo = TRUE}
+experiment
 ```
 
-## IPW (MAR)
+
+## Create randomization distribution
+
+::: aside
+Code relies on `tidyverse`, `infer` and `estimatr` packages
+:::
+
+::: {.panel-tabset}
+## Code
+
+```{r, echo = TRUE}
+#| code-line-numbers: "|3|4|5|6|7|8|9|10"
+set.seed(20241108)
+
+null_df = experiment %>% 
+  specify(Y ~ D) %>% 
+  hypothesize(null = "independence") %>% 
+  generate(reps = 1000, type = "permute") %>% 
+  split(.$replicate) %>% 
+  map(~difference_in_means(Y ~ D, data = .)) %>% 
+  map(tidy) %>% 
+  bind_rows(.id = "replicate")
+```
+
+## Output
 
 ```{r}
-gss_wide %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    mar_ipw = weighted.mean(vote, w = ipw, na.rm = TRUE)
+null_df
+```
+
+:::
+
+## Visualize
+
+```{r}
+obs = difference_in_means(Y ~ D, data = experiment) %>%
+  tidy %>% .$estimate
+
+dens = density(null_df$estimate)
+
+data = tibble(estimate = dens$x,
+              dens = dens$y) %>% 
+  mutate(p = ifelse(abs(estimate) >= abs(obs), 1, 0))
+
+p0 = ggplot(data) + 
+  aes(x = estimate,
+      y = dens) + 
+  geom_line(linewidth = 2) +
+  labs(x = "ATEs under sharp null hypothesis",
+       y = "Density") +
+  theme_gray(base_size = 20)
+
+p0
+  
+```
+
+## Visualize
+
+```{r}
+
+p1 = p0 +
+  geom_vline(
+    xintercept = c(-obs, obs),
+    linetype = "dashed",
+    color = "purple",
+    linewidth = 1) +
+  annotate(
+    "text",
+    x = obs + 0.15,
+    y = 1.8,
+    label = "Observed ATE",
+    color = "purple"
     )
+
+p1
 ```
 
-
-## Doubly robust (MAR)
+## Visualize
 
 ```{r}
-doubly_robust = lm(vote ~ female + dem,
-                   data = gss_wide,
-                   weights = ipw)
-
-gss_wide$vote_dr = predict(doubly_robust,
-                           newdata = gss_wide)
-
-gss_wide %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    mar_dr = mean(vote_dr)
-  )
+p2 = p1 +
+  geom_area(
+    data = filter(data, p == 1 & estimate > 0),
+    fill = "purple",
+    alpha = 0.5
+  ) +
+  geom_area(
+    data = filter(data, p == 1 & estimate < 0),
+    fill = "purple",
+    alpha = 0.5
+  ) 
+  
+p2
 ```
+
+## Visualize
+
+```{r}
+p2
+```
+
+
+```{r, echo = TRUE}
+mean(abs(null_df$estimate) >= abs(obs))
+```
+
+## Normal-approximation inference
+
+```{r, echo = TRUE}
+mean(abs(null_df$estimate) >= abs(obs)) # randomization inference p-value
+```
+
+. . .
+
+Compare with:
+
+```{r, echo = TRUE}
+difference_in_means(Y ~ D, data = experiment) %>% tidy()  %>% .$p.value
+```
+
+::: incremental
+- Normal approximation compares test statistic to t-distribution
+
+- Based on "weak" null hypothesis $H_0: E[\tau_i] = 0$
+
+- vs. randomization inference sharp null $H_0 : \tau_i = Y_i(1) - Y_i(0) = 0 \forall i$
+:::
+
+## Using control variables?
+
+Difference in means gives you an **unbiased** estimate of the average treatment effect in experiments
+
+. . .
+
+But no guarantee for statistical precision
+
+. . .
+
+Can use covariates and regression to make standard errors smaller
+
+. . .
+
+...and you should! Experiments are expensive
+
+::: aside
+See [Bowers (2011)](https://doi.org/10.1017/CBO9780511921452.032) for an extensive discussion
+:::
+
+## Example
+
+![](fig/manekin_mitts_2022.png){fig-align="center"}
+
+::: aside
+Manekin, Devorah and Tamar Mitts. 2022. ["Effective for Whom? Ethnic Identity and Nonviolent Resistance."](https://doi.org/10.1017/S0003055421000940) *American Political Science Review* 116(1): 161-180
+:::
+
+## Data from US Wave 2
+
+
+::: {.panel-tabset}
+
+## Data
+
+```{r, echo = TRUE}
+#| code-line-numbers: "|5|7-9|10-14|15|"
+
+# Load data from course github
+load(url("http://gustavodiaz.org/ps403/data/Manekin_Mitts.rdata"))
+
+# Clean up
+w2 = us_survey_wave2 %>% 
+  # Redo factors so that they don't have too many levels
+  mutate(
+    white = ifelse(race == "White / Caucasian", 1, 0)
+  ) %>% 
+  select(Y = police_action_required, # outcome 11 pt scale
+         Z = black, # treatment: race of protesters
+         # covariates
+         pol_views, white, female, partyID
+  ) %>% 
+  drop_na # drop incomplete cases, if any
+```
+
+
+## Output
+
+```{r}
+w2
+```
+
+:::
+
+## Results
+
+```{r, echo = TRUE}
+main1 = difference_in_means(Y ~ Z, data = w2) %>% tidy()
+
+main2 = lm_robust(Y ~ Z, data = w2) %>% tidy()
+
+adj = lm_robust(Y ~ Z + white + female + partyID, data = w2) %>% tidy()
+```
+
+
+. . .
+
+```{r}
+bind_rows(
+  main1 %>% mutate(estimator = "Diff. in means"),
+  main2 %>% mutate(estimator = "OLS (no controls)"),
+  adj %>% mutate(estimator = "OLS + controls")) %>%
+  filter(term == "Z") %>%
+  select(estimator, estimate, std.error, conf.low, conf.high, p.value) %>% 
+  tt(digits = 3) %>% style_tt(fontsize = 0.8)
+```
+
+
+
+# What if I don't have random assignment?
+
+
+## Strategy 2: Ignorability
+
+. . .
+
+What if we cannot assume random assignment?
+
+## Strategy 2: Ignorability
+
+We can still conduct valid causal inference if we believe treatment assignment is **strongly ignorable** (conditional on covariates)
+
+. . .
+
+Requirements:
+
+::: incremental
+- *Conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
+- *Positivity*: There exists $\epsilon > 0$ such that $$\epsilon < Pr[D_i = 1 | \mathbf{X}_i] < 1 - \epsilon$$
+:::
+
+::: aside
+*Weak ignorability* only requires $Y_i(d) \perp \!\!\! \perp D_i | \mathbf{X}_i \forall d \in \{0, 1\}$, which in most cases makes no difference
+:::
+
+## Strategy 2: Ignorability
+
+If strong ignorability holds:
+
+::: incremental
+- ATE $E[\tau_i]$  is **point-identified**
+- Conditional ATE (CATE) $E[\tau_i | \mathbf{X}_i]$ is **point-identified**
+:::
+
+. . .
+
+Estimation strategies (more in the lab):
+
+::: incremental
+- Conditioning on covariates (regression)
+- Propensity score matching
+- IPW estimation
+- Doubly robust estimation
+:::
+
+
+## Post-treatment variables
+
+. . .
+
+Randomization implies *independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i$
+
+. . .
+
+Strong ignorability requires *conditional independence*: $(Y_i(0), Y_i(1)) \perp \!\!\! \perp D_i | \mathbf{X}_i$
+
+. . .
+
+Neither needs to be true for **post-treatment variables**
+
+. . .
+
+Conditioning on post-treatment variables introduces *bias*
+
+
+::: aside
+See [Montgomery, Nyhan, and Torres (2018)](https://doi.org/10.1111/ajps.12357) for details
+:::
+
+
 
 ## Wrapping up
 
-- Missing data means i.i.d. assumption does not hold even with a random/representative sample
+- Causal inference requires imposing additional assumptions
 
-- But i.i.d. is assumed out of convenience, not accuracy
+- Easy to justify with experiments (but hard to implement)
 
-- Many are unbothered by missing data because it does not make a difference
+- Hard to justify in observational studies (easy to p-hack, HARK)
 
-- But sometimes ignoring may present problems for inference or the application of other methods
+- Next step: "Quasi"-experimental designs
 
-- You want to (at least) show that ignoring missing data is not a big deal
+# Bonus: Quasi-experiments
+
+What if we could guarantee strong ignorability *by design*?
+
+
+
+## Quasi-experiments
+
+::: incremental
+- *Observational* studies
+- Data structured such that we can credibly make causal claims
+- We can *treat* them as experiments but they **are not**
+:::
+
+. . .
+
+Examples:
+
+1. Regression discontinuity design (RDD)
+
+2. Difference-in-differences (DID)
+
+## RDD ingredients
+
+::: incremental
+- $Y_i$: outcome
+
+- $X_i$: score or running variable
+
+- $c$: cutoff or threshold
+
+- $T_i$: Treatment indicator
+:::
+
+. . .
+
+**Potential outcomes**
+
+$$
+Y_i = (1 - T_i) Y_i(0) + T_i Y_i(1) = \begin{cases}
+Y_i(0) & \text{if } X_i < c\\
+Y_i(1) & \text{if } X_i \geq c
+\end{cases}
+$$
+
+## Sharp RDD
+
+![](fig/rd_assign.png){fig-align="center" width=59%}
+
+::: aside
+Called *sharp* because treatment assignment is *deterministic* at the cutoff
+:::
+
+## Interpretation: Two approaches
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+![](fig/rd_assign.png)
+
+:::
+
+::: {.column width="40%"}
+
+
+1. Local randomization
+
+2. Continuity-based
+
+
+:::
+::::
+
+## Local randomization approach
+
+:::: {.columns}
+::: {.column width="60%"}
+![](fig/rd_rand.png)
+:::
+
+::: {.column width="40%"}
+::: incremental
+- Bandwidth $\mathcal{W} = [c−w,c+w]$
+
+- Treatment **as-if** random within $\mathcal{W}$
+
+- ATE *point-identified* within $\mathcal{W}$
+
+:::
+
+:::
+
+::::
+
+
+## Local randomization approach
+
+:::: {.columns}
+::: {.column width="60%"}
+![](fig/rd_rand.png)
+:::
+
+::: {.column width="40%"}
+
+**Requirements**
+
+::: incremental
+1. Known probability distribution of scores within $\mathcal{W}$ ($\equiv$ random assignment)
+
+2. Potential outcomes **not affected by scores** within $\mathcal{W}$
+
+:::
+
+:::
+
+::::
+
+## Local randomization approach
+
+:::: {.columns}
+::: {.column width="60%"}
+![](fig/rd_rand.png)
+:::
+
+::: {.column width="40%"}
+
+**Estimation**
+
+::: incremental
+- Difference in means within $\mathcal{W}$
+:::
+
+**Inference**
+
+::: incremental
+
+1. Randomization inference
+
+2. Normal-approximation (*super-population*)
+
+:::
+
+:::
+
+::::
+
+## Continuity-based approach
+
+:::: {.columns}
+::: {.column width="60%"}
+![](fig/rd_cont.png)
+:::
+
+::: {.column width="40%"}
+::: incremental
+- ATE is *point-identified* at cutoff
+
+- $\tau_{SRD} \equiv E[Y_i(1) - Y_i(0) | X_i = c]$
+
+- But it does not exist!
+
+- Still, we can approximate
+
+:::
+
+:::
+
+::::
+
+## Continuity-based approach
+
+:::: {.columns}
+::: {.column width="60%"}
+![](fig/rd_cont.png)
+:::
+
+::: {.column width="40%"}
+
+- ATE is *point-identified* at cutoff
+
+- $\tau_{SRD} \equiv E[Y_i(1) - Y_i(0) | X_i = c]$
+
+- But it does not exist!
+
+- Still, we can approximate
+
+$$
+\lim_{x \downarrow c} E[Y_i | X_i = x] -
+\lim_{x \uparrow c} E[Y_i | X_i x]
+$$
+:::
+
+::::
+
+## Local polynomial point estimation
+
+**Steps**
+
+::: incremental
+1. Choose polynomial $p$ and kernel function $K(\cdot)$
+
+2. Choose bandwidth $h$
+
+3. Fit $\widehat \mu_+$ and $\widehat \mu_-$ via *weighted least-squares* (based on $K(\cdot)$)
+
+4. Estimate: $\widehat \tau_{SRD} = \widehat \mu_+ - \widehat \mu_-$
+
+5. Inference: Correct for adaptive bandwidth selection
+:::
+
+::: aside
+This a non-parametric procedure since most choices are automated to find optimal MSE
+:::
+
+## Polynomial $p$
+
+::: aside
+Different polynomials yield different estimates
+:::
+
+![](fig/rdd_poly.png){fig-align="center" width=90%}
+
+## Kernel function $K(\cdot)$
+
+![](fig/rd_kernel.png){fig-align="center" width=60%}
+
+::: aside
+$K(\cdot)$ assigns weights to units based on distance to cutoff (triangular performs better)
+:::
+
+## Bandwidth $h$
+
+::: aside
+**Narrower:** less bias, more variance. 
+**Wider:** more bias, less variance 
+:::
+
+![](fig/rdd_bw2.png){fig-align="center" width=90%}
+
+## DID ingredients
+
+::: incremental
+
+- Time periods: $t = \{1,2\}$ (Before/after treatment)
+
+- Treatment: $D_i = \{0,1\}$
+
+- Potential outcomes: $Y_{i,t}(0) = Y_{i,t}(0, 0)$ and $Y_{i,t}(1) = Y_{i,t}(0, 1)$
+
+:::
+
+. . .
+
+**Switching equation**
+
+$$
+Y_{i,t} = D_i Y_{i,t}(1) + (1-D_i) Y_{i,t}(0)
+$$
+
+
+::: aside
+Same as canonical potential outcomes framework but now with time periods
+:::
+
+## Causal estimand
+
+. . .
+
+**Average treated effect on the treated (ATT) in $t=2$**
+
+$$
+\tau_2 = E[Y_{i,2}(1) - Y_{i,2}(0) | D_i = 1]
+$$
+
+::: incremental
+- Cannot observe directly
+
+- Cannot avoid selection bias
+
+- But before/after setup allows for valid estimation
+:::
+
+## Causal estimand
+
+![](fig/dd.png)
+
+## DID estimation
+
+![](fig/dd.png)
+
+
+$$
+\widehat{ATT} =  [\text{Mean}(B) - \text{Mean}(A)] - [\text{Mean}(D) - \text{Mean}(C)]
+$$
+
+
+
+## DID estimation
+
+
+
+![](fig/dd.png)
+
+$$
+\widehat{ATT} =  \underbrace{[\text{Mean}(B) - \text{Mean}(A)]}_\text{Difference} - \underbrace{[\text{Mean}(D) - \text{Mean}(C)]}_\text{Difference}
+$$
+
+## DID estimation
+
+![](fig/dd.png)
+
+$$
+\widehat{ATT} =  \underbrace{\underbrace{[\text{Mean}(B) - \text{Mean}(A)]}_\text{Difference} - \underbrace{[\text{Mean}(D) - \text{Mean}(C)]}_\text{Difference}}_\text{Difference-in-differences}
+$$
+
+## Rewrite as a regression estimator
+
+. . .
+
+**Two time periods**
+
+
+$$
+\begin{align}
+Y = & \beta_0 + \beta_1 \text{Treated} + \beta_2 \text{Post-treatment} + \\
+& \color{purple}{\beta_3 \text{Treated} \times \text{Post-treatment}} + \varepsilon
+\end{align}
+$$
+
+. . .
+
+
+```{r, echo=TRUE, eval=FALSE}
+# Both are the same
+lm(Y ~ Treated * Post-treatment, data = dat)
+
+lm(Y ~ Treated + Post-treatment + Treated:Post-treatment, data= dat)
+```
+
+
+## Rewrite as a regression estimator
+
+**Multiple time periods**
+
+. . .
+
+$$
+Y = \alpha_i + \alpha_t + \color{purple}{\beta_1 \text{Treated}} + \varepsilon
+$$
+
+. . .
+
+Known as the two-way fixed-effects estimator (TWFE)
+
+. . .
+
+```{r, echo = TRUE, eval = FALSE}
+lm_robust(
+  Y ~ Treated,
+  fixed_effects = ~Unit + Time,
+  clusters = Unit,
+  se_type = "stata", # faster computing
+  data = dat
+)
+```
+
+## Assumption: Parallel trends
+
+![](fig/dd_trend_1.png)
+
+## What if we break parallel trends?
+
+![](fig/dd_trend_2.png)
+
+## What if we break parallel trends?
+
+![](fig/dd_trend_3.png)
+
+## Challenge: Staggered adoption
+
+
+![](fig/dd_timing.png)
+
+::: aside
+See [Roth et al 2023](https://doi.org/10.1016/j.jeconom.2023.03.008) and [`did`](https://bcallaway11.github.io/did/) package for details
+:::
+
+

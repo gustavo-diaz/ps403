@@ -72,6 +72,7 @@ We use **sampling** variance to convey uncertainty around the estimates we produ
 ::: {.panel-tabset}
 ## Code
 ```{r}
+# remotes::install_github("kjhealy/gssr")
 library(gssr)
 
 gss22 = gss_get_yr(2022)
