@@ -102,7 +102,7 @@ Your final grade in this course will depend on the following:
 
 ## Participation
 
-This course does not formally require attendance, but I do expect the usual level of accountability required in a graduate seminar. That means attending class, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify you by the end of Week 6 and give you feedback on how to improve.
+This course does not formally take attendance, but I do expect the usual level of accountability required in a graduate seminar. That means attending class, doing the reading, asking questions, and working to foster a productive learning environment for everyone. Your participation inside and outside the classroom will be marked as satisfactory or unsatisfactory by the end of the quarter. If your participation leans toward an unsatisfactory mark, I will notify you by the end of Week 6 and give you feedback on how to improve.
 
 ## Lab assignments
 
@@ -122,7 +122,7 @@ The implication is that, to assign a satisfactory mark to your lab, I will be mo
 
 You will submit a short correspondence paper as your final assignment. *Correspondence* is a new format adopted by the [*American Journal of Political Science*](https://onlinelibrary.wiley.com/journal/15405907) (AJPS) dedicated to scholarship that revisits the central empirical claims in previously published work. In the broader discipline, these are known as replication papers.
 
-The goal of the correspondence paper is to apply what you have learned this quarter on a topic of your interest by reproducing the analysis of a previously published article, reflecting on the way it was conducted, consider what could be done differently, and possibly improve upon it.
+The goal of the correspondence paper is to apply what you have learned this quarter to a topic of your interest by reproducing the analysis of a previously published article, reflecting on the way it was conducted, consider what could be done differently, and possibly improve upon it.
 
 You should think of this as the first step toward writing a publishable article in your field. Since the AJPS has a dedicated track for this form of scholarship, you are required to choose a paper published in the journal in the last five years (2021-2026).
 
@@ -137,7 +137,7 @@ Final papers are due on Wednesday, December 9 at 9AM. You should submit your pap
 
 Your final paper will be marked as *outstanding*, *satisfactory*, *unsatisfactory*, or *failed*. You are also welcome to resubmit a final paper marked as unsatisfactory at any point, but that means I will not be able to update your grade until after the final grade report deadline. I encourage submitting an incomplete paper for a temporary grade over asking for an incomplete course grade.
 
-We will discuss more details about the final paper during Week 6 and throughout the term.
+<!-- We will discuss more details about the final paper during Week 6 and throughout the term. -->
 
 
 # Grading
