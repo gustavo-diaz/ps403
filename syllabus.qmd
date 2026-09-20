@@ -19,16 +19,16 @@ fontsize: 12pt
 <!-- Remember double space for line skip -->
 **Instructor:** Gustavo Diaz (<gustavo.diaz@northwestern.edu>)  
 **Office Hours:** By appointment ([cal.com/gustavodiaz/](https://cal.com/gustavodiaz/))  
-**Office:** Jacobs 3152
+**Office:** 2001 Sheridan Rd, suite 3152
 
-**Teaching Assistant:** TBD (<tbd@u.northwestern.edu>)  
+**Teaching Assistant:** Mikhail Turchenko (<mturchenko@u.northwestern.edu>)  
 **Office Hours:** TBD  
-**Office:** TBD
+**Office:** 2001 Sheridan Rd, suite XXXX
 
-**Lecture:**  Tuesdays 9:30am -- 12:20pm, TBD  
-**Lab:** Thursdays  11:00 -- 11:50am, TBD    
+**Lecture:**  Tuesdays 9:30am -- 12:20pm, 2001 Sheridan Rd, suite 3111  
+**Lab:** Thursdays  11:00 -- 11:50am, 2001 Sheridan Rd, suite 3111      
 **GitHub Repository:** [github.com/gustavo-diaz/ps403](https://github.com/gustavo-diaz/ps403)  
-**Canvas:** TBD
+**Canvas:** [canvas.northwestern.edu/courses/256213](https://canvas.northwestern.edu/courses/256213)
 
 :::
  
@@ -120,7 +120,7 @@ The implication is that, to assign a satisfactory mark to your lab, I will be mo
 
 ## Correspondence paper
 
-You will submit a short correspondence paper as your final assignment. *Correspondence* is a new format adopted by the [*American Journal of Political Science*](https://onlinelibrary.wiley.com/journal/15405907) (AJPS) dedicated to scholarship that revisits the central empirical claims in previously published work. In the broader discipline, these are known as replication papers.
+You will submit a short correspondence paper as your final assignment. *Correspondence* is a new format adopted by the [*American Journal of Political Science*](https://onlinelibrary.wiley.com/journal/15405907) (AJPS) dedicated to scholarship that revisits the central empirical claims in previously published work. In the broader discipline, these are known as replication papers ([which is maybe a misnomer](https://jblevins.org/log/rep)).
 
 The goal of the correspondence paper is to apply what you have learned this quarter to a topic of your interest by reproducing the analysis of a previously published article, reflecting on the way it was conducted, consider what could be done differently, and possibly improve upon it.
 
