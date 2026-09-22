@@ -22,8 +22,8 @@ fontsize: 12pt
 **Office:** 2001 Sheridan Rd, suite 3152
 
 **Teaching Assistant:** Mikhail Turchenko (<mturchenko@u.northwestern.edu>)  
-**Office Hours:** TBD  
-**Office:** 2001 Sheridan Rd, suite XXXX
+**Office Hours:** Thursdays 12:00 -- 2:00pm  
+**Office:** 2001 Sheridan Rd, suite 3169
 
 **Lecture:**  Tuesdays 9:30am -- 12:20pm, 2001 Sheridan Rd, suite 3111  
 **Lab:** Thursdays  11:00 -- 11:50am, 2001 Sheridan Rd, suite 3111      
