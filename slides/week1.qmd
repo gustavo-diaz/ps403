@@ -27,31 +27,16 @@ First in the PhD methods sequence:
 
 ::: incremental
 - **POLI_SCI 403:** (Introduction to) Probability and Statistics
-- **POLS_SCI 405:** Linear Models (Seawright)
+- **POLS_SCI 405:** Linear Models (Wilson)
 
 - **POLI_SCI 406:** Quantitative Causal Inference (Seawright)
 :::
 
 ## Methods electives this year
 
-. . .
-
-**Fall**
-
-- Experiments (McGrath)
-- Small-N (Mahoney)
-
-. . .
-
-**Winter:** Machine Learning (Diaz)
-
-. . .
-
-**Spring:** Replication (Coppock)
-
-. . .
-
-**Year-long:** Statistical Computing Workshop (Diaz) 
+- **Fall:** Small-N (Mahoney)
+- **Spring:** Experiments (McGrath)
+- **Year-long:** Statistical Computing Workshop (Diaz) 
 
 ## This course
 
@@ -85,7 +70,7 @@ First in the PhD methods sequence:
 
 **Assignments:** [github.com/gustavo-diaz/ps403](https://github.com/gustavo-diaz/ps403)
 
-**Submit work:** [canvas.northwestern.edu/courses/235851](https://canvas.northwestern.edu/courses/235851)
+**Submit work:** [canvas.northwestern.edu/courses/256213](https://canvas.northwestern.edu/courses/256213)
 
 **Meetings:** [cal.com/gustavodiaz](https://cal.com/gustavodiaz/)
 
@@ -98,15 +83,15 @@ First in the PhD methods sequence:
 Assistant Professor of Instruction in Political Science  
 **Email:** <gustavo.diaz@northwestern.edu>  
 **Website:** [gustavodiaz.org](https://gustavodiaz.org)  
-**Office:** Scott Hall 103 
+**Office:** 2001 Sheridan Rd, suite 3152
 :::
 
 ::: {.callout-tip}
-## Artur Baranov
+## Mikhail Turchenko
 PhD Student in Political Science  
-**Email:** <artur.baranov@u.northwestern.edu>  
-**Website:** [artur-baranov.github.io](https://artur-baranov.github.io)  
-**Office:** Scott Hall 110
+**Email:** <mturchenko@u.northwestern.edu>  
+**Website:** [msturchenko.com](https://msturchenko.com)  
+**Office:** 2001 Sheridan Rd, suite 3169
 :::
 
 ::: aside
@@ -161,9 +146,9 @@ Additional readings linked in syllabus
 
 1. Participation
 
-2. Lab assignments (9 total, due Mondays 11:59 PM)
+2. Lab assignments (8 total, due Fridays 11:59 PM)
 
-3. Replication paper (due December 10 9AM)
+3. Replication paper (due December 9 9:00 AM)
 
 
 
@@ -189,7 +174,7 @@ NA: Fail
 - [Complete Lab 0]{style="color: gray;"}
 - [Be late on no more than one lab assignment]{style="color: gray;"}
 - [Submit final paper before deadline]{style="color: gray;"}
-- Complete 7 out of 9 labs
+- Complete 6 out of 8 labs
 - Complete final paper
 - Satisfactory participation mark
 
@@ -222,10 +207,6 @@ NA: Fail
 - One lab assignment
 
 # Questions?
-
-# AI and Coding
-
-Placeholder for a conversation
 
 # Lab 0
 
