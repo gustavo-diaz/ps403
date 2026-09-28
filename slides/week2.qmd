@@ -91,6 +91,10 @@ What is the probability of rolling {{< fa dice-one >}} or {{< fa dice-six >}} wi
 
 . . .
 
+How do you know!?
+
+. . .
+
 What about a **biased** coin? An **unfair** die?
 
 . . .
@@ -103,10 +107,14 @@ Why do we need such language?
 
 We are making the problem **tractable** so that the answer can be something other than "I don't know"
 
-
-## A more involved example<br>(Stark and Freedman)
+## A more involved example<br>(Stark and Freedman 2003)
 
 *What is the chance that an earthquake of magnitude 6.7 or greater will occur before the year 2023?*
+
+
+## A more involved example<br>(Stark and Freedman 2003)
+
+*What is the chance that an earthquake of magnitude 6.7 or greater will occur before the year ~~2023~~ 2046?*
 
 &nbsp;
 
@@ -160,7 +168,7 @@ Symmetry will be useful when we move to statistical inference proper. Doesn't ma
 - **Bayesian:** Probability as degree of belief (0: impossible; 1: sure to happen)
 
 ::: aside
-Frequentist statistics will be the default approach in the methods sequence, but it's hard to imagine repeating 2000-2030
+Frequentist statistics will be the default approach in the methods sequence, but it's hard to imagine repeating history
 :::
 
 ## Approaches to probability
@@ -206,11 +214,7 @@ Or, rather, it is held together by a series of *heroic, implausible assumptions*
 
 . . .
 
-And I find that both **beautiful** *AND* **stupid**
-
-. . .
-
-But, more importantly, I want you to remember that we use statistical models not because they are true, but because they are **useful**
+We use statistical models not because they are true, but because they are **useful**
 
 . . .
 
