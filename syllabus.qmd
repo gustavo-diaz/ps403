@@ -214,7 +214,7 @@ Copilot is [Northwestern University’s supported artificial intelligence servic
 **Reading:**
 
 - AM Chapter 2
-- Helwig, Nathaniel E. 2020. ["Introduction to Random Variables"](http://users.stat.umn.edu/~helwig/notes/RandomVariables.pdf)
+- Helwig, Nathaniel E. 2020. ["Introduction to Random Variables"](https://github.com/nathaniel-helwig/teaching-materials/blob/main/psy-8814/2020/05-RandomVariables.pdf)
 
 **Lab 2:** Quantities of interest
 
