@@ -23,8 +23,8 @@ header-includes:
     - \floatplacement{figure}{t}
     - \floatplacement{table}{t}
     - \usepackage{flafter}
-    - \usepackage[T1]{fontenc}
-    - \usepackage[utf8]{inputenc}
+    # - \usepackage[T1]{fontenc}
+    # - \usepackage[utf8]{inputenc}
     - \usepackage{ragged2e}
     - \usepackage{booktabs}
     - \usepackage{amsmath}
@@ -40,6 +40,8 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       tidy = TRUE)
 ```
+
+$P[A \cup B] = 0.4$
 
 # Setup {.unnumbered}
 
