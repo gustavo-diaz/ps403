@@ -35,7 +35,7 @@ theme_set(theme_gray(base_size = 20))
 
 - Hypothesis testing
 
-- Lab
+- Bonus track: CIs as inverted tests
 
 # So far
 
@@ -170,11 +170,20 @@ vote_df %>%
     std.error = sd(mean)
   )
 ```
+
 # Good?
+
+. . .
+
+See you next week!
 
 # Hold on
 
 . . .
+
+What's wrong with our simulation-based approach?
+
+# Hold on
 
 No one repeats the study many times!
 
@@ -233,7 +242,7 @@ $$
 
 . . .
 
-where $z_*$ denotes the quantile of the standard normal distribution $N(0,1)$
+where $z_*$ denotes a quantile of the standard normal distribution $N(0,1)$
 
 ::: aside
 The convention is $\alpha = 0.05$, which gives a 95% confidence interval. There is a good reason for this (coming soon), but nowadays it is mostly path dependency
