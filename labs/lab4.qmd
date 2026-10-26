@@ -116,9 +116,9 @@ The functions `t.test()` in base R or `t_test()` in the `infer` tidyverse packag
 
 # The bootstrap
 
-In the previous section, we calculated *Normal approximation-based confidence intervals*. They rely on the assumption that the standardized sample mean converges in probability to a standard normal distribution.
+In the previous section, we calculated *Normal approximation-based confidence intervals*. They rely on the assumption that the standardized sample mean converges in probability to a standard normal distribution as the sample size increases.
 
-An alternative approach would be to take advantage of the idea that we can use the *empirical* CDF to approximate the CDF of the random variable that underlies our data. Again, we can't really observe this, but this principle lets us assume that the sample we observe is enough approximate the sampling distribution of the estimator.
+An alternative approach would be to take advantage of the idea that we can use the *empirical* CDF to approximate the CDF of the random variable that underlies our data. Again, we can't really observe this, but this principle lets us assume that the sample we observe is enough to approximate the sampling distribution of the estimator.
 
 The bootstrap proceeds as follows:
 
@@ -198,7 +198,7 @@ boot_ci
 The paper by Mooney assigned for this week discusses the two approaches.
 :::
 
-## More generally, what's the point of getting bootstrapped confidence intervals when we already have a normal approximation shortcut that performs ok even if the i.i.d. assumptions are suspect? Is there any case in which you would need or prefer to use bootstrapped confidence intervals?
+## More generally, what's the point of getting bootstrapped confidence intervals when we already have a normal approximation shortcut that performs decently even if the i.i.d. assumptions are suspect? Is there any case in which you would need or prefer to use bootstrapped confidence intervals?
 
 
 # The jackknife
