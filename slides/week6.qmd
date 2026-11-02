@@ -62,6 +62,27 @@ nu_purple = "#4E2A84"
 
 ::: {style="text-align: center"}
 
+$X \rightarrow \overline{X} \rightarrow \widehat{\theta}  \xrightarrow{\text{hopefully!}} \theta$
+
+:::
+
+## So far
+
+**Ingredients for statistical inference**
+
+1. Estimand $\theta$
+
+2. Estimator $\widehat \theta$
+
+3. Data $X$
+
+4. Estimate $\overline X$
+
+5. Quantify uncertainty (confidence intervals, p-values)
+
+
+::: {style="text-align: center"}
+
 $X \rightarrow \widehat{\theta} \rightarrow \overline{X}  \xrightarrow{\text{hopefully!}} \theta$
 
 :::
@@ -252,6 +273,18 @@ then the following minimize MSE of $Y$ given $X$:
 - $\alpha = E[Y] - \frac{\text{Cov}[X,Y]}{V[X]}E[X]$
 - $\beta = \frac{\text{Cov}[X,Y]}{V[X]}$
 
+## Conditional expectations
+
+CEF $E[Y|X]$ minimizes MSE of $Y$ given $X$
+
+If we restrict ourselves to a linear functional form $Y = a + bX$
+
+then the following minimize MSE of $Y$ given $X$:
+
+- $g(X) = \alpha + \beta X$ where
+- $\alpha = E[Y] - \color{purple}{\frac{\text{Cov}[X,Y]}{V[X]}} E[X]$
+- $\beta = \color{purple}{\frac{\text{Cov}[X,Y]}{V[X]}}$
+
 . . .
 
 So it's really all about $\beta$
@@ -313,7 +346,7 @@ But how do we find it!?
 
 ## Which line is a better summary?
 
-![](https://scholar.harvard.edu/sites/scholar.harvard.edu/files/styles/os_files_xxlarge/public/ellaudet/files/the_least_squares_method_new.gif)
+![](https://ellaudet.scholars.harvard.edu/sites/g/files/omnuum9971/files/styles/hwp_1_1__1440x1440_scale/public/ellaudet/files/the_least_squares_method_new.gif)
 
 ## More formally
 
@@ -370,7 +403,7 @@ cookies_with_residual
 
 ## More formally
 
-- The **best linear predictor** is the line that minimizes the distance of each observation to to the line
+- The **best linear predictor** is the line that minimizes the distance of each observation to the line
 
 - That distance is know as a **residual** or **error**
 
@@ -382,7 +415,7 @@ $$
 
 ## More formally
 
-- The **best linear predictor** is the line that minimizes the distance of each observation to to the line
+- The **best linear predictor** is the line that minimizes the distance of each observation to the line
 
 - That distance is know as a **residual** or **error**
 
@@ -396,6 +429,21 @@ $$
 We want to find a **vector of coefficients** ($\widehat \beta_0$, $\widehat \beta_1$) that minimizes the **sum of squared residuals**
 
 . . .
+
+$$
+SSR = \sum_{i=1}^n e_i^2
+$$
+
+. . . 
+
+
+What happens if we divide $SSR/n$?
+
+
+
+## Minimizing residuals
+
+We want to find a **vector of coefficients** ($\widehat \beta_0$, $\widehat \beta_1$) that minimizes the **sum of squared residuals**
 
 $$
 SSR = \sum_{i=1}^n e_i^2
