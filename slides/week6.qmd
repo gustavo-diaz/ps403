@@ -37,7 +37,7 @@ nu_purple = "#4E2A84"
 
 - Bivariate regression
 
-- Multivariate regression
+- Multiple regression
 
 - Inference (lab)
 
@@ -837,7 +837,7 @@ Corresponds to $\rho =$ `r round(cor(cookies$cookies, cookies$happiness), 2)`
 
 ::::
 
-# Multivariate regression
+# Multiple Regression
 
 ## Problem
 
@@ -894,7 +894,7 @@ $$
 Where $e_i = (Y_i - (b_0 + b_1 X_{[1]i} + b_2 X_{[2]i} + \ldots + b_K X_{[K]i}))$
 
 ::: aside
-Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+Multiple OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
 :::
 
 
@@ -916,7 +916,7 @@ $$
 Where $e_i = (Y_i - \widehat Y_i)$
 
 ::: aside
-Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+Multiple OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
 :::
 
 ## Ordinary Least Squares (OLS)
@@ -937,7 +937,7 @@ $$
 Where $e_i = (\text{actual} - \text{predicted})$
 
 ::: aside
-Multivariate OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
+Multiple OLS "finds" the vector of coefficients that minimizes the MSE of squared residuals (or the Sum of Squared Residuals -- SSR)
 :::
 
 ## ANES 2016 data
@@ -1559,7 +1559,7 @@ AM call this **overfitting**
 
 - **B**est **L**inear **U**nbiased **E**stimator (BLUE)
 
-- Multivariate regression only makes sense with a 
+- Multiple regression only makes sense with a 
 *marginal means* interpretation
 
 - Which requires a (proto-)causal story
