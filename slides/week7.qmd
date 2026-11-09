@@ -376,7 +376,7 @@ with(Default, table(default, default01))
 
 . . .
 
-Linear probability model
+Linear "probability" model
 
 ```{r}
 ols = lm(default01 ~ student + balance + income, data = Default)
@@ -387,7 +387,7 @@ coef(ols) # very small numbers
 
 ## Estimation
 
-Linear probability model
+Linear "probability" model
 
 ```{r}
 ols = lm(default01 ~ student + balance + income, data = Default)
