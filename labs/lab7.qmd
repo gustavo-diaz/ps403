@@ -3,7 +3,7 @@ title: "Lab 8: Dealing with Missing Data"
 author: 
   - FirstName LastName
   - <YourEmail@u.northwestern.edu>
-date: November 17, 2025
+date: November 21, 2026
 date-format: "**[D]ue:** MMMM D, YYYY"
 format: 
      pdf:
