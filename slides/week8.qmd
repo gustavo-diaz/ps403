@@ -1,7 +1,7 @@
 ---
 title: "Missing Data"
 subtitle: "POLI_SCI 403: Probability and Statistics"
-format: 
+format:
   revealjs:
     slide-number: false
     progress: false
@@ -12,16 +12,13 @@ format:
 
 ```{r setup, include=FALSE}
 # Global options for the rendering behavior of all subsequent code chunks
-knitr::opts_chunk$set(echo = TRUE, 
+knitr::opts_chunk$set(echo = TRUE,
                       warning = FALSE,
                       message = FALSE,
                       fig.pos = "center")
 
 library(tidyverse)
-library(tinytable)
-
-# tinytable options
-options(tinytable_html_mathjax = TRUE)
+library(kableExtra)
 ```
 
 # Agenda
@@ -34,7 +31,7 @@ options(tinytable_html_mathjax = TRUE)
 
 - Data example (if enough time)
 
-- Multiple imputation (lab)
+- **Lab:** Multiple imputation
 
 
 # Identification
@@ -76,11 +73,11 @@ This is the domain of **nonparametric identification**
 
 ## Point-identification
 
-> A statistical functional of a random vector 
+> A statistical functional of a random vector
 
 ## Point-identification
 
-> A statistical functional of a random vector is *point-identified* 
+> A statistical functional of a random vector is *point-identified*
 
 ## Point-identification
 
@@ -109,21 +106,20 @@ Should we worry?
 
 ```{r, echo = FALSE}
 tab0 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i$`,
+  ~Unit, ~Y_star, ~R, ~Y,
   1, 1, 1, 1,
-  2, -99, 0, 0, 
+  2, -99, 0, 0,
   3, 1, 1, 1,
   4, 0, 1, 0,
   5, 1, 1, 1,
   6, -99, 0, 0
 )
 
-tt(tab0) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(j = 4,
-           color = "gray")
+kable(tab0, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = "gray")
 ```
 
 :::
@@ -136,12 +132,11 @@ tt(tab0) %>%
 ::: {.column width="50%"}
 
 ```{r, echo = FALSE}
-tt(tab0) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(j = 4,
-           color = "gray")
+kable(tab0, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = "gray")
 ```
 
 :::
@@ -183,7 +178,7 @@ tt(tab0) %>%
 
 ```{r, echo = FALSE}
 tab1 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`,
+  ~Unit, ~Y_star, ~R,
   1, 1, 1,
   2, -99, 0,
   3, 1, 1,
@@ -192,10 +187,10 @@ tab1 = tribble(
   6, -99, 0
 )
 
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab1, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 . . .
@@ -207,8 +202,8 @@ Plug-in worst case scenario to find *lower* and *upper* bound
 
 ```{r, echo = FALSE}
 tab2 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i^L$`, ~`$Y_i^U$`,
-  1, 1, 1, 1, 1, 
+  ~Unit, ~Y_star, ~R, ~Y_L, ~Y_U,
+  1, 1, 1, 1, 1,
   2, -99, 0, 0, 1,
   3, 1, 1, 1, 1,
   4, 0, 1, 0, 0,
@@ -216,15 +211,12 @@ tab2 = tribble(
   6, -99, 0, 0, 1
 )
 
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(
-    i = 1:6,
-    j = 4:5,
-    color = "white"
-  )
+kable(tab2, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i^L\\)", "\\(Y_i^U\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = "white") %>%
+  column_spec(5, color = "white")
 ```
 
 Plug-in worst case scenario to find *lower* and *upper* bound
@@ -233,15 +225,12 @@ Plug-in worst case scenario to find *lower* and *upper* bound
 
 
 ```{r, echo = FALSE}
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4),
-           color = "purple") %>% 
-  style_tt(
-    i = 1:6,
-    j = 5,
-    color = "white"
-  )
+kable(tab2, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i^L\\)", "\\(Y_i^U\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(5, color = "white")
 ```
 
 Plug-in worst case scenario to find *lower* and *upper* bound
@@ -250,10 +239,12 @@ Plug-in worst case scenario to find *lower* and *upper* bound
 
 
 ```{r, echo = FALSE}
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4, 5),
-           color = "purple")
+kable(tab2, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i^L\\)", "\\(Y_i^U\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(5, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Plug-in worst case scenario to find *lower* and *upper* bound
@@ -262,10 +253,12 @@ Plug-in worst case scenario to find *lower* and *upper* bound
 
 
 ```{r, echo = FALSE}
-tt(tab2) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4, 5),
-           color = "purple")
+kable(tab2, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i^L\\)", "\\(Y_i^U\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(5, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 **Sharp bounds:** $\widehat E[Y_i] = [\frac{3}{6}, \frac{5}{6}]$
@@ -326,7 +319,7 @@ IDK exactly why "minimal assumptions" means "sharp", but this is a related yet d
 
 . . .
 
-**Baseline:** Missing not at random (MNAR/NMAR) 
+**Baseline:** Missing not at random (MNAR/NMAR)
 
 $$Y_i \not\!\perp\!\!\!\perp R_i$$
 
@@ -349,11 +342,10 @@ $$
 ## MCAR
 
 ```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab1, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 . . .
@@ -363,11 +355,10 @@ We assume the *distribution of outcomes is the same* for observed and unobserved
 ## MCAR
 
 ```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab1, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Which is equivalent to imputing missing obs with the sample mean
@@ -377,20 +368,20 @@ Which is equivalent to imputing missing obs with the sample mean
 
 ```{r, echo = FALSE}
 tab3 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$Y_i$`,
+  ~Unit, ~Y_star, ~R, ~Y,
   1, 1, 1, "1",
-  2, -99, 0, "$\\widehat E[Y_i] = 3/4$",
+  2, -99, 0, "\\(\\widehat E[Y_i] = 3/4\\)",
   3, 1, 1, "1",
   4, 0, 1, "0",
   5, 1, 1, "1",
-  6, -99, 0, "$\\widehat E[Y_i] = 3/4$"
+  6, -99, 0, "\\(\\widehat E[Y_i] = 3/4\\)"
 )
 
-
-tt(tab3) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 4),
-           color = "purple")
+kable(tab3, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(4, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Which is equivalent to imputing missing obs with the sample mean
@@ -398,11 +389,10 @@ Which is equivalent to imputing missing obs with the sample mean
 ## MAR
 
 ```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab1, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 . . .
@@ -412,11 +402,10 @@ We assume *conditional independence*
 ## MAR
 
 ```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab1, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Imagine we now observe covariate $X_i$
@@ -426,7 +415,7 @@ Imagine we now observe covariate $X_i$
 
 ```{r, echo = FALSE}
 tab4 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_i$`,
+  ~Unit, ~Y_star, ~R, ~X,
   1, 1, 1, 0,
   2, -99, 0, 0,
   3, 1, 1, 0,
@@ -435,10 +424,10 @@ tab4 = tribble(
   6, -99, 0, 1
 )
 
-tt(tab4) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab4, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Imagine we now observe covariate $X_i$
@@ -446,10 +435,10 @@ Imagine we now observe covariate $X_i$
 ## MAR
 
 ```{r, echo = FALSE}
-tt(tab4) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab4, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 MAR lets us impute the sample mean of units with the same covariate values
@@ -458,19 +447,20 @@ MAR lets us impute the sample mean of units with the same covariate values
 
 ```{r, echo = FALSE}
 tab5 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_i$`, ~`$Y_i$`,
+  ~Unit, ~Y_star, ~R, ~X, ~Y,
   1, 1, 1, 0, "1",
-  2, -99, 0, 0, "$\\widehat E[Y_i|X_i=0] = 2/3$",
+  2, -99, 0, 0, "\\(\\widehat E[Y_i|X_i=0] = 2/3\\)",
   3, 1, 1, 0, "1",
   4, 0, 1, 0, "0",
   5, 1, 1, 1, "1",
-  6, -99, 0, 1, "$\\widehat E[Y_i|X_i=1] = 1$"
+  6, -99, 0, 1, "\\(\\widehat E[Y_i|X_i=1] = 1\\)"
 )
 
-tt(tab5) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 5),
-           color = "purple") 
+kable(tab5, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_i\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(5, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 We can impute the sample mean of units with the same covariate values
@@ -478,11 +468,10 @@ We can impute the sample mean of units with the same covariate values
 ## MAR with multiple covariates
 
 ```{r, echo = FALSE}
-
-tt(tab1) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab1, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Imagine we observe covariates $X_{1i}$ and $X_{2i}$
@@ -491,7 +480,7 @@ Imagine we observe covariates $X_{1i}$ and $X_{2i}$
 
 ```{r, echo = FALSE}
 tab6 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
+  ~Unit, ~Y_star, ~R, ~X1, ~X2,
   1, 1, 1, 0, 3,
   2, -99, 0, 0, 7,
   3, 1, 1, 0, 9,
@@ -500,10 +489,10 @@ tab6 = tribble(
   6, -99, 0, 1, 3
 )
 
-tt(tab6) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab6, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Imagine we observe covariates $X_{1i}$ and $X_{2i}$
@@ -519,10 +508,10 @@ Imagine we observe covariates $X_{1i}$ and $X_{2i}$
 ## Regression estimation
 
 ```{r, echo = FALSE}
-tt(tab6) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab6, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 
@@ -533,10 +522,10 @@ Estimate $\widehat Y_i^* = \widehat \beta_0 + \widehat \beta_1 X_{1i} + \widehat
 ## Regression estimation
 
 ```{r, echo = FALSE}
-tt(tab6) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") 
+kable(tab6, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Use coefficients to impute missing values
@@ -545,19 +534,20 @@ Use coefficients to impute missing values
 
 ```{r, echo = FALSE}
 tab7 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
+  ~Unit, ~Y_star, ~R, ~X1, ~X2, ~Y,
   1, 1, 1, 0, 3, "1",
-  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
+  2, -99, 0, 0, 7, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7\\)",
   3, 1, 1, 0, 9, "1",
   4, 0, 1, 0, 5, "0",
   5, 1, 1, 1, 4, "1",
-  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
+  6, -99, 0, 1, 3, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3\\)"
 )
 
-tt(tab7) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2, 6),
-           color = "purple") 
+kable(tab7, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(6, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 . . .
@@ -568,22 +558,20 @@ Which yields the same $\widehat E[Y_i]$ as
 
 ```{r, echo = FALSE}
 tab8 = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`, ~`$Y_i$`,
-  1, 1, 1, 0, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 3$",
-  2, -99, 0, 0, 7, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7$",
-  3, 1, 1, 0, 9, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 9$",
-  4, 0, 1, 0, 5, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 5$",
-  5, 1, 1, 1, 4, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 4$",
-  6, -99, 0, 1, 3, "$\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3$"
+  ~Unit, ~Y_star, ~R, ~X1, ~X2, ~Y,
+  1, 1, 1, 0, 3, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 3\\)",
+  2, -99, 0, 0, 7, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 7\\)",
+  3, 1, 1, 0, 9, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 9\\)",
+  4, 0, 1, 0, 5, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 0 + \\widehat \\beta_2 \\cdot 5\\)",
+  5, 1, 1, 1, 4, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 4\\)",
+  6, -99, 0, 1, 3, "\\(\\widehat \\beta_0 + \\widehat \\beta_1 \\cdot 1 + \\widehat \\beta_2 \\cdot 3\\)"
 )
 
-tt(tab8) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple") %>% 
-  style_tt(i = 1:6,
-           j = 6,
-           color = "purple")
+kable(tab8, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(6, color = "purple")
 ```
 
 . . .
@@ -605,7 +593,7 @@ $$
 
 - Conditional probability of response given the covariates
 
-- Useful since you cannot condition on many covariates  *nonparametrically* 
+- Useful since you cannot condition on many covariates  *nonparametrically*
 
 - Can estimate *consistently* via ML (usually logit)
 
@@ -616,20 +604,19 @@ $$
 
 ```{r, echo = FALSE}
 pstab = tribble(
-  ~Unit, ~`$Y_i^*$`, ~`$R_i$`, ~`$X_{1i}$`, ~`$X_{2i}$`,
+  ~Unit, ~Y_star, ~R, ~X1, ~X2,
   1, 2, 1, 0, 3,
   2, -99, 0, 0, 7,
   3, 3, 1, 0, 9,
   4, 10, 1, 0, 5,
   5, 12, 1, 1, 4,
   6, -99, 0, 1, 3
-) 
+)
 
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple")
-  
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 . . .
@@ -639,12 +626,12 @@ Add propensity score
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
-pstab$`$p_R(\\mathbf{X}_i)$` = c(0.33, 0.14, 0.73, 0.35, 0.78, 0.70)
+pstab$pR = c(0.33, 0.14, 0.73, 0.35, 0.78, 0.70)
 
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple")
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(p_R(\\mathbf{X}_i)\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Add propensity score
@@ -652,12 +639,10 @@ Add propensity score
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
-
-
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = 2,
-           color = "purple")
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(p_R(\\mathbf{X}_i)\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Impute values with nearest propensity score
@@ -665,19 +650,20 @@ Impute values with nearest propensity score
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
-pstab$`$Y_i$` = c(
+pstab$Y = c(
   "2",
-  "$\\widehat E[Y_i|p_R(X_i) = 0.14]$",
+  "\\(\\widehat E[Y_i|p_R(X_i) = 0.14]\\)",
   "3",
   "10",
   "12",
-  "$\\widehat E[Y_i|p_R(X_i) = 0.70]$"
+  "\\(\\widehat E[Y_i|p_R(X_i) = 0.70]\\)"
 )
 
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(p_R(\\mathbf{X}_i)\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(7, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Impute values with nearest propensity score
@@ -685,12 +671,13 @@ Impute values with nearest propensity score
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
-pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
+pstab$Y = c(2, 2, 3, 10, 12, 3)
 
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(p_R(\\mathbf{X}_i)\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(7, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Impute values with nearest propensity score
@@ -699,17 +686,46 @@ Impute values with nearest propensity score
 
 ![](https://www.hnf.de/uploads/tx_templavoila/Kartenlocher_HNF_1.JPG){fig-align="center"}
 
+---
+
+<iframe class="r-stretch" src="https://www.youtube.com/embed/YqdvVnJsHYQ?si=i0qsLJzhK-d8Xs_z" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width:96%;margin:0 2%;"></iframe>
+
+
+## Hot deck what?
+
+::: {style="display:flex; justify-content:center; align-items:center; height:70%;"}
+``` {style="font-size:1em; width:fit-content;"}
+[ Card 101: Male, 30-34, Midwest, $45,000 ]
+
+[ Card 102: Male, 30-34, Midwest, $48,000 ]
+
+[ Card 103: Male, 30-34, Midwest, MISSING ]
+```
+:::
+
+## Hot deck what?
+
+::: {style="display:flex; justify-content:center; align-items:center; height:70%;"}
+``` {style="font-size:1em; width:fit-content;"}
+[ Card 101: Male, 30-34, Midwest, $45,000 ]
+
+[ Card 102: Male, 30-34, Midwest, $48,000 ]
+
+[ Card 103: Male, 30-34, Midwest, $48,000 ]
+```
+:::
 
 
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
-pstab$`$Y_i$` = c(2, 2, 3, 10, 12, 3)
+pstab$Y = c(2, 2, 3, 10, 12, 3)
 
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(p_R(\\mathbf{X}_i)\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(7, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 Impute values with nearest propensity score
@@ -717,10 +733,11 @@ Impute values with nearest propensity score
 ## Hot deck imputation
 
 ```{r, echo = FALSE}
-tt(pstab) %>% 
-  style_tt(i = c(2, 6),
-           j = c(2,7),
-           color = "purple")
+kable(pstab, format = "html", escape = FALSE,
+      col.names = c("Unit", "\\(Y_i^*\\)", "\\(R_i\\)", "\\(X_{1i}\\)", "\\(X_{2i}\\)", "\\(p_R(\\mathbf{X}_i)\\)", "\\(Y_i\\)")) %>%
+  kable_styling(font_size = 40) %>%
+  column_spec(2, color = ifelse(1:6 %in% c(2, 6), "purple", "black")) %>%
+  column_spec(7, color = ifelse(1:6 %in% c(2, 6), "purple", "black"))
 ```
 
 **Not a good idea.** Discards a lot of information!
@@ -824,192 +841,3 @@ $$
 $$
 \widehat E_{DR}[Y_i] = \text{Regression estimator} + \text{IPW correction}
 $$
-
-## With data
-
-
-```{r}
-library(gssr)
-
-gss22 = gss_get_yr(2022)
-
-gss = gss22 %>% 
-  select(vote20) %>% 
-  mutate(vote = ifelse(vote20 == 1, 1, 0))
-
-gss %>% 
-  group_by(vote) %>% 
-  tally()
-```
-
-
-## Bounds as weighted average
-
-Get proportion missing
-
-```{r}
-pr_response = mean(!is.na(gss$vote))
-
-pr_response
-```
-
-. . .
-
-Lower bound:
-
-```{r}
-mean(gss$vote, na.rm = TRUE) * pr_response + 0 *(1-pr_response)
-```
-
-. . .
-
-Upper bound:
-
-```{r}
-mean(gss$vote, na.rm = TRUE) * pr_response + 1 * (1-pr_response)
-```
-
-## Bounds by imputation
-
-```{r}
-gss %>% 
-  select(vote) %>% 
-  mutate(
-    vote_lo = ifelse(is.na(vote), 0, vote),
-    vote_hi = ifelse(is.na(vote), 1, vote)) %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    lower_bound = mean(vote_lo),
-    upper_bound = mean(vote_hi)
-  )
-```
-
-## MCAR by imputation
-
-```{r}
-vote_mean = mean(gss$vote, na.rm = TRUE)
-
-gss %>% 
-  select(vote) %>% 
-  mutate(
-    vote_mcar = ifelse(is.na(vote), vote_mean, vote)) %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    mcar = mean(vote_mcar)
-  )
-```
-
-::: aside
-The number is the same so the real value would come from being able to use more data in general. But also you should never do mean imputation.
-:::
-
-## Regression imputation (MAR)
-
-Make a new data with two more variables
-
-```{r}
-gss_wide = gss22 %>% 
-  select(vote20, sex, partyid) %>% 
-  mutate(vote = ifelse(vote20 == 1, 1, 0),
-         female = ifelse(sex == 2, 1, 0),
-         dem = ifelse(partyid <= 2, 1, 0)) %>% 
-  select(vote, female, dem)
-
-head(gss_wide, 3)
-```
-
-::: aside
-In practice, you want to convince yourself that you have enough variables to justify *conditional independence*
-:::
-
-## Regression imputation (MAR)
-
-```{r}
-outcome_model = lm(vote ~ female + dem,
-                   data = gss_wide)
-
-gss_wide$vote_pred = predict(outcome_model, 
-                    # newdata is by default current data in predict.lm
-                    newdata = gss_wide)
-
-head(gss_wide)
-```
-
-## Regression imputation (MAR)
-
-```{r}
-gss_wide %>% 
-  mutate(
-    vote_reg = ifelse(is.na(vote), vote_pred, vote)
-  ) %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    # Some still missing have missing data in the covariates
-    mar_reg_1 = mean(vote_reg, na.rm = TRUE),
-    mar_reg_2 = mean(vote_pred, na.rm = TRUE)
-  )
-```
-
-
-## IPW (MAR)
-
-```{r}
-# Make a binary indicator of missingness
-gss_wide = gss_wide %>% 
-  mutate(
-    response = ifelse(!is.na(vote), 1, 0)
-  ) %>% 
-  filter(!is.na(female) & !is.na(dem))
-
-pscore_model = glm(
-  response ~ female + dem,
-  family = binomial,
-  data = gss_wide
-)
-
-# Create variable with probabilities
-gss_wide$pscore = predict(pscore_model, type = "response")
-
-# Convert to IPW
-gss_wide$ipw = 1/gss_wide$pscore
-```
-
-## IPW (MAR)
-
-```{r}
-gss_wide %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    mar_ipw = weighted.mean(vote, w = ipw, na.rm = TRUE)
-    )
-```
-
-
-## Doubly robust (MAR)
-
-```{r}
-doubly_robust = lm(vote ~ female + dem,
-                   data = gss_wide,
-                   weights = ipw)
-
-gss_wide$vote_dr = predict(doubly_robust,
-                           newdata = gss_wide)
-
-gss_wide %>% 
-  summarize(
-    complete_cases = mean(vote, na.rm = TRUE),
-    mar_dr = mean(vote_dr)
-  )
-```
-
-## Wrapping up
-
-- Missing data means i.i.d. assumption does not hold even with a random/representative sample
-
-- But i.i.d. is assumed out of convenience, not accuracy
-
-- Many are unbothered by missing data because it does not make a difference
-
-- But sometimes ignoring may present problems for inference or the application of other methods
-
-- You want to (at least) show that ignoring missing data is not a big deal
