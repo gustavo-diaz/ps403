@@ -234,7 +234,7 @@
 <li>Random assignment</li>
 <li>Observational studies</li>
 <li>Quasi-experiments (if we have time)</li>
-<li>Lab</li>
+<li><strong>Lab:</strong> Causal inference in experiments vs.&nbsp;observational studies</li>
 </ul>
 </section>
 
@@ -465,84 +465,63 @@ Unobserved
 </table>
 </div>
 </div>
-<div class="fragment">
-<p>Assign condition <span class="math inline">\(D_i\)</span> (0: control, 1: treatment)</p>
-</div>
 </section>
 <section id="challenge-2" class="slide level2">
 <h2>Challenge</h2>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top" style="width:100%;">
+<table class="caption-top">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
 <th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Unobserved
-</div></th>
-<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Observed
+<span style="color:gray">Unobserved</span>
 </div></th>
 </tr>
 <tr class="even">
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i(1)\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i(0)\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(\tau_i\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(D_i\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i\)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(1)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(0)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(\tau_i\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="fragment">
-<p>To know <span class="math inline">\(E[\tau_i]\)</span> we need <span class="math inline">\((Y_i(1) - Y_i(0))\)</span></p>
-</div>
-<div class="fragment">
-<p>But we only observe one at a time for each unit</p>
+<p>Assign condition <span class="math inline">\(D_i\)</span> (0: control, 1: treatment)</p>
 </div>
 </section>
 <section id="challenge-3" class="slide level2">
@@ -562,7 +541,7 @@ Observed
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
 <th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Unobserved
+<span style="color:gray">Unobserved</span>
 </div></th>
 <th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Observed
@@ -570,9 +549,9 @@ Observed
 </tr>
 <tr class="even">
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i(1)\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i(0)\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(\tau_i\)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(1)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(0)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(\tau_i\)</span></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">\(D_i\)</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i\)</th>
 </tr>
@@ -580,33 +559,33 @@ Observed
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
 </tr>
@@ -614,11 +593,13 @@ Observed
 </table>
 </div>
 </div>
-<p>This is the <strong>FUNDAMENTAL PROBLEM OF CAUSAL INFERENCE</strong></p>
-
-<aside><div>
-<p>The term comes from: Holland, Paul W. 1986. <a href="https://doi.org/10.2307/2289064">“Statistics and Causal Inference.”</a> <em>Journal of the American Statistical Association</em> 81 (396): 945-960</p>
-</div></aside></section>
+<div class="fragment">
+<p>To know <span class="math inline">\(E[\tau_i]\)</span> we need <span class="math inline">\((Y_i(1) - Y_i(0))\)</span></p>
+</div>
+<div class="fragment">
+<p>But we only observe one at a time for each unit</p>
+</div>
+</section>
 <section id="challenge-4" class="slide level2">
 <h2>Challenge</h2>
 <div class="cell">
@@ -636,7 +617,7 @@ Observed
 <tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
 <th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-Unobserved
+<span style="color:gray">Unobserved</span>
 </div></th>
 <th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Observed
@@ -644,9 +625,9 @@ Observed
 </tr>
 <tr class="even">
 <th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i(1)\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i(0)\)</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">\(\tau_i\)</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(1)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(0)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(\tau_i\)</span></th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">\(D_i\)</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i\)</th>
 </tr>
@@ -654,33 +635,107 @@ Observed
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>This is the <strong>FUNDAMENTAL PROBLEM OF CAUSAL INFERENCE</strong></p>
+
+<aside><div>
+<p>The term comes from: Holland, Paul W. 1986. <a href="https://doi.org/10.2307/2289064">“Statistics and Causal Inference.”</a> <em>Journal of the American Statistical Association</em> 81 (396): 945-960</p>
+</div></aside></section>
+<section id="challenge-5" class="slide level2">
+<h2>Challenge</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; empty-cells: hide; border-bottom: hidden;"></th>
+<th colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+<span style="color:gray">Unobserved</span>
+</div></th>
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Observed
+</div></th>
+</tr>
+<tr class="even">
+<th style="text-align: left;" data-quarto-table-cell-role="th">ID</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(1)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(Y_i(0)\)</span></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th"><span style="     color: gray !important;">\(\tau_i\)</span></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">\(D_i\)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">\(Y_i\)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">1</span></td>
+<td style="text-align: left;"><span style="     color: gray !important;">0</span></td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
 </tr>
@@ -2996,19 +3051,19 @@ E[\color{purple}{Y_i(1)} | D_i = 1] - E[Y_i(0) | D_i = 0]
 <section id="visualize" class="slide level2">
 <h2>Visualize</h2>
 
-<img data-src="week9_files/figure-revealjs/unnamed-chunk-14-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
+<img data-src="week9_files/figure-revealjs/unnamed-chunk-15-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
 <section id="visualize-1" class="slide level2">
 <h2>Visualize</h2>
 
-<img data-src="week9_files/figure-revealjs/unnamed-chunk-15-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
+<img data-src="week9_files/figure-revealjs/unnamed-chunk-16-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
 <section id="visualize-2" class="slide level2">
 <h2>Visualize</h2>
 
-<img data-src="week9_files/figure-revealjs/unnamed-chunk-16-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
+<img data-src="week9_files/figure-revealjs/unnamed-chunk-17-1.png" data-fig-pos="center" width="960" class="r-stretch"></section>
 <section id="visualize-3" class="slide level2">
 <h2>Visualize</h2>
 
-<img data-src="week9_files/figure-revealjs/unnamed-chunk-17-1.png" data-fig-pos="center" width="960" class="r-stretch"><div class="cell">
+<img data-src="week9_files/figure-revealjs/unnamed-chunk-18-1.png" data-fig-pos="center" width="960" class="r-stretch"><div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">mean</span>(<span class="fu">abs</span>(null_df<span class="sc">$</span>estimate) <span class="sc">&gt;=</span> <span class="fu">abs</span>(obs))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.2</code></pre>

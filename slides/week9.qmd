@@ -196,7 +196,16 @@ dat_1 %>%
 
 ## Challenge
 
-<!-- Repeat previous table here but gray out everything under the "Unobserved" columns from here on out -->
+```{r}
+dat_1 %>%
+  mutate(across(2:4, ~ cell_spec(.x, color = "gray"))) %>%
+  kbl(escape = FALSE,
+      col.names = c("ID",
+                    cell_spec("\\(Y_i(1)\\)", color = "gray"),
+                    cell_spec("\\(Y_i(0)\\)", color = "gray"),
+                    cell_spec("\\(\\tau_i\\)", color = "gray"))) %>%
+  add_header_above(c(" ", "<span style='color:gray'>Unobserved</span>" = 3), escape = FALSE)
+```
 
 . . .
 
@@ -210,12 +219,16 @@ dat_2 = dat %>%
   mutate(tau = Y1 - Y0) %>% 
   relocate(tau, .after = "Y0")
 
-colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+colnames(dat_2) = c("ID",
+                    cell_spec("\\(Y_i(1)\\)", color = "gray"),
+                    cell_spec("\\(Y_i(0)\\)", color = "gray"),
+                    cell_spec("\\(\\tau_i\\)", color = "gray"),
                     "\\(D_i\\)", "\\(Y_i\\)")
 
-dat_2 %>% 
+dat_2 %>%
+  mutate(across(2:4, ~ cell_spec(.x, color = "gray"))) %>%
   kbl(escape = FALSE) %>%
-  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+  add_header_above(c(" ", "<span style='color:gray'>Unobserved</span>" = 3, "Observed" = 2), escape = FALSE)
 ```
 
 . . .
@@ -234,12 +247,16 @@ dat_2 = dat %>%
   mutate(tau = Y1 - Y0) %>% 
   relocate(tau, .after = "Y0")
 
-colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+colnames(dat_2) = c("ID",
+                    cell_spec("\\(Y_i(1)\\)", color = "gray"),
+                    cell_spec("\\(Y_i(0)\\)", color = "gray"),
+                    cell_spec("\\(\\tau_i\\)", color = "gray"),
                     "\\(D_i\\)", "\\(Y_i\\)")
 
-dat_2 %>% 
+dat_2 %>%
+  mutate(across(2:4, ~ cell_spec(.x, color = "gray"))) %>%
   kbl(escape = FALSE) %>%
-  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+  add_header_above(c(" ", "<span style='color:gray'>Unobserved</span>" = 3, "Observed" = 2), escape = FALSE)
 ```
 
 This is the **FUNDAMENTAL PROBLEM OF CAUSAL INFERENCE**
@@ -257,12 +274,16 @@ dat_2 = dat %>%
   mutate(tau = Y1 - Y0) %>% 
   relocate(tau, .after = "Y0")
 
-colnames(dat_2) = c("ID", "\\(Y_i(1)\\)", "\\(Y_i(0)\\)", "\\(\\tau_i\\)",
+colnames(dat_2) = c("ID",
+                    cell_spec("\\(Y_i(1)\\)", color = "gray"),
+                    cell_spec("\\(Y_i(0)\\)", color = "gray"),
+                    cell_spec("\\(\\tau_i\\)", color = "gray"),
                     "\\(D_i\\)", "\\(Y_i\\)")
 
-dat_2 %>% 
+dat_2 %>%
+  mutate(across(2:4, ~ cell_spec(.x, color = "gray"))) %>%
   kbl(escape = FALSE) %>%
-  add_header_above(c(" ", "Unobserved" = 3,  "Observed" = 2))
+  add_header_above(c(" ", "<span style='color:gray'>Unobserved</span>" = 3, "Observed" = 2), escape = FALSE)
 ```
 
 How do we approximate $E[\tau_i]$ with observed data?
