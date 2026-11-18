@@ -60,7 +60,7 @@ When is a causal claim *not* appropriate?
 - Random assignment
 - Observational studies
 - Quasi-experiments (if we have time)
-- Lab
+- **Lab:** Causal inference in experiments vs. observational studies
 
 
 
@@ -192,6 +192,11 @@ dat_1 %>%
   kbl(escape = FALSE) %>% 
   add_header_above(c(" ", "Unobserved" = 3))
 ```
+
+
+## Challenge
+
+<!-- Repeat previous table here but gray out everything under the "Unobserved" columns from here on out -->
 
 . . .
 
