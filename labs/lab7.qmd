@@ -1,5 +1,5 @@
 ---
-title: "Lab 8: Dealing with Missing Data"
+title: "Lab 7: Dealing with Missing Data"
 author: 
   - FirstName LastName
   - <YourEmail@u.northwestern.edu>
